@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4 | 생체역학적 원리</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --bg2: #E0ECFF;
+    --card: #FFFFFF;
+    --accent: #1E3A5F;
+    --accent2: #2E5FA3;
+    --accent3: #4A90D9;
+    --accent4: #6BAED6;
+    --text: #1a2a3a;
+    --text2: #4a6080;
+    --border: #C5D8F0;
+    --highlight: #FFF3CD;
+    --correct: #d4edda;
+    --wrong: #f8d7da;
+    --tag1: #2E5FA3; --tag1b: #EBF2FF;
+    --tag2: #1A7A4A; --tag2b: #E6F7EE;
+    --tag3: #7C3D99; --tag3b: #F3E8FF;
+    --tag4: #C05000; --tag4b: #FFF0E0;
+    --tag5: #B00020; --tag5b: #FFE8EC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  .page-header {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+    color: white; padding: 28px 32px 20px; text-align: center;
+    box-shadow: 0 4px 18px rgba(30,58,95,0.18);
+  }
+  .page-header .chap-label { font-size: 12px; letter-spacing: 3px; opacity: 0.75; text-transform: uppercase; }
+  .page-header h1 { font-size: 26px; font-weight: 800; margin: 6px 0 4px; }
+  .page-header p { font-size: 13px; opacity: 0.8; font-style: italic; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex; background: var(--accent); position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .tab-btn {
+    flex: 1; padding: 13px 8px; background: none; border: none; color: rgba(255,255,255,0.7);
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  .tab-btn.active { color: #fff; border-bottom-color: #6BAED6; background: rgba(255,255,255,0.08); }
+  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* OVERVIEW TAB */
+  .section-card {
+    background: var(--card); border-radius: 12px; margin-bottom: 16px;
+    border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(30,58,95,0.06);
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 14px 18px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    color: white; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-body { padding: 16px 18px; }
+  .keyword-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .kw-tag {
+    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    cursor: default;
+  }
+  .kw1 { background: var(--tag1b); color: var(--tag1); border: 1px solid #C0D4F5; }
+  .kw2 { background: var(--tag2b); color: var(--tag2); border: 1px solid #B0DFC0; }
+  .kw3 { background: var(--tag3b); color: var(--tag3); border: 1px solid #D5B8F0; }
+  .kw4 { background: var(--tag4b); color: var(--tag4); border: 1px solid #F0C890; }
+  .kw5 { background: var(--tag5b); color: var(--tag5); border: 1px solid #F0B0BB; }
+
+  .toc-list { list-style: none; }
+  .toc-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 9px 0;
+    border-bottom: 1px solid var(--bg2); font-size: 14px; line-height: 1.5;
+  }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-num {
+    background: var(--accent2); color: white; border-radius: 50%;
+    width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* SUMMARY TAB */
+  .collapsible {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .collapsible-header {
+    padding: 13px 16px; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; font-weight: 700; font-size: 14px; color: var(--accent);
+    background: linear-gradient(90deg, #EBF2FF 0%, #F5F9FF 100%);
+    transition: background 0.2s; user-select: none;
+  }
+  .collapsible-header:hover { background: linear-gradient(90deg, #D8E8FF 0%, #EBF2FF 100%); }
+  .collapsible-header .arrow { transition: transform 0.3s; font-size: 12px; }
+  .collapsible-header.open .arrow { transform: rotate(180deg); }
+  .collapsible-body { display: none; padding: 16px 18px; border-top: 1px solid var(--border); }
+  .collapsible-body.open { display: block; }
+
+  .info-box {
+    background: var(--bg2); border-left: 4px solid var(--accent3); border-radius: 0 8px 8px 0;
+    padding: 12px 14px; margin: 10px 0; font-size: 13px; line-height: 1.7;
+  }
+  .highlight-box {
+    background: var(--highlight); border-left: 4px solid #F0A500; border-radius: 0 8px 8px 0;
+    padding: 10px 14px; margin: 10px 0; font-size: 13px; line-height: 1.7;
+  }
+  .formula-box {
+    background: #F0F4FF; border: 1px solid #B0C8F0; border-radius: 8px;
+    padding: 10px 14px; margin: 10px 0; font-size: 13px; font-family: 'Courier New', monospace;
+    line-height: 1.9;
+  }
+  .formula-box b { color: var(--accent2); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .col-box {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-size: 13px;
+  }
+  .col-box .col-title { font-weight: 700; color: var(--accent2); margin-bottom: 6px; font-size: 13px; }
+  ul.bullet { padding-left: 18px; font-size: 13px; line-height: 1.8; color: var(--text2); }
+  ul.bullet li { margin-bottom: 3px; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+  .compare-table th {
+    background: var(--accent); color: white; padding: 8px 10px; text-align: left;
+  }
+  .compare-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  .compare-table tr:nth-child(even) td { background: var(--bg); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 6px; }
+  .badge-red { background: #FFE0E5; color: #B00020; }
+  .badge-blue { background: #EBF2FF; color: #2E5FA3; }
+  .badge-green { background: #E6F7EE; color: #1A7A4A; }
+  .sub-title { font-weight: 700; color: var(--accent); margin: 14px 0 6px; font-size: 14px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+
+  /* QUIZ TAB */
+  .quiz-controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .btn {
+    padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 700; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent2); color: white; }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-secondary { background: var(--card); color: var(--accent2); border: 1.5px solid var(--accent3); }
+  .btn-secondary:hover { background: var(--bg2); }
+  .btn-danger { background: #dc3545; color: white; }
+  .btn-danger:hover { background: #b02a37; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+  .progress-area { background: var(--card); border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .progress-bar-bg { background: var(--bg2); border-radius: 10px; height: 10px; overflow: hidden; margin: 8px 0 4px; }
+  .progress-bar-fill { background: linear-gradient(90deg, var(--accent3), var(--accent2)); height: 100%; border-radius: 10px; transition: width 0.4s; }
+  .progress-stats { display: flex; gap: 16px; font-size: 12px; color: var(--text2); flex-wrap: wrap; }
+  .stat-item { display: flex; align-items: center; gap: 4px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-blue { background: var(--accent3); }
+  .dot-green { background: #28a745; }
+  .dot-red { background: #dc3545; }
+
+  .quiz-card {
+    background: var(--card); border-radius: 12px; padding: 20px;
+    border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(30,58,95,0.08);
+    margin-bottom: 16px;
+  }
+  .quiz-q-num { font-size: 11px; color: var(--text2); font-weight: 600; margin-bottom: 6px; }
+  .quiz-q-text { font-size: 15px; font-weight: 700; color: var(--accent); line-height: 1.6; margin-bottom: 14px; }
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .choice-btn {
+    padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: var(--bg); text-align: left; cursor: pointer; font-size: 13px;
+    color: var(--text); transition: all 0.2s; line-height: 1.5;
+  }
+  .choice-btn:hover:not(:disabled) { background: var(--bg2); border-color: var(--accent3); }
+  .choice-btn.correct { background: var(--correct); border-color: #28a745; color: #155724; font-weight: 700; }
+  .choice-btn.wrong { background: var(--wrong); border-color: #dc3545; color: #721c24; }
+  .choice-btn:disabled { cursor: default; }
+  .quiz-feedback {
+    margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+    font-size: 13px; line-height: 1.6; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+  .quiz-feedback.ng { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+
+  .wrong-review { background: #FFF8F0; border: 1px solid #F0C890; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; }
+  .wrong-review-title { font-weight: 700; color: var(--tag4); margin-bottom: 8px; font-size: 14px; }
+  .result-box { background: var(--card); border-radius: 12px; padding: 24px; text-align: center; border: 1px solid var(--border); }
+  .result-score { font-size: 48px; font-weight: 900; color: var(--accent2); }
+  .result-label { font-size: 14px; color: var(--text2); margin-top: 4px; }
+  .hidden { display: none; }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 20px; }
+    .tab-btn { font-size: 12px; padding: 11px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="chap-label">Chapter 4 · Kinesiology</div>
+  <h1>🔬 생체역학적 원리</h1>
+  <p>Biomechanical Principles</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ===== OVERVIEW TAB ===== -->
+<div id="tab-overview" class="tab-content active">
+
+  <div class="section-card">
+    <div class="section-header">📌 챕터 핵심 키워드</div>
+    <div class="section-body">
+      <div class="keyword-grid">
+        <span class="kw-tag kw1">뉴턴 운동법칙</span>
+        <span class="kw-tag kw1">관성의 법칙</span>
+        <span class="kw-tag kw1">가속도 법칙</span>
+        <span class="kw-tag kw1">작용-반작용</span>
+        <span class="kw-tag kw2">힘(Force)</span>
+        <span class="kw-tag kw2">토크(Torque)</span>
+        <span class="kw-tag kw2">질량관성모멘트</span>
+        <span class="kw-tag kw2">충격량-운동량</span>
+        <span class="kw-tag kw3">자유물체도</span>
+        <span class="kw-tag kw3">공간적 기준체계</span>
+        <span class="kw-tag kw3">X·Y 성분 분해</span>
+        <span class="kw-tag kw3">오른손의 법칙</span>
+        <span class="kw-tag kw4">내적인 토크</span>
+        <span class="kw-tag kw4">외적인 토크</span>
+        <span class="kw-tag kw4">IMA / EMA</span>
+        <span class="kw-tag kw4">관절반작용력</span>
+        <span class="kw-tag kw5">정적 분석</span>
+        <span class="kw-tag kw5">동적 분석</span>
+        <span class="kw-tag kw5">운동형상학적 측정</span>
+        <span class="kw-tag kw5">지면반발력</span>
+        <span class="kw-tag kw1">일(Work)</span>
+        <span class="kw-tag kw2">일률(Power)</span>
+        <span class="kw-tag kw3">위치·운동에너지</span>
+        <span class="kw-tag kw4">인체측정학</span>
+        <span class="kw-tag kw5">등속성 근측정기</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">📚 목차 구성</div>
+    <div class="section-body">
+      <ul class="toc-list">
+        <li class="toc-item"><div class="toc-num">1</div><div><b>뉴턴의 운동법칙</b> — 관성·가속도·작용반작용 법칙, 선형운동과 돌림운동에 적용</div></li>
+        <li class="toc-item"><div class="toc-num">2</div><div><b>질량관성모멘트</b> — 물체 회전저항성, 야구방망이 예시, 다이빙선수 적용</div></li>
+        <li class="toc-item"><div class="toc-num">3</div><div><b>충격량-운동량 관계</b> — 선형·각운동량, 힘-시간 그래프, 걷기 응용</div></li>
+        <li class="toc-item"><div class="toc-num">4</div><div><b>일-에너지 관계</b> — 일(W), 일률(P), 위치에너지(PE), 운동에너지(KE)</div></li>
+        <li class="toc-item"><div class="toc-num">5</div><div><b>자유물체도(FBD)</b> — 구성 5단계, 인체 적용, 경계면 분리</div></li>
+        <li class="toc-item"><div class="toc-num">6</div><div><b>공간적 기준체계</b> — 오른손의 법칙, 데카르트 좌표, 3D vs 2D 분석</div></li>
+        <li class="toc-item"><div class="toc-num">7</div><div><b>힘과 토크</b> — 벡터 분해·합성, X·Y 성분, 내적 토크·외적 토크</div></li>
+        <li class="toc-item"><div class="toc-num">8</div><div><b>내적/외적 토크 비교</b> — IMA/EMA, 관절각도와 토크 변화, 풀다운 예시</div></li>
+        <li class="toc-item"><div class="toc-num">9</div><div><b>관절반작용력(J)</b> — X·Y 성분 분해, 전단력·압박력, 피타고라스 정리</div></li>
+        <li class="toc-item"><div class="toc-num">10</div><div><b>정적·동적 분석</b> — 평형방정식(ΣF=0, ΣT=0), 예제 1~3, 임상 연관성</div></li>
+        <li class="toc-item"><div class="toc-num">11</div><div><b>운동형상학적 측정체계</b> — 전자각도계, 가속도계, 영상기법, 역학적 기구</div></li>
+        <li class="toc-item"><div class="toc-num">12</div><div><b>임상 연관성</b> — 관절 보호, 외부 토크 조절, 대항근 동시활성의 영향</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">⭐ 핵심 공식 모음</div>
+    <div class="section-body">
+      <div class="formula-box">
+        <b>선형운동</b><br>
+        ΣF = m × a &nbsp;&nbsp;|&nbsp;&nbsp; F = m × Δv/t &nbsp;&nbsp;|&nbsp;&nbsp; F × t = m × Δv<br><br>
+        <b>돌림운동</b><br>
+        ΣT = I × α &nbsp;&nbsp;|&nbsp;&nbsp; T × t = I × Δω<br><br>
+        <b>토크</b><br>
+        내적 토크 = M × IMA &nbsp;&nbsp;|&nbsp;&nbsp; 외적 토크 = R × EMA<br><br>
+        <b>일 / 일률</b><br>
+        W(선형) = F × d &nbsp;&nbsp;|&nbsp;&nbsp; W(각) = T × θ<br>
+        P(평균) = W/t &nbsp;&nbsp;|&nbsp;&nbsp; P(순간, 선형) = F × v &nbsp;&nbsp;|&nbsp;&nbsp; P(순간, 각) = T × ω<br><br>
+        <b>에너지</b><br>
+        PE = m × g × h &nbsp;&nbsp;|&nbsp;&nbsp; KE(선형) = ½mv² &nbsp;&nbsp;|&nbsp;&nbsp; KE(각) = ½Iω²<br><br>
+        <b>정적 평형</b><br>
+        ΣFx = 0 &nbsp;&nbsp;|&nbsp;&nbsp; ΣFy = 0 &nbsp;&nbsp;|&nbsp;&nbsp; ΣTz = 0
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SUMMARY TAB ===== -->
+<div id="tab-summary" class="tab-content">
+
+  <!-- 1. 뉴턴의 운동법칙 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ① 뉴턴의 운동법칙 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="sub-title">제1법칙: 관성의 법칙</div>
+      <div class="info-box">
+        외부에서 힘이 가해지지 않으면 물체는 현재 상태(정지 또는 등속운동)를 유지한다.<br>
+        • <b>정적인 평형</b>: 선형속도·돌림속도 = 0<br>
+        • <b>동적인 평형</b>: 선형가속도·돌림가속도 = 0 (등속 운동 중)<br>
+        관련 핵심용어: <b>관성, 질량, 질량중심, 질량관성모멘트</b>
+      </div>
+
+      <div class="sub-title">제2법칙: 가속도의 법칙</div>
+      <div class="info-box">
+        물체의 가속도는 적용된 힘에 비례하고, 질량에 반비례한다.<br>
+        <div class="formula-box">
+          선형: <b>ΣF = m × a</b> (Newton, N = kg·m/sec²)<br>
+          돌림: <b>ΣT = I × α</b> (Newton-meter, Nm = kg·m²·rad/sec²)
+        </div>
+      </div>
+      <div class="highlight-box">⭐ 충격량-운동량 관계: F × t = m × Δv (선형) &nbsp;|&nbsp; T × t = I × Δω (각)</div>
+
+      <div class="sub-title">제3법칙: 작용-반작용의 법칙</div>
+      <div class="info-box">
+        모든 힘에는 크기가 같고 방향이 반대인 힘이 존재한다.<br>
+        임상 예) 걷기 중 발이 지면에 힘 → 지면반발력(ground reaction force)이 발에 작용
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 질량관성모멘트 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ② 질량관성모멘트 (I) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="info-box">
+        • <b>정의</b>: 돌림축에 대한 물체의 각도 변화 저항성 (선형의 "질량"에 해당)<br>
+        • 단위: kg·m²<br>
+        • 공식: I = Σmr² (질량 × 돌림축까지 거리²의 합)
+      </div>
+      <div class="highlight-box">
+        ⭐ 돌림축에서 멀수록 I 증가 → 각가속도 감소<br>
+        야구방망이: 끝을 잡으면(Y₁) I↑ → 가속도↓ / 손잡이 쪽(Y₂) I↓ → 가속도↑<br>
+        다이빙선수: 구부린 자세→ I↓ → 빠른 회전 / 펼친 자세→ I↑ → 느린 회전
+      </div>
+      <div class="info-box">
+        ◼ 다리의 질량관성모멘트:<br>
+        오른쪽 다리 &gt; 왼쪽 다리 (오른 엉덩관절에서 질량중심이 더 원위부)<br>
+        → 같은 토크로도 오른다리 가속도↑
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 충격량-운동량 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ③ 충격량-운동량 관계 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-title">선형운동</div>
+          충격량 = F × t<br>
+          운동량 = m × v<br>
+          F × t = m × Δv
+        </div>
+        <div class="col-box">
+          <div class="col-title">돌림운동</div>
+          충격량 = T × t<br>
+          운동량 = I × ω<br>
+          T × t = I × Δω
+        </div>
+      </div>
+      <div class="info-box">
+        힘-시간 곡선(force-time curve): 그래프 아래 면적 = 충격량<br>
+        걷기 시 지면반발력 수평성분: A구간(뒤쪽방향) + B구간(앞쪽방향) 양상(biphasic)
+      </div>
+      <div class="highlight-box">
+        ⭐ 임상: 충격량 흡수를 위해 관절범위 이용 (예: 착지 시 무릎 굽힘 → 힘-시간 분산)<br>
+        ⭐ 짧은 범위에서 큰 제동력 vs 넓은 범위에서 작은 제동력
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 일-에너지 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ④ 일(Work) · 일률(Power) · 에너지 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="formula-box">
+        <b>일(W)</b><br>
+        선형운동: W = F × d (Joule, 1J = 1 N·m)<br>
+        돌림운동: W = T × θ (Joule)<br><br>
+        <b>일률(P)</b><br>
+        평균: P = W/t (Watt, W = J/sec)<br>
+        순간(선형): P = F × v<br>
+        순간(각): P = T × ω<br><br>
+        <b>위치에너지 PE</b> = m × g × h<br>
+        <b>운동에너지 KE(선형)</b> = ½mv²<br>
+        <b>운동에너지 KE(각)</b> = ½Iω²
+      </div>
+      <div class="highlight-box">
+        ⭐ 양(+)의 일 = 외적 부하에 대해 동성으로(단축성 수축)<br>
+        ⭐ 음(-)의 일 = 편심성으로 활동한 근육(신장성 수축)<br>
+        <br>등척성 = 힘은 있지만 변위 없음 → 역학적인 일 = 0
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 자유물체도 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑤ 자유물체도(Free Body Diagram) 구성 5단계 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="bullet">
+        <li><b>I단계:</b> 고려할 자유물체(분절) 확인 및 분리</li>
+        <li><b>II단계:</b> 좌표기준체계 설정 (X-Y 축)</li>
+        <li><b>III단계:</b> 시스템에 작용하는 모든 힘(내적·외적) 확인 및 표시</li>
+        <li><b>IV단계:</b> 관절반작용력(J) 그리기 (방향 미결정 상태로 표시)</li>
+        <li><b>V단계:</b> 관련 운동공식 기재 (ΣFx=0, ΣFy=0, ΣTz=0)</li>
+      </ul>
+      <div class="highlight-box">
+        ⭐ 내적인 힘 = 근육에 의해 생산된 힘 (M)<br>
+        ⭐ 외적인 힘 = 중력, 신체접촉, 외적부하, 무게, 탄성력, 치료사 힘 등<br>
+        ⭐ 관절반작용력(J) = 전단력(Jx) + 압박력(Jy) 성분
+      </div>
+      <div class="info-box">
+        J의 크기: J = √(Jx² + Jy²)<br>
+        J의 방향: cosμ = Jx/J (역코사인 이용)<br>
+        <br>J가 크다 → 관절 연골에 해로울 수 있음 → 관절 보호 치료의 핵심
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 공간적 기준체계 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑥ 공간적 기준체계 & 오른손의 법칙 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="info-box">
+        <b>데카르트 좌표계(Cartesian Coordinate System)</b><br>
+        • 2D: X(수평), Y(수직) — 임상에서 주로 사용<br>
+        • 3D: X, Y, Z축 + 각 축에 대한 방향 표시<br><br>
+        <b>오른손의 법칙 (Right-hand rule)</b><br>
+        오른손의 엄지손가락을 돌림축(+Z 방향)에 맞추면, 나머지 손가락이 감기는 방향 = 양(+)의 방향<br>
+        → 굽힘(시계반대방향) = +Z, 폄(시계방향) = -Z
+      </div>
+      <div class="highlight-box">
+        ⭐ 이 책에서는 X축을 이래팔 분절에 대해 수평하게 배치<br>
+        ⭐ +Y는 위쪽, +X는 오른쪽(환자 기준)<br>
+        ⭐ 상대적 기준체계(relative) vs 절대적 기준체계(global laboratory)
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 힘과 토크의 X·Y 성분 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑦ 힘과 토크의 X·Y 성분 분해 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="info-box">
+        <b>X 성분 (근육 힘)</b>: 뼈 분절에 수직, 회전(토크) 유발<br>
+        - My = M × sinα (관절각도 α)<br><br>
+        <b>Y 성분 (근육 힘)</b>: 뼈 분절에 평행, 관절로 전달(압박 or 견인)<br>
+        - Mx = M × cosα
+      </div>
+      <div class="highlight-box">
+        ⭐ 정지각도 α=90°: My = M (최대), Mx = 0 → 내적 토크 최대<br>
+        ⭐ α=45°: My = 0.71×M, Mx = 0.71×M (동등)<br>
+        ⭐ α=20°: My 작음, Mx 큼 → 내적 토크 작음
+      </div>
+      <table class="compare-table">
+        <tr><th>각도</th><th>My (토크 성분)</th><th>Mx (전달 성분)</th></tr>
+        <tr><td>20°</td><td>0.34M (작음)</td><td>0.94M (큼)</td></tr>
+        <tr><td>45°</td><td>0.71M</td><td>0.71M</td></tr>
+        <tr><td>90°</td><td>1.0M (최대)</td><td>0</td></tr>
+        <tr><td>15°</td><td>0.26M</td><td>0.97M</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 8. 내적/외적 토크 & IMA/EMA -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑧ 내적 토크 vs 외적 토크 / IMA vs EMA <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-title">🔴 내적인 토크</div>
+          근육에 의해 생산<br>
+          방법 1: My × IMA<br>
+          방법 2: M × IMAм<br>
+          IMA = 내적 모멘트팔 (돌림축~근육 수직거리)
+        </div>
+        <div class="col-box">
+          <div class="col-title">🔵 외적인 토크</div>
+          저항(중력, 부하)에 의해 생산<br>
+          방법 1: Ry × EMAry<br>
+          방법 2: R × EMAr<br>
+          EMA = 외적 모멘트팔
+        </div>
+      </div>
+      <div class="highlight-box">
+        ⭐ 팔꿈관절 90°굽힘 = 내적·외적 토크 모두 최대<br>
+        ⭐ 아래팔 수평 + 수직 위치: 외적 토크 없음 (EMA=0)<br>
+        ⭐ 두갈래근 최적 정지각(IMA) = 90° 근처
+      </div>
+      <div class="info-box">
+        <b>관절각도 변화에 따른 토크 변화</b><br>
+        • 정지각 변화 → My, Mx 변화 → 내적 토크 변화<br>
+        • 무게(외적힘) S, W의 Y성분 방향에 따라 외적 토크 방향 결정<br>
+        <br>
+        <b>운동과 근력검사 시 외적인 토크 도수 적용</b><br>
+        • 외적 모멘트팔(EMA)이 작을수록 → 같은 외적 토크에 더 큰 저항 필요<br>
+        • 외적 토크 = R × EMA → 동일 토크라도 EMA 크면 R 작아도 됨
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 정적 분석 예제 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑨ 정적 분석 예제 풀이 흐름 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="info-box">
+        <b>정적 평형 조건 (2D)</b><br>
+        ΣFx = 0 (공식 4.13A) &nbsp;|&nbsp; ΣFy = 0 (공식 4.13B) &nbsp;|&nbsp; ΣTz = 0 (공식 4.14)
+      </div>
+      <div class="sub-title">예제 1 (팔꿈관절 등척성 굽힘 - 수평 아래팔)</div>
+      <ul class="bullet">
+        <li>S(아래팔-손 무게), W(운동무게), M(근육 힘) 작용</li>
+        <li>α=90° → My = M (전부 토크 성분)</li>
+        <li>ΣTz=0 → M 계산 → ΣFy=0 → Jy 계산</li>
+        <li>α=90° 에서 Jx=0 → J = Jy</li>
+      </ul>
+      <div class="sub-title">예제 2 (30° 기울어진 아래팔)</div>
+      <ul class="bullet">
+        <li>α=60° → S, W 모두 X·Y 성분 분해 필요</li>
+        <li>외적 힘의 성분 계산 후 ΣTz=0으로 My → M 계산</li>
+        <li>ΣFx=0, ΣFy=0으로 Jx, Jy 계산 → J, cosμ</li>
+      </ul>
+      <div class="sub-title">예제 3 (케이블 저항 + 팔꿈관절 굽힘)</div>
+      <ul class="bullet">
+        <li>S, C(케이블), M, J 모두 고려</li>
+        <li>C의 방향 각도(β)까지 포함하여 X·Y 성분 분해</li>
+        <li>ΣTz=0 → M 계산 → ΣFx=0, ΣFy=0 → Jx, Jy → J</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. 임상 연관성 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑩ 임상 연관성 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="sub-title">임상 연관성 4.1 - 지레작용으로 상대적 토크 추정</div>
+      <ul class="bullet">
+        <li>내적 토크: IMA로 평가 (근육 삽입점·돌림축 관계)</li>
+        <li>외적 토크: 무게중심 위치로 비교 (쪼그려 앉기 깊이 → EMA 변화)</li>
+        <li>관절염 통증 환자: 깊게 쪼그려 앉기 제한 → 관절 보호</li>
+      </ul>
+      <div class="sub-title">임상 연관성 4.2 - 관절 보호: 내적인 토크 수정</div>
+      <ul class="bullet">
+        <li>엉덩관절 치환술 환자: 중력에 의한 외적 토크(시계방향) 균형 위해 엉덩관절 벌림근이 내적 토크(시계반대방향) 생산</li>
+        <li>벌림근에 필요한 힘 = 체중의 약 2배 (모멘트팔 비율 때문)</li>
+        <li>지팡이 사용 → 외적 모멘트팔 감소 → 벌림근 힘↓ → 관절반작용력↓</li>
+        <li>대전자 부위 지방이식(greater trochanter) → IMA 증가 → 벌림근 힘 요구량 감소</li>
+      </ul>
+      <div class="sub-title">임상 연관성 4.3 - 대항근 동시활성의 영향</div>
+      <ul class="bullet">
+        <li>대항근 동시활성 → 최종 내적 토크 감소, 관절반작용력 증가</li>
+        <li>근육측정기로 외적 토크(R)만 측정 → 내적 토크 과대평가 가능</li>
+        <li>신경학적 병리 있는 환자 → 비정상적 동시활성 확인 필요</li>
+      </ul>
+      <div class="sub-title">Special Focus 4.6 - 외적·내적 토크 최적화로 저항운동 설계</div>
+      <ul class="bullet">
+        <li>팔꿈관절 90° = 내적·외적 토크 모두 최대</li>
+        <li>수평에서 수직으로 위치 변경 → 외적 토크 0 (EMA=0)</li>
+        <li>운동프로그램에서 관절각도별 토크 변화 이용해 난이도 조절</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 11. 운동형상학적 측정체계 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⑪ 운동형상학적·운동역학적 측정체계 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="sub-title">운동형상학적 측정체계</div>
+      <ul class="bullet">
+        <li><b>전자각도계(electrogoniometer)</b>: 관절 각도 측정, 전위차계 2개로 구성</li>
+        <li><b>가속도계(accelerometer)</b>: 가속도 측정, 3D 분석 가능</li>
+        <li><b>영상기법</b>: 사진촬영, 영화촬영, 비디오촬영, 광전자공학</li>
+        <li><b>전자기 추적장치</b>: 6자유도(3D 선형 + 3D 각도) 측정</li>
+      </ul>
+      <div class="sub-title">운동역학적 측정체계</div>
+      <ul class="bullet">
+        <li><b>역학적 기구</b>: 변형률계(strain gauge), 압전기(piezoelectric), 압저항(piezoresistive), 전기용량(capacitance) 변환기</li>
+        <li><b>힘판(force plate)</b>: 3직각 방향의 힘 측정, 지면반발력에 사용</li>
+        <li><b>전기역학적 기구(등속성 근측정기)</b>: 일정한 각속도에서 최대 토크 측정, Biodex 시스템</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== QUIZ TAB ===== -->
+<div id="tab-quiz" class="tab-content">
+
+  <div class="quiz-controls">
+    <button class="btn btn-primary" onclick="startQuiz('all')">🎯 전체 퀴즈 시작</button>
+    <button class="btn btn-secondary" onclick="startQuiz('wrong')">❌ 틀린 문제만</button>
+    <button class="btn btn-danger btn-sm" onclick="resetQuiz()">🔄 초기화</button>
+  </div>
+
+  <div class="progress-area" id="progress-area" style="display:none">
+    <div style="font-weight:700;font-size:14px;color:var(--accent);margin-bottom:4px">진행 상황</div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="progress-stats">
+      <div class="stat-item"><div class="dot dot-blue"></div><span id="stat-total">0/0 문제</span></div>
+      <div class="stat-item"><div class="dot dot-green"></div><span id="stat-correct">정답: 0</span></div>
+      <div class="stat-item"><div class="dot dot-red"></div><span id="stat-wrong">오답: 0</span></div>
+    </div>
+  </div>
+
+  <div id="quiz-area"></div>
+  <div id="result-area" class="hidden"></div>
+
+</div>
+
+<script>
+// ===== COLLAPSIBLE =====
+function toggleCollapse(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ===== TABS =====
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== QUIZ DATA =====
+const allQuestions = [
+  // 뉴턴의 법칙
+  { q: "뉴턴의 제1법칙(관성의 법칙)에서, 물체가 일정한 각속도로 회전 중일 때 이 상태를 무엇이라 하는가?", choices: ["정적인 평형", "동적인 평형", "정지 상태", "가속 운동"], ans: 1, exp: "동적인 평형: 선형가속도 또는 돌림가속도가 0인 상태 (등속운동). 정적인 평형은 선형·돌림속도가 모두 0인 정지 상태." },
+  { q: "뉴턴 제2법칙에서 돌림운동에 적용되는 공식은?", choices: ["F = m × a", "ΣT = I × α", "T × t = I × Δω", "P = T × ω"], ans: 1, exp: "ΣT = I × α (토크 = 질량관성모멘트 × 각가속도)" },
+  { q: "달리는 사람이 발로 지면을 뒤쪽으로 밀 때 지면이 앞쪽으로 발에 힘을 가하는 것은 뉴턴의 어느 법칙인가?", choices: ["관성의 법칙", "가속도의 법칙", "작용-반작용의 법칙", "충격량-운동량 법칙"], ans: 2, exp: "제3법칙(작용-반작용): 모든 힘에는 크기가 같고 방향이 반대인 반작용이 존재한다." },
+  { q: "선형운동에서 뉴턴 제2법칙의 충격량-운동량 관계식은?", choices: ["F = m × a", "F × t = m × Δv", "W = F × d", "P = F × v"], ans: 1, exp: "F × t = m × Δv. 충격량(Impulse) = 힘 × 시간 = 운동량의 변화" },
+  { q: "정적인 평형 상태에서 물체의 선형속도와 돌림속도는?", choices: ["모두 최대", "모두 0", "선형속도만 0", "돌림속도만 0"], ans: 1, exp: "정적인 평형: 선형속도 = 0, 돌림속도 = 0 (정지 상태)" },
+
+  // 질량관성모멘트
+  { q: "질량관성모멘트(I)의 공식은?", choices: ["I = Σmr", "I = Σmr²", "I = F/a", "I = T/α"], ans: 1, exp: "I = Σmr² (각 질량지점의 질량 × 돌림축까지 거리의 제곱의 합)" },
+  { q: "야구방망이를 손잡이 끝 쪽(Y₁)으로 잡을 때와 가운데(Y₂)로 잡을 때, 더 큰 질량관성모멘트를 갖는 것은?", choices: ["Y₁ (끝 쪽)", "Y₂ (가운데)", "둘 다 같다", "상황에 따라 다르다"], ans: 0, exp: "Y₁으로 잡으면 질량들이 돌림축에서 더 멀리 위치 → I 증가. 단, Y₂ 축을 기준으로 하면 Y₂가 58% 더 토크 유리" },
+  { q: "다이빙선수가 공중에서 구부린 자세(tuck position)를 취하는 이유는?", choices: ["미적 효과", "질량관성모멘트 감소 → 빠른 회전", "질량관성모멘트 증가 → 느린 회전", "힘 생산 증가"], ans: 1, exp: "구부린 자세 → 분절들이 돌림축에 가까이 → I 감소 → 각속도 증가(각운동량 보존)" },
+  { q: "질량관성모멘트의 단위는?", choices: ["kg·m/sec²", "kg·m²", "N·m", "J/sec"], ans: 1, exp: "kg·m² (질량 × 거리² 단위)" },
+  { q: "달리기 시 다리 흔들기 동안 무릎을 굽히는 이유와 관련된 개념은?", choices: ["지면반발력 증가", "외적 토크 증가", "질량관성모멘트 감소 → 토크 감소", "충격량 증가"], ans: 2, exp: "무릎 굽힘 → 다리 분절 질량관성모멘트 감소 → 흔들기에 필요한 토크 감소" },
+
+  // 충격량-운동량
+  { q: "힘-시간 곡선(force-time curve)에서 그래프 아래 면적이 나타내는 것은?", choices: ["일(Work)", "충격량(Impulse)", "일률(Power)", "운동량"], ans: 1, exp: "충격량 = 힘 × 시간 = 그래프 아래 면적 (=운동량의 변화)" },
+  { q: "걷기 중 지면반발력 수평성분의 특징(biphasic)으로 올바른 것은?", choices: ["항상 앞쪽 방향", "항상 뒤쪽 방향", "초기 뒤쪽방향(A) + 후기 앞쪽방향(B)", "초기 앞쪽방향(A) + 후기 뒤쪽방향(B)"], ans: 2, exp: "보행 stance phase에서 수평 지면반발력은 초기 뒤쪽 방향(A) → 후기 앞쪽 방향(B)으로 변화" },
+  { q: "각운동의 충격량-운동량 관계식은?", choices: ["F × t = m × Δv", "T × t = I × Δω", "ΣT = I × α", "P = T × ω"], ans: 1, exp: "T × t = I × Δω (각충격량 = 각운동량 변화)" },
+
+  // 일-에너지
+  { q: "선형운동에서 일(W)의 정의는?", choices: ["W = F/d", "W = F × v", "W = F × d", "W = T × θ"], ans: 2, exp: "W(선형) = 힘(F) × 변위(d), 단위: Joule(J)" },
+  { q: "돌림운동에서 일(W)의 정의는?", choices: ["W = T × θ", "W = T × ω", "W = F × d", "W = T/α"], ans: 0, exp: "W(각) = 토크(T) × 각변위(θ), 단위: Joule(J)" },
+  { q: "근육이 단축성(동심성) 수축을 할 때 수행하는 일은?", choices: ["음(-)의 일", "양(+)의 일", "0", "중립적 일"], ans: 1, exp: "양의 일: 외적 부하에 대해 동성으로(같은 방향) 활동한 근육에 의해 수행. 신장성 수축은 음의 일." },
+  { q: "등척성 수축 시 역학적인 일(mechanical work)은?", choices: ["최대", "음수", "0", "양수"], ans: 2, exp: "등척성 수축: 힘은 있지만 변위 없음 → W = F × 0 = 0" },
+  { q: "순간일률(순간, 선형운동)의 공식은?", choices: ["P = W/t", "P = F × v", "P = T × θ", "P = m × v²"], ans: 1, exp: "순간일률(선형) = F × v (힘 × 선형속도). 각운동 순간일률 = T × ω" },
+  { q: "위치에너지(PE)의 공식은?", choices: ["PE = ½mv²", "PE = m × g × h", "PE = ½Iω²", "PE = F × d"], ans: 1, exp: "PE = m × g × h (질량 × 중력가속도 × 높이)" },
+  { q: "선형운동에너지(KE)의 공식은?", choices: ["KE = m × g × h", "KE = ½mv²", "KE = ½Iω²", "KE = F × v"], ans: 1, exp: "KE(선형) = ½mv² | KE(각) = ½Iω²" },
+
+  // 자유물체도
+  { q: "자유물체도(FBD) 구성 5단계 중 2단계는?", choices: ["관절반작용력 그리기", "좌표기준체계 설정", "운동공식 기재", "힘 확인·표시"], ans: 1, exp: "II단계: 좌표기준체계(X-Y 축) 설정" },
+  { q: "자유물체도에서 내적인 힘(internal force)은?", choices: ["중력", "탄성력", "근육에 의해 생산된 힘", "지면반발력"], ans: 2, exp: "내적인 힘 = 근육에 의해 생산된 힘(M). 외적인 힘 = 중력, 외적부하, 신체접촉, 탄성력 등" },
+  { q: "관절반작용력(J)의 크기를 구하는 공식은?", choices: ["J = Jx + Jy", "J = √(Jx² + Jy²)", "J = Jy - Jx", "J = Jx × Jy"], ans: 1, exp: "피타고라스 정리: J = √(Jx² + Jy²)" },
+  { q: "관절반작용력 J의 방향을 구하는 공식은?", choices: ["sinμ = Jx/J", "tanμ = Jy/Jx", "cosμ = Jx/J", "cosμ = Jy/J"], ans: 2, exp: "cosμ = Jx/J → μ = cos⁻¹(Jx/J). 이 각도는 뼈 분절에 대한 J의 방향(정지각=α와 같음)" },
+  { q: "관절반작용력에서 Jx 성분이 나타내는 것은?", choices: ["압박력", "전단력", "토크", "일률"], ans: 1, exp: "Jx = 전단력(shear force, 관절면에 평행), Jy = 압박력(관절 축 방향)" },
+
+  // 공간적 기준체계
+  { q: "오른손의 법칙에서 엄지손가락이 가리키는 +Z 방향에 해당하는 돌림운동은?", choices: ["폄(시계방향)", "굽힘(시계반대방향)", "모음", "벌림"], ans: 1, exp: "오른손 엄지 = +Z 방향. 나머지 손가락 감기는 방향 = 양(+) = 굽힘(시계반대방향)" },
+  { q: "이 교재에서 주로 사용하는 좌표계는?", choices: ["극좌표계", "구면좌표계", "데카르트 좌표계(Cartesian)", "원통좌표계"], ans: 2, exp: "데카르트 좌표계(직교좌표계): X, Y축이 서로 직각. 임상에서 2D 분석 주로 사용" },
+
+  // 힘과 토크
+  { q: "근육 힘의 X 성분(Mx)의 주요 역할은?", choices: ["토크 생산", "뼈 분절 따라 전달(압박·견인)", "지면반발력 흡수", "각가속도 생성"], ans: 1, exp: "Mx(Y 성분 설명이 되어있음 주의) = 뼈의 장축에 평행 → 관절로 전달. My = 수직 → 토크 생산" },
+  { q: "관절각도 α=90°일 때 근육 힘의 Y 성분(My)은?", choices: ["My = 0", "My = 0.71M", "My = M (전체)", "My = 0.34M"], ans: 2, exp: "α=90°: sinα = sin90° = 1 → My = M × 1 = M (최대 토크 성분)" },
+  { q: "팔꿈관절이 수직에 가까운 상태(α ≈ 0°)에서 외적인 토크는?", choices: ["최대", "중간", "0에 가깝거나 없음", "음수"], ans: 2, exp: "수직 위치: 운동무게(W)의 EMA ≈ 0 → 외적 토크 ≈ 0" },
+  { q: "두 개 이상의 힘을 하나의 합력벡터로 만드는 과정은?", choices: ["벡터 분해(vector resolution)", "벡터 합성(vector composition)", "스칼라 합산", "삼각함수 분리"], ans: 1, exp: "벡터 합성: 여러 힘→ 단일 합력. 벡터 분해: 단일 힘 → X·Y 성분으로 나눔" },
+
+  // 내적/외적 토크 & IMA/EMA
+  { q: "내적 모멘트팔(IMA)의 정의는?", choices: ["관절에서 저항까지의 거리", "돌림축과 근육 힘선 사이의 수직거리", "뼈 분절의 길이", "근육 길이"], ans: 1, exp: "IMA = 돌림축(관절 중심)에서 근육의 힘의 선까지의 수직거리" },
+  { q: "외적 모멘트팔(EMA)의 정의는?", choices: ["근육에서 관절까지 거리", "돌림축에서 외적 힘선까지의 수직거리", "분절 길이", "중력선"], ans: 1, exp: "EMA = 돌림축에서 외적인 힘(저항)의 선까지의 수직거리" },
+  { q: "팔꿈관절 굽힘 중 내적 토크와 외적 토크가 모두 최대인 각도는?", choices: ["0°", "45°", "90°", "135°"], ans: 2, exp: "90°굽힘: IMA 최대(두갈래근 정지각) + EMA 최대 → 내적·외적 토크 모두 최대" },
+  { q: "운동프로그램에서 더 큰 외적인 토크를 만들기 위해 선택 가능한 방법은?", choices: ["저항을 관절 가까이 적용", "저항을 원위부에 적용(EMA 증가)", "속도 증가", "근육 수축 속도 감소"], ans: 1, exp: "외적 토크 = R × EMA. EMA를 늘리려면 저항을 관절에서 멀리(원위부) 적용" },
+  { q: "내적 토크를 줄이기 위한 치료적 중재 방법은?", choices: ["더 무거운 저항 적용", "저항의 적용점을 관절 가까이(EMA 감소)", "근육 스트레칭 증가", "관절가동범위 증가"], ans: 1, exp: "저항 적용점을 관절 가까이 → EMA 감소 → 외적 토크 감소 → 필요 내적 토크 감소 → 관절반작용력 감소" },
+
+  // 정적 분석
+  { q: "2D 정적 분석에서 정적 평형 방정식 3가지는?", choices: ["ΣFx=0, ΣFy=0, ΣFz=0", "ΣFx=0, ΣFy=0, ΣTz=0", "ΣTx=0, ΣTy=0, ΣTz=0", "ΣF=ma, ΣT=Iα"], ans: 1, exp: "2D 정적 분석: ΣFx=0 (공식 4.13A), ΣFy=0 (공식 4.13B), ΣTz=0 (공식 4.14)" },
+  { q: "정적 분석에서 토크의 방향을 결정할 때 양(+) 토크의 방향은?", choices: ["시계방향(폄)", "시계반대방향(굽힘, +Z)", "아래 방향", "위 방향"], ans: 1, exp: "오른손의 법칙: 시계반대방향(굽힘) = +Z = 양(+)의 토크" },
+  { q: "관절반작용력이 큰 임상적 의미는?", choices: ["근력 증가", "관절 연골에 해로울 수 있음", "운동 효율 증가", "일률 증가"], ans: 1, exp: "큰 관절반작용력 → 관절 연골·주변조직 압박 증가 → 손상 위험. 관절 보호 치료의 핵심" },
+
+  // 임상 연관성
+  { q: "지팡이를 아픈 엉덩관절의 반대쪽 손에 사용하는 이유는?", choices: ["균형 유지", "외적 모멘트팔 감소로 엉덩관절 부하 감소", "내적 토크 증가", "보행 속도 증가"], ans: 1, exp: "지팡이 반대쪽 사용 → 체중 중심 이동 → 외적 모멘트팔(D₁) 감소 → 엉덩관절 벌림근에 필요한 힘↓ → 관절반작용력↓" },
+  { q: "대항근(拮抗筋) 동시활성이 관절반작용력에 미치는 영향은?", choices: ["관절반작용력 감소", "관절반작용력 증가", "영향 없음", "내적 토크만 증가"], ans: 1, exp: "대항근 동시활성 → 두 근육 모두 관절에 힘 작용 → 관절반작용력 증가, 최종 내적 토크는 감소" },
+  { q: "쪼그려 앉는 깊이가 깊어질수록(90° vs 45°) 무릎관절의 외적인 토크는?", choices: ["감소", "변화없음", "증가(EMA 증가)", "내적 토크와 같아짐"], ans: 2, exp: "깊게 쪼그릴수록 체중 중심의 EMA 증가 → 외적 토크 증가 → 관절통 환자에게 제한 권고" },
+
+  // 측정체계
+  { q: "전자각도계(electrogoniometer)가 측정하는 것은?", choices: ["선형변위", "관절의 각도변화(각도 운동)", "힘", "일률"], ans: 1, exp: "전자각도계: 운동 중 관절의 각도변화(angular rotation) 측정. 2개의 전위차계로 구성" },
+  { q: "힘판(force plate)이 주로 측정하는 것은?", choices: ["관절 각도", "지면반발력 (3방향)", "근육 길이", "전기적 근활성도"], ans: 1, exp: "힘판: 3직각 방향의 힘 측정. 지면반발력의 크기·방향·적용점 측정에 사용" },
+  { q: "등속성 근측정기(isokinetic dynamometer)의 특징은?", choices: ["일정한 힘으로 저항", "일정한 각속도에서 최대 토크 측정", "등척성 수축만 측정", "선형속도 일정 유지"], ans: 1, exp: "등속성 근측정기: 일정 각속도(0°/sec~500°/sec)에서 최대 토크 측정. 대표 기기: Biodex" },
+  { q: "영상기법(imaging technique) 중 3차원 분석이 가능한 방법은?", choices: ["사진촬영", "영화촬영(1대)", "비디오촬영(2대 이상)", "청진기"], ans: 2, exp: "3D 분석: 2대 이상의 카메라 필요. 1대는 2D만 가능" },
+
+  // Special Focus
+  { q: "Special Focus 4.3에서 설명하는 '양의 일'과 '음의 일'의 차이는?", choices: ["힘의 크기 차이", "수행 속도 차이", "외적부하에 대한 동성 vs 편심성 활동", "관절 각도 차이"], ans: 2, exp: "양의 일: 외적 부하에 대해 동성으로(단축성) 활동. 음의 일: 편심성(신장성)으로 활동하는 근육에 의해 수행" },
+  { q: "Special Focus 4.1에서 야구방망이 돌림축 Y₁과 Y₂ 중 더 빠른 각가속도를 얻을 수 있는 축은?", choices: ["Y₁ (끝쪽)", "Y₂ (가운데 쪽)", "동일", "상황에 따라 다름"], ans: 1, exp: "Y₂ 축: 질량관성모멘트가 Y₁보다 58% 작음 → 같은 토크 대비 각가속도 더 큼" },
+  { q: "Special Focus 4.5에서 '오른손의 법칙'을 각운동 방향 설명에 사용 시, 어깨 폄근(M)이 -Z 토크를 생성한다는 의미는?", choices: ["굽힘 방향 회전", "폄 방향(시계방향) 회전", "벌림 방향 회전", "모음 방향 회전"], ans: 1, exp: "-Z 토크 = 시계방향 = 폄 방향 (오른손의 법칙에서 +Z = 시계반대방향 = 굽힘)" },
+];
+
+// ===== QUIZ STATE =====
+let currentQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let wrongSet = new Set();
+let answered = [];
+
+function startQuiz(mode) {
+  if (mode === 'wrong') {
+    if (wrongSet.size === 0) { alert('틀린 문제가 없습니다!'); return; }
+    currentQuestions = allQuestions.filter((_, i) => wrongSet.has(i));
+    wrongSet.clear();
+  } else {
+    currentQuestions = shuffle([...allQuestions]);
+  }
+  currentIdx = 0; score = 0; answered = new Array(currentQuestions.length).fill(null);
+  document.getElementById('progress-area').style.display = 'block';
+  document.getElementById('result-area').classList.add('hidden');
+  updateProgress();
+  renderQuestion();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function renderQuestion() {
+  const qa = document.getElementById('quiz-area');
+  if (currentIdx >= currentQuestions.length) { showResult(); return; }
+  const q = currentQuestions[currentIdx];
+  const total = currentQuestions.length;
+  const choiceHtml = q.choices.map((c, i) =>
+    `<button class="choice-btn" onclick="answer(this, ${i})">${String.fromCharCode(65+i)}. ${c}</button>`
+  ).join('');
+  qa.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-q-num">문제 ${currentIdx+1} / ${total}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="choices">${choiceHtml}</div>
+      <div class="quiz-feedback" id="qfb"></div>
+      <div class="quiz-nav">
+        <span style="font-size:12px;color:var(--text2)">${currentIdx+1}/${total}</span>
+        <button class="btn btn-secondary btn-sm hidden" id="next-btn" onclick="nextQ()">다음 문제 →</button>
+      </div>
+    </div>`;
+}
+
+function answer(btn, idx) {
+  const q = currentQuestions[currentIdx];
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('qfb');
+  const origIdx = allQuestions.indexOf(q);
+  if (idx === q.ans) {
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback show ok';
+    fb.innerHTML = '✅ 정답! ' + q.exp;
+    score++;
+    answered[currentIdx] = true;
+  } else {
+    btn.classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback show ng';
+    fb.innerHTML = `❌ 오답! 정답: ${String.fromCharCode(65+q.ans)}. ${q.exp}`;
+    answered[currentIdx] = false;
+    if (origIdx >= 0) wrongSet.add(origIdx);
+  }
+  document.getElementById('next-btn').classList.remove('hidden');
+  updateProgress();
+}
+
+function nextQ() {
+  currentIdx++;
+  if (currentIdx >= currentQuestions.length) { showResult(); return; }
+  renderQuestion();
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = currentQuestions.length;
+  const done = answered.filter(a => a !== null).length;
+  const correct = answered.filter(a => a === true).length;
+  const wrong = answered.filter(a => a === false).length;
+  const pct = total > 0 ? (done / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('stat-total').textContent = `${done}/${total} 문제`;
+  document.getElementById('stat-correct').textContent = `정답: ${correct}`;
+  document.getElementById('stat-wrong').textContent = `오답: ${wrong}`;
+}
+
+function showResult() {
+  document.getElementById('quiz-area').innerHTML = '';
+  const total = currentQuestions.length;
+  const pct = Math.round(score / total * 100);
+  const msg = pct >= 90 ? '🎉 완벽해요!' : pct >= 70 ? '👍 잘했어요!' : pct >= 50 ? '💪 조금 더!' : '📚 복습 필요';
+  const ra = document.getElementById('result-area');
+  ra.classList.remove('hidden');
+  ra.innerHTML = `
+    <div class="result-box">
+      <div class="result-score">${score} / ${total}</div>
+      <div class="result-label">정답률 ${pct}% &nbsp; ${msg}</div>
+      <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="startQuiz('all')">🔄 다시 풀기</button>
+        ${wrongSet.size > 0 ? `<button class="btn btn-secondary" onclick="startQuiz('wrong')">❌ 틀린 문제 (${wrongSet.size}개)</button>` : ''}
+      </div>
+    </div>`;
+}
+
+function resetQuiz() {
+  wrongSet.clear(); answered = []; currentQuestions = [];
+  document.getElementById('quiz-area').innerHTML = '';
+  document.getElementById('result-area').classList.add('hidden');
+  document.getElementById('progress-area').style.display = 'none';
+}
+</script>
+</body>
+</html>
