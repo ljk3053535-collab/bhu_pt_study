@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소아발달 중간고사 암기노트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --card: #1c2128;
+    --border: #30363d;
+    --accent1: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --accent4: #d2a8ff;
+    --accent5: #ffa657;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --star: #f1c40f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(135deg, #161b22 0%, #1c2128 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent1);
+    letter-spacing: -0.5px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .tab {
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--muted);
+  }
+
+  .tab.active {
+    background: var(--accent1);
+    color: #000;
+    font-weight: 700;
+  }
+
+  .tab:hover:not(.active) {
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .content { display: none; padding: 24px; max-width: 1200px; margin: 0 auto; }
+  .content.active { display: block; }
+
+  /* ── SECTION HEADERS ── */
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--accent1);
+    border-left: 4px solid var(--accent1);
+    padding-left: 12px;
+    margin: 32px 0 16px;
+    letter-spacing: -0.5px;
+  }
+
+  /* ── GRID ── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .grid-3 { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent1); }
+
+  .card-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .c1 .card-title { color: var(--accent1); border-color: var(--accent1)22; }
+  .c2 .card-title { color: var(--accent2); border-color: var(--accent2)22; }
+  .c3 .card-title { color: var(--accent3); border-color: var(--accent3)22; }
+  .c4 .card-title { color: var(--accent4); border-color: var(--accent4)22; }
+  .c5 .card-title { color: var(--accent5); border-color: var(--accent5)22; }
+
+  .kw {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag-age { background: #1f3a5f; color: var(--accent1); }
+  .tag-key { background: #1a3726; color: var(--accent2); }
+  .tag-warn { background: #3d1f1f; color: var(--accent3); }
+  .tag-purple { background: #2d1f3d; color: var(--accent4); }
+  .tag-orange { background: #3d2a1f; color: var(--accent5); }
+  .tag-star { background: #3d3000; color: var(--star); }
+
+  ul { list-style: none; padding: 0; }
+  ul li {
+    font-size: 0.83rem;
+    color: var(--text);
+    padding: 4px 0 4px 14px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid #ffffff08;
+  }
+  ul li:last-child { border-bottom: none; }
+  ul li::before { content: '▸'; position: absolute; left: 0; color: var(--muted); font-size: 0.7rem; top: 5px; }
+
+  .highlight { color: var(--accent3); font-weight: 700; }
+  .blue { color: var(--accent1); font-weight: 600; }
+  .green { color: var(--accent2); font-weight: 600; }
+  .purple { color: var(--accent4); font-weight: 600; }
+  .orange { color: var(--accent5); font-weight: 600; }
+  .star-text { color: var(--star); font-weight: 700; }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .compare-header {
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-header div {
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .compare-header div:first-child { color: var(--muted); }
+  .compare-header div:nth-child(2) { color: var(--accent1); border-left: 1px solid var(--border); }
+  .compare-header div:nth-child(3) { color: var(--accent3); border-left: 1px solid var(--border); }
+  .compare-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr;
+    border-bottom: 1px solid #ffffff08;
+  }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row div {
+    padding: 9px 14px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  .compare-row div:first-child { color: var(--muted); font-weight: 600; font-size: 0.78rem; }
+  .compare-row div:nth-child(2) { border-left: 1px solid #ffffff08; }
+  .compare-row div:nth-child(3) { border-left: 1px solid #ffffff08; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent1), var(--accent4));
+    border-radius: 2px;
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 16px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent1);
+    border: 2px solid var(--bg);
+  }
+  .tl-age {
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent1);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .tl-content { font-size: 0.8rem; color: var(--text); }
+
+  /* ── QUIZ ── */
+  .quiz-wrap { display: flex; flex-direction: column; gap: 14px; }
+
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .quiz-num {
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .quiz-q {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .quiz-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--accent1);
+    font-size: 0.78rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz-toggle:hover { background: var(--surface); border-color: var(--accent1); }
+
+  .quiz-ans {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--surface);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent2);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .quiz-ans.show { display: block; animation: fadeIn 0.2s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .quiz-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--accent1); color: var(--accent1); }
+  .btn-primary { background: var(--accent1); color: #000; border-color: var(--accent1); }
+  .btn-primary:hover { background: #79b8ff; color: #000; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-easy { background: #1a3726; color: var(--accent2); }
+  .badge-mid { background: #3d2a1f; color: var(--accent5); }
+  .badge-hard { background: #3d1f1f; color: var(--accent3); }
+
+  .full { grid-column: 1 / -1; }
+
+  .note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding: 4px 0;
+    font-style: italic;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 소아발달 중간고사</h1>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('study')">📚 정리</button>
+    <button class="tab" onclick="switchTab('quiz')">✏️ 문제 (30)</button>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<!--  TAB 1 : 정리                                                -->
+<!-- ============================================================ -->
+<div id="study" class="content active">
+
+  <!-- ① 연령별 핵심 키워드 타임라인 -->
+  <div class="section-title">⏱ 연령별 핵심 키워드 & 차이점</div>
+
+  <div class="grid">
+    <!-- 대동작 단계 요약 -->
+    <div class="card c1 full">
+      <div class="card-title">🏃 대동작 발달 4단계 (0~12개월) — 핵심만</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px;">
+        <div>
+          <div class="kw"><span class="tag tag-age">1단계 0~3M</span><span class="tag tag-star">★HEAD CONTROL</span></div>
+          <ul>
+            <li>핵심: <span class="highlight">머리 정렬(head alignment)</span></li>
+            <li>특징: Hypertonia (굴곡 우세)</li>
+            <li>Prone: 2M에 45° → 3M에 1분 들어올림</li>
+            <li><span class="green">3개월 = on-elbows posture 완성</span></li>
+            <li>원시서기(primary standing) / 원시보행 가능</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kw"><span class="tag tag-age">2단계 4~6M</span><span class="tag tag-star">★SITTING UP</span></div>
+          <ul>
+            <li>핵심: <span class="highlight">팔 지지에 의한 pushing up + sitting up</span></li>
+            <li>Prone: hand support → pivot prone(비행기 자세)</li>
+            <li>4~5M 뒤집기 가능</li>
+            <li>배밀이(creeping) 시작 — 배 바닥</li>
+            <li><span class="green">5M: propped sitting / bridging position</span></li>
+            <li>낙하산 반응 출현 시작</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kw"><span class="tag tag-age">3단계 7~9M</span><span class="tag tag-star">★지속 이동</span></div>
+          <ul>
+            <li>핵심: <span class="highlight">이동성 + 활동성</span></li>
+            <li>7M: 네발기기 자세(quadruped) — rocking</li>
+            <li>기기(crawling): 배 안 닿음 / creeping과 차이!</li>
+            <li>7M: unsupported sitting 가능</li>
+            <li>9M: 잡고 서기 / 잡고 이동(cruising)</li>
+            <li><span class="green">pull up to standing</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="kw"><span class="tag tag-age">4단계 10~12M</span><span class="tag tag-star">★걷기</span></div>
+          <ul>
+            <li>핵심: <span class="highlight">독립 보행</span></li>
+            <li>10M: W-sitting, side-sitting 가능</li>
+            <li>10M: 능숙한 기기 / squat 앉기</li>
+            <li>11M: 한 손으로 잡고 걷기</li>
+            <li><span class="green">12M: 혼자 서기 / 가구 잡고 걷기</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- creeping vs crawling 비교 -->
+  <div class="section-title">🔄 헷갈리는 개념 비교</div>
+
+  <div class="compare">
+    <div class="compare-header">
+      <div>구분</div>
+      <div>Creeping (배밀이)</div>
+      <div>Crawling (기기)</div>
+    </div>
+    <div class="compare-row">
+      <div>배 위치</div>
+      <div>바닥에 닿음</div>
+      <div><span class="highlight">바닥에 닿지 않음</span></div>
+    </div>
+    <div class="compare-row">
+      <div>지지면</div>
+      <div>팔다리 전체</div>
+      <div>손 + 무릎 (4-point)</div>
+    </div>
+    <div class="compare-row">
+      <div>시기</div>
+      <div>6~7M</div>
+      <div>7~9M</div>
+    </div>
+    <div class="compare-row">
+      <div>특징</div>
+      <div>뒤로 먼저 감 (다리 힘 ↑)</div>
+      <div>rocking behavior로 시작</div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="compare-header">
+      <div>구분</div>
+      <div>Prone (바로누운자세)</div>
+      <div>Supine (엎드린자세)</div>
+    </div>
+    <div class="compare-row">
+      <div>신생아 특징</div>
+      <div>ATNR 빈번 / 굴곡 패턴</div>
+      <div>머리 들기 시작 / 발차기</div>
+    </div>
+    <div class="compare-row">
+      <div>2개월</div>
+      <div>45° 들어올림 / ATNR 나타남</div>
+      <div>긴장성 목반사 자세</div>
+    </div>
+    <div class="compare-row">
+      <div>3개월</div>
+      <div>1분 머리 들기 / on-elbows</div>
+      <div>머리 조절 시작</div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="compare-header">
+      <div>구분</div>
+      <div>Primary Standing (원시서기)</div>
+      <div>Secondary Standing (2차 서기)</div>
+    </div>
+    <div class="compare-row">
+      <div>시기</div>
+      <div>1단계 (0~3M)</div>
+      <div>3단계 (7~9M)</div>
+    </div>
+    <div class="compare-row">
+      <div>특징</div>
+      <div>발가락으로 섬 / 반사적</div>
+      <div>발바닥 전체 / 다리 벌림, 무릎 폄</div>
+    </div>
+    <div class="compare-row">
+      <div>이후</div>
+      <div>astasia (서지 못하게 됨)</div>
+      <div>cruising → 독립보행</div>
+    </div>
+  </div>
+
+  <!-- 소동작 요약 -->
+  <div class="section-title">✋ 소동작 발달 핵심 키워드</div>
+  <div class="grid grid-3">
+    <div class="card c2">
+      <div class="card-title">1단계 0~3M</div>
+      <ul>
+        <li>손움켜잡기반사(grasping reflex) 강함</li>
+        <li>신생아: 수의적 잡기 못함</li>
+        <li>1~2M: 짧게 잡을 수 있으나 바로 놓음</li>
+        <li>3M: <span class="blue">물건 입으로 가져감 / 180° 추적</span></li>
+      </ul>
+    </div>
+    <div class="card c2">
+      <div class="card-title">2단계 4~6M</div>
+      <ul>
+        <li>손 파악반사 소실</li>
+        <li>4M 후반: 양손으로 물건 잡아 입으로</li>
+        <li>5M: <span class="blue">palmar grasp 가능</span></li>
+        <li>6M: 두 물건 동시 쥠 / 손바닥 아치 발달</li>
+        <li>6M: <span class="blue">radial palmar grasp</span></li>
+      </ul>
+    </div>
+    <div class="card c2">
+      <div class="card-title">3단계 7~9M</div>
+      <ul>
+        <li>7M: <span class="blue">radial digital grasp</span></li>
+        <li>엄지+다른 손가락 쥐기(prehension) 가능</li>
+        <li>7~8M: 양손 물건 쥐기</li>
+        <li>9M: <span class="blue">물건 놓기(release) 가능</span></li>
+      </ul>
+    </div>
+    <div class="card c2">
+      <div class="card-title">4단계 10~12M</div>
+      <ul>
+        <li>10M: <span class="blue">pincer grasp 가능</span></li>
+        <li>10M: three jaw chuck</li>
+        <li>11~12M: 능숙한 pincer grasp</li>
+        <li>12M: <span class="blue">finger tip pinch</span></li>
+      </ul>
+    </div>
+    <div class="card c2">
+      <div class="card-title">14~60M (유아기)</div>
+      <ul>
+        <li>14M: 입방체 2개 쌓기</li>
+        <li>24M: 입방체 6개 / 수직선 그리기</li>
+        <li>그리기: <span class="orange">원→사각형→삼각형</span> (3→4→5세)</li>
+        <li>가위질: 학령전기</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 원시반사 -->
+  <div class="section-title">⚡ 원시반사(Primitive Reflex) — 시험 핵심</div>
+  <div class="grid">
+    <div class="card c3 full">
+      <div class="card-title">★ 소실 시기별 분류 (중요!)</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;">
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:8px;">2~3개월 소실</div>
+          <ul>
+            <li><span class="highlight">빨기반사(sucking reflex)</span></li>
+            <li>신생아에서 출생 시 나타남</li>
+          </ul>
+        </div>
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:8px;">4개월 소실</div>
+          <ul>
+            <li>밀어내기반사(extrusion reflex) — 혀 밖으로</li>
+            <li>놀람반사(startle reflex)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:8px;">4개월경 소실</div>
+          <ul>
+            <li><span class="highlight">ATNR (긴장성 목반사)</span> — <span class="blue">1M에 나타나 4M 소실</span></li>
+            <li>머리 돌린 쪽 팔 폄, 반대 굽힘</li>
+          </ul>
+        </div>
+        <div>
+          <div class="tag tag-star" style="margin-bottom:8px;">평생 지속</div>
+          <ul>
+            <li>눈깜박반사 / 동공반사</li>
+            <li>재채기, 구역, 기침, 하품반사</li>
+          </ul>
+        </div>
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:8px;">1년 후 소실</div>
+          <ul>
+            <li><span class="highlight">바빈스키반사(Babinski)</span></li>
+            <li>발뒤꿈치→발바닥 자극 → 엄지 펌</li>
+          </ul>
+        </div>
+        <div>
+          <div class="tag tag-star" style="margin-bottom:8px;">걷기반사 소실 → 3M</div>
+          <ul>
+            <li>stepping reflex: 3개월에 소실</li>
+            <li>이후 9~12M에 진짜 보행 발달</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c4">
+      <div class="card-title">모로반사 vs 놀람반사</div>
+      <div class="compare">
+        <div class="compare-header"><div>구분</div><div>모로반사</div><div>놀람반사</div></div>
+        <div class="compare-row"><div>자극</div><div>머리 갑자기 이동 / 소리</div><div>갑작스런 큰 소음</div></div>
+        <div class="compare-row"><div>반응</div><div>팔 벌림 후 안음</div><div>팔꿈치 굽힘 / 손 주먹</div></div>
+        <div class="compare-row"><div>소실</div><div>2M 소실 시작, 5~6M 소실</div><div>4M경 소실</div></div>
+      </div>
+    </div>
+
+    <div class="card c4">
+      <div class="card-title">Ankle clonus 포인트</div>
+      <ul>
+        <li>약간 무릎 굽힌 자세 → 발 발등굽힘</li>
+        <li>1~2회 진동 → <span class="green">정상</span></li>
+        <li>지속 → <span class="highlight">Stroke / SCI / MNI 의심</span></li>
+        <li>뇌성마비에서 pressure로 measure</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 연령별 발달 (표 4-2) -->
+  <div class="section-title">📅 표 4-2 연령별 발달 — 영역별 핵심</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-age">생후 2개월</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">운동: ATNR / prone머리 돌림</span>
+          <span class="tag tag-purple">인지: 애착형성 시작</span>
+        </div>
+        <ul>
+          <li>바로 누워 ATNR 자세 빈번</li>
+          <li><span class="green">2~6개월: 가까운 사람 선호 반응</span></li>
+          <li>social smile: 3~5주 → 보통 <span class="highlight">2개월</span> 명확히 출현</li>
+          <li>자기를 돌봐주는 사람 믿는 기본적 안정감 형성 (애착형성기)</li>
+          <li>눈 발달: supine에서 천천히 추적</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-age">생후 2~6개월</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">head control 완성</span>
+          <span class="tag tag-orange">3개월 고저조절★</span>
+          <span class="tag tag-purple">4M 소이 반응</span>
+        </div>
+        <ul>
+          <li>3M: 엎드린 자세 팔 뻗어 몸 지지 → head control</li>
+          <li>4M: 전완 6로 지지 → 안면 드는데 <span class="highlight">스스로 못할 경우 sh. control 이상형</span></li>
+          <li>3~4M: 비대칭 긴장성 몸 반사 소실 → 양손 모아 물건</li>
+          <li><span class="green">4~5M 뒤집기 가능</span></li>
+          <li><span class="blue">4M: 주위 흥미 → 수유 중 고개 돌림 (소이 반응!)</span></li>
+          <li>6M: 가족 애착 + 낯선 사람 불안감</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-age">생후 6~12개월</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">7M 혼자 앉기</span>
+          <span class="tag tag-orange">8M 배밀이</span>
+          <span class="tag tag-star">9M 대상영속성</span>
+          <span class="tag tag-warn">10M O-position</span>
+        </div>
+        <ul>
+          <li>7M: 혼자 앉기 / 9M: 허리 돌릴 수 있음</li>
+          <li>8M: <span class="highlight">배밀이(creeping) + 바로누운자세에서 잡아 일어서기</span></li>
+          <li>12M: 혼자 걷기 (아이들 많은 편)</li>
+          <li>10M: <span class="blue">손 움직임 발달 → 엄지+집게 물건 잡기 (O position)</span></li>
+          <li><span class="star-text">9M: 대상영속성 — 물건 가려져도 존재 알게 됨</span></li>
+          <li>만지는 물건 떨어뜨린 후 안 보이면 찾아냄</li>
+          <li>8M: 분리 불안 많이 발생</li>
+          <li>돌이 되면 <span class="highlight">엄마/아빠</span> 한다</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-age">생후 12~18개월</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">support 없이 계단</span>
+          <span class="tag tag-purple">엄마 행동 흉내</span>
+        </div>
+        <ul>
+          <li>12M 혼자 걸음 / 15M 못 걷는 아이도 있음</li>
+          <li>18M: 불안하지만 뛸 수 있음</li>
+          <li><span class="blue">12M: 바이바이, 안돼, 주세요 등 간단한 지시 이해</span></li>
+          <li>15M: 몇 개 단어로 표현 / 크레파스 잡고 선</li>
+          <li>이 시기: 가족 구성원 행동 보며 흉내냄 (엄마 행동 흉내내기)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-age">생후 18~24개월</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">2층 세트 / 계단</span>
+          <span class="tag tag-star">언어 급발달</span>
+        </div>
+        <ul>
+          <li>한손으로 계단 올라감 [2층]</li>
+          <li>24M: 균형 유지 → 민첩하게 움직여 계단</li>
+          <li><span class="star-text">이 시기 언어 발달이 가장 특징적</span></li>
+          <li>18M: 어휘 10~15개 / 24M: 100개 이상</li>
+          <li>단어 조합 → 단순 문장 / 두 문장 말 이해</li>
+          <li>18M: 인지 성장은 정서 + 언어발달과 부합</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-age">학령전기 (3~5세)</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">3세 불잡지 않고 걷기</span>
+          <span class="tag tag-orange">5세 줄넘기</span>
+          <span class="tag tag-purple">오이디푸스 4~5세</span>
+        </div>
+        <ul>
+          <li>3세: 불잡지 않고 계단 / 한발 서기 잠깐</li>
+          <li>4세: 한발 들고 뜀</li>
+          <li><span class="green">5세: 한 발 교대 들고 뛰기 / 줄넘기 가능</span></li>
+          <li>그리기: <span class="orange">원(3세) → 사각형(4세) → 삼각형(5세)</span></li>
+          <li>언어: 2,000개 어휘 / 3M 의문형·진행형·소유격</li>
+          <li>4세: 과거형 / 5세: 미래형</li>
+          <li>3세: 독자성 확인 욕구 / 이름·성별·나이 말함</li>
+          <li><span class="purple">4~5세: 오이디푸스(Oedipus) — 엄마에 특별 관심 / 아빠 경쟁심 ambivalence</span></li>
+          <li>3~4세: 친구와 협조적 놀이</li>
+          <li>4~5세: 규칙 따르지만 상황 따라 다름</li>
+          <li>5세 이후: 일정 규칙에 따라 놀이</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-age">학령기</div>
+      <div class="tl-content">
+        <div class="kw">
+          <span class="tag tag-key">고기능의 힘에 기여</span>
+          <span class="tag tag-star">주용언어 발달★</span>
+        </div>
+        <ul>
+          <li>근육의 힘과 협응성 증가 → <span class="highlight">고기능의 힘에 기여</span></li>
+          <li>피아노·춤추기·농구공 등 복잡한 운동</li>
+          <li>인지 발달: 6~12세 뚜렷 / 현실적 이해</li>
+          <li><span class="star-text">주용언어 발달 수준 → 집중력 영향 → 인지·언어 정상 발달해야 학교생활 OK</span></li>
+          <li>정신: 성과에 따라 평가받는 것이 가장 중요</li>
+          <li>학업 불진: 두통·복통 신체 증상 유발 가능</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 뇌성마비 -->
+  <div class="section-title">🧠 뇌성마비 (Cerebral Palsy) — 종류·기전·임상</div>
+
+  <div class="grid">
+    <div class="card c1">
+      <div class="card-title">정의 & 유병률</div>
+      <ul>
+        <li><span class="blue">비진행적 손상</span> → 운동·자세 장애 초래 활동 제한</li>
+        <li>태아 or 영아 뇌에 발생 (2004년 정의)</li>
+        <li>유병률: 2~2.5명/1,000명</li>
+        <li><span class="highlight">36주 이하 = 37주 미만 동일</span></li>
+        <li>원인 비율: 출산 전 34% / <span class="highlight">주산기 43%</span> / 출생 후 6%</li>
+        <li>주산기 원인이 가장 많다!</li>
+      </ul>
+    </div>
+    <div class="card c1">
+      <div class="card-title">위험인자 (표 6-1)</div>
+      <ul>
+        <li><span class="blue">출생 전</span>: 조산(36주 이하) / 저체중(2.5kg 이하) / 모체 감염(풍진) / 간질</li>
+        <li><span class="orange">주산기</span>: 임신중독증 / 조기양막파열 / 분만 중 질 출혈 / 저산소증</li>
+        <li><span class="purple">출생 후</span>: CNS 감염 / 저산소증 / 고빌리루빈혈증 / 머리부 외상</li>
+        <li>미숙아(1.5kg 이하): 유병률 77명/1,000명으로 급증</li>
+      </ul>
+    </div>
+    <div class="card c3">
+      <div class="card-title">관련 주요 질환 (3개 암기)</div>
+      <ul>
+        <li>① <span class="highlight">고빌리루빈혈증</span> — 황달 → BBB 통과 → 핵황달(kernicterus) → 바닥핵·뇌줄기 침범</li>
+        <li>② <span class="highlight">IVH (뇌실내출혈)</span> — 32~34주에 배아기질 소멸 → 34주 이전 위험. 4단계 분류</li>
+        <li>③ <span class="highlight">PVL (뇌실주위 백질연화증)</span> — 32주 미만 미숙아 / 겉질척수로 손상 → 양하지마비 많음</li>
+      </ul>
+    </div>
+    <div class="card c3">
+      <div class="card-title">IVH 4단계</div>
+      <ul>
+        <li>I: 뇌실막·배아기질 국한</li>
+        <li>II: 뇌실로 확장 / 50% 미만</li>
+        <li>III: <span class="highlight">뇌실 확장 동반</span></li>
+        <li>IV: <span class="highlight">뇌실질까지 확장</span></li>
+        <li>문제: 3,4단계에서 뇌손상 가능성</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 분류 -->
+  <div class="grid">
+    <div class="card c4 full">
+      <div class="card-title">뇌성마비 분류 3가지</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px;">
+        <div>
+          <div class="kw"><span class="tag tag-purple">① 해부학적 (topography)</span></div>
+          <ul>
+            <li>단마비(monoplegia): 거의 없음</li>
+            <li>반신마비(hemiplegia): 한쪽</li>
+            <li><span class="highlight">양하지마비(diplegia): 하지 심함</span></li>
+            <li>삼지마비(triplegia)</li>
+            <li>팔다리마비(quadriplegia): 사지 + 몸통</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kw"><span class="tag tag-orange">② 운동장애 형태</span></div>
+          <ul>
+            <li><span class="blue">강직형(spastic)</span>: 대뇌겉질 손상 / 70%</li>
+            <li><span class="orange">운동이상형(dyskinesia)</span>: 바닥핵 손상</li>
+            <li><span class="green">실조형(ataxia)</span>: 소뇌 손상 / 저긴장</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kw"><span class="tag tag-star">③ GMFCS (기능)</span></div>
+          <ul>
+            <li>1단계: 제한 없이 걷기</li>
+            <li>2단계: 걷지만 제한적</li>
+            <li>3단계: 보행보조기구 사용</li>
+            <li>4단계: 자가이동 가능하나 제한</li>
+            <li>5단계: <span class="highlight">수동 휠체어로 다른 사람이 옮겨야</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 강직형 세부 비교 -->
+  <div class="compare">
+    <div class="compare-header">
+      <div>유형</div>
+      <div>강직형 반신마비 (20%)</div>
+      <div>강직형 양하지마비 (50%) ★가장 많음</div>
+    </div>
+    <div class="compare-row">
+      <div>병변</div>
+      <div>한쪽 대뇌피질</div>
+      <div>PVL (조산아 많음)</div>
+    </div>
+    <div class="compare-row">
+      <div>특징</div>
+      <div>다리보다 팔 심함 / 한쪽 위축</div>
+      <div>다리 심함 / 팔 소운동기능 중간 이하</div>
+    </div>
+    <div class="compare-row">
+      <div>예후</div>
+      <div>비교적 좋음 / 3세 전후 보행 가능</div>
+      <div>보행 어려움이 주된 문제 / 치료 효율성 좋음</div>
+    </div>
+    <div class="compare-row">
+      <div>동반장애</div>
+      <div>간질(seizure) / 학습장애</div>
+      <div>간질 미발생 / 시지각 문제 종종</div>
+    </div>
+    <div class="compare-row">
+      <div>발목</div>
+      <div>안쪽번짐 일반적 (체중 따라 가쪽번짐)</div>
+      <div>valgus / recurvatum 다양</div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="compare-header">
+      <div>유형</div>
+      <div>강직형 팔다리마비 (30%)</div>
+      <div>운동이상형 (15%)</div>
+    </div>
+    <div class="compare-row">
+      <div>병변</div>
+      <div>사지+몸통 / perinatal hypoxic ischemic</div>
+      <div>바닥핵(basal ganglia) 손상</div>
+    </div>
+    <div class="compare-row">
+      <div>특징</div>
+      <div>입·혀·인두 침범 / 지적장애 30~65%</div>
+      <div>원하지 않는 근육 동시 수축 / 발음장애</div>
+    </div>
+    <div class="compare-row">
+      <div>원인물질</div>
+      <div>저산소 혈증 / 분만 이상</div>
+      <div><span class="highlight">고빌리루빈혈증 / 심한 저산소증</span></div>
+    </div>
+    <div class="compare-row">
+      <div>세분류</div>
+      <div>—</div>
+      <div>근긴장이상형(dystonic) / 무도-무정위운동형(choreo-athetotic)</div>
+    </div>
+  </div>
+
+  <!-- 강직 정의 & 척도 -->
+  <div class="grid">
+    <div class="card c5">
+      <div class="card-title">강직(Spasticity) 정의</div>
+      <ul>
+        <li><span class="highlight">"근육의 수동적 신장 시 나타나는 속도 의존적 저항"</span></li>
+        <li>신장 속도↑ = 저항↑ (비례하지는 않음)</li>
+        <li>감정·통증·접촉에 따라 증가 가능</li>
+        <li>손상된 운동시스템(UMN) 관련</li>
+        <li>반사항진(hyperreflexia) / 클로누스(clonus) 동반</li>
+      </ul>
+    </div>
+    <div class="card c5">
+      <div class="card-title">★ 개정된 Ashworth 척도 (MAS)</div>
+      <ul>
+        <li>0: 근 긴장도 증가 없음</li>
+        <li>1: 약간 증가 (잡힘 느껴졌다 사라짐)</li>
+        <li>1+: 1/2 이하 범위에서 소 저항</li>
+        <li>2: 대부분 범위에서 현저히 증가 / 쉽게 움직임</li>
+        <li>3: 수동 움직임 어려움</li>
+        <li><span class="highlight">4: rigid (굽히거나 펼 때)</span></li>
+      </ul>
+    </div>
+    <div class="card c5">
+      <div class="card-title">★ 개정된 Tardieu 척도 (MTS)</div>
+      <ul>
+        <li>R1: 빠른 속도 신장 시 catch 각도</li>
+        <li>R2: 느린 속도 수동 관절 운동 각도</li>
+        <li>V1: 최대 느리게 / V2: 중력 / V3: 최대 빠르게</li>
+        <li>근육반응 0~5 (5: 관절 못 움직임)</li>
+        <li><span class="highlight">R2-R1 차이 = 동적 구축 정도</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 동반장애 -->
+  <div class="grid">
+    <div class="card c2">
+      <div class="card-title">동반장애 비율</div>
+      <ul>
+        <li>지적장애: <span class="green">30~65%</span> (팔다리마비에 많음)</li>
+        <li>간질성 경기: <span class="green">25~45%</span> → 수면 뇌파 검사</li>
+        <li>시각장애: <span class="green">40%</span>에서 시각장애·안구조절 문제</li>
+        <li>청각장애: <span class="green">약 10%</span> (연관성 그리 크지 않음)</li>
+        <li>삼킴장애: 강직형 팔다리마비에 특히 많음</li>
+        <li>심리적 문제: 불안·우울·과잉행동</li>
+      </ul>
+    </div>
+    <div class="card c2">
+      <div class="card-title">이동 평가 — FMS (기능적 이동척도)</div>
+      <ul>
+        <li>Rating 6: 모든 지면 독립</li>
+        <li>Rating 5: 평지 독립</li>
+        <li>Rating 4: 지팡이 (한쪽·양쪽)</li>
+        <li>Rating 3: 목발</li>
+        <li>Rating 2: 보행기·frame</li>
+        <li>Rating 1: 휠체어 (일어설 수 있음)</li>
+        <li>Rating C: 기기 (5m)</li>
+        <li>Rating N: 해당거리 걷기 불가</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 보행 분류 -->
+  <div class="grid">
+    <div class="card c3 full">
+      <div class="card-title">강직형 반신마비 보행 4유형 (Rodda 2001)</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;">
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:6px;">유형 1 — 처진발(drop foot)</div>
+          <ul><li>앞정강근 약화</li><li>hinged AFO / PLS AFO</li></ul>
+        </div>
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:6px;">유형 2 — 참꿈치들린발 (true equinus)</div>
+          <ul><li>장딴지근 강직·구축</li><li>뛰기보행(jump gait) 가장 흔함</li><li>관절형 AFO</li></ul>
+        </div>
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:6px;">유형 3 — 참꿈치들린발+뒤기무릎</div>
+          <ul><li>넙다리뒤근·넙다리곧은근 동시 수축</li><li>무릎 ROM 45도 이하</li></ul>
+        </div>
+        <div>
+          <div class="tag tag-warn" style="margin-bottom:6px;">유형 4 — 발목+무릎+골반 모두</div>
+          <ul><li>가장 복잡 / 양하지마비 양상</li><li>고정형 AFO / 지면반발 AFO</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c1 full">
+      <div class="card-title">강직형 양하지마비 보행 5유형 (Rodda 2004)</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;">
+        <div><div class="tag tag-age" style="margin-bottom:6px;">유형 1 — 참꿈치들린발</div><ul><li>장딴지근 / 관절형 AFO</li></ul></div>
+        <div><div class="tag tag-age" style="margin-bottom:6px;">유형 2A — 뛰기보행</div><ul><li>장딴지근+넙다리뒤근</li><li>관절형 AFO</li></ul></div>
+        <div><div class="tag tag-age" style="margin-bottom:6px;">유형 3 — 겉보기꿈치들린발</div><ul><li>발목은 정상 / 무릎·고관절 굽힘</li><li>고정형 AFO</li></ul></div>
+        <div><div class="tag tag-age" style="margin-bottom:6px;">유형 4 — 웅크림보행(crouch gait)</div><ul><li><span class="highlight">가장 심각</span> / 에너지 효율 최저</li><li>지면반발 AFO</li></ul></div>
+        <div><div class="tag tag-age" style="margin-bottom:6px;">유형 5 — 비대칭 보행</div><ul><li>반신마비+양하지마비 혼합</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 근골격계 검사 -->
+  <div class="section-title">🔍 근골격계 주요 검사 키워드</div>
+  <div class="grid grid-3">
+    <div class="card c4">
+      <div class="card-title">Ely test (일라이 검사)</div>
+      <ul>
+        <li>목적: <span class="blue">넙다리곧은근(rectus femoris) 단축</span></li>
+        <li>엎드린 자세 → 반대쪽 다리 빠르게 굽힘</li>
+        <li>허벅지 바닥에서 떨어지면 → 강직·구축 ✓</li>
+      </ul>
+    </div>
+    <div class="card c4">
+      <div class="card-title">Ogunlal angle / 모음근 단축 검사</div>
+      <ul>
+        <li>무릎 세우고 바로 누운 자세</li>
+        <li>엉덩관절 벌림 → ROM 측정</li>
+        <li>허벅지 고정 → 무릎 폄 시 모음 증가 = 안쪽 넙다리뒤근·두덩정강근 단축</li>
+      </ul>
+    </div>
+    <div class="card c4">
+      <div class="card-title">오금각도(popliteal angle) 검사</div>
+      <ul>
+        <li>목적: <span class="blue">넙다리뒤근 단축</span></li>
+        <li>바로 누운 자세 / 엉덩관절 90° 굽힘</li>
+        <li>무릎 폄 시 넙다리뼈·정강뼈 각도 측정</li>
+      </ul>
+    </div>
+    <div class="card c4">
+      <div class="card-title">Silverskiold test</div>
+      <ul>
+        <li>목적: <span class="blue">장딴지근 vs 가자미근 단축 구별</span></li>
+        <li>무릎 폄 → 발등굽힘 제한 = 장딴지근</li>
+        <li>무릎 굽힘 → 발등굽힘 잘 됨 = 가자미근은 OK</li>
+      </ul>
+    </div>
+    <div class="card c4">
+      <div class="card-title">엉덩관절 돌림 검사</div>
+      <ul>
+        <li>엎드린 자세 무릎 굽히고 검사</li>
+        <li>과도한 안쪽 돌림 → <span class="highlight">넙다리뼈 앞경사(femoral anteversion) 증가</span></li>
+        <li>과도한 가쪽 돌림 → 앞경사 감소</li>
+      </ul>
+    </div>
+    <div class="card c4">
+      <div class="card-title">정강뼈 비틀림 검사 (2nd toe test)</div>
+      <ul>
+        <li>엎드린 자세 / 무릎 90° 굽힘</li>
+        <li>두 번째 발가락 아래로 위치</li>
+        <li>넙다리뼈 고정 → 수직선과 정강뼈 각도 측정</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 척주변형 -->
+  <div class="grid">
+    <div class="card c1">
+      <div class="card-title">척주 변형 종류 & 관련 유형</div>
+      <ul>
+        <li>척주옆굽음증(scoliosis): <span class="blue">강직형 팔다리마비 + 긴장이상형</span> 많이 발생</li>
+        <li>척추뒤굽음증(kyphosis): 앉은자세 균형 떨어지는 아동</li>
+        <li>허리 과다앞굽음증(hyperlordosis): 엉덩관절굽힘근 구축 + 보행 가능 아동</li>
+        <li>골반 기울기: 척주옆굽음증 + 엉덩관절 탈구 관련</li>
+      </ul>
+    </div>
+    <div class="card c1">
+      <div class="card-title">발 변형 종류</div>
+      <ul>
+        <li>안쪽들린발(pes varus): 앞정강근·뒤정강근 강직</li>
+        <li>가쪽들린발(pes valgus): 종아리근·장딴지근 강직 / 무지외반</li>
+        <li>굼치들린발(pes equinus): 반신마비 + 보행 불가 아동</li>
+        <li>젖힌무릎(genu recurvatum): 장딴지근 단축으로 유발</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- end study -->
+
+<!-- ============================================================ -->
+<!--  TAB 2 : 문제                                                 -->
+<!-- ============================================================ -->
+<div id="quiz" class="content">
+
+  <div class="quiz-controls">
+    <button class="btn btn-primary" onclick="showAll()">전체 정답 보기</button>
+    <button class="btn" onclick="hideAll()">전체 정답 숨기기</button>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+</div>
+
+<script>
+const quizData = [
+  {
+    q: "대동작 발달 1단계(0~3개월)의 핵심 움직임은 무엇인가? 그리고 이 시기를 대표하는 자세 이름은?",
+    a: "핵심 움직임: 머리 정렬(head alignment). 대표 자세: on-elbows posture (3개월에 완성). Hypertonia(굴곡 우세)가 특징이며, 원시서기(primary standing)·원시보행이 반사적으로 가능하다.",
+    level: "easy"
+  },
+  {
+    q: "Creeping(배밀이)과 Crawling(기기)의 가장 중요한 차이점 2가지를 설명하라.",
+    a: "① 배 위치: creeping은 배가 바닥에 닿음 / crawling은 바닥에 닿지 않음. ② 지지면: creeping은 팔다리 전체 / crawling은 손+무릎(4-point position). 시기: creeping 6~7M → crawling 7~9M.",
+    level: "mid"
+  },
+  {
+    q: "소동작 발달에서 10개월에 가능해지는 잡기 형태는 무엇이며, 12개월에는 어떻게 발전하는가?",
+    a: "10M: pincer grasp(집게 쥐기) 가능. 11~12M: 능숙한 pincer grasp. 12M: finger tip pinch(손가락 끝집기) 가능.",
+    level: "easy"
+  },
+  {
+    q: "ATNR(긴장성 목반사)의 반응 양상과 소실 시기를 설명하라.",
+    a: "반응: 머리가 한쪽으로 돌아가면 → 얼굴 쪽 팔은 벌림+팔꿈치 폄, 뒤통수 쪽 팔은 굽힘. 소실 시기: 1개월에 나타나 4개월경 소실. 4개월 이후에도 지속되면 신경계 손상 의미.",
+    level: "mid"
+  },
+  {
+    q: "바빈스키 반사(Babinski reflex)의 자극 방법, 정상 반응, 소실 시기를 설명하라.",
+    a: "자극: 발뒤꿈치에서 발바닥 외측을 따라 엄지발가락 쪽으로 긁음. 정상 반응(신생아): 엄지 폄 + 발가락 펼침(fan sign). 소실 시기: 1년 후 소실. 1세 이후 지속 시 UMN 손상 의심.",
+    level: "mid"
+  },
+  {
+    q: "모로반사와 놀람반사의 차이를 반응 양상 측면에서 설명하라.",
+    a: "모로반사: 머리 갑자기 이동/소리 자극 → 팔 벌림 후 안음(포옹 자세). 2M 소실 시작, 5~6M 소멸. 놀람반사: 갑작스런 큰 소음 → 팔꿈치 굽힘 + 손 주먹. 4M경 소멸.",
+    level: "mid"
+  },
+  {
+    q: "대상영속성(object permanence)은 몇 개월에 나타나며, 임상적으로 어떤 행동으로 확인하는가?",
+    a: "9개월에 나타남. 물건이 가시적으로 보이지 않아도 존재한다는 것을 알게 됨. 확인 행동: 만지는 물건을 떨어뜨린 후 안 보이면 계속 찾아냄 / 물건을 숨겨놓아도 찾아냄.",
+    level: "easy"
+  },
+  {
+    q: "3세, 4세, 5세에 가능한 도형 그리기를 순서대로 나열하라.",
+    a: "원(3세) → 사각형(4세) → 삼각형(5세). 암기 팁: 원사삼 (원→사→삼).",
+    level: "easy"
+  },
+  {
+    q: "학령전기(3~5세)의 운동 발달 특징을 나이별로 정리하라.",
+    a: "3세: 불잡지 않고 계단 오르내림 / 한 발로 잠깐 서기. 4세: 한발 들고 뜀 가능 / 계단 발 교대. 5세: 한 발 교대 들고 뛰기 / 줄넘기 가능.",
+    level: "mid"
+  },
+  {
+    q: "뇌성마비의 2004년 국제 정의에서 핵심 키워드 3가지를 말하라.",
+    a: "① 비진행적 손상(non-progressive) ② 태아 또는 영아의 뇌에 발생 ③ 운동 및 자세의 장애를 초래하여 활동 제한 발생. +감각·인지·의사소통·지각·행동 장애 및 경련 흔히 동반.",
+    level: "easy"
+  },
+  {
+    q: "뇌성마비 원인 비율에서 출산 전, 주산기, 출생 후 각각의 비율을 말하고, 어느 시기가 가장 많은지 답하라.",
+    a: "출산 전 34% / 주산기 43% / 출생 후 6%. 주산기 원인이 가장 많다.",
+    level: "easy"
+  },
+  {
+    q: "IVH(뇌실내출혈)가 34주 이전 미숙아에게 많이 발생하는 이유는 무엇인가?",
+    a: "뇌실 아래에 배아기질(germinal matrix)이라는 모세혈관 밀집 구조물이 존재하는데, 이 배아기질은 32~34주경 소멸된다. 따라서 34주 이전에 태어나면 배아기질이 남아 있어 출혈 위험이 높다.",
+    level: "hard"
+  },
+  {
+    q: "핵황달(kernicterus)의 발생 기전을 설명하고, 주로 어느 뇌 부위에 침범하는가?",
+    a: "기전: 고빌리루빈혈증 → 과도한 빌리루빈이 혈액-뇌장벽(BBB)을 통과 → 뇌 손상(핵황달). 주로 침범: 바닥핵(basal ganglia)과 뇌줄기(brain stem). 결과: 이상운동 증상, 안구운동 문제, 청각장애.",
+    level: "hard"
+  },
+  {
+    q: "PVL(뇌실 주위 백질연화증)에서 주로 침범하는 신경 구조물과 그 임상 결과를 설명하라.",
+    a: "침범: 겉질척수로(corticospinal tract)가 지나가는 백질 영역 — 다리와 몸통 지배. 임상 결과: 주로 다리와 몸통의 운동기능장애 → 양하지마비(diplegia)가 많이 나타남. 조산아에서 주로 발생.",
+    level: "hard"
+  },
+  {
+    q: "강직형(spastic) 뇌성마비의 강직(spasticity) 정의와 강직 근육에서 나타나는 2가지 상반된 현상을 설명하라.",
+    a: "정의: '근육의 수동적 신장 시 나타나는 속도 의존적 저항'. ① 손상된 운동시스템(UMN) → 반사항진(hyperreflexia), 클로누스(clonus). ② 강직 근육: 근력 약화 + 민첩성·섬세한 조절 저하.",
+    level: "hard"
+  },
+  {
+    q: "GMFCS 5단계를 간단히 설명하고, 4단계와의 차이점은 무엇인가?",
+    a: "4단계: 자가 이동 가능하나 제한적 / 전동 이동장비 사용. 5단계: 중력에 대해 목과 몸통 가누지 못함 / 수동 휠체어로 다른 사람이 옮겨야 함 / 보조기술로 충분히 보완 안 됨.",
+    level: "mid"
+  },
+  {
+    q: "강직형 반신마비와 강직형 양하지마비에서 상지·하지 침범 정도의 차이를 비교하라.",
+    a: "반신마비: 한쪽 몸 침범, 다리보다 팔이 더 심하게 침범. 양하지마비: 다리에 심하게 침범, 팔은 소운동기능에 중간 이하 손상. 양하지마비가 전체 강직형 CP의 50%로 가장 많음.",
+    level: "mid"
+  },
+  {
+    q: "운동이상형(dyskinetic) 뇌성마비의 주요 원인 2가지와 병변 부위를 답하라.",
+    a: "원인: ① 고빌리루빈혈증(hyperbilirubinemia) ② 심한 저산소증(severe anoxia). 병변: 바닥핵(basal ganglia) 손상. 세분류: 근긴장이상형(dystonic CP) + 무도-무정위운동형(choreo-athetotic CP).",
+    level: "mid"
+  },
+  {
+    q: "뇌성마비에서 간질성 경기(epileptic seizures)의 유병률과 가장 흔히 동반되는 유형은?",
+    a: "유병률: 25~45%. 가장 흔히 동반: 반신마비(hemiplegia) + 지적장애 동반 시. 양하지마비에서는 미발생 경향. 치료: 약물 조절 가능, 케톤식이 등.",
+    level: "mid"
+  },
+  {
+    q: "Silverskiold test의 목적과 검사 방법, 결과 해석을 설명하라.",
+    a: "목적: 장딴지근(gastrocnemius)과 가자미근(soleus) 단축을 구별. 방법: ① 무릎 폄 상태에서 발등굽힘 → 제한 있으면 장딴지근 단축 의심. ② 무릎 굽힘 상태에서 발등굽힘 가능해지면 → 장딴지근 단축(가자미근은 정상).",
+    level: "hard"
+  },
+  {
+    q: "Ely test(일라이 검사)의 목적과 양성 소견 판단 기준을 설명하라.",
+    a: "목적: 넙다리곧은근(rectus femoris) 단축·강직 평가. 방법: 엎드린 자세에서 엉덩·무릎 완전히 폄 → 반대쪽 다리 빠르게 굽힘. 양성: 허벅지(대퇴부)가 바닥에서 떨어지면 강직 또는 구축 양성.",
+    level: "hard"
+  },
+  {
+    q: "강직형 반신마비 보행 유형 2(true equinus / jump gait)의 특징과 관리를 설명하라.",
+    a: "특징: 장딴지근 강직·구축 → 꿈치들린발 변형. 무릎·엉덩관절 굽힘 증가 + 허리앞굽음증. 말기 디딤기에 특히 나타남. 관리: 관절형 AFO / 선택적 후절제술 / 정형외과 수술 고려.",
+    level: "hard"
+  },
+  {
+    q: "강직형 양하지마비 보행 유형 4(crouch gait)의 특징과 왜 심각한지 설명하라.",
+    a: "특징: 디딤기 전반 발등굽힘 + 무릎·엉덩관절 과도한 굽힘 / 골반 정상이거나 후방경사. 심각한 이유: 에너지 효율이 매우 떨어짐 → 시간이 지남에 따라 보행이 점점 불가능해짐. 적절히 관리 안 되면 자연스럽게 나타남.",
+    level: "hard"
+  },
+  {
+    q: "개정된 Ashworth 척도(MAS) 4단계와 4점의 차이는 무엇인가?",
+    a: "3단계(3): 근 긴장도가 현저히 증가되어 있으나 수동 움직임이 어려운 상태. 4점(4): 손상된 팔다리를 굽히거나 펼 때 rigid(경직)되어 있는 상태 — 완전히 굳어있음.",
+    level: "mid"
+  },
+  {
+    q: "척주옆굽음증(scoliosis)은 뇌성마비의 어느 유형에서 가장 많이 발생하는가?",
+    a: "강직형 팔다리마비(spastic quadriplegia)와 긴장이상형(dystonia)에서 많이 발생. 특히 보행 불가 아동에서 흔하며 등허리부 척주뒤굽음증은 앉은자세 균형이 떨어지는 아동에서 많다.",
+    level: "mid"
+  },
+  {
+    q: "뇌성마비에서 삼킴장애(dysphagia)가 특히 심각한 유형은? 그리고 튜브 식사가 사망률에 미치는 영향은?",
+    a: "강직형 팔다리마비(spastic quadriplegia) 아동에서 특히 심각. 튜브 식사 아동 → 그렇지 않은 아동보다 사망률 2배 이상. 15세 이전 사망 위험 8배 이상 높음.",
+    level: "hard"
+  },
+  {
+    q: "7~9개월(3단계) 네발기기 자세(quadruped position)에서 처음에 rocking behavior가 나타나는 이유는?",
+    a: "팔다리가 몸의 무게 때문에 흔들리는데, 이는 전정기관(vestibular apparatus)에 감각을 입력하여 기기가 시작되기 때문. 처음에는 불안정하지만 점차적으로 안정됨.",
+    level: "hard"
+  },
+  {
+    q: "원시서기(primary standing)와 2차 서기(secondary standing)의 시기와 특징 차이를 비교하라.",
+    a: "원시서기: 0~3M, 반사적, 발가락으로 섬, 이후 astasia(서지 못하게 됨). 2차 서기(3단계): 7~9M, 다리 벌림+무릎 폄+발바닥 전체로 섬(plantigrade posture), 이후 cruising → 독립보행으로 발전.",
+    level: "mid"
+  },
+  {
+    q: "낙하산 반응(parachute reaction)은 어느 시기에 나타나며, 임상적 의미는 무엇인가?",
+    a: "나타나는 시기: 6~7개월(2단계 후반부). 임상적 의미: 앉는 자세를 취할 때 무게 중심을 잃으면 손이나 팔을 뻗는 반응 → 낙하산·보호 신전 반응이라고도 함. 6개월 이후 미출현 시 나쁜 예후.",
+    level: "mid"
+  },
+  {
+    q: "안쪽들린발(pes varus)과 가쪽들린발(pes valgus)에서 각각 강직된 근육은 무엇인가?",
+    a: "안쪽들린발(pes varus): 앞정강근(tibialis anterior) + 뒤정강근(tibialis posterior) 강직. 가쪽들린발(pes valgus): 종아리근(peroneus) + 장딴지근(gastrocnemius) 강직 / 무지외반증(hallux valgus) 함께 나타남.",
+    level: "hard"
+  },
+  {
+    q: "사회적 미소(social smile)는 몇 주에 나타나며, 8개월에 두드러지는 사회정서 발달은 무엇인가?",
+    a: "사회적 미소: 3~5주에 주위 자극 반응으로 나타남(2개월경 명확). 8개월: 분리 불안(separation anxiety)이 많이 발생 → 엄마와 잠깐이라도 떨어지기 싫어함.",
+    level: "easy"
+  }
+];
+
+const levelLabel = { easy: '기본', mid: '중급', hard: '심화' };
+const levelClass = { easy: 'badge-easy', mid: 'badge-mid', hard: 'badge-hard' };
+
+function renderQuiz() {
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = quizData.map((q, i) => `
+    <div class="quiz-card">
+      <div class="quiz-num">Q${String(i+1).padStart(2,'0')} <span class="badge ${levelClass[q.level]}">${levelLabel[q.level]}</span></div>
+      <div class="quiz-q">${q.q}</div>
+      <button class="quiz-toggle" onclick="toggleAns(${i})">▶ 정답 확인</button>
+      <div class="quiz-ans" id="ans-${i}">${q.a}</div>
+    </div>
+  `).join('');
+}
+
+function toggleAns(i) {
+  const el = document.getElementById('ans-'+i);
+  const btn = el.previousElementSibling;
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '▼ 정답 숨기기' : '▶ 정답 확인';
+}
+
+function showAll() {
+  document.querySelectorAll('.quiz-ans').forEach(el => el.classList.add('show'));
+  document.querySelectorAll('.quiz-toggle').forEach(btn => btn.textContent = '▼ 정답 숨기기');
+}
+function hideAll() {
+  document.querySelectorAll('.quiz-ans').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.quiz-toggle').forEach(btn => btn.textContent = '▶ 정답 확인');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

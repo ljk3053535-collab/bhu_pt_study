@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>골절(Fracture) 완전 정리 노트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222536;
+    --border: #2e3250;
+    --accent: #4f8ef7;
+    --accent2: #f7634f;
+    --accent3: #4fd8a0;
+    --accent4: #f7c94f;
+    --text: #e2e5f0;
+    --text2: #9097b8;
+    --text3: #c5cae0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  /* 헤더 */
+  header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 28px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  header h1 {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  header span {
+    font-size: 12px;
+    color: var(--text2);
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  /* 목차 */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  nav a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  nav a:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* 레이아웃 */
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* 섹션 */
+  .section {
+    margin-bottom: 40px;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header:hover { background: #262a3d; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    min-width: 28px;
+    text-align: center;
+  }
+  .section-num.red { background: var(--accent2); }
+  .section-num.green { background: var(--accent3); color: var(--bg); }
+  .section-num.yellow { background: var(--accent4); color: var(--bg); }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+  .toggle-icon { color: var(--text2); font-size: 18px; transition: transform 0.3s; }
+  .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+  .section-body {
+    padding: 20px 24px;
+    display: block;
+  }
+  .section.collapsed .section-body { display: none; }
+
+  /* 서브섹션 */
+  .subsection {
+    margin-bottom: 20px;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .subsection-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 10px 16px;
+    background: rgba(79,142,247,0.08);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .subsection-title::before {
+    content: '▶';
+    font-size: 9px;
+    color: var(--accent);
+  }
+  .subsection-body { padding: 14px 16px; }
+
+  /* 아이템 */
+  ul.items { list-style: none; }
+  ul.items li {
+    padding: 5px 0;
+    color: var(--text3);
+    font-size: 13px;
+    border-bottom: 1px solid rgba(46,50,80,0.5);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  ul.items li:last-child { border-bottom: none; }
+  ul.items li::before {
+    content: '─';
+    color: var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* 하이라이트 */
+  .hl { color: var(--accent); font-weight: 700; }
+  .hl2 { color: var(--accent2); font-weight: 700; }
+  .hl3 { color: var(--accent3); font-weight: 700; }
+  .hl4 { color: var(--accent4); font-weight: 700; }
+
+  /* 배지 */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge-blue { background: rgba(79,142,247,0.2); color: var(--accent); border: 1px solid rgba(79,142,247,0.4); }
+  .badge-red { background: rgba(247,99,79,0.2); color: var(--accent2); border: 1px solid rgba(247,99,79,0.4); }
+  .badge-green { background: rgba(79,216,160,0.2); color: var(--accent3); border: 1px solid rgba(79,216,160,0.4); }
+  .badge-yellow { background: rgba(247,201,79,0.2); color: var(--accent4); border: 1px solid rgba(247,201,79,0.4); }
+
+  /* 그리드 */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  @media (max-width: 700px) {
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    nav { padding: 12px 16px; }
+    .container { padding: 16px 12px; }
+    header { padding: 16px; }
+    header h1 { font-size: 16px; }
+  }
+
+  /* 카드 */
+  .card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent4);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* 타임라인 */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--text3);
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .timeline-label {
+    font-weight: 700;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* 테스트 카드 */
+  .test-card {
+    background: rgba(79,216,160,0.05);
+    border: 1px solid rgba(79,216,160,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+  }
+  .test-card .test-name {
+    font-weight: 700;
+    color: var(--accent3);
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .test-card .test-desc {
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  /* 경고 박스 */
+  .warn-box {
+    background: rgba(247,99,79,0.08);
+    border: 1px solid rgba(247,99,79,0.3);
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: var(--text3);
+  }
+  .info-box {
+    background: rgba(79,142,247,0.08);
+    border: 1px solid rgba(79,142,247,0.3);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  p.desc { font-size: 13px; color: var(--text3); margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>골절(Fracture) 완전 정리 노트</h1>
+  <span>근골격계 물리치료학</span>
+</header>
+
+<nav>
+  <a href="#s1">I. 개요</a>
+  <a href="#s2">II. 분류</a>
+  <a href="#s3">III. 증상</a>
+  <a href="#s4">IV. 치유</a>
+  <a href="#s5">V. 치유인자</a>
+  <a href="#s6">VI. 뼈유합</a>
+  <a href="#s7">VII. 합병증</a>
+  <a href="#s8">VIII. 부위별</a>
+  <a href="#s9">IX. 검사</a>
+  <a href="#s10">X. 중재</a>
+</nav>
+
+<div class="container">
+
+<!-- I. 개요 -->
+<div class="section" id="s1">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num">I</span>
+    <span class="section-title">개요 (Overview)</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">정의</div>
+        <ul class="items">
+          <li>뼈에 가해지는 힘이 <span class="hl">내구성 초과</span> → 뼈 손상 또는 선상 변형</li>
+          <li>뼈의 연속성이 <span class="hl">완전 또는 부분적</span>으로 파괴된 상태</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">발생 요인</div>
+        <ul class="items">
+          <li><span class="hl">외적 요인</span>: 외력의 형태, 크기, 방향, 속도</li>
+          <li><span class="hl">내적 요인</span>: 뼈 자체의 감수성 (골밀도, 연령, 대사질환, 강도)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- II. 분류 -->
+<div class="section" id="s2">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num red">II</span>
+    <span class="section-title">골절의 분류 (Classification)</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+
+    <div class="subsection">
+      <div class="subsection-title">1) 골절에 따른 분류</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <div>
+            <p class="desc"><span class="hl">완전골절</span> — 양쪽 피질 연속성 완전히 끊어짐 / 주로 성인</p>
+            <ul class="items">
+              <li><span class="hl">감입골절</span>: 골절된 뼈 한쪽 끝이 다른 쪽 뼈 속에 박힘</li>
+              <li><span class="hl">합병골절</span>: 주위 중요 조직·장기·기관 손상 동반</li>
+              <li><span class="hl">압박골절</span>: diaphysis 골절 없이 metaphysis가 diaphysis 속으로 감입·압박</li>
+              <li><span class="hl2">개방골절</span>: 골편이 피부 뚫고 외부 노출 <span class="badge badge-red">감염↑</span></li>
+              <li><span class="hl">단순골절</span>: 골절편 수 3개 미만</li>
+              <li><span class="hl">분쇄골절</span>: 2개 이상 골절선, 골절편 3개 이상</li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc"><span class="hl">불완전골절</span> — 한쪽 피질만 손상 / 주로 소아</p>
+            <ul class="items">
+              <li><span class="hl3">★생목골절</span>: 소아 호발, 한쪽 부러지고 반대쪽 휘어짐 <span class="badge badge-yellow">골절선O</span></li>
+              <li><span class="hl">균열골절</span>: 전위 없이 금만 가고 구조적 연속성 유지</li>
+              <li><span class="hl">관통골절</span>: 큰 힘이 작은 면적 → 뼈 관통</li>
+              <li><span class="hl">함몰골절</span>: 주로 두개골, 아래로 함몰</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2) 골절 방향에 따른 분류</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <ul class="items">
+            <li><span class="hl3">가로상(transverse)</span>: 장축에 직각 / 직접력 / 광범위 물렁조직 손상 / <span class="badge badge-green">안정성</span></li>
+            <li><span class="hl2">경사상(oblique)</span>: 압박+구부러짐+비틀림 복합력 / 짧고 둥근 골절선 / <span class="badge badge-red">불안정성</span></li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl2">나선상(spiral)</span>: 비틀림력 / 골절선 길고 예각 / <span class="badge badge-red">불안정성</span></li>
+            <li><span class="hl">세로상(longitudinal)</span>: 골절선이 뼈 장축을 따라 형성</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">3) 피부손상 유무에 따른 분류</div>
+      <div class="subsection-body grid2">
+        <ul class="items">
+          <li><span class="hl">폐쇄골절</span>: 골절부가 피부 밖으로 노출 안 됨</li>
+        </ul>
+        <ul class="items">
+          <li><span class="hl2">개방골절</span>: 골편이 피부 뚫고 노출 → 혈종이 외부 공기에 오염 → <span class="hl2">감염↑</span> → 치료 시 특별 주의</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">4) 골절편 수에 따른 분류</div>
+      <div class="subsection-body">
+        <ul class="items">
+          <li><span class="hl">단순골절</span>: 골절편 3개 미만 / 물렁조직·피부 손상 없음 / 전위 적음</li>
+          <li><span class="hl">분쇄골절</span>: 2개 이상 골절선, 골절편 3개 이상</li>
+          <li><span class="hl">분절골절</span>: 별도의 2개 완전골절이 하나의 뼈 안에 동시 존재</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">5) 골절편 전위에 따른 분류</div>
+      <div class="subsection-body">
+        <div class="grid3">
+          <ul class="items">
+            <li><span class="hl">각형성전위</span>: 뼈에서 먼 방향으로 힘 / 반대쪽 긴장</li>
+            <li><span class="hl">엇갈림전위</span>: 평행한 방향으로 수평 전위 / 정렬 어려움</li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl">돌림전위</span>: 축성 회전 / 정복 어려움</li>
+            <li><span class="hl">신연전위</span>: 골편이 당겨져 분리 / 골유합 저해</li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl">겹침전위</span>: 뼈 길이 단축</li>
+            <li><span class="hl">끼임전위</span>: 주로 골단부, 끼임 고정</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">6) 해부학적 위치에 따른 분류</div>
+      <div class="subsection-body">
+        <ul class="items">
+          <li>뼈끝(epiphysis) / 뼈몸통끝(metaphysis) / 뼈몸통(diaphysis)</li>
+          <li>몸쪽(proximal) / 중간(middle) / 먼쪽(distal) 1/3</li>
+          <li>관절 내(intra-articular) / 관절 외(extra-articular)</li>
+          <li>넓적다리뼈: 머리, 목, 돌기, 돌기아래, 관절용기위 골절 등</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">7) 손상기전에 따른 분류</div>
+      <div class="subsection-body">
+        <div class="grid3">
+          <div class="card">
+            <div class="card-title">외상</div>
+            <ul class="items">
+              <li><span class="hl">감입골절</span>: 축성 부하·압박력 → 뼈잔기둥(trabecula) 압박</li>
+              <li><span class="hl">찢김골절</span>: 장력 부하 → 근육 수축/인대 저항 → 뼈 조각 떨어짐 / 돌출부에 호발</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">병적 과정</div>
+            <ul class="items">
+              <li>구조적으로 약해진 뼈에 <span class="hl">작은 외상</span>으로 쉽게 발생</li>
+              <li>원인: 골다공증, 파제트병, 골종양, 골감염 등</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">비정상적 스트레스</div>
+            <ul class="items">
+              <li><span class="hl">피로골절</span>: 정상 뼈에 작은 스트레스 반복 → 뼈아교질 연속성 중단</li>
+              <li>예: 장거리 행군 → 발허리뼈 / 육상선수 → 정강뼈</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- III. 일반적 증상 -->
+<div class="section" id="s3">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num green">III</span>
+    <span class="section-title">골절의 일반적 증상</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+    <div class="grid2">
+      <ul class="items">
+        <li><span class="hl">통증과 압통</span>: 골절 시 통증/압통 / 척추 경미한 압박골절은 통증 미미</li>
+        <li><span class="hl">기능 소실</span>: 지레작용 상실 + 물렁조직 손상 / 피로·압박골절은 일부 유지</li>
+        <li><span class="hl">변형</span>: 전위 or 물렁조직 손상 → 각형성·돌림변형</li>
+        <li><span class="hl">부기</span>: 물렁조직·혈관 손상 → 국소 부기 → 점차 확대</li>
+      </ul>
+      <ul class="items">
+        <li><span class="hl">자세의 변화</span>: 의식적·무의식적 골절부 보호 반응</li>
+        <li><span class="hl">비정상적 움직임·마찰음</span>: 골편 부딪쳐 마찰음 → 추가 손상 주의</li>
+        <li><span class="hl2">신경·혈관 동반 손상</span>: 반드시 검사 / 위팔뼈·넓적다리뼈 관절용기위 골절 시 필수</li>
+        <li><span class="hl">피부색의 변화</span>: 출혈·물렁조직 손상 → <span class="hl">반상출혈(ecchymosis)</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- IV. 골절의 치유 -->
+<div class="section" id="s4">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num yellow">IV</span>
+    <span class="section-title">골절의 치유 (Healing Process)</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+
+    <div class="info-box">긴뼈(long bone) = 위팔뼈, 노뼈, 자뼈, 넓적다리뼈, 정강뼈, 종아리뼈 / 치유과정은 연속적·중복적으로 진행</div>
+
+    <div class="timeline" style="margin-top:16px;">
+      <div class="timeline-item">
+        <div class="timeline-label">① 염증기 (Inflammatory Phase) — 3~14일, 전체 10%</div>
+        골절 발생 직후 ~ 연골이나 뼈 형성될 때까지 / 뼈바탕질 내 세포·혈관 손상 + 골막·물렁조직 손상 → <span class="hl">혈종(hematoma)</span> 형성 → 핏덩이(blood clot) → 염증 유도체 유리 → 혈관 확장·혈장 삼출 → <span class="hl2">급성 부종</span> / 대식세포·림프구 이동 → 괴사조직 제거 → <span class="hl3">섬유모세포(fibroblast)</span> 출현 → 복원기로 이행
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">② 복원기 (Reparative Phase) — 1~10개월, 전체 40%</div>
+        혈종의 기질화(organization) / 핵심 세포: <span class="hl">중간엽세포(mesenchymal cell)</span> → 골형성세포·연골세포로 분화 / 골모세포(osteoblast) 관여 / 골절부에 <span class="hl3">애벌뼈(callus)</span> 형성 / ★이 시기의 뼈유합은 완성 단계 아님 — 재형성기에 접어들어야 정상 강도
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">③ 재형성기 (Remodeling Phase) — 수개월~수년, 전체 70%</div>
+        미숙뼈·연골 → 성숙 층판뼈로 대치 / <span class="hl2">파골세포(osteoclast)</span> 출현 → 과형성된 애벌뼈 흡수 / 힘의 방향에 따라 뼈잔기둥이 더 치밀하게 배치
+      </div>
+    </div>
+
+    <div class="subsection" style="margin-top:16px;">
+      <div class="subsection-title">해면뼈 골절의 치유과정</div>
+      <div class="subsection-body">
+        <ul class="items">
+          <li>긴뼈 골절 치유과정과 유사</li>
+          <li>혈종 형성 → 혈종 사이로 신생 혈관 들어가 골형성세포 증식</li>
+          <li>골절된 양쪽면에서 같은 양상으로 성장 → 서로 접촉 → 석회화 → 격자뼈 형성</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- V. 치유에 영향을 미치는 인자 -->
+<div class="section" id="s5">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num">V</span>
+    <span class="section-title">골절 치유의 기간에 영향을 미치는 인자</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+    <div class="grid3">
+      <ul class="items">
+        <li><span class="hl">나이</span>: 젊을수록 빠름 / 소아는 급속 치유 (간엽→골형성세포 분화 빠름)</li>
+        <li><span class="hl">호르몬</span>: 촉진(성장호르몬, 갑상선호르몬, 칼시토닌, 인슐린) / 억제(부신피질호르몬)</li>
+        <li><span class="hl2">감염</span>: 정상 조직 괴사, 종창, 혈관내 혈전 → 지연</li>
+      </ul>
+      <ul class="items">
+        <li><span class="hl">손상의 정도</span>: 경미 → 조기 유합 / 심함 → 골형성세포·혈관 증식 지연</li>
+        <li><span class="hl2">혈액질환</span>: 전신쇠약·영양불량 → 지연 / 넓적다리뼈머리·손배뼈·목말뼈 = 혈행차단 잘 됨</li>
+        <li><span class="hl2">만성 소모성 질환</span>: 당뇨병, 활동성 결핵 → 지연</li>
+      </ul>
+      <ul class="items">
+        <li><span class="hl">신경마비</span>: 생리적 전기자극 감소 → 지연 / 단, 중추신경 손상 시 근경련 → 오히려 촉진</li>
+        <li><span class="hl2">개방골절·분쇄골절</span>: 물렁조직 소실·혈행장애·혈종 → 지장</li>
+        <li><span class="hl2">뼈 괴사</span>: 혈행 차단 → 모세혈관 증식에 의해서만 유합 진행 → 지연</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin-top:12px;">
+      <span class="hl3">치유 빠른 조건</span>: 소아·젊은 연령 / 근육에 둘러싸인 부위 > 피하 부위 / 해면뼈 > 피질골 / 뼈몸통끝 > 뼈몸통 / 접촉 면적 크고 전이 적음 / 폐쇄골절 > 개방골절 / 팔골절 > 다리골절
+    </div>
+  </div>
+</div>
+
+<!-- VI. 뼈유합의 분류 -->
+<div class="section" id="s6">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num red">VI</span>
+    <span class="section-title">뼈유합의 분류</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title" style="color:var(--accent2);">부정유합 (malunion) ★잘못 붙음</div>
+        <ul class="items">
+          <li>유합은 됐으나 원래 해부학적 위치가 아닌 상태로 유합</li>
+          <li>각형성변형, 돌림변형, 뼈 길이 단축</li>
+          <li>9세 미만 각형성 → 자연 교정 가능 / 돌림변형은 자연 교정 안 됨</li>
+          <li>원인: CNS 손상 경련성 마비, 부정확한 맞춤, 고정 불충분, 심한 물렁조직 손상</li>
+          <li>골절부 재정렬 후 재교정 필요</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent4);">지연유합 (delayed union) ★혈액공급 부족</div>
+        <ul class="items">
+          <li>충분한 기간(5개월) 치료했음에도 유합이 지연</li>
+          <li>치유과정이 완전히 정지된 건 아님 → 계속 치료 시 유합 가능</li>
+          <li>원인: 전신질환, 혈액순환 장애, 고정·맞춤 불완전, 고정기간 불충분, 영양불량</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent3);">불유합 (nonunion) ★가성관절</div>
+        <ul class="items">
+          <li>뼈유합기전이 정지되어 유합 가능성이 없는 상태</li>
+          <li>9개월 이상 치료에도 뼈유합 진행 없거나 3개월간 방사선 변화 없을 때</li>
+          <li>방사선상 골절부 양쪽 끝이 둥글고 진하게 됨, 골절선 선명</li>
+          <li>호발: 정강뼈 아래 1/3, 노뼈 먼쪽, 넓적다리뼈 목, 위팔뼈 중간, 손배뼈</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VII. 합병증 -->
+<div class="section" id="s7">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num red">VII</span>
+    <span class="section-title">합병증 (Complications)</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+    <div class="grid3">
+      <ul class="items">
+        <li><span class="hl2">감염</span>: 개방성 창상 통한 직접감염이 대부분 / 성인 골수염 70%가 골절 후 발생</li>
+        <li><span class="hl2">무혈성 괴사</span>: 골절·탈구로 혈류 차단 / 대표: 넓적다리뼈 목·머리, 손배뼈 골절의 몸쪽부</li>
+        <li><span class="hl">외상성 관절염</span>: 관절 내 골절이 해부학적으로 맞춰지지 않음 → 관절연골 마모</li>
+      </ul>
+      <ul class="items">
+        <li><span class="hl2">관절경직</span>: 오랜 석고붕대 고정 → 근육·관절막 위축·섬유화 / 석고붕대 고정 원칙: 골절부 위아래 관절 포함</li>
+        <li><span class="hl2">혈관손상</span>: 큰 혈관 파열·폐쇄 / 전체 혈관 막히면 괴저 / 일부 막히면 <span class="hl2">허혈성 구축(ischemic contracture)</span></li>
+        <li><span class="hl">근육과 힘줄의 손상</span>: 콜레스골절 합병증 → 긴엄지폄근힘줄(EPL) 파열</li>
+      </ul>
+      <ul class="items">
+        <li><span class="hl2">신경손상</span>: 해당 신경 지배 부위에 감각마비·감각이상</li>
+        <li><span class="hl2">외상 후 골위축 (Sudeck's atrophy)</span>: 교감신경 흥분상태 / 방사선상 점상 골다공증(spotty osteoporosis) 특징 / 임상 3단계: 초기(따끔거림·발적) → 이영양기(차고 번질거림) → 위축기(근육·피부 위축)</li>
+        <li><span class="hl">내장기관 손상</span>: 골반·가슴 골절 시 내장기관 손상</li>
+      </ul>
+    </div>
+    <div class="warn-box">
+      <span class="hl2">★ CRPS (복합부위통증증후군)</span>: 외상 후 비정상적 통증, 감각 변화, 부기, 혈관운동 불안정성, 관절 강직성 / 팔 > 다리 (55:45) / 중년기 여성에 호발 / 치료: 조기 발견·진단 + 적극적 통증 조절 + 물리치료
+    </div>
+  </div>
+</div>
+
+<!-- VIII. 부위별 골절 -->
+<div class="section" id="s8">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num yellow">VIII</span>
+    <span class="section-title">부위별 골절 ★부위마다 다름</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+
+    <div class="subsection">
+      <div class="subsection-title">팔골절 — 위팔뼈</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <div>
+            <p class="desc"><span class="hl">위팔뼈 몸쪽골절 (proximal humerus fracture)</span></p>
+            <ul class="items">
+              <li>골다공증 있는 노인·여성에 호발 / 팔 짚고 넘어질 때</li>
+              <li>분류: <span class="hl">Neer 분류</span> (이분·삼분·사분 골절 + 골절탈구)</li>
+              <li>합병증: 팔신경얼기 손상 (60%), 혈관 손상, 골화성근염, 무혈성 괴사</li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc"><span class="hl">위팔뼈 중간골절 (humerus shaft fracture)</span></p>
+            <ul class="items">
+              <li>청장년층 / 직접·간접 외력</li>
+              <li><span class="hl2">★Holstein-lewis증후군</span>: 나선상골절 맞춤 시 <span class="hl2">노신경</span>이 골절편 사이에 끼어 마비</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">팔골절 — 팔꿈치 관절</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <div>
+            <p class="desc"><span class="hl">팔꿈치머리골절 (olecranon fracture)</span></p>
+            <ul class="items">
+              <li>합병증: <span class="hl3">골화성근염(이소성 골화증)</span> — 팔꿈치(위팔근) 호발 / 예방이 최선 / Collar and Cuff sling 사용</li>
+              <li><span class="hl2">★볼크만허혈성 구축 (Volkmann's)</span>: 아래팔부 앞쪽 구획증후군</li>
+              <li><span class="hl2">5P sign</span>: Pain, Pallor, Pulselessness, Paresthesia, Paralysis</li>
+              <li>→ 정중신경·자신경 괴사 → 내재근 마비 → <span class="hl2">갈퀴손가락 변형(claw hand)</span></li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc"><span class="hl">운반각 (carrying angle)</span></p>
+            <ul class="items">
+              <li>정상: 약 15° (남 8.9°, 여 11~12°)</li>
+              <li><span class="hl">과도한 가쪽휜팔꿈치(cubitus valgus)</span>: 15° 이상</li>
+              <li><span class="hl2">안쪽휜팔꿈치(cubitus varus)</span>: 5° 이하 = <span class="hl2">개머리판 변형(gunstock deformity)</span></li>
+              <li>팔꿈치관절 골절 합병증 중 가장 높은 빈도</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">팔골절 — 아래팔뼈·손목뼈</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <ul class="items">
+            <li><span class="hl">몬테지아골절</span>: <span class="hl3">자뼈 몸쪽골절</span> + 노뼈머리 탈구 동반 / 뼈사이신경 마비 흔함</li>
+            <li><span class="hl">갈레아찌골절</span>: <span class="hl3">노뼈 먼쪽골절</span> + 아래노자관절 탈구 동반 / = 역몬테지아 = 필요골절</li>
+            <li><span class="hl">자뼈단독골절</span>: = 야경봉골절(nightstick fracture)</li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl">콜레스골절</span>: 손바닥 짚고 넘어짐 / 노뼈 먼쪽 골절 / <span class="hl3">포크형 변형(dinner fork deformity)</span> / 골다공증 중년 여성 / 합병증: 정중신경염, 긴엄지폄근힘줄 파열</li>
+            <li><span class="hl">스미스골절</span>: 손등으로 짚고 넘어짐 / = 역콜레스골절 / <span class="hl3">정원삽 변형(garden spade deformity)</span></li>
+            <li><span class="hl">손배뼈골절</span>: 젊은 성인 남자 호발 / 허리골절이 가장 多 / <span class="hl2">무혈성 괴사 자주 발생</span> / 검사: ★타진검사(percussion test)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">팔골절 — 손골절</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <ul class="items">
+            <li><span class="hl">망치손가락골절(mallet finger)</span>: DIP관절에 강한 굽힘력 → 손가락폄근 먼쪽 부착점 단열 → 굽힘 변형 / = 야구손가락 / 심하면 <span class="hl2">백조목 변형(swan neck deformity)</span></li>
+            <li><span class="hl">복서골절(boxer fracture)</span>: 5번째 손허리뼈목골절 / = 짜움꾼골절 / 자뼈고랑부목으로 70~90° 고정</li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl">베네트골절(Bennett's)</span>: 1번째 손허리뼈 몸쪽 + 노뼈쪽 탈구 / ★2조각 / 관절내 골절</li>
+            <li><span class="hl">롤란도골절(Rolando's)</span>: 엄지손가락 손허리뼈 바닥부 분쇄골절 / ★Y가 / Y형 배치의 관절내 골절</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">몸통골절</div>
+      <div class="subsection-body">
+        <div class="grid3">
+          <div>
+            <p class="desc"><span class="hl">빗장뼈골절</span></p>
+            <ul class="items">
+              <li>소아·청소년에 자주 발생 / 가쪽 1/3과 중간 1/3 지점 사이에서 호발</li>
+              <li>치료: 팔걸이 or 팔자형 석고붕대(figure 8 cast)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc"><span class="hl">척주골절</span></p>
+            <ul class="items">
+              <li><span class="hl2">★고리뼈골절 = 제퍼슨골절(Jefferson's)</span>: C1 / 장축 방향 외력 / 골편이 바깥쪽으로 벌어짐 / ★골절 시 척수손상은 일어나지 않음</li>
+              <li><span class="hl2">★치아돌기골절 제2형</span>: 가장 흔함 / 불안정 / 불유합 32~36%</li>
+              <li><span class="hl2">★교수형골절(hangman fracture)</span>: C2 과다폄+수직압박 → 척수 절단 → 사망</li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc"><span class="hl">갈비뼈골절</span></p>
+            <ul class="items">
+              <li>주로 5~9번째에서 발생</li>
+              <li>★1~3번째: 팔신경얼기 손상 가능</li>
+              <li>★10~12번째: 간·비장·신장 열상 가능</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">다리골절 — 골반·엉덩관절</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <ul class="items">
+            <li><span class="hl">골반골절 합병증</span>: 출혈(사망의 주요 원인) / 요도손상 가장 흔함 → 협착·발기부전·요실금</li>
+            <li><span class="hl">갭핑검사(gapping test)</span>: ASIS에 대고 아래·가쪽 방향으로 힘 가함 → 통증 유발 시 골반골절 의심</li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl">넓적다리뼈목골절</span>: 노년층 / 골다공증 + 넘어질 때 / 합병증: 무혈성 괴사(15~40%), 불유합(전위성 20~30%)</li>
+            <li><span class="hl">안빌검사(Anvil test)</span>: 종아리 30° 들어올린 후 발바닥에서 축성 압박 → 엉덩관절 통증 유발 시 넓적다리뼈목골절 의심</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">다리골절 — 무릎·발목·발</div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <ul class="items">
+            <li><span class="hl">정강뼈용기골절</span>: = 범퍼골절(Bumper) = 웬더골절(Fender)</li>
+            <li><span class="hl">무릎뼈골절</span>: ★드레이어징후검사(Drayer's sign test) / 능동적 폄 가능하면 지지띠 안전 의미</li>
+            <li><span class="hl">복사골절</span>: 안쪽복사골절은 내번력 작용 시 세모인대가 당겨 발생 / 치료: 보행 석고 3~4주</li>
+            <li><span class="hl">포트골절(Pott's)</span>: 발에 내번력 → 외번(eversion) / 안쪽복사골절 + 세모인대 손상 동반 / 분류: 1도·2도·3도 벌림골절</li>
+          </ul>
+          <ul class="items">
+            <li><span class="hl">킨징후검사(Keen's sign test)</span>: 발목관절에서 가쪽 5~8cm 위에 부기·피부색 변화 관찰 → 발목관절골절 의심</li>
+            <li><span class="hl2">목말뼈골절(talus fracture)</span>: 혈액순환이 매우 취약 / Hawkins 분류 4형 / ★무혈성 괴사: 제2형 50%, 제3형 90%, 제4형 100%</li>
+            <li><span class="hl">발꿈치뼈골절(calcaneous fracture)</span>: 가장 많이 발생하는 발목뼈 골절 / ★척추골절과 동반되는 경우 있음 / 검사: ★호파검사(Hoffa's test)</li>
+            <li><span class="hl">몰톤검사(Morton's test)</span>: 발허리뼈머리 부위 쥐어짬 → 통증 시 발허리뼈머리골절 의심</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- IX. 검사 및 평가 -->
+<div class="section" id="s9">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num green">IX</span>
+    <span class="section-title">검사 및 평가 (Assessment)</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+    <div class="grid3">
+      <div class="test-card">
+        <div class="test-name">근골격계검사</div>
+        <div class="test-desc">관절운동범위검사 (수동·능동 ROM, 근길이) / 근수행력검사 (근력·지구력, MMT) / 관절통합성검사 (부수적 관절움직임, 인대안정성)</div>
+      </div>
+      <div class="test-card">
+        <div class="test-name">신경근육계검사</div>
+        <div class="test-desc">통증검사 / 말초신경통합성검사 (myotome, dermatome, reflex) / 피부검사 (부기, 발적, 온도 변화) / 균형 및 보행검사</div>
+      </div>
+      <div class="test-card">
+        <div class="test-name">★소리굽쇠검사 (tuning fork test)</div>
+        <div class="test-desc">방사선 촬영 불가능한 경우 사용 / 골절된 뼈 → 정상 뼈와 다른 약간 둔탁한 소리 / 골절 예상 부위에 진동 주면 뼈끝에서 통증 유발</div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:12px;">
+      <div class="card">
+        <div class="card-title">의학적 검사</div>
+        <ul class="items">
+          <li>병력 청취: 손상 당시 상황, 시기, 심한 정도, 과거 병력</li>
+          <li>신체검사: 통증·압통·기능장애·변형·비정상적 움직임 + 혈관·신경손상 여부</li>
+          <li>방사선촬영(X-ray): 가장 중요하고 기본적 / 앞뒤·옆쪽·대각선 촬영</li>
+          <li>CT: 골절 형태 정확히 파악 / 3D-CT: 직접 눈으로 보는 것과 같은 영상</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">부위별 특수 검사 모음</div>
+        <ul class="items">
+          <li><span class="hl">갭핑검사</span>: ASIS에 힘 가함 → 골반골절 의심</li>
+          <li><span class="hl">안빌검사</span>: 발바닥 축성 압박 → 넓적다리뼈목골절 의심</li>
+          <li><span class="hl">드레이어징후검사</span>: SLR 유사 → 무릎뼈골절 의심</li>
+          <li><span class="hl">킨징후검사</span>: 발목 가쪽 5~8cm 위 부기·압통 → 발목관절골절 의심</li>
+          <li><span class="hl">호파검사</span>: 발목관절 등쪽굽힘·발바닥굽힘 + 아킬레스힘줄 촉진 → 발꿈치뼈 찢김골절 의심</li>
+          <li><span class="hl">타진검사</span>: 반사망치로 해부학적 코담배갑 타진 → 손배뼈골절 의심</li>
+          <li><span class="hl">몰톤검사</span>: 발허리뼈머리 쥐어짬 → 발허리뼈머리골절 의심</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- X. 중재 -->
+<div class="section" id="s10">
+  <div class="section-header" onclick="toggle(this)">
+    <span class="section-num">X</span>
+    <span class="section-title">중재 (Intervention)</span>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body">
+
+    <div class="subsection">
+      <div class="subsection-title">1) 의학적 치료</div>
+      <div class="subsection-body">
+        <div class="grid3">
+          <div class="card">
+            <div class="card-title">응급 처치</div>
+            <ul class="items">
+              <li>가장 중요: <span class="hl">적절한 부목고정</span> → 추가적 물렁조직 손상 예방·통증 경감</li>
+              <li>지방색전증과 쇼크 발생 감소</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">맞춤 (Reduction)</div>
+            <ul class="items">
+              <li><span class="hl">도수 맞춤</span>: 비수술 / 골절 후 6~12시간 이내 조기에</li>
+              <li><span class="hl">견인에 의한 맞춤</span>: 뼈견인(skeletal) / 피부견인(skin) / 재전위 위험 없어지면 석고붕대로 전환</li>
+              <li><span class="hl">개방적 맞춤</span>: 도수 맞춤으로 정확한 정렬 얻기 어려울 때 수술</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">고정 (Fixation)</div>
+            <ul class="items">
+              <li><span class="hl">외적고정</span>: 석고붕대, 기능성 주형 부목, 외적고정 기구</li>
+              <li><span class="hl">내적고정</span>: 강선(wire), 핀(pin), 나사와 금속판, 골수내정(intramedullary nail)</li>
+              <li>보호: 팔걸이(arm sling) / 보행 석고붕대·목발(crutch)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2) 물리치료적 중재 — 고정 시</div>
+      <div class="subsection-body">
+        <div class="info-box">목표: 손상·초기 염증과 부기 / 점진적 근위축·구축·관절연골 퇴화 / 혈액순환 감소 / 기능적 제한 관리</div>
+        <div class="grid2" style="margin-top:12px;">
+          <div>
+            <p class="desc"><span class="hl">물리적 인자치료</span></p>
+            <ul class="items">
+              <li><span class="hl">온습포</span>: 내적고정만 있는 경우 적용 가능 / 타월 4~6겹 / 20~30분</li>
+              <li><span class="hl">적외선</span>: 내적고정만 시행한 환자 사용 가능 / ★금속이 가까운 경우 화상 주의</li>
+              <li><span class="hl">극초단파</span>: 깊은 조직 열치료 / ★피부 0.5~2cm 내 금속 삽입물 있으면 사용 금지</li>
+              <li><span class="hl">초음파</span>: 핏덩이·육아조직 형성 초기에는 사용 금지 / ★금속 내적고정물 있어도 비교적 안심 사용 가능 / 도자를 자주 움직여 열집중 방지</li>
+              <li><span class="hl">NMES</span>: 근수축 유발 / 불용 위축 방지 / 근경축·부기 감소 / 10~20분</li>
+              <li><span class="hl">TENS</span>: 통증 감소 / 관문조절설(gate theory) / 맥동 100~150pps</li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc"><span class="hl">운동치료</span></p>
+            <ul class="items">
+              <li><span class="hl3">★등척성 운동(isometric exercise)</span>: 고정기간 동안 대표적 운동 / 근길이·관절움직임 없는 상태에서 수축 / 불용 위축·근력저하 방지 / 섬유화·강직 예방 / 골절 고정부에 직접 적용 or 인접관절 간접 적용</li>
+              <li>관리계획: RICE(휴식·냉·압박·올림) / 간헐적 등척성 운동 + 인접부 능동관절운동 / 고정되지 않은 근육군 저항운동</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">3) 물리치료적 중재 — 고정 제거 후</div>
+      <div class="subsection-body">
+        <div class="info-box">목표: 운동 시 통증 / 반흔조직 유착으로 인해 ROM·관절놀이 감소 / 근력과 지구력 감소 관리</div>
+        <div class="grid2" style="margin-top:12px;">
+          <div>
+            <p class="desc">관리계획</p>
+            <ul class="items">
+              <li>환자 교육: 피해야 할 활동 + 가정 운동 프로그램</li>
+              <li>다리골절: 부분적 체중부하 / 팔골절: 비스트레스성 활동</li>
+              <li>관절가동술 (I·II등급 통증조절 / III·IV등급 ROM 증진)</li>
+              <li>스트레칭운동: ★뼈위축 있으면 재골절 위험 → 초기에 너무 강한 힘 금지</li>
+              <li>저항운동 진행 순서: 등척성 → 편심성 → 동심성 → 열린 사슬 → 닫힌 사슬</li>
+              <li>★고정기간 이후 첫 2주는 뼈의 내성이 약하므로 저항운동 조심스럽게 적용</li>
+              <li>심폐지구력: 뼈유합 완료 전까지 비스트레스성 운동 (유산소운동)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="desc">정형도수물리치료</p>
+            <ul class="items">
+              <li><span class="hl3">지속적 수동운동(CPM)</span>: 수술 직후(최소 3일 이전)부터 / 20~30° 작은 범위 시작 → 매일 10~15°씩 증가 / 운동주기 1cycle/45sec~1cycle/2min / 최소 7일 or 운동범위 개선될 때까지</li>
+              <li><span class="hl">관절가동술</span>: 골절 부위에 부하 없이 관절놀이(joint play) 회복 / 안정위치(resting position)에서 신연·미끄러짐 이용</li>
+              <li><span class="hl">물렁조직가동술</span>: 오랜 고정 → 근육 단축 → 유착 형성 → 탄력성 소실 → 통증유발점·관련통 / 혈액순환 증진·유착 제거 → 통증 감소·가동성 증진</li>
+              <li><span class="hl">수중운동</span>: 부력·정수압·점성·표면장력 이용 / 스트레칭·근력·지구력·균형·보행훈련</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+function toggle(header) {
+  const section = header.parentElement;
+  section.classList.toggle('collapsed');
+}
+</script>
+
+</body>
+</html>

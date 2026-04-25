@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>근골격계 중간고사 서머리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #1a2235;
+    --border: #2a3a55;
+    --accent1: #38bdf8;
+    --accent2: #f472b6;
+    --accent3: #a78bfa;
+    --accent4: #34d399;
+    --accent5: #fbbf24;
+    --accent6: #fb923c;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --danger: #f87171;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  /* 헤더 */
+  .hero {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0f172a 50%, #1a0a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(56,189,248,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(167,139,250,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero p { color: var(--muted); font-size: 13px; }
+
+  /* 탭 네비게이션 */
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,14,26,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 12px 14px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent1); border-bottom-color: var(--accent1); }
+
+  /* 컨텐츠 */
+  .content { padding: 20px 16px 60px; max-width: 900px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* 섹션 */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 28px 0 14px;
+    padding-left: 12px;
+    border-left: 3px solid var(--accent1);
+    color: var(--accent1);
+  }
+  .section-title:first-child { margin-top: 8px; }
+
+  /* 카드 */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent4);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-title::before {
+    content: '▸';
+    color: var(--accent4);
+    font-size: 12px;
+  }
+
+  /* 비교 테이블 */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .compare-table th {
+    background: rgba(56,189,248,0.12);
+    color: var(--accent1);
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(42,58,85,0.5);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* 뱃지 */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+  }
+  .badge-red { background: rgba(248,113,113,0.15); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+  .badge-blue { background: rgba(56,189,248,0.12); color: var(--accent1); border: 1px solid rgba(56,189,248,0.3); }
+  .badge-green { background: rgba(52,211,153,0.12); color: var(--accent4); border: 1px solid rgba(52,211,153,0.3); }
+  .badge-yellow { background: rgba(251,191,36,0.12); color: var(--accent5); border: 1px solid rgba(251,191,36,0.3); }
+  .badge-purple { background: rgba(167,139,250,0.12); color: var(--accent3); border: 1px solid rgba(167,139,250,0.3); }
+  .badge-orange { background: rgba(251,146,60,0.12); color: var(--accent6); border: 1px solid rgba(251,146,60,0.3); }
+
+  /* 리스트 */
+  .info-list { list-style: none; }
+  .info-list li {
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+    color: var(--text);
+    font-size: 13px;
+  }
+  .info-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  /* 강조 */
+  .highlight { color: var(--accent2); font-weight: 700; }
+  .highlight-b { color: var(--accent1); font-weight: 700; }
+  .highlight-g { color: var(--accent4); font-weight: 700; }
+  .highlight-y { color: var(--accent5); font-weight: 700; }
+
+  /* 2열 그리드 */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* 3열 그리드 */
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 700px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 450px) { .grid-3 { grid-template-columns: 1fr; } }
+
+  /* 미니 카드 */
+  .mini-card {
+    background: rgba(26,34,53,0.8);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .mini-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent3);
+    margin-bottom: 6px;
+  }
+
+  /* 박스 (경고/팁) */
+  .tip-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-left: 3px solid var(--accent5);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: var(--accent5);
+  }
+  .info-box {
+    background: rgba(56,189,248,0.06);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-left: 3px solid var(--accent1);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: var(--accent1);
+  }
+  .danger-box {
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.25);
+    border-left: 3px solid var(--danger);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: var(--danger);
+  }
+
+  /* 검사 카드 */
+  .test-card {
+    background: rgba(26,34,53,0.6);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .test-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent1);
+    margin-bottom: 4px;
+  }
+  .test-detail { font-size: 12px; color: var(--muted); }
+  .test-positive { color: var(--accent2); font-weight: 600; }
+
+  /* 단계 */
+  .step-list { list-style: none; counter-reset: step; }
+  .step-list li {
+    counter-increment: step;
+    padding: 6px 0 6px 28px;
+    position: relative;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(42,58,85,0.3);
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: var(--accent3);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 8px;
+  }
+
+  /* 콤팩트 텍스트 */
+  .compact { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* 스크롤 맨위 버튼 */
+  .scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--accent1);
+    color: var(--bg);
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(56,189,248,0.3);
+    transition: transform 0.2s;
+  }
+  .scroll-top:hover { transform: scale(1.1); }
+
+  /* 진행단계 박스 */
+  .phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .phase-box {
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .phase-acute { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); }
+  .phase-chronic { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25); }
+  .phase-title { font-weight: 700; margin-bottom: 5px; }
+  .phase-acute .phase-title { color: var(--danger); }
+  .phase-chronic .phase-title { color: var(--accent4); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🦴 근골격계 중간고사 서머리</h1>
+  <p>물리치료사 국가고시 대비 · 근골격계 질환 & 중재 핵심 정리</p>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('fracture')">골절</button>
+  <button class="tab-btn" onclick="showTab('dislocation')">탈구</button>
+  <button class="tab-btn" onclick="showTab('deformity')">기형</button>
+  <button class="tab-btn" onclick="showTab('joint')">관절질환</button>
+  <button class="tab-btn" onclick="showTab('soft')">물렁조직</button>
+  <button class="tab-btn" onclick="showTab('spine')">척추질환</button>
+  <button class="tab-btn" onclick="showTab('muscle')">근육계질환</button>
+  <button class="tab-btn" onclick="showTab('bone')">뼈대계질환</button>
+  <button class="tab-btn" onclick="showTab('amputation')">절단</button>
+  <button class="tab-btn" onclick="showTab('intervention')">중재</button>
+  <button class="tab-btn" onclick="showTab('exercise')">운동치료</button>
+</nav>
+
+<div class="content">
+
+  <!-- ===== 골절 ===== -->
+  <div id="fracture" class="tab-panel active">
+    <div class="section-title">골절의 분류</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">완전골절</div>
+        <ul class="info-list">
+          <li><span class="highlight">감입</span>: 한쪽 끝이 다른 뼈 속에 박힘</li>
+          <li><span class="highlight">합병</span>: 주위 중요조직 손상 동반</li>
+          <li><span class="highlight">압박</span>: 뼈몸통끝 속으로 감입</li>
+          <li><span class="highlight">개방</span>: 골편이 피부 밖으로 노출</li>
+          <li><span class="highlight">단순</span>: 골절편 3개 미만</li>
+          <li><span class="highlight">분쇄</span>: 골절편 3개 이상</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">불완전골절</div>
+        <ul class="info-list">
+          <li><span class="highlight-g">생목</span>: <span class="highlight-y">소아</span> 호발, 뼈겉질 일부 떨어짐 <span class="badge badge-yellow">48회·51회</span></li>
+          <li><span class="highlight-g">균열</span>: 전위 없이 금이 간 상태</li>
+          <li><span class="highlight-g">관통</span>: 총상 등 작은 면적에 큰 힘</li>
+          <li><span class="highlight-g">함몰</span>: 머리뼈 호발, 접시 모양</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title">골절 치유 3단계</div>
+    <div class="grid-3">
+      <div class="mini-card">
+        <div class="mini-card-title">① 염증기 (10%)</div>
+        <p class="compact">수일~수주 / 혈종→괴사조직→큰포식세포 제거→새기질 형성</p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-title">② 복원기 (40%)</div>
+        <p class="compact">~3개월 / 거짓뼈→신생골→연골속뼈→<span style="color:var(--accent4)">임상적 융합</span></p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-title">③ 재형성기 (70%)</div>
+        <p class="compact">미성숙뼈→성숙층판뼈 / 뼈파괴세포 흡수→<span style="color:var(--accent4)">방사선적 융합</span></p>
+      </div>
+    </div>
+
+    <div class="section-title">뼈유합 분류 (중요!)</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title" style="color:var(--danger)">부정유합</div>
+        <p class="compact">해부학적 위치 아닌 상태로 유합<br>원인: CNS손상 강직마비, 부정확한 정복, 불충분한 고정</p>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent5)">지연유합</div>
+        <p class="compact">충분한 치료에도 불구 뼈융합 미완성<br>원인: 빈혈, 골수염, 혈액순환 장애, 불완전 고정</p>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent2)">불유합</div>
+        <p class="compact">유합 기전 정지, 가능성 없음<br>원인: 심한 연부조직 손상, 감염, 관절내 골절</p>
+      </div>
+    </div>
+
+    <div class="section-title">팔 골절 핵심</div>
+    <div class="card">
+      <div class="card-title">팔꿉관절 골절 합병증</div>
+      <div class="grid-2">
+        <div>
+          <p class="compact" style="margin-bottom:6px"><span class="highlight">뼈되기근염 (화골성근염)</span></p>
+          <ul class="info-list">
+            <li>근조직에 뼈성분 침착</li>
+            <li>뼈막 가까이서 호발</li>
+          </ul>
+        </div>
+        <div>
+          <p class="compact" style="margin-bottom:6px"><span class="highlight">볼크만허혈성구축</span> <span class="badge badge-red">48회·49회</span></p>
+          <ul class="info-list">
+            <li>팔꿉관절 혈관 과도 압박</li>
+            <li>깊은손가락굽힘근+긴엄지굽힘근 구축</li>
+            <li>아래팔 앞쪽 구획 증상</li>
+            <li><span class="highlight-y">5P sign</span>: 통증·창백·마비·무맥·이상감각</li>
+            <li>갈퀴손가락 변형 발생</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">아래팔 골절 (중요)</div>
+      <table class="compare-table">
+        <tr>
+          <th>골절명</th>
+          <th>특징</th>
+          <th>발생기전</th>
+        </tr>
+        <tr>
+          <td><span class="highlight">몬테지아</span> <span class="badge badge-blue">47회</span></td>
+          <td>자뼈 몸쪽골절 + 노뼈머리 탈구<br>뼈사이신경 손상</td>
+          <td>아래팔 과다엎침/과다폄</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">갈레아찌</span> <span class="badge badge-blue">49회</span></td>
+          <td>노뼈 먼쪽골절 + 아래노자관절 탈구<br>필요골절이라 불림</td>
+          <td>과도한 엎침+땅 짚고 넘어짐</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">손목 골절 (중요)</div>
+      <table class="compare-table">
+        <tr><th>골절명</th><th>기전</th><th>특징</th></tr>
+        <tr>
+          <td><span class="highlight-g">콜리스</span> <span class="badge badge-blue">46회</span></td>
+          <td>손바닥 짚고 넘어짐</td>
+          <td>노뼈 먼쪽, 먼쪽면 뒤쪽 전위<br><span class="highlight-y">포크형 변형</span>, 정중신경 손상, Sudeck위축</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">스미스</span> <span class="badge badge-blue">48회</span></td>
+          <td>손등 짚고 넘어짐</td>
+          <td>노뼈 먼쪽, 골절면 손바닥쪽 전위<br><span class="highlight-y">정원삽 변형</span></td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">손배뼈</span></td>
+          <td>손목 90°↑ 폄+손바닥 짚음</td>
+          <td>해부학적 코담배갑 통증, 무혈성괴사</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">베넷</span> <span class="badge badge-blue">50회</span></td>
+          <td>엄지손가락 지지 중</td>
+          <td>엄지 손허리뼈 몸쪽 관절내 골절+탈구<br>긴엄지벌림근에 의해 노쪽 탈구</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-title">다리 골절 핵심</div>
+    <div class="card">
+      <div class="card-title">발목 골절</div>
+      <table class="compare-table">
+        <tr><th>골절명</th><th>특징</th></tr>
+        <tr><td><span class="highlight">뒤퓌트랑</span></td><td>높은 곳에서 뛰어내림 / 먼쪽정강종아리인대+종아리뼈골절+목말뼈 위쪽탈구 / 발활 무너짐</td></tr>
+        <tr><td><span class="highlight">포트</span></td><td>발에 안쪽번짐력 → 가쪽번짐 / 목말뼈가쪽아탈구+세모인대파열+종아리뼈골절</td></tr>
+        <tr><td><span class="highlight">발꿈치뼈</span></td><td>발목뼈 골절 중 가장 많음 / 호파검사: 찢김골절 확인</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 탈구 ===== -->
+  <div id="dislocation" class="tab-panel">
+    <div class="section-title">탈구의 정의</div>
+    <div class="grid-2">
+      <div class="mini-card">
+        <div class="mini-card-title">탈구</div>
+        <p class="compact">관절면 접촉이 <span class="highlight">완전히 소실</span></p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-title">아탈구</div>
+        <p class="compact">관절면이 <span class="highlight-g">부분적으로</span> 분리 (일부 접촉)</p>
+      </div>
+    </div>
+
+    <div class="section-title">선천성 엉덩관절 탈구 (CDH) <span class="badge badge-blue">48회</span></div>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <p class="compact" style="margin-bottom:8px"><span class="highlight-y">발생빈도</span>: 여 > 남, 편측 > 양측, 좌 > 우</p>
+          <ul class="info-list">
+            <li>엉덩관절 벌림 제한</li>
+            <li>안쪽 넙다리 피부주름 비대칭</li>
+            <li>편측: 절뚝보행, 척추옆굽음증</li>
+            <li>양측: 오리걸음, 과도한앞굽음증</li>
+          </ul>
+        </div>
+        <div>
+          <div class="test-card">
+            <div class="test-name">바로우 검사</div>
+            <p class="test-detail">6개월↑ 유아 / 뒤→앞 밀면서 벌림<br><span class="test-positive">양성: 맥박 감소/소실</span></p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">오토라니 징후</div>
+            <p class="test-detail">출생 후 몇 주 / 견인+가쪽돌림<br><span class="test-positive">양성: 염발음+반사</span></p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">텔레스코핑 징후</div>
+            <p class="test-detail">엉덩관절 위-아래 밀었다 당기기 (피스톤 현상)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">어깨관절 탈구</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>방향</th><th>특징</th><th>합병증</th></tr>
+        <tr>
+          <td><span class="highlight-g">앞쪽탈구</span><br><span class="badge badge-blue">50회</span></td>
+          <td>가장 흔함 / 간접외력<br>부리돌기밑 탈구 = 가장 흔한 형태<br>위팔뼈머리 앞·아래 이동+가쪽돌림<br>돌출된 어깨뼈봉우리</td>
+          <td>겨드랑신경마비<br>반가르트병변 (관절테 앞·아래)<br>슬랩병변 (관절테 위 앞·뒤)<br>힐-세치병변 (위팔뼈머리 뒤안쪽 결손)</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">뒤쪽탈구</span></td>
+          <td>전체 2% / 굽힘-모음-안쪽돌림 힘</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><span class="highlight">아래쪽탈구</span></td>
+          <td><span class="highlight-y">가장 많이 발생</span> / 노인, 과도한 벌림</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-title">기타 탈구</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">팔꿉관절 탈구</div>
+        <ul class="info-list">
+          <li>위팔자관절: 10대 / 팔 편 상태 넘어짐</li>
+          <li>노뼈와 자뼈 뒤쪽 또는 뒤가쪽 전위</li>
+          <li>합병증: 볼크만허혈성구축, 화골성근염</li>
+          <li style="margin-top:6px"><span class="highlight-y">노뼈머리 아탈구</span>: 5세 이하</li>
+          <li>당겨진팔꿈치증후군</li>
+          <li>아래팔엎침+팔꿉폄상태서 당길 때</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">엉덩관절 뒤쪽탈구</div>
+        <ul class="info-list">
+          <li>엉덩관절 굽힘-모음+무릎굽힘 상태 충격</li>
+          <li>THA 환자에게 多 발생</li>
+          <li>트렌델렌버그 징후 (중간볼기근 문제)</li>
+          <li style="margin-top:6px"><span class="highlight-y">무릎뼈 가쪽탈구</span></li>
+          <li>Q각 증가, 넙다리가쪽근육 뻣뻣함</li>
+          <li>계단 오를 때 무릎 앞쪽 통증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 기형 ===== -->
+  <div id="deformity" class="tab-panel">
+    <div class="section-title">손의 변형과 기형</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>변형명</th><th>원인</th><th>특징</th></tr>
+        <tr>
+          <td><span class="highlight">망치손가락</span></td>
+          <td>DIP 폄근 힘줄파열</td>
+          <td>MCP·PIP 폄 / DIP 굽힘</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">백조목 기형</span></td>
+          <td>RA, 내재근 구축</td>
+          <td><span class="highlight-y">PIP 폄 + DIP 굽힘</span></td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">단추구멍 변형</span> <span class="badge badge-blue">50회</span></td>
+          <td>RA, 중심힘줄 파열</td>
+          <td>MCP·DIP 폄 / <span class="highlight-y">PIP 굽힘</span></td>
+        </tr>
+        <tr>
+          <td><span class="highlight">갈퀴손</span> <span class="badge badge-blue">50회</span></td>
+          <td>정중+자신경 마비</td>
+          <td>MCP 과다폄, PIP·DIP 굽힘, 벌레근 약화</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">원숭이손</span></td>
+          <td>정중신경 마비</td>
+          <td>엄지두덩 위축, 맞섬기능 소실</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">비숍손</span> <span class="badge badge-blue">49회</span></td>
+          <td>자신경 마비</td>
+          <td>4,5번 손가락 MCP 폄, IP 굽힘</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">손목처짐</span></td>
+          <td>노신경 마비</td>
+          <td>손목관절 폄 불가</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-y">헤베르덴</span></td>
+          <td>OA</td>
+          <td><span class="highlight-y">DIP</span> 결절</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-y">보차드</span></td>
+          <td>OA</td>
+          <td><span class="highlight-y">PIP</span> 결절</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-title">다리 기형</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>기형</th><th>각도</th><th>증상</th><th>중재</th></tr>
+        <tr>
+          <td><span class="highlight-g">밖굽이 엉덩관절</span><br>coxa valga</td>
+          <td>>125°</td>
+          <td>다리 길어짐, 모음근 약화, 벌림근 단축</td>
+          <td>ROM: 모음↑ / 근력: 모음근 / 뻗침: 벌림근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">안굽이 엉덩관절</span><br>coxa vara <span class="badge badge-blue">46·50회</span></td>
+          <td>&lt;125°</td>
+          <td>다리 짧아짐, 벌림근 약화, 모음근 단축</td>
+          <td>ROM: 벌림↑ / 근력: 벌림근 / 뻗침: 모음근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">밖굽이 무릎</span><br>X자 (knock knee)</td>
+          <td>Q각↑</td>
+          <td>안쪽곁인대 신장/가쪽 단축<br>안굽이 엉덩관절, 편평발 동반 가능</td>
+          <td>강화: 안쪽넙다리근<br>뻗침: 가쪽넙다리근+엉덩정강띠</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">안굽이 무릎</span><br>O자 (bow leg)</td>
+          <td>Q각↓</td>
+          <td>가쪽곁인대 신장/안쪽 단축</td>
+          <td>강화: 가쪽넙다리근<br>뻗침: 안쪽넙다리근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">편평발</span> <span class="badge badge-blue">49회</span></td>
+          <td>-</td>
+          <td>안쪽세로활 감소, 용수철인대 늘어남</td>
+          <td>근력: 앞정강근, 뒤정강근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">엄지발가락가쪽휨</span> <span class="badge badge-blue">50회</span></td>
+          <td>-</td>
+          <td>여성 호발, 두번째 발가락 망치변형</td>
+          <td>근력: 엄지모음근</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="tip-box">
+      💡 <strong>선천성 안쪽들린휜발증</strong>: 보조기 = 데니스브라운 스프린트 / 젖힌무릎 = 스웨덴무릎보조기
+    </div>
+  </div>
+
+  <!-- ===== 관절질환 ===== -->
+  <div id="joint" class="tab-panel">
+    <div class="section-title">OA vs RA 비교 (초중요!) <span class="badge badge-red">시험 단골</span></div>
+    <div class="card">
+      <table class="compare-table">
+        <tr>
+          <th>항목</th>
+          <th style="color:var(--accent4)">뼈관절염 (OA)</th>
+          <th style="color:var(--accent2)">류마티스관절염 (RA)</th>
+        </tr>
+        <tr><td>초기 침범</td><td>관절연골</td><td>윤활막</td></tr>
+        <tr><td>초기 관절</td><td>DIP, CMC</td><td>MCP, PIP</td></tr>
+        <tr><td>발병연령</td><td>주로 중년 이후</td><td>모든 연령 (30~50대)</td></tr>
+        <tr><td>침범관절</td><td>체중부하·큰관절 비대칭</td><td>작은관절 <span class="highlight-y">대칭적</span></td></tr>
+        <tr><td>무릎변형</td><td><span class="highlight-g">안굽이무릎</span></td><td><span class="highlight-g">밖굽이무릎</span></td></tr>
+        <tr><td>강직</td><td>오후강직 (활동 후 악화)</td><td><span class="highlight-y">아침강직</span> (휴식 후 악화)</td></tr>
+        <tr><td>결절</td><td>헤베르덴·보차드 결절</td><td>없음</td></tr>
+        <tr><td>RF</td><td>음성</td><td><span class="highlight-y">양성</span></td></tr>
+        <tr><td>ESR</td><td>정상</td><td><span class="highlight-y">증가</span></td></tr>
+        <tr><td>CRP</td><td>정상</td><td><span class="highlight-y">증가</span></td></tr>
+        <tr><td>파누스</td><td>없음</td><td><span class="highlight-y">형성</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">RA 관절변형</div>
+      <ul class="info-list">
+        <li>손가락: 백조목기형(PIP 과다폄, DIP 굽힘), 단추구멍변형(PIP 굽힘, DIP 과다폄)</li>
+        <li>엄지손가락: Z 변형 → 자쪽곁인대 파열</li>
+        <li>손목관절: <span class="highlight-y">자쪽치우침</span></li>
+        <li>무릎관절: 밖굽이무릎</li>
+      </ul>
+    </div>
+
+    <div class="section-title">통풍성 관절염 <span class="badge badge-blue">50회</span></div>
+    <div class="mini-card">
+      <p class="compact"><span class="highlight-y">푸린(purine) 대사장애</span> → 혈중 요산↑ → 요산염 결정이 관절 침착 → 발작성 통증<br>
+      원발성: 가족력 / 속발성: 항암치료, 신장질환, 비만 등<br>
+      30~50대 남성 호발 / 주로 <span class="highlight">엄지발가락</span>에 증상</p>
+    </div>
+  </div>
+
+  <!-- ===== 물렁조직 ===== -->
+  <div id="soft" class="tab-panel">
+    <div class="section-title">팔 병변</div>
+    <div class="card">
+      <div class="card-title">가슴문증후군 (TOS) <span class="badge badge-blue">49회</span></div>
+      <div class="grid-2">
+        <div>
+          <p class="compact" style="margin-bottom:6px"><strong>분류</strong></p>
+          <ul class="info-list">
+            <li>목갈비뼈증후군: 7번 목뼈 가로돌기 이상</li>
+            <li>앞목갈비근증후군: 앞+중간목갈비근 비후</li>
+            <li>갈비빗장증후군: 삼각공동 협소</li>
+            <li>과벌림증후군: 팔 과벌림, 작은가슴근 긴장</li>
+          </ul>
+        </div>
+        <div>
+          <div class="test-card">
+            <div class="test-name">에드손 검사</div>
+            <p class="test-detail">앉은자세, 어깨45°벌림, 팔꿉폄<br>동작: 머리 <span class="highlight-g">동측 돌림</span><br><span class="test-positive">양성: 맥박 감소/소실</span></p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">알렌 검사</div>
+            <p class="test-detail">어깨90°벌림·가쪽돌림, 팔꿉90°굽힘<br>동작: 머리 <span class="highlight-g">반대쪽 돌림</span><br><span class="test-positive">양성: 맥박 감소/소실</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">굳은어깨 (frozen shoulder) — 유착성관절주머니염</div>
+      <div class="grid-3">
+        <div class="mini-card">
+          <div class="mini-card-title">1단계 (결빙기)</div>
+          <p class="compact">특별한 외상 없이 방사통<br>야간통 심함 / 10~36주</p>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-title">2단계 (동결기)</div>
+          <p class="compact">강직 진행, 휴식 시 통증↓<br>모든 운동 제한 / 16~48주</p>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-title">3단계 (해빙기)</div>
+          <p class="compact">운동범위 점차 회복<br>물리치료 시행 / 12~24주</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">어깨관절 충돌증후군</div>
+      <p class="compact" style="margin-bottom:8px">위팔뼈-봉우리 사이 돌림근띠+봉우리+윤활주머니 충돌 반복</p>
+      <div class="grid-2">
+        <div>
+          <div class="test-card">
+            <div class="test-name">니어 검사</div>
+            <p class="test-detail">어깨 완전안쪽돌림 → 팔 완전올림<br>큰결절을 봉우리에 충돌</p>
+          </div>
+        </div>
+        <div>
+          <div class="test-card">
+            <div class="test-name">호킨스-케네디 검사</div>
+            <p class="test-detail">어깨90°굽힘, 팔꿉90°굽힘 → 강하게 안쪽돌림<br>가시위근을 봉우리아래에 충돌</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">가쪽위관절융기염 (테니스엘보) <span class="badge badge-blue">46회</span></div>
+        <p class="compact">짧은노쪽손목폄근 호발</p>
+        <div class="test-card" style="margin-top:8px">
+          <div class="test-name">코젠 검사</div>
+          <p class="test-detail">손목 굽힘방향 힘 vs 환자 폄방향 힘<br><span class="test-positive">양성: 가쪽위관절융기 통증</span></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">안쪽위관절융기염 (골퍼엘보) <span class="badge badge-blue">48회</span></div>
+        <p class="compact">원엎침근, 노쪽손목굽힘근 힘줄 염증</p>
+        <div class="test-card" style="margin-top:8px">
+          <div class="test-name">역코젠 검사</div>
+          <p class="test-detail">팔꿉120°굽힘, 아래팔뒤침, 손목폄<br>→ 손목 굽힘-자쪽치우침 시 저항<br><span class="test-positive">양성: 안쪽위관절융기 통증</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">손목굴증후군 <span class="badge badge-blue">46회</span></div>
+        <ul class="info-list">
+          <li>정중신경 압박</li>
+          <li>1~4번째 손가락 손바닥쪽 통증·감각저하</li>
+          <li>엄지두덩 위축</li>
+          <li>팔렌검사: 양손목 최대굽힘 1분</li>
+          <li>티넬징후: 손목굴 두드림</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">협착성힘줄윤활막염 (드퀘르뱅) <span class="badge badge-blue">49회</span></div>
+        <ul class="info-list">
+          <li>긴엄지벌림근, 짧은엄지폄근 염증</li>
+          <li>해부학적 코담배갑 부위 통증</li>
+          <li>핀켈스타인 검사: 엄지 넣고 주먹→자쪽치우침</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title">다리 병변</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">십자인대 손상 <span class="badge badge-blue">51회</span></div>
+        <table class="compare-table">
+          <tr><th></th><th>ACL</th><th>PCL</th></tr>
+          <tr><td>저항</td><td>무릎폄, 정강뼈 앞쪽 병진</td><td>무릎굽힘, 정강뼈 뒤쪽 병진</td></tr>
+          <tr><td>손상기전</td><td>넙다리뼈 안쪽돌림+무릎폄+밖굽이력</td><td>무릎완전굽힘+정강뼈 강타</td></tr>
+          <tr><td>검사</td><td>라크만(30°굽힘), 앞끌림징후</td><td>뒤끌림징후, 중력끌림검사</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">반달연골 손상</div>
+        <table class="compare-table">
+          <tr><th></th><th>안쪽반달</th><th>가쪽반달</th></tr>
+          <tr><td>형태</td><td>C형 (크고 넓음)</td><td>O형 (작고 두꺼움)</td></tr>
+          <tr><td>손상 多</td><td>✓ (곁인대 부착, 운동성↓)</td><td></td></tr>
+        </table>
+        <div class="tip-box" style="margin-top:8px">
+          <strong>불행삼주징</strong>: ACL + 안쪽곁인대 + 안쪽반달연골 동시 파열
+        </div>
+        <div class="test-card" style="margin-top:6px">
+          <div class="test-name">맥머레이 / 아플레이 압박검사</div>
+          <p class="test-detail">안쪽: 가쪽돌림+밖굽이 / 가쪽: 안쪽돌림+안굽이</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 척추질환 ===== -->
+  <div id="spine" class="tab-panel">
+    <div class="section-title">척추사이원반 구조</div>
+    <div class="grid-2">
+      <div class="mini-card">
+        <div class="mini-card-title">속질핵 (nucleus pulposus)</div>
+        <p class="compact">안쪽 위치 / 겔 형태 / 70~90% 물 / 척추굽힘 시 <span class="highlight-y">뒤쪽 이동</span></p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-title">섬유테 (annulus fibrosus)</div>
+        <p class="compact">바깥쪽 / 15~20개 동심성 아교섬유 / 약 65도 교차 배열</p>
+      </div>
+    </div>
+
+    <div class="section-title">허리 척추원반탈출증</div>
+    <div class="card">
+      <div class="card-title">분류 (4단계)</div>
+      <table class="compare-table">
+        <tr><th>단계</th><th>별칭</th><th>특징</th></tr>
+        <tr><td>후방돌출</td><td>융기(bulge)</td><td>속질핵이 섬유테 살짝 밀음 / 허리통증+간헐적 다리 당김</td></tr>
+        <tr><td>내포성</td><td>돌출(protrusion)</td><td>섬유테 밀어냄 / 허리 > 다리 불편</td></tr>
+        <tr><td>외포성</td><td>탈출(extrusion)</td><td>섬유테 뚫고 나옴 / <span class="highlight-y">다리 > 허리</span> 불편</td></tr>
+        <tr><td>조각성</td><td>분리(sequestration)</td><td>원반 일부 이탈, 경질막 공간 유리체</td></tr>
+      </table>
+      <div class="tip-box" style="margin-top:8px">
+        💡 호발부위: <strong>L4~L5, L5~S1</strong> / 20~40세 활동성 큰 사람
+      </div>
+    </div>
+
+    <div class="section-title">중요 척추질환</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">강직성 척추염 <span class="badge badge-blue">48회</span></div>
+        <ul class="info-list">
+          <li><span class="highlight-y">대나무 척추</span> (bamboo spine)</li>
+          <li>통증·강직이 <span class="highlight">아침에 심함</span></li>
+          <li>아래쪽→위쪽 척추로 진행</li>
+          <li>등뼈의 뒤굽음증+뒤세로인대 석회화</li>
+          <li>HLA-B27 항원검사 양성</li>
+          <li>쇼베르 검사: 허리뼈 운동범위 감소</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">척추전방전위증 <span class="badge badge-blue">46·50회</span></div>
+        <ul class="info-list">
+          <li>위 척추가 아래 척추에 대해 앞으로 미끄러짐</li>
+          <li>L5~S1, L4~L5 순 호발</li>
+          <li>가시돌기 징후</li>
+          <li>메이어딩 등급: 1~4등급 (25%씩 전위)</li>
+          <li>뻗은다리올림검사(SLR)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">척추관협착증 vs 허리척추원반탈출증 비교</div>
+      <table class="compare-table">
+        <tr><th></th><th>척추관협착증</th><th>허리추간판탈출증</th></tr>
+        <tr><td>폄시</td><td><span class="highlight-y">통증 증가</span></td><td>다양</td></tr>
+        <tr><td>굽힘시</td><td><span class="highlight-y">통증 감소</span></td><td>악화</td></tr>
+        <tr><td>보행</td><td>간헐적 파행</td><td>다양</td></tr>
+      </table>
+    </div>
+
+    <div class="section-title">척추옆굽음증</div>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <p class="compact" style="margin-bottom:6px"><span class="highlight-y">발생빈도</span>: 성장기, 14세 전후, 여자 3배</p>
+          <div class="test-card">
+            <div class="test-name">아담 앞굽음 검사 <span class="badge badge-blue">47회</span></div>
+            <p class="test-detail">선 자세 → 팔 내려 발 만지기<br><span class="test-positive">양성: 한쪽 갈비 봉우리 높이↑</span></p>
+          </div>
+        </div>
+        <div>
+          <table class="compare-table">
+            <tr><th>분류</th><th>중재</th></tr>
+            <tr><td>비구조적</td><td>볼록면: 근력강화<br>오목면: 뻗침운동</td></tr>
+            <tr><td>구조적 30°↑</td><td>밀워키 보조기 (T7 이상)</td></tr>
+            <tr><td>구조적 30°↓</td><td>크랩(Klapp) 운동</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 근육계 ===== -->
+  <div id="muscle" class="tab-panel">
+    <div class="section-title">진행성 근이영양증 비교 <span class="badge badge-red">초중요</span></div>
+    <div class="card">
+      <table class="compare-table">
+        <tr>
+          <th>항목</th>
+          <th style="color:var(--accent2)">뒤시엔느 (DMD)</th>
+          <th style="color:var(--accent4)">팔다리이음형</th>
+          <th style="color:var(--accent3)">얼굴어깨위팔형 (FSH)</th>
+        </tr>
+        <tr><td>발병연령</td><td>어린이</td><td>초기·후기</td><td>사춘기</td></tr>
+        <tr><td>성별</td><td>남자 (<span class="highlight-y">반성질환</span>)</td><td>남·여</td><td>남·여</td></tr>
+        <tr><td>유전</td><td>반성소질열성</td><td>열성소질</td><td>우성소질</td></tr>
+        <tr><td>가성비대</td><td><span class="highlight-y">흔함</span> (장딴지)</td><td>흔하지않음</td><td>희귀</td></tr>
+        <tr><td>초기 이환</td><td>골반부위+넙다리몸쪽부</td><td>골반부위, 어깨부위</td><td>어깨부위</td></tr>
+        <tr><td>안면 이환</td><td>희귀함</td><td>거의 없음</td><td><span class="highlight-y">항상 있음</span></td></tr>
+        <tr><td>진행</td><td>급속</td><td>중간</td><td>느림</td></tr>
+        <tr><td>예후</td><td>불량</td><td>중간</td><td><span class="highlight-g">가장 양호</span></td></tr>
+        <tr><td>기형</td><td>흔함</td><td>가끔있음</td><td>귀함</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">뒤시엔느 근이영양증 특징 <span class="badge badge-blue">51회</span></div>
+      <div class="grid-2">
+        <ul class="info-list">
+          <li>근약화: <span class="highlight-y">몸통 → 먼쪽</span> 진행</li>
+          <li>큰볼기근 약해짐 → 척주앞굽음증↑</li>
+          <li>장딴지근 <span class="highlight-y">가성비대</span></li>
+          <li>가우어스 징후</li>
+        </ul>
+        <ul class="info-list">
+          <li>첨족보행, 외반슬, 오리걸음</li>
+          <li>선천성 첨내반족</li>
+          <li>진단 어려움, 진행 빠름</li>
+        </ul>
+      </div>
+      <div class="tip-box" style="margin-top:8px">
+        <strong>가우어스 징후</strong>: 땅→무릎→넙다리부로 손을 짚으며 일어남
+      </div>
+    </div>
+
+    <div class="section-title">기타 근육계 질환</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">중증성 근무력증 (MG) <span class="badge badge-blue">46회</span></div>
+        <ul class="info-list">
+          <li>자가면역 / 아세틸콜린 수용체↓</li>
+          <li>여성 2배, 30대 호발</li>
+          <li>반복 운동 → 쉽게 피로 → 휴식 시 회복</li>
+          <li>얼굴근육 침범</li>
+          <li>텐시론검사로 빠른 진단</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">선천성 근긴장증 (Myotonia Congenita) <span class="badge badge-blue">47회</span></div>
+        <ul class="info-list">
+          <li>수의근 경련성↑</li>
+          <li>수의적 근수축 후 <span class="highlight-y">이완 어려움</span></li>
+          <li>톰슨병·베커병으로 분류</li>
+          <li>호흡 등 생명기능은 잘 침범 안됨</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 뼈대계 ===== -->
+  <div id="bone" class="tab-panel">
+    <div class="section-title">뼈대계 질환</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">뼈엉성증 (골다공증)</div>
+        <table class="compare-table">
+          <tr><th>분류</th><th>특징</th></tr>
+          <tr><td>제1형</td><td>55~65세 여성 / 폐경후 / 기둥뼈↓</td></tr>
+          <tr><td>제2형</td><td>70세↑ 노인성 / 겉질뼈+기둥뼈 감소</td></tr>
+        </table>
+        <div class="tip-box" style="margin-top:8px">
+          <strong>T-score -2.5 이하</strong> → 뼈엉성증 진단<br>
+          <strong>중재</strong>: 체중부하운동 <span class="badge badge-blue">47회</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">변형성 뼈염 (파제트병) <span class="badge badge-blue">49회</span></div>
+        <ul class="info-list">
+          <li>원인 불명의 대사성 만성 뼈 질환</li>
+          <li>다리뼈: 활처럼 휘는 변형(bowing)</li>
+          <li>머리뼈: 시각·청각·후각 소실</li>
+          <li>밤에 심한 통증, 이마 돌출</li>
+          <li>방사선: Cotton wool 소견</li>
+          <li>알카리성 인산분해효소검사</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">뼈속질염 (골수염) <span class="badge badge-blue">51회</span></div>
+      <div class="grid-2">
+        <div>
+          <p class="compact" style="margin-bottom:6px"><span class="highlight-y">성장기 남아</span> 호발 혈행성 감염질환</p>
+          <table class="compare-table">
+            <tr><th>분류</th><th>특징</th></tr>
+            <tr><td>급성</td><td>2주 이내, 소아, 통증 심함</td></tr>
+            <tr><td>아급성</td><td>1~2개월 이내, 무증상</td></tr>
+            <tr><td>만성</td><td>2개월↑, 방사선상 일차부골</td></tr>
+          </table>
+        </div>
+        <div>
+          <p class="compact" style="margin-bottom:6px"><strong>호발부위</strong></p>
+          <ul class="info-list">
+            <li>정강뼈 위끝</li>
+            <li>넙다리뼈 아래끝</li>
+            <li>위팔뼈 위끝</li>
+          </ul>
+          <p class="compact" style="margin-top:6px"><strong>합병증</strong></p>
+          <ul class="info-list">
+            <li>병적 골절</li>
+            <li>장기 전이</li>
+            <li>양측 팔다리 길이 차이</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 절단 ===== -->
+  <div id="amputation" class="tab-panel">
+    <div class="section-title">절단 부위별 구축 방향과 운동</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr>
+          <th>절단 부위</th>
+          <th style="color:var(--danger)">구축 방향</th>
+          <th style="color:var(--accent4)">강화 근육</th>
+          <th style="color:var(--accent1)">뻗침 근육</th>
+        </tr>
+        <tr>
+          <td><span class="highlight">넙다리뼈 절단</span> <span class="badge badge-blue">48회</span></td>
+          <td>엉덩관절 굽힘-벌림-가쪽돌림</td>
+          <td>엉덩관절 폄근(큰볼기근), 모음근, 안쪽돌림근</td>
+          <td>엉덩관절 굽힘근(엉덩허리근), 벌림근, 가쪽돌림근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">종아리 절단</span></td>
+          <td>무릎관절 굽힘</td>
+          <td>무릎관절 폄근 (넙다리네갈래근)</td>
+          <td>무릎관절 굽힘근 (뒤넙다리근)</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">위팔 절단</span> <span class="badge badge-blue">49회</span></td>
+          <td>어깨관절 굽힘-모음-안쪽돌림</td>
+          <td>어깨관절 폄근(넓은등근), 벌림근, 가쪽돌림근</td>
+          <td>어깨관절 굽힘근(어깨세모근), 모음근, 안쪽돌림근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">아래팔 절단</span></td>
+          <td>팔꿉관절 굽힘</td>
+          <td>팔꿉관절 폄근 (위팔세갈래근)</td>
+          <td>팔꿉관절 굽힘근 (위팔두갈래근)</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">발목관절 절단</span></td>
+          <td>발바닥 굽힘</td>
+          <td>발등쪽굽힘근 (앞정강근)</td>
+          <td>발바닥쪽굽힘근 (종아리세갈래근)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-title">다리 절단 종류</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>절단명</th><th>특징</th></tr>
+        <tr>
+          <td><span class="highlight-g">종아리절단</span></td>
+          <td>가장 많이 시행 / PTB 의지 착용 / 잘린끝↑ → 엎침·뒤침↑ <span class="badge badge-blue">46회</span></td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">사임절단</span></td>
+          <td>정강뼈+종아리뼈 위 0.5cm / 즉시 체중부하 가능 / 외관 좋지 않음 / SACH 사용</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">쇼파르절단</span></td>
+          <td>발배뼈+입방뼈 - 목말뼈+발꿈치뼈 사이 / <span class="highlight-y">안쪽들린휜발증</span> 변형 위험</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">리스프랑절단</span></td>
+          <td>발허리뼈-발목뼈 사이 / <span class="highlight-y">꿈치들린휜발증</span> 위험</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">피로고프절단</span></td>
+          <td>발꿈치뼈 절반+사임절단 / 의지 없이 보행 가능 / 다리길이 단축 없음</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">잘린끝 관리</div>
+      <ul class="info-list">
+        <li><span class="highlight-y">원추형(conical shape)</span> 유지 목표</li>
+        <li>탄력붕대: 끝에서부터 위쪽으로 감아 올림</li>
+        <li>몸쪽: 느슨히 / 먼쪽: 단단히</li>
+        <li>stump 둘레 줄자 측정 = 부종 확인 목적</li>
+        <li>임시의지(pylon): 조기 착용 필수</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 중재 ===== -->
+  <div id="intervention" class="tab-panel">
+    <div class="section-title">급성기 vs 만성기 중재 <span class="badge badge-red">매우 중요</span></div>
+    <div class="phase-grid">
+      <div class="phase-box phase-acute">
+        <div class="phase-title">🔴 최대보호기 (급성기)</div>
+        <ul class="info-list compact">
+          <li>수치료: 한랭치료</li>
+          <li>전기: TENS (통증조절), NMES (근력강화)</li>
+          <li>초음파, 단파투열치료</li>
+          <li>관절가동범위: 수동, 능동-보조</li>
+          <li>뻗침운동: <strong>X</strong></li>
+          <li>저항: <strong>최대하 등척성</strong>, 근고정운동</li>
+          <li>관절가동술: 등급 I·II (통증조절)</li>
+          <li>유산소: <strong>X</strong></li>
+          <li>마사지: <strong>X</strong></li>
+          <li>운동형태: 열린사슬</li>
+          <li>체중부하: 비체중부하</li>
+        </ul>
+      </div>
+      <div class="phase-box phase-chronic">
+        <div class="phase-title">🟢 최소보호기 (만성기)</div>
+        <ul class="info-list compact">
+          <li>수치료: 온열치료</li>
+          <li>관절가동범위: 능동</li>
+          <li>뻗침운동: <strong>O</strong></li>
+          <li>저항: 최대 등척성, 동심성·편심성, 플라이오메트릭, 탄력밴드</li>
+          <li>관절가동술: 등급 III·IV (스트레칭)</li>
+          <li>움직임을 동반한 관절가동술</li>
+          <li>유산소: 트레드밀 보행운동</li>
+          <li>마사지: <strong>O</strong></li>
+          <li>운동형태: 닫힌사슬</li>
+          <li>체중부하: 체중부하</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      💡 <strong>발목펌핑운동</strong>: 급성기 = 깊은정맥혈전증 예방 + 혈액순환 촉진
+    </div>
+
+    <div class="section-title">척추 운동치료 비교</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>운동명</th><th>적용</th><th>특징</th></tr>
+        <tr>
+          <td><span class="highlight-g">윌리엄 운동</span> <span class="badge badge-blue">49회</span></td>
+          <td>허리앞굽음증</td>
+          <td>몸통굽힘→허리앞굽음↓ / 강화: 배근육·큰볼기근·뒤넙다리근 / 신장: 엉덩허리근·엉치가시근</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">엠브라스 운동</span></td>
+          <td>추간판탈출증</td>
+          <td>능동적 허리폄→허리앞굽음 형성, 척주세움근 강화</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">맥켄지 운동</span></td>
+          <td>추간판탈출증</td>
+          <td>허리폄으로 척추 앞쪽 넓혀 추간판 되넣기</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">골드웨이트 운동</span></td>
+          <td>만성허리통증</td>
+          <td>척추폄근 근력강화, 등척성 배근육 강화</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">갈리엇 운동</span></td>
+          <td>복합</td>
+          <td>윌리엄 + 맥켄지 합친 것</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-title">물렁조직 회복단계별 중재</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>단계</th><th>임상 징후</th><th>중재</th></tr>
+        <tr>
+          <td><span class="highlight-y">급성기</span><br>(염증반응)</td>
+          <td>조직저항 전에 통증</td>
+          <td>보호기: 염증조절, 조기치유 촉진<br>수동운동·마사지·조심스러운 근고정</td>
+        </tr>
+        <tr>
+          <td><span class="highlight">아급성기</span><br>(회복과치유)</td>
+          <td>조직저항 시 통증</td>
+          <td>운동통제기: 비파괴적 능동운동<br>저항운동, 닫힌사슬 안정화, 근지구력 훈련</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">만성기</span><br>(성숙과리모델링)</td>
+          <td>조직저항 이후 통증</td>
+          <td>기능회복기: 점진적 뻗침, 근력강화<br>기능적·특수 숙련 활동</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 운동치료 ===== -->
+  <div id="exercise" class="tab-panel">
+    <div class="section-title">관절가동술 등급 (Maitland)</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>등급</th><th>진폭</th><th>범위</th><th>목적</th></tr>
+        <tr><td><span class="badge badge-blue">I</span></td><td>작음</td><td>시작범위</td><td rowspan="2" style="color:var(--accent5)">통증감소, 근방호에 의해 제한된 관절 치료</td></tr>
+        <tr><td><span class="badge badge-blue">II</span></td><td>큼</td><td>중간범위</td></tr>
+        <tr><td><span class="badge badge-green">III</span></td><td>큼</td><td>중간~끝범위</td><td rowspan="2" style="color:var(--accent4)">뻗침기법: 관절가동범위 증가</td></tr>
+        <tr><td><span class="badge badge-green">IV</span></td><td>작음</td><td>끝범위 (빠름)</td></tr>
+        <tr><td><span class="badge badge-purple">V</span></td><td>작음+빠름</td><td>한계지점</td><td>순간밀기: 유착 깨뜨리기</td></tr>
+      </table>
+    </div>
+
+    <div class="section-title">주요 관절 활주 방향</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>관절</th><th>운동</th><th>활주 방향</th></tr>
+        <tr><td>오목위팔관절</td><td>벌림</td><td style="color:var(--accent2)">아래쪽 ↓</td></tr>
+        <tr><td>오목위팔관절</td><td>굽힘</td><td style="color:var(--accent2)">뒤쪽(손등쪽) →</td></tr>
+        <tr><td>오목위팔관절</td><td>안쪽돌림</td><td style="color:var(--accent2)">뒤쪽(등쪽)</td></tr>
+        <tr><td>팔꿉관절</td><td>굽힘</td><td style="color:var(--accent4)">앞쪽(손바닥쪽)</td></tr>
+        <tr><td>팔꿉관절</td><td>폄</td><td style="color:var(--accent4)">뒤쪽(손등쪽)</td></tr>
+        <tr><td>손목관절</td><td>굽힘</td><td style="color:var(--accent3)">뒤쪽(등쪽)</td></tr>
+        <tr><td>손목관절</td><td>폄</td><td style="color:var(--accent3)">앞쪽(배쪽)</td></tr>
+        <tr><td>엉덩관절</td><td>굽힘</td><td style="color:var(--accent5)">뒤쪽(등쪽)</td></tr>
+        <tr><td>무릎관절</td><td>폄</td><td style="color:var(--accent5)">앞쪽</td></tr>
+        <tr><td>발목관절</td><td>발등쪽굽힘</td><td style="color:var(--accent6)">뒤쪽</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:10px">
+        💡 <strong>오목-볼록 법칙</strong><br>
+        오목 고정-볼록 움직임 → 구르기와 미끄러짐 <span class="highlight-y">반대</span>방향<br>
+        볼록 고정-오목 움직임 → 구르기와 미끄러짐 <span class="highlight-g">같은</span>방향
+      </div>
+    </div>
+
+    <div class="section-title">저항운동</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">등척성 운동 종류</div>
+        <ul class="info-list">
+          <li><span class="highlight-y">근고정운동</span>: 저강도, 급성기 사용</li>
+          <li><span class="highlight-y">안정화운동</span>: 중간범위, 동시수축 발달</li>
+          <li><span class="highlight-y">다각도 등척성</span>: 여러 각도에서 저항</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">점진적 저항운동 방법</div>
+        <table class="compare-table">
+          <tr><th>방법</th><th>원리</th></tr>
+          <tr><td>델롬 (DeLorme)</td><td>10RM / 세트마다 하중 <span class="highlight-g">증가</span></td></tr>
+          <tr><td>옥스포드 (Oxford)</td><td>10RM / 세트마다 하중 <span class="highlight-y">감소</span></td></tr>
+          <tr><td>다프레 (DAPRE)</td><td>6RM / 개인 진행속도 고려</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">열린사슬 vs 닫힌사슬</div>
+      <table class="compare-table">
+        <tr>
+          <th></th>
+          <th style="color:var(--accent1)">열린사슬 (OKC)</th>
+          <th style="color:var(--accent4)">닫힌사슬 (CKC)</th>
+        </tr>
+        <tr><td>먼쪽분절</td><td>자유롭게 움직임</td><td>고정됨</td></tr>
+        <tr><td>관절압박</td><td>낮음</td><td>높음</td></tr>
+        <tr><td>체중부하</td><td>비체중부하</td><td>체중부하</td></tr>
+        <tr><td>관절운동</td><td>단일관절</td><td>다중관절</td></tr>
+        <tr><td>사용시기</td><td>급성기</td><td>만성기</td></tr>
+        <tr><td>고유감각</td><td>덜 효과적</td><td><span class="highlight-y">효과적</span></td></tr>
+        <tr><td>예시</td><td>밥먹기, 공던지기</td><td>스쿼트, 팔굽혀펴기, 목발보행</td></tr>
+      </table>
+    </div>
+
+    <div class="section-title">맨손뻗침 기법</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">유지-이완 (HR)</div>
+        <ul class="info-list">
+          <li>단축된 근육(길항근)에 <span class="highlight-y">등척성 수축</span> 후 이완</li>
+          <li>관절가동범위 변화 없음</li>
+          <li>움직임의 의도 없음</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">수축-이완 (CR)</div>
+        <ul class="info-list">
+          <li>단축된 근육(길항근)에 <span class="highlight-y">등장성 수축</span> 후 이완</li>
+          <li>관절가동범위 <span class="highlight-g">변화 있음</span></li>
+          <li>움직임의 의도 있음</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title">치료적 마사지 종류</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr><th>종류</th><th>특징</th><th>방법</th></tr>
+        <tr>
+          <td><span class="highlight-g">쓰다듬기 (effleurage)</span> <span class="badge badge-blue">47회</span></td>
+          <td>가장 많이 사용 / 시작과 끝에 적용</td>
+          <td>부드럽게 미끄러지듯</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">주무르기 (petrissage)</span> <span class="badge badge-blue">48회</span></td>
+          <td>노폐물 제거, 정맥 환원 보조</td>
+          <td>근육 배열에 수직</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">문지르기 (friction)</span> <span class="badge badge-blue">46·50회</span></td>
+          <td>흉터조직에 적용 / 유착성 흉터 깨뜨림</td>
+          <td>피부 아래까지 강한 압력</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">두드리기 (tapotement)</span> <span class="badge badge-blue">51회</span></td>
+          <td>자극으로 근수축 증진</td>
+          <td>두드려서 적용</td>
+        </tr>
+        <tr>
+          <td><span class="highlight-g">흔들기 (vibration)</span></td>
+          <td>말초신경염 치료 시 진정효과</td>
+          <td>율동적·부드럽게 움직임</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-title">근섬유 비교 (Type I vs II)</div>
+    <div class="card">
+      <table class="compare-table">
+        <tr>
+          <th></th>
+          <th style="color:var(--accent1)">Type I (느린연축)</th>
+          <th style="color:var(--accent2)">Type II (빠른연축)</th>
+        </tr>
+        <tr><td>속도</td><td>느림</td><td>빠름</td></tr>
+        <tr><td>피로저항</td><td>높음</td><td>낮음</td></tr>
+        <tr><td>에너지</td><td>유산소</td><td>무산소</td></tr>
+        <tr><td>역할</td><td>자세유지근, 지구력</td><td>큰 힘, 단기간 고강도</td></tr>
+        <tr><td>미토콘드리아</td><td>많음</td><td>적음</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
