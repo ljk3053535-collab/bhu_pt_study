@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3 · 근육: 뼈대계통의 일차적인 안정자와 운동자</title>
+<style>
+:root {
+  --bg: #EEF4FF;
+  --bg2: #dce8fa;
+  --card: #FFFFFF;
+  --accent: #1E3A5F;
+  --accent2: #2E5FAA;
+  --accent3: #4A90D9;
+  --accent-light: #D6E8FF;
+  --text: #1A2B40;
+  --text2: #4A6080;
+  --green: #1B6B3A;
+  --green-bg: #E8F5E9;
+  --orange: #C84B00;
+  --orange-bg: #FFF0E0;
+  --red: #B71C1C;
+  --red-bg: #FFEBEE;
+  --purple: #5E35B1;
+  --purple-bg: #EDE7F6;
+  --teal: #00695C;
+  --teal-bg: #E0F2F1;
+  --shadow: 0 2px 12px rgba(30,58,95,0.10);
+  --shadow-hover: 0 6px 24px rgba(30,58,95,0.18);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+/* ── Header ─────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+  color: #fff;
+  padding: 32px 24px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+.header .chapter-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.header h1 {
+  font-size: clamp(18px, 4vw, 26px);
+  font-weight: 800;
+  line-height: 1.3;
+  position: relative;
+}
+.header h2 {
+  font-size: clamp(12px, 2.5vw, 15px);
+  font-weight: 400;
+  opacity: 0.8;
+  margin-top: 6px;
+  position: relative;
+}
+/* ── Tabs ───────────────────────────── */
+.tab-bar {
+  display: flex;
+  background: var(--card);
+  border-bottom: 2px solid var(--bg2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.07);
+}
+.tab-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 14px 8px;
+  border: none;
+  background: none;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--accent2); background: var(--bg); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent3); background: var(--accent-light); }
+/* ── Tab Panels ─────────────────────── */
+.tab-panel { display: none; padding: 20px 16px 40px; max-width: 900px; margin: 0 auto; }
+.tab-panel.active { display: block; }
+/* ── Section Cards ───────────────────── */
+.section-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 24px 0 12px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent3);
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent2);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .icon { font-size: 16px; }
+/* ── Keyword chips ───────────────────── */
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+.chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: default;
+  transition: transform 0.15s;
+}
+.chip:hover { transform: scale(1.05); }
+.chip-blue { background: var(--accent-light); color: var(--accent); }
+.chip-green { background: var(--green-bg); color: var(--green); }
+.chip-orange { background: var(--orange-bg); color: var(--orange); }
+.chip-red { background: var(--red-bg); color: var(--red); }
+.chip-purple { background: var(--purple-bg); color: var(--purple); }
+.chip-teal { background: var(--teal-bg); color: var(--teal); }
+/* ── Collapsible ─────────────────────── */
+.collapsible { margin-bottom: 10px; }
+.collapsible-header {
+  background: linear-gradient(90deg, var(--accent-light), #f0f5ff);
+  border: 1px solid #c5d9f5;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  transition: all 0.2s;
+  user-select: none;
+}
+.collapsible-header:hover { background: var(--accent-light); }
+.collapsible-header .arrow { transition: transform 0.3s; font-size: 12px; }
+.collapsible-header.open .arrow { transform: rotate(180deg); }
+.collapsible-body {
+  display: none;
+  background: var(--card);
+  border: 1px solid #c5d9f5;
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+.collapsible-body.open { display: block; }
+/* ── Lists / Info ────────────────────── */
+ul.info-list { list-style: none; padding: 0; }
+ul.info-list li {
+  padding: 5px 0 5px 20px;
+  position: relative;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text);
+  border-bottom: 1px dashed #e0e8f5;
+}
+ul.info-list li:last-child { border-bottom: none; }
+ul.info-list li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  color: var(--accent3);
+  font-size: 11px;
+  top: 7px;
+}
+/* ── Highlight box ───────────────────── */
+.highlight-box {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.highlight-blue { background: var(--accent-light); border-left: 4px solid var(--accent3); }
+.highlight-green { background: var(--green-bg); border-left: 4px solid var(--green); }
+.highlight-orange { background: var(--orange-bg); border-left: 4px solid var(--orange); }
+.highlight-red { background: var(--red-bg); border-left: 4px solid var(--red); }
+.highlight-purple { background: var(--purple-bg); border-left: 4px solid var(--purple); }
+/* ── Table ───────────────────────────── */
+.tbl-wrap { overflow-x: auto; margin: 10px 0; }
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px;
+}
+th {
+  background: var(--accent); color: #fff;
+  padding: 9px 10px; text-align: left;
+  font-weight: 700; font-size: 12px;
+}
+td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e0e8f5;
+  vertical-align: top;
+  line-height: 1.6;
+}
+tr:nth-child(even) td { background: #f5f8ff; }
+tr:hover td { background: var(--accent-light); }
+/* ── Quiz ────────────────────────────── */
+#quiz-panel { padding-bottom: 60px; }
+.quiz-header {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  color: #fff; border-radius: var(--radius);
+  padding: 18px 20px; margin-bottom: 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 10px;
+}
+.quiz-header h3 { font-size: 16px; font-weight: 800; }
+.quiz-header .stats { font-size: 13px; opacity: 0.9; }
+.progress-bar-wrap {
+  background: #e0e8f5; border-radius: 10px;
+  height: 10px; margin: 0 0 16px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%; border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent3), var(--accent2));
+  transition: width 0.4s ease;
+}
+.q-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 20px;
+  margin-bottom: 16px; transition: box-shadow 0.2s;
+}
+.q-card:hover { box-shadow: var(--shadow-hover); }
+.q-num {
+  font-size: 11px; font-weight: 700;
+  color: var(--accent3); letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.q-text {
+  font-size: 15px; font-weight: 700;
+  color: var(--text); line-height: 1.5;
+  margin-bottom: 14px;
+}
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.q-opt {
+  background: #f4f8ff;
+  border: 2px solid #dce8fa;
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  cursor: pointer; font-size: 13.5px;
+  transition: all 0.18s; text-align: left;
+  font-family: inherit;
+}
+.q-opt:hover { background: var(--accent-light); border-color: var(--accent3); }
+.q-opt.correct { background: var(--green-bg) !important; border-color: var(--green) !important; color: var(--green); font-weight: 700; }
+.q-opt.wrong { background: var(--red-bg) !important; border-color: var(--red) !important; color: var(--red); }
+.q-opt.disabled { cursor: default; pointer-events: none; }
+.q-feedback {
+  margin-top: 12px; padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px; line-height: 1.6;
+  display: none;
+}
+.q-feedback.show { display: block; }
+.q-feedback.correct-fb { background: var(--green-bg); color: var(--green); border-left: 4px solid var(--green); }
+.q-feedback.wrong-fb { background: var(--red-bg); color: var(--red); border-left: 4px solid var(--red); }
+.quiz-controls {
+  display: flex; gap: 10px; justify-content: center;
+  flex-wrap: wrap; margin-top: 16px;
+}
+.btn {
+  padding: 12px 24px; border: none; border-radius: 24px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: all 0.2s;
+}
+.btn-primary { background: var(--accent2); color: #fff; }
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(46,95,170,0.35); }
+.btn-secondary { background: var(--bg2); color: var(--accent); }
+.btn-secondary:hover { background: var(--accent-light); }
+.btn-danger { background: var(--red-bg); color: var(--red); }
+.btn-danger:hover { background: var(--red); color: #fff; }
+.score-display {
+  text-align: center; padding: 30px 20px;
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.score-num {
+  font-size: 52px; font-weight: 900;
+  background: linear-gradient(135deg, var(--accent2), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.score-label { font-size: 14px; color: var(--text2); margin-top: 6px; }
+.wrong-list-header {
+  background: var(--red-bg); color: var(--red);
+  border-radius: var(--radius-sm); padding: 10px 14px;
+  font-weight: 700; font-size: 13px; margin: 16px 0 8px;
+}
+/* ── Responsive ─────────────────────── */
+@media (max-width: 600px) {
+  .header { padding: 22px 16px 16px; }
+  .tab-btn { font-size: 11px; padding: 12px 6px; }
+  .card { padding: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="chapter-badge">CHAPTER 03</div>
+  <h1>근육: 뼈대계통의 일차적인 안정자와 운동자</h1>
+  <h2>Muscle: The Primary Stabilizer and Mover of the Skeletal System</h2>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ============================================================
+     TAB 1: 개요
+============================================================ -->
+<div id="overview" class="tab-panel active">
+
+  <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.7;">
+    뼈대근육은 뼈와 관절을 안정시키고 움직이게 하는 일차적인 힘을 제공한다. 신경계통의 활성전위를 통한 활성 이후, 수축단백질의 작용을 통해 힘을 생산한다.
+  </p>
+
+  <div class="section-title">📚 주요 토픽 목차</div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🔵</span> 뼈 안정자로서의 근육</div>
+    <ul class="info-list">
+      <li>주어진 길이에서 적절한 양의 힘을 발생시키기</li>
+      <li>뼈대근육의 구조적 구성에 대한 소개</li>
+      <li>근육 형태학 (Muscle morphology)</li>
+      <li>근육의 구조방식 (Architectural design)</li>
+      <li>수동적인 길이-장력곡선 (Passive length-tension)</li>
+      <li>능동적인 길이-장력곡선 (Active length-tension)</li>
+      <li>총 길이-장력곡선</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🟢</span> 뼈 운동자로서의 근육: 힘의 조절</div>
+    <ul class="info-list">
+      <li>동심 또는 편심활성을 통한 힘의 조절</li>
+      <li>힘-속도곡선 (Force-velocity curve)</li>
+      <li>일률과 일 (Power &amp; Work)</li>
+      <li>신경계통을 통한 근육의 활성</li>
+      <li>동원 (Recruitment) &amp; 비율부호화 (Rate coding)</li>
+      <li>근전도 (EMG) 소개, 기록, 분석, 표준화</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🟠</span> 등척성 근육 힘: 내적인 토크-관절각도곡선</div>
+    <ul class="info-list">
+      <li>근육 모멘트팔 (Moment arm)</li>
+      <li>토크-각도곡선 (Torque-angle curve)</li>
+      <li>등척성 힘과 내적인 토크에 영향 미치는 역학적 특성</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🟣</span> 근육 변화</div>
+    <ul class="info-list">
+      <li>근육활성 동안의 근전도 진폭</li>
+      <li>건강한 사람에서의 근육피로의 원인</li>
+      <li>근력훈련에 따른 근육의 변화</li>
+      <li>감소된 사용에 따른 근육의 변화 (Disuse atrophy)</li>
+      <li>노화에 따른 근육의 변화 (Sarcopenia)</li>
+    </ul>
+  </div>
+
+  <div class="section-title">🔑 핵심 키워드</div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🏗️</span> 구조 관련</div>
+    <div class="chips">
+      <span class="chip chip-blue">근섬유 (Muscle fiber)</span>
+      <span class="chip chip-blue">근원섬유 (Myofibril)</span>
+      <span class="chip chip-blue">근잔섬유 (Myofilament)</span>
+      <span class="chip chip-blue">근섬유마디 (Sarcomere)</span>
+      <span class="chip chip-blue">액틴 (Actin)</span>
+      <span class="chip chip-blue">미오신 (Myosin)</span>
+      <span class="chip chip-blue">티틴 (Titin)</span>
+      <span class="chip chip-blue">트로포미오신 (Tropomyosin)</span>
+      <span class="chip chip-blue">트로포닌 (Troponin)</span>
+      <span class="chip chip-blue">Z 판 / M 선</span>
+      <span class="chip chip-blue">A 띠 / I 띠 / H 띠</span>
+      <span class="chip chip-blue">근육바깥막 (Epimysium)</span>
+      <span class="chip chip-blue">근육다발막 (Perimysium)</span>
+      <span class="chip chip-blue">근육속막 (Endomysium)</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">⚡</span> 수축/힘 관련</div>
+    <div class="chips">
+      <span class="chip chip-green">미끄럼잔섬유가설 (Sliding filament hypothesis)</span>
+      <span class="chip chip-green">교차연결 (Crossbridge)</span>
+      <span class="chip chip-green">수동장력 (Passive tension)</span>
+      <span class="chip chip-green">능동적 힘 (Active force)</span>
+      <span class="chip chip-green">안정길이 (Resting length)</span>
+      <span class="chip chip-green">임계길이 (Critical length)</span>
+      <span class="chip chip-green">병렬탄성소자</span>
+      <span class="chip chip-green">직렬탄성소자</span>
+      <span class="chip chip-green">동심성 (Concentric)</span>
+      <span class="chip chip-green">편심성 (Eccentric)</span>
+      <span class="chip chip-green">등척성 (Isometric)</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🧠</span> 신경-근육 관련</div>
+    <div class="chips">
+      <span class="chip chip-orange">운동단위 (Motor unit)</span>
+      <span class="chip chip-orange">동원 (Recruitment)</span>
+      <span class="chip chip-orange">비율부호화 (Rate coding)</span>
+      <span class="chip chip-orange">헤네만의 크기원리 (Henneman's size principle)</span>
+      <span class="chip chip-orange">연축 (Twitch)</span>
+      <span class="chip chip-orange">융합된 강축 (Fused tetanus)</span>
+      <span class="chip chip-orange">느린(S) / 빠르고피로저항(FR) / 빠르고쉽게피로(FF)</span>
+      <span class="chip chip-orange">근전도 (EMG)</span>
+      <span class="chip chip-orange">MVIC</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">🏋️</span> 근육 변화</div>
+    <div class="chips">
+      <span class="chip chip-red">근육감소증 (Sarcopenia)</span>
+      <span class="chip chip-red">비대 (Hypertrophy)</span>
+      <span class="chip chip-red">위축 (Atrophy)</span>
+      <span class="chip chip-red">지연성근육통 (DOMS)</span>
+      <span class="chip chip-red">1 RM</span>
+      <span class="chip chip-red">높은-저항훈련</span>
+      <span class="chip chip-red">낮은-저항훈련</span>
+      <span class="chip chip-purple">가소성 (Plasticity)</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span> 역학 관련</div>
+    <div class="chips">
+      <span class="chip chip-teal">깃각 (Pennation angle)</span>
+      <span class="chip chip-teal">생리학적 단면적 (PCSA)</span>
+      <span class="chip chip-teal">토크-각도곡선</span>
+      <span class="chip chip-teal">힘-속도곡선</span>
+      <span class="chip chip-teal">모멘트팔 (Moment arm)</span>
+      <span class="chip chip-teal">지레팔 (Lever arm)</span>
+      <span class="chip chip-teal">일률 (Power)</span>
+      <span class="chip chip-teal">양의 일 / 음의 일</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     TAB 2: 요약
+============================================================ -->
+<div id="summary" class="tab-panel">
+
+  <!-- 1. 근육 구조 -->
+  <div class="section-title">1️⃣ 뼈대근육의 구조적 구성</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🔬 근육의 계층 구조 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="highlight-box highlight-blue">
+        <strong>근육(Muscle) → 근섬유유다발(Fascicle) → 근섬유(Muscle fiber) → 근원섬유(Myofibril) → 근잔섬유(Myofilament)</strong>
+      </div>
+      <ul class="info-list">
+        <li><strong>근육바깥막(Epimysium)</strong>: 근육 전체를 둘러싸는 결합조직</li>
+        <li><strong>근육다발막(Perimysium)</strong>: 근섬유유다발(근섬유묶음)을 둘러쌈, 혈관·신경 포함</li>
+        <li><strong>근육속막(Endomysium)</strong>: 개별 근섬유 주위 — 모세혈관·신경 대사 교환 장소</li>
+        <li><strong>근원섬유(Myofibril)</strong>: 근섬유 내 1~2μm 두께, 수많은 근섬유마디로 구성</li>
+        <li><strong>근잔섬유(Myofilament)</strong>: 액틴(가는잔섬유)과 미오신(굵은잔섬유)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      📏 근섬유마디(Sarcomere) 구조 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>구조</th><th>설명</th></tr>
+          <tr><td><strong>A 띠</strong></td><td>굵은 미오신잔섬유에 의해 형성되는 어두운 띠</td></tr>
+          <tr><td><strong>I 띠</strong></td><td>가는 액틴잔섬유에 의해 형성되는 밝은 띠</td></tr>
+          <tr><td><strong>H 띠</strong></td><td>액틴과 미오신이 겹치지 않는 A 띠 내의 밝은 영역</td></tr>
+          <tr><td><strong>M 선</strong></td><td>A 띠 중앙에서 미오신잔섬유가 비후해지는 중간영역</td></tr>
+          <tr><td><strong>Z 판</strong></td><td>연속적인 근섬유마디 사이의 경계 — 액틴 고정</td></tr>
+        </table>
+      </div>
+      <div class="highlight-box highlight-green" style="margin-top:10px;">
+        💡 수축 시 I띠·H띠 짧아짐, A띠 길이 불변 → 미끄럼잔섬유가설(Sliding filament hypothesis)
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🧬 근육 단백질 (표 3.2 요약) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>단백질</th><th>분류</th><th>기능</th></tr>
+          <tr><td>미오신(Myosin)</td><td>능동단백질(수축)</td><td>ATP 가수분해, 액틴과 결합해 힘 발생</td></tr>
+          <tr><td>액틴(Actin)</td><td>능동단백질(수축)</td><td>힘 전달, 미오신머리와 결합</td></tr>
+          <tr><td>트로포미오신(Tropomyosin)</td><td>능동단백질(조절)</td><td>액틴·미오신 상호작용 조절, 안정화</td></tr>
+          <tr><td>트로포닌(Troponin)</td><td>능동단백질(조절)</td><td>트로포미오신 위치에 영향, Ca²⁺ 결합</td></tr>
+          <tr><td>미오신 가벼운·무거운사슬</td><td>능동단백질(조절)</td><td>수축속도에 영향, 교차연결기구 운동역학 조절</td></tr>
+          <tr><td>네뷸린(Nebulin)</td><td>구조단백질</td><td>액틴을 Z 판에 고정</td></tr>
+          <tr><td>티틴(Titin)</td><td>구조단백질</td><td>신장된 근섬유마디에서 수동장력 생성 — "스프링"</td></tr>
+          <tr><td>데스민(Desmin)</td><td>구조단백질</td><td>인접 근섬유마디 세로·가족 정렬 안정화</td></tr>
+          <tr><td>디스트로핀(Dystrophin)</td><td>구조단백질</td><td>세포막·황문근섬유마디에 구조적 안정성 제공</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 근육 형태 -->
+  <div class="section-title">2️⃣ 근육 형태학 & 구조방식</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🎭 근육 형태 분류 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="highlight-box highlight-blue">
+        근육 형태 2가지: <strong>방추근(Fusiform muscle)</strong>과 <strong>깃근(Pennate muscle)</strong>
+      </div>
+      <ul class="info-list">
+        <li><strong>방추근</strong>: 섬유들이 힘줄에 평행하게 배열. 더 큰 범위의 운동 → 속도 유리</li>
+        <li><strong>반깃근(Unipennate)</strong>: 힘줄 한쪽으로 비스듬히 부착</li>
+        <li><strong>깃근(Bipennate)</strong>: 힘줄 양쪽으로 비스듬히 부착</li>
+        <li><strong>뭇깃근(Multipennate)</strong>: 여러 방향으로 비스듬히 부착</li>
+        <li>깃근은 더 많은 섬유를 가져 <strong>더 큰 힘</strong> 생성 가능</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      📐 깃각 (Pennation Angle) & 생리학적 단면적 (PCSA) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>깃각(θ)</strong>: 근섬유가 힘줄에 대해 평행하게 부착된 각도</li>
+        <li>0°: 힘의 100% 힘줄에 전달 (방추근)</li>
+        <li>30° 깃각: 힘의 86% 힘줄에 전달 (cos 30° = 0.86)</li>
+        <li>깃각 증가 → 전달력 감소, 하지만 더 많은 섬유 배치 가능</li>
+        <li><strong>생리학적 단면적(PCSA)</strong>: 단위 생리학적 단면적(mm²)당 생산되는 근육의 힘 = 비력 (Specific force)</li>
+        <li>비력: 15~60 N/cm² (평균 약 43~65 lb/in²)</li>
+      </ul>
+      <div class="highlight-box highlight-orange">
+        ⚠️ 깃각이 클수록 힘 전달 효율↓ but 근섬유 수↑ → 힘 생산량 전체적으로는 증가 가능
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 길이-장력 -->
+  <div class="section-title">3️⃣ 수동적 & 능동적 길이-장력곡선</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🔄 수동적 길이-장력곡선 (Passive Length-Tension) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li>근육이 점진적으로 신장될 때 발생하는 수동장력</li>
+        <li>신경계의 자극 없이도 발생 (근육 내 탄성 구조에 의함)</li>
+        <li><strong>임계길이(Critical length)</strong>까지는 느슨한(Slack) 상태 → 이후 지수적 증가</li>
+        <li>원인: 세포바깥결합조직(이틀레넨, 근육다발막), 티틴, 비탄성적 세포바깥결합조직</li>
+        <li><strong>병렬탄성소자(Parallel elastic components)</strong>: 능동단백질과 평행하게 배열된 비수축 성분</li>
+        <li><strong>직렬탄성소자(Series elastic components)</strong>: 능동단백질과 직렬로 배열 → 힘줄, 액틴·미오신</li>
+      </ul>
+      <div class="highlight-box highlight-blue">
+        수동장력의 기능: 에너지 저장 → 후에 방출하여 총 힘 증가; 최대 길이 넘어 발생해 근육 손상 방지
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⚡ 능동적 길이-장력곡선 (Active Length-Tension) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li>신경계 자극에 의한 능동적 힘 발생</li>
+        <li><strong>안정길이(Resting length)</strong>: 최대 힘 발생 위치 — 교차연결 수 최대</li>
+        <li>짧아질수록: 액틴 겹침으로 교차연결 수↓ → 힘 감소</li>
+        <li>늘어날수록: 교차연결 수↓ → 힘 감소</li>
+        <li>그래프: 역 U자형 (A~D 특이점)</li>
+      </ul>
+      <div class="highlight-box highlight-green">
+        A: 매우 짧음 (액틴 겹침 최대, 힘 최소)<br>
+        B~C: 최적 영역 (교차연결 최대, 힘 최대)<br>
+        D: 매우 길게 늘어남 (교차연결 없음, 힘 최소)
+      </div>
+      <ul class="info-list" style="margin-top:10px;">
+        <li><strong>총 길이-장력곡선</strong> = 능동적 힘 + 수동장력의 합</li>
+        <li>능동적 안정길이 이상에서 수동장력이 총 힘 크게 기여</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. 힘-속도 -->
+  <div class="section-title">4️⃣ 힘-속도곡선 & 동심/편심/등척성</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🏃 힘-속도곡선 (Force-Velocity Curve) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>동심성(Concentric)</strong>: 근육 짧아짐, 부하가 클수록 속도↓</li>
+        <li><strong>등척성(Isometric)</strong>: 속도=0, 최대 동심성 힘 발생</li>
+        <li><strong>편심성(Eccentric)</strong>: 근육 늘어남, 힘이 등척성보다 더 큼 (비례하지 않고 비교적 일정)</li>
+        <li>최대 편심성 힘 > 최대 등척성 힘 > 최대 동심성 힘</li>
+        <li>A. V. Hill 1938: 최초로 힘-속도 관계 설명</li>
+      </ul>
+      <div class="highlight-box highlight-orange">
+        임상 적용: 편심성 수축 → 하강 시 근육 제동(brake); 동심성 → 추진(accelerator); 등척성 → 자세 유지
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      💡 일률(Power)과 일(Work) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>일률(Power)</strong>: 힘의 수행 비율 = 힘 × 속도</li>
+        <li><strong>양의 일(+Work)</strong>: 동심성 수축 — 부하에 대해 힘 발생</li>
+        <li><strong>음의 일(-Work)</strong>: 편심성 수축 — 부하에 의해 재작용된 에너지 저장</li>
+        <li>등척성: 속도=0이므로 일률=0, 일=0</li>
+        <li>가속기(Accelerator): 부하가 가해지면 활성된 근육이 짧아져 양의 일 수행</li>
+        <li>제동기(Brake): 편심성 — 자신의 체중 올릴 때 근육 길어지며 음의 일 수행</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. 신경계 & 동원 -->
+  <div class="section-title">5️⃣ 신경계통을 통한 근육의 활성 & 동원</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🧠 운동단위 (Motor Unit) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>운동단위</strong> = 알파운동신경세포 + 이것이 신경지배하는 모든 근섬유</li>
+        <li>알파운동신경세포 → 척수 앞쪽뿔에서 뻗어나온 신경세포</li>
+        <li>각 알파운동신경세포는 많은 근섬유를 자극 (innervation ratio)</li>
+        <li>한 알파운동신경세포가 활성되면 → 그 단위의 근섬유들 모두 최대 수축</li>
+      </ul>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>유형</th><th>느린(S)</th><th>빠르고피로저항(FR)</th><th>빠르고쉽게피로(FF)</th></tr>
+          <tr><td>조직화학적 특성</td><td>느리고 산화성 (SO)</td><td>빠르고 산화해당성 (FOG)</td><td>빠르고 해당성 (FG)</td></tr>
+          <tr><td>연축반응</td><td>느린 연축</td><td>빠른 연축</td><td>빠른 연축</td></tr>
+          <tr><td>피로도</td><td>피로 저항</td><td>피로 저항</td><td>쉽게 피로</td></tr>
+          <tr><td>신경지배비율</td><td>낮음 (소세포)</td><td>중간</td><td>높음 (대세포)</td></tr>
+          <tr><td>MHC 유형</td><td>MHC I</td><td>MHC IIA</td><td>MHC IIX</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      📈 동원 & 비율부호화 & 헤네만의 크기원리 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>동원(Recruitment)</strong>: 특정 동신경세포의 초기 활성을 유발하는 과정</li>
+        <li><strong>비율부호화(Rate coding)</strong>: 운동단위의 반복 발전 빈도를 높여 힘 증가</li>
+        <li><strong>헤네만의 크기원리(Henneman's Size Principle)</strong>: 크기가 작은 운동단위(S)가 먼저 동원, 이후 FR→FF 순서</li>
+        <li>작은 운동단위 먼저 → 부드럽고 정밀한 힘 조절 가능</li>
+        <li><strong>임계전압(Critical voltage)</strong>: 이온들이 막을 가로질러 흐르게 될 때 활성전위(Action potential) 발생</li>
+        <li>연축(Twitch): 활성전위 한 번에 단 한 번의 짧은 수축</li>
+        <li>비융합된 강축(Unfused tetanus): 연속 자극 — 힘 겹침</li>
+        <li>융합된 강축(Fused tetanus): 높은 빈도 자극 — 매끄럽고 안정된 힘</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. 감각수용기 -->
+  <div class="section-title">6️⃣ 뼈대근육의 신경지배와 감각수용기</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🔌 뼈대근육 감각수용기 분류 (표 3.4) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>그룹</th><th>감각수용기</th><th>기능</th><th>수용체에 대한 일차적 자극</th></tr>
+          <tr><td>Ia</td><td>근방추(일차적)</td><td>작용근 흥분성 증가, 대항근 흥분성 감소시킴</td><td>근육의 신장률 — 힘줄탁탁반사(tendon tap reflex)에 가장 잘 반응</td></tr>
+          <tr><td>Ib</td><td>골지힘줄기관(GTO)</td><td>작용근 흥분성 감소, 대항근 흥분성 증가시킴</td><td>근육-힘줄의 힘 — 넓은 범위의 힘에 걸쳐 자극</td></tr>
+          <tr><td>II</td><td>근방추(이차적)</td><td>작용근 흥분성 증가, 대항근 흥분성 증가시킴</td><td>하체의 신장 — 하체 전체 근육에 있음</td></tr>
+          <tr><td>III</td><td>기계수용기</td><td>심혈관 반응과 환기 조절, 중추성 억제시킴</td><td>근육 압력의 변화</td></tr>
+          <tr><td>IV</td><td>대사수용기</td><td>위와 같음</td><td>근육대사의 변화</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 등척성 토크 -->
+  <div class="section-title">7️⃣ 등척성 근육 힘: 토크-각도곡선</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      ⚖️ 내적 토크와 관절각도의 관계 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>내적 토크(Internal torque)</strong> = 근육 힘 × 모멘트팔(Moment arm)</li>
+        <li><strong>모멘트팔(Moment arm/지레팔)</strong>: 관절 중심에서 근육 힘 작용선까지의 수직 거리</li>
+        <li>팔꿈치 굽힘근: 약 75~80° 굽힘에서 내적 토크 최대</li>
+        <li>엉덩관절 벌림근: -10°에서 가장 큼</li>
+        <li>토크-각도곡선 형태: 근육마다 다르며 — 근육 구조·모멘트팔·생리학적 특성 반영</li>
+      </ul>
+      <div class="highlight-box highlight-purple">
+        📌 2가지 요인: ① 관절각도 변화 → 근육길이 변화 → 능동·수동 힘 변화<br>
+        ② 관절각도 변화 → 모멘트팔 길이 변화 → 내적 토크 변화
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. EMG -->
+  <div class="section-title">8️⃣ 근전도(EMG)</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      📊 EMG 기초 및 기록 방법 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>EMG(Electromyography)</strong>: 활성된 뼈대근육으로부터 나온 전기적 활동을 기록·해석하는 과학 분야</li>
+        <li><strong>표면전극(Surface electrode)</strong>: 피부에 부착 — 넓은 영역의 근육 신호 감지, 접근 쉬움</li>
+        <li><strong>미세침전극(Fine wire electrode)</strong>: 깊은 근육 접근 가능, 단일/소수 운동단위 활동 기록</li>
+        <li><strong>선형배열전극(Linear array electrode)</strong>: 근육기록영역 넓게 감지, 운동단위 분류 가능</li>
+        <li><strong>표본추출률(Sampling rate)</strong>: 적어도 1,000 Hz 이상 권장</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      📉 EMG 분석 & 표준화 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>Raw EMG</strong>: 원신호 기록</li>
+        <li><strong>전파정류(Full-wave rectification)</strong>: 신호 양의 전압으로 반전</li>
+        <li><strong>평탄화(Smoothing/평균값EMG)</strong>: 최고-최저 정평, 선형 포락선</li>
+        <li><strong>MVIC(최대 수의적 등척성수축)</strong>: 기준신호로 사용 → 근육 간 상대적 활성 비교</li>
+        <li><strong>EMG 표준화</strong>: 여러 날·대상자 자료 비교 위해 MVIC 대비 % 표현</li>
+        <li><strong>주파수 분석</strong>: 파워밀도스펙트럼, 중앙주파수↓ → 피로 신호</li>
+      </ul>
+      <div class="highlight-box highlight-blue">
+        EMG 신호 크기에 영향 미치는 기술적 요인: 전극의 배치 크기 / 신호 주파수 내 의파 범위와 유형 / 근육으로부터의 거리 / 운동단위말판에 대한 전극의 위치 / 근섬유에 대한 전극의 방위(orientation)
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 근육피로 -->
+  <div class="section-title">9️⃣ 근육피로와 EMG 변화</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      😓 건강한 사람에서의 근육피로 원인 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li>근육피로 = 최대노력에도 불구하고 운동으로 유발되는 최대 수의적 활성 감소</li>
+        <li>최대 힘의 5번째까지 50%, 6번째는 100% 노력</li>
+        <li>반복적인 최대 수축 시 약 50% 수준 힘은 지속 가능하지만 최대 힘 점차 감소</li>
+        <li><strong>근육 기전</strong>: 세포질에서 ATP 감소, 인산 축적, 미오신 ATPase 활성 감소</li>
+        <li><strong>신경 기전(중추성)</strong>: 척추상위중추로부터 하행 훈련 신호 감소, 운동단위 발전 빈도 감소</li>
+        <li><strong>신경 기전(말초성)</strong>: 신경근육접합부 전달 실패, 근섬유막 흥분 감소</li>
+        <li><strong>DOMS(지연성근육통)</strong>: 비교적 심한 편심성 활동 후 24~72시간에 최고 증상 — 세포골격(cytoskeleton) 손상</li>
+      </ul>
+      <div class="highlight-box highlight-red">
+        ⚠️ 피로의 기전: 중추성 기전(운동 영역)과 근섬유 자체의 기전(근육 기전)으로 설명 가능; 이 두 기전의 상대적 기여는 수행한 운동 유형에 따라 달라짐
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 근육 변화 -->
+  <div class="section-title">🔟 근력훈련 · 감소된 사용 · 노화에 따른 변화</div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      🏋️ 근력훈련에 따른 근육의 변화 <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li>훈련 후 단면적 30% 이상 증가 가능 — 주로 빠른연축(유형 II) 섬유에서 가장 크게 나타남</li>
+        <li><strong>1 RM (1회최대반복)</strong>: 관절의 완전한 가동범위 통해 한 번 들어올릴 수 있는 최대 부하</li>
+        <li><strong>높은-저항훈련</strong>: 3~12 RM 이내에서 힘을 점진적으로 증가시킴 — 매번 3세트 이상</li>
+        <li><strong>낮은-저항훈련</strong>: 적어도 15 RM 정도의 비교적 낮은 부하 — 매번 운동 시마다 3세트 이상</li>
+        <li>신경계 적응: 동원·비율부호화 향상, 척추상위운동 적응, 운동단위 발전 빈도 증가</li>
+        <li>데스민(desmin) 증가 — 구조단백질 강화</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      📉 감소된 사용에 따른 근육의 변화 (Disuse) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li>관절 고정 2~3일 만에 단면적 감소 시작</li>
+        <li>주로 빠른연축(유형 II) 섬유에서 위축 크게 나타남</li>
+        <li>40% 감소 = 근력에서 40% 감소와 연관됨</li>
+        <li>고정 10일 후: 1 RM의 40%까지의 감소 가능</li>
+        <li><strong>지연성위축(Delayed atrophy)</strong>: 고정 후 비교적 느린 위축</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      👴 노화에 따른 근육의 변화 (Sarcopenia) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="info-list">
+        <li><strong>근육감소증(Sarcopenia)</strong>: 노화에 따른 근육 감소의 일차적 원인</li>
+        <li>60세 이후 근육 10년마다 약 10% 감소</li>
+        <li>75세 이후 뚜렷하게 빠르게 감소</li>
+        <li>유형 II(빠른연축) 섬유에서의 위축이 더 크게 나타남</li>
+        <li>원인: 세포자멸사(apoptosis), 신체활동 감소, 영양, 호르몬 수치 변화</li>
+        <li>28세 vs 80세 여성: MRI 단면에서 근육량 대비 결합조직 및 지방 비율 현저히 증가</li>
+        <li>임상적 중요성: 낙상, 기능적 감소, 일상 활동 수행 능력 저하와 직결</li>
+      </ul>
+      <div class="highlight-box highlight-red">
+        💡 근육훈련을 통해 근육 기능 유지 가능하지만, 신경근육계 노화의 기본적인 일상생활활동 수행에 필요한 임계수준의 근력과 일률 유지에 도움이 됨
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     TAB 3: 퀴즈
+============================================================ -->
+<div id="quiz" class="tab-panel" id="quiz-panel">
+  <div id="quiz-container"></div>
+</div>
+
+<script>
+// ── Utility ─────────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'quiz' && !quizInitialized) initQuiz();
+}
+function toggleCollapse(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── Quiz Data ────────────────────────────────────────────────
+const ALL_QUESTIONS = [
+  // 구조
+  { q: "근육바깥막(Epimysium)에 대한 설명으로 옳은 것은?", opts: ["개별 근섬유를 둘러쌈","근섬유유다발을 둘러쌈","근육 전체를 둘러싸는 결합조직","근원섬유를 둘러쌈"], ans: 2, exp: "근육바깥막(Epimysium)은 근육 전체를 둘러싸는 결합조직이다. 근육다발막(Perimysium)은 근섬유유다발을, 근육속막(Endomysium)은 개별 근섬유를 감싼다." },
+  { q: "미오신 ATPase에 의해 결정되는 섬유 유형 분류로 옳은 것은?", opts: ["유형 I = 높은 활성(빠른 연축)","유형 IIA = 낮은 활성(느린 연축)","유형 I = 낮은 활성(느린 연축)","유형 IIX = 낮은 활성"], ans: 2, exp: "유형 I은 미오신 ATPase 활성이 낮아 느린연축(slow twitch), 유형 IIA·IIX는 높은 활성으로 빠른연축(fast twitch)이다." },
+  { q: "근섬유마디(Sarcomere)에서 수축 시 길이가 변하지 않는 구조는?", opts: ["I 띠","H 띠","A 띠","Z 판 간격"], ans: 2, exp: "미끄럼잔섬유가설에 따라 수축 시 I 띠와 H 띠의 길이는 줄어들지만, A 띠 길이는 변하지 않는다. 이는 미오신 잔섬유의 길이가 변하지 않기 때문이다." },
+  { q: "티틴(Titin) 단백질의 주요 기능은?", opts: ["액틴과 결합하여 교차연결 형성","신장 시 수동장력 생성 — 스프링 역할","트로포닌과 결합하여 수축 조절","미오신 ATPase 활성화"], ans: 1, exp: "티틴은 구조단백질로 근섬유마디 내에서 분자형태의 스프링으로 작용하여 근육이 신장될 때 수동장력을 생성한다." },
+  { q: "Z 판(Z disc)의 역할은?", opts: ["미오신잔섬유를 고정","액틴잔섬유를 연속적인 근섬유마디 사이에 고정","트로포미오신 위치 조절","힘을 힘줄로 전달"], ans: 1, exp: "Z 판은 연속적인 근섬유마디 사이의 경계로, 액틴잔섬유를 고정시켜 근섬유마디의 구조를 유지하는 데 도움을 준다." },
+  { q: "트로포닌(Troponin)의 역할로 옳은 것은?", opts: ["액틴 단량체들을 중합","미오신 머리의 ATPase 활성화","Ca²⁺ 결합 후 트로포미오신 위치 변화 → 수축 개시","Z 판에 액틴 고정"], ans: 2, exp: "트로포닌은 능동단백질(조절)로, Ca²⁺와 결합하면 트로포미오신의 위치를 변화시켜 액틴의 능동부위를 노출함으로써 수축이 시작된다." },
+
+  // 형태학
+  { q: "깃근(Pennate muscle)에 대한 설명으로 옳은 것은?", opts: ["힘줄에 평행하게 섬유 배열","더 큰 범위의 운동에 유리","더 많은 섬유 배치 가능 → 더 큰 힘 생성","섬유 길이가 가장 길다"], ans: 2, exp: "깃근은 섬유들이 힘줄에 비스듬하게 배열되어 주어진 근육 면적에 더 많은 섬유를 가질 수 있어 더 큰 힘을 생성할 수 있다. 단, 힘의 전달 효율은 방추근보다 낮다." },
+  { q: "깃각(Pennation angle) 30°일 때 힘줄에 전달되는 힘의 비율은?", opts: ["100%","90%","86%","70%"], ans: 2, exp: "코사인 30° = 0.86이므로, 30도의 깃각을 가진 근육은 수축력의 86%만을 힘줄로 전달한다." },
+  { q: "생리학적 단면적(PCSA)이 큰 근육의 특성은?", opts: ["빠른 수축 속도","큰 가동범위","더 큰 최대 힘 생성","더 긴 섬유 길이"], ans: 2, exp: "생리학적 단면적(PCSA)은 근육의 최대 힘 발생 능력과 비례한다. PCSA가 클수록 더 많은 수축단백질을 포함하므로 더 큰 힘을 생성할 수 있다." },
+
+  // 길이-장력
+  { q: "수동적 길이-장력곡선에서 임계길이(Critical length) 이후 장력이 급격히 증가하는 주된 이유는?", opts: ["운동단위 추가 동원","교차연결 수 최대화","세포바깥결합조직과 티틴의 탄성 저항","미오신 ATPase 활성화"], ans: 2, exp: "임계길이를 넘으면 세포바깥결합조직(이틀레넨, 근육다발막)과 티틴 같은 구조단백질의 탄성 저항이 증가하여 수동장력이 지수적으로 급증한다." },
+  { q: "능동적 길이-장력곡선에서 최대 힘이 발생하는 근섬유마디 길이(안정길이)에서의 상태는?", opts: ["액틴 잔섬유들이 최대로 겹침","교차연결 수가 최대","Z 판들이 최대로 이격","미오신 잔섬유가 늘어남"], ans: 1, exp: "안정길이(resting length)에서는 액틴과 미오신의 겹침이 최적화되어 교차연결 수가 최대가 되므로 최대 능동적 힘이 발생한다." },
+  { q: "총 길이-장력곡선(Total force-length)은 어떻게 구성되는가?", opts: ["능동적 힘만으로 구성","수동장력만으로 구성","능동적 힘 + 수동장력의 합","등척성 힘과 동심성 힘의 합"], ans: 2, exp: "총 길이-장력곡선은 능동적 힘(Active force)과 수동장력(Passive tension)의 합으로 나타낸다. 안정길이 이상에서는 수동장력이 총 힘에 크게 기여한다." },
+  { q: "병렬탄성소자(Parallel elastic components)에 해당하는 것은?", opts: ["액틴","미오신","힘줄","세포바깥결합조직과 티틴"], ans: 3, exp: "병렬탄성소자는 능동단백질과 평행하게 배열된 비수축 성분으로, 세포바깥결합조직(이틀레넨, 근육다발막)과 티틴 단백질이 포함된다." },
+
+  // 힘-속도
+  { q: "힘-속도곡선에서 편심성(Eccentric) 수축의 힘 특성은?", opts: ["동심성보다 힘이 작음","등척성과 같은 힘","등척성보다 큰 힘","부하에 비례하여 속도 감소"], ans: 2, exp: "편심성 수축에서 생산되는 힘은 등척성 힘보다 크다. 이는 신장된 근육의 병렬탄성소자와 직렬탄성소자의 탄성 특성, 그리고 교차연결의 특성 때문이다." },
+  { q: "동심성 수축에서 부하가 증가할수록 나타나는 현상은?", opts: ["수축 속도 증가","수축 속도 감소","힘 감소","근피로 감소"], ans: 1, exp: "힘-속도관계에 따르면, 동심성 수축에서는 부하(힘)가 클수록 근육이 짧아지는 속도가 감소한다. 최대 부하 = 속도 0(등척성 상태)." },
+  { q: "양의 일(Positive work)을 수행하는 수축 유형은?", opts: ["편심성(Eccentric)","등척성(Isometric)","동심성(Concentric)","수동 신장"], ans: 2, exp: "양의 일은 동심성 수축에서 발생한다. 근육이 짧아지면서 외부 부하에 대해 힘을 발생시켜 양의 일을 수행한다. 편심성 수축은 음의 일을 수행한다." },
+
+  // 신경
+  { q: "헤네만의 크기원리(Henneman's Size Principle)에 따른 운동단위 동원 순서는?", opts: ["FF → FR → S","S → FR → FF","FR → S → FF","FF → S → FR"], ans: 1, exp: "헤네만의 크기원리: 크기가 작은 운동단위(Slow)가 먼저 동원되고, 이후 FR, 마지막으로 FF가 동원된다. 이를 통해 힘의 전개가 부드럽게 조절된다." },
+  { q: "융합된 강축(Fused tetanus)이 발생하는 조건은?", opts: ["단일 활성전위 자극","낮은 빈도의 연속 자극","높은 빈도의 연속 자극으로 장력 파동 융합","최대 수의적 수축 한 번"], ans: 2, exp: "융합된 강축(Fused tetanus)은 높은 빈도의 활성전위가 연속적으로 주어져 이전 장력 파동과 다음 파동이 완전히 융합되어 매끄럽고 안정된 수준의 힘을 발생시킬 때 나타난다." },
+  { q: "느린(S) 운동단위의 조직화학적 특성은?", opts: ["빠르고 해당성(FG)","빠르고 산화해당성(FOG)","느리고 산화성(SO)","빠르고 산화성(SO)"], ans: 2, exp: "느린(S) 운동단위에 연관된 근섬유는 느리고 산화성(SO: Slow Oxidative) 조직화학적 특성을 보인다. 이는 산화 대사 효소가 많아 지속적인 활동에 적합하다." },
+  { q: "비율부호화(Rate coding)의 의미는?", opts: ["더 많은 운동단위 동원","한 운동단위의 발전 빈도를 높여 힘 증가","근육 단면적 증가","신경전달물질 방출 감소"], ans: 1, exp: "비율부호화(Rate coding)는 이미 활성화된 운동단위의 반복 발전(방전) 빈도를 높여 근육 힘을 증가시키는 기전이다. 동원(Recruitment)과 함께 근육 힘 조절의 두 가지 주요 방법이다." },
+
+  // 감각수용기
+  { q: "골지힘줄기관(GTO, Group Ib)의 일차적 기능은?", opts: ["근육 신장률에 반응하여 수축 촉진","힘줄의 장력 증가 시 작용근 억제","관절 압력 변화 감지","대사 변화에 반응"], ans: 1, exp: "골지힘줄기관(GTO)은 근육-힘줄의 힘 증가에 반응하여 작용근의 흥분성을 감소시키고 대항근의 흥분성을 증가시킨다. 과도한 힘에 의한 손상을 방지하는 역할을 한다." },
+  { q: "힘줄탁탁반사(Tendon tap reflex)에 가장 잘 반응하는 수용기는?", opts: ["Group Ib (골지힘줄기관)","Group Ia (근방추 일차적)","Group II (근방추 이차적)","Group III (기계수용기)"], ans: 1, exp: "Group Ia(근방추 일차적)는 근육의 신장률에 반응하며 힘줄탁탁반사(tendon tap reflex)에 가장 잘 반응한다. 이는 근육이 갑자기 신장될 때 반사적 수축을 유발한다." },
+
+  // 토크-각도
+  { q: "팔꿈치 굽힘근에서 내적 토크가 최대인 관절 각도는 약?", opts: ["0° (완전 신전)","30° 굽힘","75~80° 굽힘","120° 굽힘"], ans: 2, exp: "팔꿈치 굽힘근의 내적인 토크는 약 75~80도의 굽힘 각도에서 가장 크다. 이는 이 각도에서 근육의 힘과 모멘트팔의 조합이 최적화되기 때문이다." },
+  { q: "내적 토크(Internal torque) 공식은?", opts: ["힘 ÷ 모멘트팔","힘 × 모멘트팔","힘 + 수동장력","생리학적 단면적 × 비력"], ans: 1, exp: "내적 토크 = 근육 힘 × 모멘트팔(지레팔). 토크는 회전력을 나타내며, 단위는 N·m이다." },
+  { q: "등척성 토크의 크기를 결정하는 2가지 주요 요인은?", opts: ["근육 길이와 깃각","관절각도와 근육피로","① 관절각도 변화→근육길이→힘 변화, ② 모멘트팔 변화","수축 속도와 근육단면적"], ans: 2, exp: "등척성 토크의 크기는 ① 관절각도 변화에 따른 근육길이 변화(힘 생산 능력 변화)와 ② 관절각도 변화에 따른 모멘트팔 길이 변화, 이 두 가지 요인에 의해 결정된다." },
+
+  // EMG
+  { q: "근전도(EMG) 표준화에 가장 일반적으로 사용되는 기준신호는?", opts: ["안정 시 EMG","최대 수의적 등척성수축(MVIC)","편심성 수축 중 EMG","관절 가동범위 최대 각도에서의 EMG"], ans: 1, exp: "MVIC(Maximal Voluntary Isometric Contraction, 최대 수의적 등척성수축)는 대상자 간, 날 간 비교를 가능하게 하는 가장 일반적인 EMG 표준화 기준이다." },
+  { q: "EMG 피로 지표로서 주파수 분석에서 피로 시 나타나는 변화는?", opts: ["중앙주파수 증가","중앙주파수 감소","진폭 감소","표본추출률 증가"], ans: 1, exp: "근육피로 시 EMG 신호의 중앙주파수(median frequency)는 감소한다. 이는 파워밀도스펙트럼이 낮은 주파수 쪽으로 이동하기 때문이며, 피로 지표로 활용된다." },
+
+  // 피로 & 변화
+  { q: "지연성근육통(DOMS)의 최고 증상이 나타나는 시간은?", opts: ["운동 직후 1~2시간","운동 후 6~12시간","운동 후 24~72시간","운동 후 1주일"], ans: 2, exp: "DOMS(Delayed Onset Muscle Soreness, 지연성근육통)는 운동 후 24~72시간 사이에 최고 증상이 나타난다. 주로 비교적 심한 편심성 활동 후 세포골격(cytoskeleton) 손상으로 발생한다." },
+  { q: "감소된 사용(Disuse)에 따른 근육 위축에서 가장 크게 영향받는 섬유 유형은?", opts: ["유형 I(느린연축)","유형 IIA","유형 IIX(빠른연축)","모든 유형 동일하게"], ans: 2, exp: "감소된 사용에 따른 위축(Disuse atrophy)은 주로 유형 II(빠른연축) 섬유에서 더 크게 나타난다. 이는 빠른연축 섬유가 고부하 활동에 주로 사용되기 때문이다." },
+  { q: "근육감소증(Sarcopenia)에 대한 설명으로 옳은 것은?", opts: ["주로 젊은 사람에게서 발생","60세 이후 10년마다 약 10% 근육 감소","유형 I 섬유에서만 감소","근력훈련으로 전혀 예방 불가능"], ans: 1, exp: "근육감소증은 노화에 따른 근육 감소로, 60세 이후 10년마다 약 10%씩 감소하며 75세 이후 더욱 빠르게 감소한다. 유형 II 섬유에서 더 두드러지며, 근력훈련으로 어느 정도 보상 가능하다." },
+  { q: "근력훈련 후 단면적 증가가 가장 크게 나타나는 섬유 유형은?", opts: ["유형 I(느린연축)","유형 IIA","유형 IIX 또는 유형 II 전체","모든 유형 동일"], ans: 2, exp: "근력훈련에 따른 근육 비대(hypertrophy)는 대부분 빠른연축(유형 II) 섬유에서 가장 크게 나타난다." },
+
+  // Special Focus 문제
+  { q: "Special Focus 3.1: 근육의 비력(Specific force)의 단위는?", opts: ["N·m (뉴턴미터)","N/cm² (뉴턴/제곱센티미터)","kg (킬로그램)","W (와트)"], ans: 1, exp: "비력(Specific force)은 단위 생리학적 단면적(cm²)당 생산된 힘의 양으로, 단위는 N/cm² (또는 lbs/in²)이다. 인간 근육에서 약 15~60 N/cm² 범위이다." },
+  { q: "Special Focus 3.6: 피로의 지표로서 EMG 신호의 주파수 분석에서 관찰되는 변화는?", opts: ["전폭(Amplitude) 증가","중앙주파수(Median frequency) 증가","중앙주파수 감소 — 저주파수 쪽으로 이동","표면 잡음 감소"], ans: 2, exp: "피로 시 EMG 신호의 중앙주파수는 저주파수 쪽으로 이동(감소)한다. 이는 피로된 근섬유에서 활성전위 전파 속도가 감소하기 때문이다." },
+  { q: "Special Focus 3.7: 뼈대근육 섬유 유형화 3가지 방법 중 '표준 금(Gold standard)'으로 인정되는 방법은?", opts: ["생화학적 또는 해당성 대사경로에 근거한 조직화학","미오신 ATPase의 활성에 근거한 조직화학적 방법","미오신 무거운사슬(MHC)의 분자적 특성","생리적 특성에 근거한 방법"], ans: 1, exp: "미오신 ATPase의 활성에 근거한 조직화학적 방법이 섬유 유형화의 표준 금(gold standard)으로 오랫동안 인정되어왔다. 최근에는 MHC 분자적 방법도 함께 사용된다." },
+];
+
+// ── Quiz State ───────────────────────────────────────────────
+let quizInitialized = false;
+let questions = [];
+let currentIdx = 0;
+let score = 0;
+let wrongIds = [];
+let answered = [];
+let quizMode = 'all'; // 'all' | 'wrong'
+let quizFinished = false;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function initQuiz(mode = 'all') {
+  quizInitialized = true;
+  quizFinished = false;
+  currentIdx = 0;
+  score = 0;
+  wrongIds = [];
+  answered = [];
+  quizMode = mode;
+
+  if (mode === 'wrong' && wrongIds.length === 0 && window._wrongIds) {
+    questions = shuffle([...ALL_QUESTIONS.filter((_, i) => window._wrongIds.includes(i))]);
+  } else if (mode === 'wrong' && window._wrongIds && window._wrongIds.length > 0) {
+    questions = shuffle([...ALL_QUESTIONS.filter((_, i) => window._wrongIds.includes(i))]);
+  } else {
+    questions = shuffle([...ALL_QUESTIONS]);
+  }
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  if (quizFinished) {
+    renderScore(container);
+    return;
+  }
+  const q = questions[currentIdx];
+  const pct = Math.round((currentIdx / questions.length) * 100);
+
+  container.innerHTML = `
+    <div class="quiz-header">
+      <h3>📝 Ch.3 근육 퀴즈${quizMode === 'wrong' ? ' (오답 재풀기)' : ''}</h3>
+      <div class="stats">문제 ${currentIdx + 1} / ${questions.length} &nbsp;|&nbsp; 점수 ${score}</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" style="width:${pct}%"></div>
+    </div>
+    <div class="q-card" id="qcard">
+      <div class="q-num">Q ${currentIdx + 1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, i) => `<button class="q-opt" onclick="selectOpt(this, ${i})">${i + 1}. ${o}</button>`).join('')}
+      </div>
+      <div class="q-feedback" id="qfb"></div>
+    </div>
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="initQuiz('all')">🔄 처음부터</button>
+      ${window._wrongIds && window._wrongIds.length > 0 ? `<button class="btn btn-danger" onclick="initQuiz('wrong')">❌ 오답만 (${window._wrongIds.length})</button>` : ''}
+    </div>
+  `;
+}
+
+function selectOpt(btn, idx) {
+  const q = questions[currentIdx];
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach(o => { o.classList.add('disabled'); o.onclick = null; });
+
+  const fb = document.getElementById('qfb');
+  const origIdx = ALL_QUESTIONS.indexOf(q);
+
+  if (idx === q.ans) {
+    btn.classList.add('correct');
+    score++;
+    fb.className = 'q-feedback show correct-fb';
+    fb.textContent = '✅ 정답! ' + q.exp;
+  } else {
+    btn.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.className = 'q-feedback show wrong-fb';
+    fb.textContent = '❌ 오답. ' + q.exp;
+    if (!wrongIds.includes(origIdx)) wrongIds.push(origIdx);
+    window._wrongIds = wrongIds;
+  }
+  answered.push(idx === q.ans);
+
+  setTimeout(() => {
+    currentIdx++;
+    if (currentIdx >= questions.length) {
+      quizFinished = true;
+    }
+    renderQuiz();
+  }, 2200);
+}
+
+function renderScore(container) {
+  const pct = Math.round((score / questions.length) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '👍' : pct >= 50 ? '😅' : '📚';
+  container.innerHTML = `
+    <div class="score-display">
+      <div style="font-size:48px;margin-bottom:8px;">${emoji}</div>
+      <div class="score-num">${pct}%</div>
+      <div class="score-label">${questions.length}문제 중 ${score}개 정답</div>
+      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="initQuiz('all')">🔄 다시 풀기</button>
+        ${window._wrongIds && window._wrongIds.length > 0 ? `<button class="btn btn-danger" onclick="initQuiz('wrong')">❌ 오답만 재풀기 (${window._wrongIds.length}문제)</button>` : ''}
+      </div>
+    </div>
+    ${window._wrongIds && window._wrongIds.length > 0 ? `
+      <div class="wrong-list-header">❌ 틀린 문제 목록 (${window._wrongIds.length}개)</div>
+      ${window._wrongIds.map(i => `
+        <div class="card" style="margin-bottom:10px;">
+          <div class="q-num">오답</div>
+          <div class="q-text" style="font-size:14px;">${ALL_QUESTIONS[i].q}</div>
+          <div class="highlight-box highlight-green" style="margin-top:8px;font-size:13px;">
+            ✅ 정답: ${ALL_QUESTIONS[i].opts[ALL_QUESTIONS[i].ans]}<br>
+            💡 ${ALL_QUESTIONS[i].exp}
+          </div>
+        </div>
+      `).join('')}
+    ` : '<div class="highlight-box highlight-green" style="margin-top:16px;">🎉 모든 문제를 맞혔습니다!</div>'}
+  `;
+}
+</script>
+</body>
+</html>
