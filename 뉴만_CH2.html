@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 02 — 인체 관절의 기본 구조와 기능</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --bg2: #E3ECFF;
+    --card: #FFFFFF;
+    --accent: #1E3A5F;
+    --accent2: #2A5298;
+    --accent3: #4A90D9;
+    --accent4: #6CB4F5;
+    --highlight: #FFF3CD;
+    --highlight2: #D4EDDA;
+    --highlight3: #F8D7DA;
+    --highlight4: #CCE5FF;
+    --text: #1A2B3C;
+    --text2: #445566;
+    --text3: #6688AA;
+    --border: #C5D8F0;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10);
+    --shadow2: 0 4px 24px rgba(30,58,95,0.15);
+    --radius: 12px;
+    --radius2: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: white;
+    padding: 28px 32px 22px;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    pointer-events: none;
+  }
+  .site-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .site-header p { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+  /* TABS */
+  .tab-nav {
+    display: flex; gap: 6px;
+    padding: 16px 24px 0;
+    background: linear-gradient(180deg, #dce8fa 0%, var(--bg) 100%);
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 20px;
+    border: none; border-radius: var(--radius2) var(--radius2) 0 0;
+    background: transparent;
+    color: var(--text2);
+    font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    border-bottom: none;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,0.6); color: var(--accent); }
+  .tab-btn.active {
+    background: white;
+    color: var(--accent);
+    border-color: var(--border);
+    border-bottom-color: white;
+    margin-bottom: -2px;
+  }
+  .tab-panel { display: none; padding: 24px; }
+  .tab-panel.active { display: block; }
+
+  /* OVERVIEW TAB */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .topic-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--accent3);
+    transition: box-shadow 0.2s;
+  }
+  .topic-card:hover { box-shadow: var(--shadow2); }
+  .topic-card h3 {
+    font-size: 14px; font-weight: 700; color: var(--accent);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .topic-card .kw-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw {
+    background: var(--bg2);
+    color: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+  }
+  .kw.red { background: #FDECEA; color: #C0392B; }
+  .kw.green { background: #E8F8F0; color: #1A7A4A; }
+  .kw.orange { background: #FEF5E7; color: #D35400; }
+  .kw.purple { background: #F3E8FD; color: #7D3C98; }
+
+  /* SUMMARY TAB */
+  .accordion { margin-bottom: 12px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .accordion-header {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    color: white;
+    padding: 14px 20px;
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700; font-size: 15px;
+    user-select: none;
+    transition: opacity 0.2s;
+  }
+  .accordion-header:hover { opacity: 0.9; }
+  .accordion-header .icon { font-size: 18px; transition: transform 0.3s; }
+  .accordion-header.open .icon { transform: rotate(180deg); }
+  .accordion-body {
+    background: white;
+    display: none;
+    padding: 20px 24px;
+  }
+  .accordion-body.open { display: block; }
+
+  .sub-section { margin-bottom: 18px; }
+  .sub-section h4 {
+    font-size: 14px; font-weight: 700; color: var(--accent2);
+    margin-bottom: 8px; padding-bottom: 4px;
+    border-bottom: 2px solid var(--bg2);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sub-section ul { padding-left: 18px; }
+  .sub-section ul li { margin-bottom: 5px; color: var(--text2); }
+  .sub-section ul li strong { color: var(--accent); }
+
+  .info-box {
+    border-radius: var(--radius2);
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .info-box.blue { background: var(--highlight4); border-left: 4px solid var(--accent3); }
+  .info-box.yellow { background: var(--highlight); border-left: 4px solid #F0AD4E; }
+  .info-box.green { background: var(--highlight2); border-left: 4px solid #27AE60; }
+  .info-box.red { background: var(--highlight3); border-left: 4px solid #E74C3C; }
+  .info-box strong { display: block; margin-bottom: 4px; color: var(--accent); font-size: 13px; }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--accent2); color: white;
+    padding: 10px 12px; text-align: left; font-weight: 600;
+  }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
+  tr:hover td { background: var(--bg); }
+
+  /* QUIZ TAB */
+  .quiz-controls {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .btn {
+    padding: 10px 22px;
+    border: none; border-radius: var(--radius2);
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent2); color: white; }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .btn-secondary { background: var(--bg2); color: var(--accent); border: 2px solid var(--border); }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-danger { background: #E74C3C; color: white; }
+  .btn-danger:hover { background: #C0392B; }
+  .btn-success { background: #27AE60; color: white; }
+  .btn-success:hover { background: #1E8449; }
+
+  .progress-bar-wrap {
+    background: var(--border); border-radius: 20px; height: 12px;
+    overflow: hidden; flex: 1; min-width: 150px;
+  }
+  .progress-bar {
+    height: 100%; border-radius: 20px;
+    background: linear-gradient(90deg, var(--accent3), var(--accent2));
+    transition: width 0.4s ease;
+  }
+  .progress-text { font-size: 13px; color: var(--text2); font-weight: 600; white-space: nowrap; }
+
+  .quiz-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow2);
+    margin-bottom: 16px;
+  }
+  .quiz-num {
+    font-size: 12px; font-weight: 700; color: var(--accent3);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .quiz-q {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    margin-bottom: 18px; line-height: 1.6;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius2);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px; text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent3); background: var(--highlight4); }
+  .opt-btn.correct { border-color: #27AE60 !important; background: #E8F8F0 !important; color: #1A7A4A !important; font-weight: 700; }
+  .opt-btn.wrong { border-color: #E74C3C !important; background: #FDECEA !important; color: #C0392B !important; }
+  .opt-btn:disabled { cursor: default; }
+  .quiz-feedback {
+    margin-top: 14px; padding: 12px 16px;
+    border-radius: var(--radius2); font-size: 13px; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: #E8F8F0; color: #1A7A4A; border-left: 4px solid #27AE60; }
+  .quiz-feedback.wrong { background: #FDECEA; color: #C0392B; border-left: 4px solid #E74C3C; }
+
+  .score-board {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow2);
+    text-align: center;
+    display: none;
+  }
+  .score-board.show { display: block; }
+  .score-big { font-size: 52px; font-weight: 900; color: var(--accent2); }
+  .score-label { font-size: 16px; color: var(--text2); margin-top: 4px; }
+
+  .wrong-section {
+    margin-top: 20px;
+    background: #FFF8F0;
+    border-radius: var(--radius);
+    padding: 18px;
+    border: 2px solid #F0AD4E;
+    display: none;
+  }
+  .wrong-section.show { display: block; }
+  .wrong-section h3 { color: #D35400; font-size: 15px; margin-bottom: 14px; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+    margin-left: 8px;
+  }
+  .badge-red { background: #FDECEA; color: #E74C3C; }
+  .badge-green { background: #E8F8F0; color: #27AE60; }
+  .badge-blue { background: var(--highlight4); color: var(--accent2); }
+
+  @media (max-width: 600px) {
+    .site-header { padding: 18px 16px 14px; }
+    .tab-nav { padding: 12px 12px 0; gap: 4px; }
+    .tab-btn { padding: 8px 12px; font-size: 13px; }
+    .tab-panel { padding: 16px; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .quiz-q { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <h1>🦴 Chapter 02 — 인체 관절의 기본 구조와 기능</h1>
+  <p>운동학 (Kinesiology) | 관절 분류 · 윤활관절 · 결합조직 · 뼈 · 관절병리</p>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('overview')">📋 개요 &amp; 목차</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약 정리</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ==================== OVERVIEW TAB ==================== -->
+<div id="tab-overview" class="tab-panel active">
+  <div class="topic-grid">
+    <div class="topic-card" style="border-left-color:#4A90D9">
+      <h3>🔵 관절 분류 (움직임 기준)</h3>
+      <div class="kw-list">
+        <span class="kw">부동관절</span><span class="kw">가동관절</span><span class="kw">섬유관절</span>
+        <span class="kw">연골관절</span><span class="kw">윤활관절</span><span class="kw">관절막</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#27AE60">
+      <h3>🟢 역학적 유사성 — 윤활관절 분류</h3>
+      <div class="kw-list">
+        <span class="kw green">경첩관절</span><span class="kw green">중쇠관절</span><span class="kw green">타원관절</span>
+        <span class="kw green">절구관절</span><span class="kw green">평면관절</span><span class="kw green">안장관절</span>
+        <span class="kw green">융기관절</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#E67E22">
+      <h3>🟠 윤활관절 구성 요소</h3>
+      <div class="kw-list">
+        <span class="kw orange">관절연골</span><span class="kw orange">관절주머니</span><span class="kw orange">윤활막</span>
+        <span class="kw orange">윤활액</span><span class="kw orange">인대</span><span class="kw orange">힘줄</span>
+        <span class="kw orange">반달연골</span><span class="kw orange">관절원반</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#9B59B6">
+      <h3>🟣 관절주위 결합조직 유형</h3>
+      <div class="kw-list">
+        <span class="kw purple">치밀결합조직</span><span class="kw purple">관절연골</span><span class="kw purple">섬유연골</span>
+        <span class="kw purple">아교질 Ⅰ·Ⅱ형</span><span class="kw purple">탄력섬유</span><span class="kw purple">GAG</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#E74C3C">
+      <h3>🔴 생물학적 기본물질</h3>
+      <div class="kw-list">
+        <span class="kw red">섬유단백질</span><span class="kw red">바탕질</span><span class="kw red">세포</span>
+        <span class="kw red">프로테오글리칸</span><span class="kw red">히알루론산</span><span class="kw red">글리코사미노글리칸</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#1ABC9C">
+      <h3>🩴 뼈 (Bone) 특성</h3>
+      <div class="kw-list">
+        <span class="kw green">치밀뼈</span><span class="kw green">겉솜뼈</span><span class="kw green">하버시안계</span>
+        <span class="kw green">볼프의 법칙</span><span class="kw green">뼈막</span><span class="kw green">뼈대사</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#3498DB">
+      <h3>🔬 관절 감각수용기</h3>
+      <div class="kw-list">
+        <span class="kw">유형 Ⅰ (루피니)</span><span class="kw">유형 Ⅱ (파치니)</span>
+        <span class="kw">유형 Ⅲ (골지)</span><span class="kw">유형 Ⅳ (자유신경종말)</span>
+      </div>
+    </div>
+    <div class="topic-card" style="border-left-color:#F39C12">
+      <h3>⚠️ 관절병리 &amp; 노화</h3>
+      <div class="kw-list">
+        <span class="kw orange">골관절염(OA)</span><span class="kw orange">류마티스관절염(RA)</span>
+        <span class="kw orange">GAG 감소</span><span class="kw orange">아교질 변화</span><span class="kw orange">고정 영향</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box blue">
+    <strong>💡 핵심 공부 포인트</strong>
+    ① 부동관절 vs 가동관절 구분 → ② 윤활관절 7종 분류 (표 2.1) 암기 → ③ 결합조직 3유형 조직학 비교 → ④ 아교질 Ⅰ형 vs Ⅱ형 차이 → ⑤ GAG/프로테오글리칸 기능 → ⑥ 볼프의 법칙 → ⑦ OA vs RA 비교
+  </div>
+</div>
+
+<!-- ==================== SUMMARY TAB ==================== -->
+<div id="tab-summary" class="tab-panel">
+
+  <!-- 1. 관절 기본 분류 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🔵 1. 관절의 분류 (움직임 가능성 기준)
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>📌 부동관절 (synarthrosis)</h4>
+        <ul>
+          <li>움직임이 없거나 아주 미세한 움직임만 허용</li>
+          <li><strong>섬유관절</strong>: 머리뼈 봉합, 연결뼈사이관절(인대결합), 노자관절 배사이막 → 고농도 아교질의 치밀결합조직으로 고정</li>
+          <li><strong>연골관절</strong>: 두덩결합, 척추뼈몸통사이관절, 자루몸통관절 → 유리연골/섬유연골로 고정</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>📌 가동관절 / 윤활관절 (diarthrosis)</h4>
+        <ul>
+          <li>중간~광범위한 운동 허용</li>
+          <li>관절강 내에 윤활액으로 차 있는 공간 보유</li>
+          <li>가동관절 = 윤활관절(synovial joint) 로 통칭</li>
+          <li>7가지 요소를 항상 보유: 관절연골, 관절주머니, 윤활막, 윤활마, 인대, 혈관, 감각신경</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 역학적 분류 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🟢 2. 역학적 유사성에 근거한 윤활관절 분류 (표 2.1)
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>관절 종류</th><th>일차적 운동</th><th>역학적 유사성</th><th>해부학적 예</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>경첩관절</strong> (hinge)</td><td>굽힘과 펼낱 일어남</td><td>문의 경첩</td><td>위팔자관절, 손가락(발가락)뼈사이관절</td></tr>
+            <tr><td><strong>중쇠관절</strong> (pivot)</td><td>단일 돌림축 주위에서 한 분절의 스핀</td><td>문의 손잡이</td><td>위팔노관절, 고리중쇠관절</td></tr>
+            <tr><td><strong>타원관절</strong> (ellipsoid)</td><td>두 개의 평면 운동 (굽힘-폄, 벌림-모음)</td><td>오목한 타원형의 오목면과 짝을 이루는 비교적 편평한 볼록의 타원형</td><td>노손목관절</td></tr>
+            <tr><td><strong>절구관절</strong> (ball-and-socket)</td><td>세 개의 평면 운동 (굽힘-폄, 벌림-모음, 안쪽-가쪽돌림)</td><td>오목한 컵 입구와 짝을 이루고 있는 구형의 볼록면</td><td>오목위팔관절, 엉덩넙다리(영덩)관절</td></tr>
+            <tr><td><strong>평면관절</strong> (plane)</td><td>미끄러짐(병진운동) 또는 미끄러짐과 돌림의 결합</td><td>책상 위의 책과 같이 서로 마주보는 비교적 편평한 면들</td><td>손목뼈사이관절, 발목뼈사이관절, 수정형 평면관절 포함</td></tr>
+            <tr><td><strong>안장관절</strong> (saddle)</td><td>두 개의 평면 운동; 뼈사이의 스핀은 가능하나 관절이 맞물리는 특성에 의해 제한됨</td><td>말의 기수와 안장의 관계와 같이, 각각의 관절면은 오목면과 볼록면을 모두 가지고 있으며 서로에 대해서는 직각 방향에 있다</td><td>엄지의 손목손허리관절, 복장빗장관절</td></tr>
+            <tr><td><strong>융기관절</strong> (condyloid)</td><td>두 개의 평면 운동; 굽힘-폄과 벌림-모음 또는 굽힘-폄과 축돌림 (안쪽돌림-가쪽돌림)</td><td>손허리손가락관절과 같이 한쪽 방향으로 확장된 거의 구형의 볼록면이 얕은 오목한 컵 입구와 짝을 이루고 있다</td><td>손허리손가락관절, 정강넙다리(무릎)관절</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box yellow">
+        <strong>⭐ 시험 핵심</strong>
+        달걀형 관절(융기관절)과 안장형 관절로 단순화 가능 — 달갈형: 한 쌍의 오목-볼록 관절면(타원·절구·융기관절) / 안장형: 각 관절면이 오목면과 볼록면 모두 보유
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 윤활관절 구성요소 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🟠 3. 윤활관절의 구성 요소
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>① 관절주머니 (Articular capsule)</h4>
+        <ul>
+          <li><strong>바깥층(섬유층)</strong>: 치밀결합조직. 뼈 사이 위치 안정성·내용물 봉쇄 기능</li>
+          <li><strong>안쪽층(윤활막)</strong>: 윤활액(synovial fluid) 분비; 평균 3~10개의 세포층, 특수화된 결합조직</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>② 윤활액 (Synovial fluid)</h4>
+        <ul>
+          <li>히알루론산(hyaluronan) + 당단백질(glycoprotein) 포함 혈장</li>
+          <li>관절연골에 영양 공급, 관절 사이 마찰 감소</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>③ 인대 (Ligament)</h4>
+        <ul>
+          <li>뼈와 뼈 사이에 부착된 결합조직 (주로 <strong>유형 Ⅰ 아교질</strong>)</li>
+          <li>과도한 움직임으로부터 관절 보호</li>
+          <li><strong>관절주머니인대</strong>: 관절주머니와 혼합 / <strong>관절주머니바깥인대</strong>: 독립적 띠 형태</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>④ 관절원반 / 반달연골 (Disc / Meniscus)</h4>
+        <ul>
+          <li>관절면 사이에 놓인 섬유연골 패드</li>
+          <li>관절의 일치성 증가, 힘 분산, 관절 안정화 역할</li>
+          <li>척추원반, 턱관절원반, 무릎 반달연골이 대표적</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>⑤ 힘줄 (Tendon)</h4>
+        <ul>
+          <li>근육이 뼈에 부착되도록 연결하는 치밀결합조직</li>
+          <li>높은 유형 Ⅰ 아교질 함량 → 장력 저항에 특화</li>
+          <li>근탄력성: 장력 에너지 저장, 충격 흡수 특성 보유</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 관절 감각수용기 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🔬 4. 관절 감각수용기 (표 2.3)
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>수용기 유형</th><th>위치</th><th>특성</th><th>기능</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>유형 Ⅰ / 루피니(Ruffini)</strong></td>
+              <td>섬유성 관절주머니, 특히 얕은층</td>
+              <td>느린 적응, 낮은 역치</td>
+              <td>정적인 관절위치와 관절 가도도에 대한 피드백 제공; 장력에 민감</td>
+            </tr>
+            <tr>
+              <td><strong>유형 Ⅱ / 파치니(Pacini)</strong></td>
+              <td>섬유성 관절주머니, 특히 깊은층, 관절의 지방덩이</td>
+              <td>빠른 적응, 낮은 역치</td>
+              <td>관절 가속도에 대한 피드백 제공; 압력에 민감</td>
+            </tr>
+            <tr>
+              <td><strong>유형 Ⅲ / 골지와 비슷(Golgi-like)</strong></td>
+              <td>인대</td>
+              <td>느린 적응, 높은 역치</td>
+              <td>관절운동량 조절에 활동; 조직변형에 대한 피드백 제공</td>
+            </tr>
+            <tr>
+              <td><strong>유형 Ⅳ / 자유신경종말(Free nerve ending)</strong></td>
+              <td>관절주머니안, 지방덩이, 근육·관절 결합조직</td>
+              <td>높은 역치</td>
+              <td>유해한 자극, 화학적 자극, 기계적 자극에 반응이 있을 때 신호를 보냄</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 결합조직 유형 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🟣 5. 관절주위 결합조직의 3가지 유형 (표 2.2)
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>① 치밀결합조직 (Dense connective tissue)</h4>
+        <ul>
+          <li>인대, 힘줄, 관절주머니의 섬유층, 힘줄에 분포</li>
+          <li><strong>유형 Ⅰ 아교질</strong>이 높은 비율, 비교적 낮은 항량의 드문드문 배치된 세포</li>
+          <li>임상 기능: 장력에 저항하고 인대와 관절주머니는 관절을 안정화</li>
+          <li>임상 상호관계: 발목 염좌(sprain) → 만관절불안정성과 외상후뼈관절염</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>② 관절연골 (특수화된 유리연골)</h4>
+        <ul>
+          <li><strong>유형 Ⅱ 아교질</strong>이 높은 비율, 중간 정도로 분포된 연골세포</li>
+          <li>비교적 중간 수준의 프로테오글리칸 함유</li>
+          <li>임상 기능: 관절의 힘(압박력과 전단력)을 분산시키고 흡수; 관절의 마찰을 감소</li>
+          <li>임상 상호관계: 뼈관절염 초기 단계 동안 바탕질이 분해·흡수됨 → 조직의 수분 흡수 능력 감소</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>③ 섬유연골 (Fibrocartilage) <span class="badge badge-red">★ 중요</span></h4>
+        <ul>
+          <li>반달연골(무릎), 관절원반(턱관절), 척추원반, 관절테두리(어깨·엉덩), 두덩결합</li>
+          <li>여러 방향을 가진 유형 Ⅰ 아교질의 높은 비율, 중간 정도까지 분포된 섬유모세포와 연골세포</li>
+          <li>임상 기능: 관절을 지지하고 역학적으로 안정화; 부하를 분산시키고 복잡한 관절운동형상학을 안내</li>
+          <li>임상 상호관계: 틱관절에 있는 찢어지거나 퇴행된 원반 → 통증 및 악화 → 관절복원술 필요</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 생물학적 기본물질 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🧬 6. 관절주위 결합조직의 생물학적 기본물질
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>① 섬유단백질</h4>
+        <ul>
+          <li><strong>유형 Ⅰ 아교질</strong>: 장력 받을 때 신장이 잘 되지 않는 굵은 섬유. 인대, 힘줄, 섬유성 관절주머니에 분포. 힘을 빠르게 전달하는 구조인 힘줄 구성</li>
+          <li><strong>유형 Ⅱ 아교질</strong>: Ⅰ형보다 가늘고 약간 탄력성 보유. 유리연골(hyaline cartilage)과 같이 일반적인 형태의 유연한 구조 유지를 위한 틀 구조 제공. 관절연골(연골모세포) 내에 속함</li>
+          <li><strong>탄력소(elastin)</strong>: 탄력섬유 구성; 신장 후 원래 형태로 쉽게 되돌아옴. 황색인대, 항안인대에 유용</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>② 바탕질 (Ground substance)</h4>
+        <ul>
+          <li>아교섬유와 탄력섬유를 함유하는 젤 내에 묻혀 있는 구조들</li>
+          <li><strong>글리코사미노글리칸(GAG)</strong>: 음전하 띠는 반복단당류. 물·용질 결합 → 조직 팽창 유발. 바탕질 내에서 영양의 확산을 위한 체액 매개체 기능</li>
+          <li><strong>프로테오글리칸</strong>: GAG 사슬이 중심단백질에 부착된 큰 분자. 히알루론산에 결합 → 대형 프로테오글리칸 복합체(large proteoglycan complex) 형성</li>
+          <li><strong>물(Water)</strong>: 연골 무게의 약 60~80% 차지. GAG의 음전하에 의해 흡착됨</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>③ 세포 (Cells)</h4>
+        <ul>
+          <li><strong>섬유모세포(fibroblast)</strong>: 인대, 힘줄, 관절주머니에 위치. 아교질 및 프로테오글리칸 합성·분비</li>
+          <li><strong>연골모세포(chondrocyte)</strong>: 유리연골과 섬유연골 내에 위치. 독특한 바탕질과 섬유단백질의 합성 담당</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 관절연골 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🦷 7. 관절연골 (Articular Cartilage) 구조와 기능
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>층별 구조 (표면 → 심부)</h4>
+        <ul>
+          <li><strong>얕은접선지대 (STZ, 10~20%)</strong>: 관절면 가까이, 아교섬유가 관절면에 평행 배열. 관절면의 두께 약 10~20%</li>
+          <li><strong>중간지대 (40~60%)</strong>: 아교섬유가 무작위로 비스듬하게 배열</li>
+          <li><strong>깊은지대 (30~40%)</strong>: 가장 굵은 아교섬유 세포. 수직방향 배열</li>
+          <li><strong>석회화지대</strong>: 하방에 있는 뼈와 관절연골 사이의 확산장벽(diffusion barrier) 형성. 최지점(tidemark)이 석회화지대 경계</li>
+        </ul>
+      </div>
+      <div class="info-box green">
+        <strong>💡 관절연골의 특성</strong>
+        혈관·신경이 없음 → 치유를 위해 원시세포모세포의 공급을 받지 못하여 부적절한 결과 초래 가능. 마찰계수 0.005~0.02 (얼음 위 얼음의 5~20배보다 낮음)
+      </div>
+      <div class="info-box red">
+        <strong>⚠️ 관절연골 손상 시</strong>
+        뼈관절염(osteoarthritis) 유발 인자가 됨. 관절성형술(arthroplasty) 통해 대체 가능
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. 뼈 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      🦴 8. 뼈 (Bone) 특성과 볼프의 법칙
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>뼈의 기본 구조</h4>
+        <ul>
+          <li><strong>치밀뼈(compact bone)</strong>: 뼈 바깥쪽 껍질, 뼈몸통의 대부분 구성. 하버시안계(Haversian system)으로 구성된 동심원 나선 구조</li>
+          <li><strong>겉솜뼈(cancellous bone)</strong>: 뼈 끝부분의 얇은 층, 치밀뼈 내의 스펀지 모양의 결성</li>
+          <li><strong>뼈막(periosteum)</strong>: 뼈의 바깥쪽 껍질, 뼈의 성장과 치유에 중요. 압력과 통증을 위한 감각 신경지배</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>볼프의 법칙 (Wolff's Law) <span class="badge badge-red">★★ 중요</span></h4>
+        <ul>
+          <li>외적인 힘에 대한 반응으로 형태, 강도, 밀도를 끊임없이 변경시킬 수 있는 매우 역동적인 조직</li>
+          <li>스트레스를 많이 받는 영역에서 적층 스트레스를 받는 영역에서 저하수준이 낮아진다</li>
+          <li>골절된 후 뼈의 양쪽 끝은 그 근육구조의 긴 축 방향으로 힘을 전달하기 위한 일련의 버팀목으로서의 역할을 취함으로써 힘의 흡수와 전달을 위해 힘의 방향을 바꾸게 함</li>
+          <li>고정 영향: 장기간 고정 → 장력강도 현저하게 감소; 운동으로 회복 가능하나 인대보다 낮은 장력강도 수준이 지속됨</li>
+        </ul>
+      </div>
+      <div class="info-box yellow">
+        <strong>⭐ 관절주위 결합조직과 뼈의 강도에 대한 고정의 영향</strong>
+        고정 → 섬유단백질·바탕질·물의 양과 배열 변화 → 구조적 강도 감소 → 운동프로그램 완료 후에도 고정 전보다 낮은 장력강도 지속 → 초기 재활운동 중 부하를 점진적으로 늘려야 함
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 관절병리 & 노화 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      ⚠️ 9. 관절병리의 짧은 요약 &amp; 노화의 영향
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-section">
+        <h4>급성 외상 (Acute trauma)</h4>
+        <ul>
+          <li>관절주머니·윤활막에 급성 염증반응 유발 → 사이토카인 활성화 → 세포-신호전달 분자 네트워크 의존성 증가</li>
+          <li>사이토카인: 관절 통증·운동 등에 중요 영향. 염증 촉진·유지 역할</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>만성적 부하 (Chronic overuse)</h4>
+        <ul>
+          <li>반복 작은 충격(피로 손상)으로 발전</li>
+          <li>가장(guarding) 패턴: 관절 감각수용기가 비정상 자세에 반응하여 근긴장도 증가 → 관절 불안정성 악화</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <h4>노화의 영향 <span class="badge badge-orange" style="background:#FEF5E7;color:#D35400">★ 시험 포인트</span></h4>
+        <ul>
+          <li><strong>GAG 감소</strong>: 세포에서 생산되는 GAG 분자의 숫자와 크기가 작아짐 → 물과 결합하는 세포바깥바탕질 능력 저하 → 관절연골의 내충격성 감소</li>
+          <li><strong>아교질 변화</strong>: 아교질이 수분에 대해 더 빠르게 미끄러지는 능력 상실 → 부가된 힘에 스스로 정렬하지 못함 → 섬유 사이 공간이 좁아짐 → 더욱 빽빽하게 채워진 형태(fibrillated) 나타남</li>
+          <li><strong>관절연골의 대표 질환</strong>: 뼈관절염(OA, osteoarthritis) / 류마티스관절염(RA, rheumatoid arthritis)</li>
+        </ul>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>구분</th><th>뼈관절염(OA)</th><th>류마티스관절염(RA)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>특징</strong></td><td>염증 성분이 낮음, 점진적인 관절연골 손실</td><td>강한 염증 요소, 전신적 자가면역 결합조직질환</td></tr>
+            <tr><td><strong>진단</strong></td><td>주로 "골관절증(osteoarthrosis)" 으로 언급 권고</td><td>혈청진단과 증상기간이 관련됨</td></tr>
+            <tr><td><strong>최다 영향 관절</strong></td><td>무릎(정강넙다리), 목말발배, 고리중쇠, 어깨 등</td><td>관절주머니·윤활막·윤활액 현저한 변화 먼저</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 요약 -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      📝 10. 챕터 요약 (Summary)
+      <span class="icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="info-box blue">
+        <strong>핵심 요약</strong>
+        관절은 근육뼈대 운동의 토대를 제공하며 인체분절 사이의 힘에 대한 분산과 안정성을 가능하게 한다. 관절을 범주화하고 관절의 역학적 특성과 운동형상학적 특성을 논의할 수 있게 해주는 여러 가지 관절분류법이 있다. 신체움직임의 비대칭적인 형태와 관절 불일치성의 결과로 돌림축은 관절 접촉면의 합동과 같은 압박적 목적을 위해 추적된다.
+      </div>
+      <ul>
+        <li>관절의 기능과 탄성은 관절을 구성하는 조직의 구조와 유형에 의해 결정된다</li>
+        <li>흥미롭게도, 모든 관절주위 결합조직(그리고 뼈)은 기본적으로 유사한 조직학적 구성을 공유한다</li>
+        <li>각각의 조직은 세포, 바탕질, 섬유단백질을 포함하고 있다</li>
+        <li>각 조직의 비율과 배열은 조직에 부과된 일차적인 기능적 요구에 따라 단일 방향에서의 장력을 저항하도록 설계된다</li>
+        <li>손상된 관절주위 결합조직의 회복은 직접적인 혈액공급의 풍요성·연령·부하·고정·외상, 그리고 이런 질병상태에 의해 영향을 받는다</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== QUIZ TAB ==================== -->
+<div id="tab-quiz" class="tab-panel">
+  <div class="quiz-controls">
+    <button class="btn btn-primary" onclick="startQuiz('all')">🎲 전체 퀴즈 시작</button>
+    <button class="btn btn-danger" id="wrongBtn" onclick="startQuiz('wrong')" style="display:none">❌ 틀린 문제만 (<span id="wrongCount">0</span>)</button>
+    <button class="btn btn-secondary" onclick="resetAll()">🔄 초기화</button>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+    <span class="progress-text" id="progressText">0 / 0</span>
+  </div>
+
+  <div id="quizArea"></div>
+  <div class="score-board" id="scoreBoard">
+    <div class="score-big" id="scoreNum">-</div>
+    <div class="score-label" id="scoreLabel"></div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="startQuiz('all')">🔄 다시 풀기</button>
+      <button class="btn btn-danger" id="retryWrongBtn" onclick="startQuiz('wrong')" style="display:none">❌ 틀린 문제 재풀기</button>
+    </div>
+  </div>
+  <div class="wrong-section" id="wrongList">
+    <h3>❌ 틀린 문제 목록</h3>
+    <div id="wrongItems"></div>
+  </div>
+</div>
+
+<script>
+// ===================== QUIZ DATA =====================
+const ALL_QUESTIONS = [
+  // 관절 기본 분류
+  { q:"관절을 움직임 가능성에 근거하여 크게 2가지로 분류할 때, 각각의 명칭으로 옳은 것은?", o:["부동관절과 가동관절","섬유관절과 연골관절","경첩관절과 구관절","윤활관절과 반윤활관절"], a:0, exp:"관절은 움직임 가능성에 따라 부동관절(synarthrosis)과 가동관절(diarthrosis)로 분류됩니다." },
+  { q:"부동관절(synarthrosis)에 대한 설명으로 옳은 것은?", o:["윤활액으로 차 있는 공간을 가진다","움직임이 없거나 아주 미세한 움직임만 허용된다","7가지 구성 요소를 항상 보유한다","관절주머니가 발달해 있다"], a:1, exp:"부동관절은 움직임이 없거나 아주 약간의 움직임이 허용되는 관절로, 섬유관절과 연골관절로 세분됩니다." },
+  { q:"섬유관절(fibrous joint)의 예로 옳은 것은?", o:["위팔자관절","두덩결합","머리뼈 봉합","노손목관절"], a:2, exp:"섬유관절의 예는 머리뼈 봉합, 연결뼈사이관절(인대결합), 노자관절을 감하는 배사이막 등입니다." },
+  { q:"연골관절(cartilaginous joint)의 예로 옳은 것은?", o:["머리뼈 봉합","척추뼈몸통사이관절","위팔자관절","오목위팔관절"], a:1, exp:"연골관절의 예는 두덩결합, 척추뼈몸통사이관절, 자루몸통관절입니다." },
+  { q:"가동관절(diarthrosis)의 특징으로 가장 적절한 것은?", o:["아교질의 치밀결합조직으로 고정된다","관절강에 윤활액이 없다","중간에서 광범위한 운동까지 허용된다","움직임이 전혀 허용되지 않는다"], a:2, exp:"가동관절은 중간 정도에서 광범위한 운동까지 허용되는 관절로, 윤활액으로 차 있는 관절강을 갖습니다." },
+
+  // 윤활관절 7종
+  { q:"경첩관절(hinge joint)의 일차적인 운동은?", o:["내회전과 외회전","미끄러짐과 회전","굽힘과 펴냄","벌림과 모음"], a:2, exp:"경첩관절은 굽힘(flexion)과 폄(extension)을 일으키는 관절로, 문의 경첩에 비유됩니다." },
+  { q:"중쇠관절(pivot joint)의 일차적인 운동은?", o:["굽힘-폄","단일 돌림축 주위에서 스핀","두 개의 평면 운동","세 개의 평면 운동"], a:1, exp:"중쇠관절은 단일 돌림축 주위에서 한 분절의 스핀이 일어나는 관절입니다." },
+  { q:"고리중쇠관절(atlanto-axial joint)은 어떤 유형의 관절인가?", o:["경첩관절","중쇠관절","타원관절","안장관절"], a:1, exp:"고리중쇠관절은 중쇠관절의 해부학적 예로, 스핀 운동이 특징입니다." },
+  { q:"노손목관절(radiocarpal joint)은 어떤 유형의 관절인가?", o:["경첩관절","중쇠관절","타원관절","절구관절"], a:2, exp:"노손목관절은 타원관절로, 굽힘-폄 및 벌림-모음 두 개의 평면 운동이 허용됩니다." },
+  { q:"세 개의 평면 운동이 가능한 관절 유형은?", o:["경첩관절","타원관절","절구관절","안장관절"], a:2, exp:"절구관절(ball-and-socket joint)은 굽힘-폄, 벌림-모음, 안쪽-가쪽 돌림의 세 개 평면 운동이 허용됩니다." },
+  { q:"엉덩넙다리관절(hip joint)은 어떤 유형의 관절인가?", o:["융기관절","절구관절","안장관절","타원관절"], a:1, exp:"엉덩넙다리관절은 절구관절의 예입니다. 오목위팔관절(shoulder)도 절구관절입니다." },
+  { q:"안장관절(saddle joint)의 역학적 특징은?", o:["한쪽 관절면만 오목하다","각 관절면이 오목면과 볼록면을 모두 가진다","구형의 볼록면이 특징이다","관절면이 서로 평행하다"], a:1, exp:"안장관절은 각 관절면이 오목면과 볼록면을 모두 갖고 있으며 서로 직각 방향에 위치합니다." },
+  { q:"엄지의 손목손허리관절(carpometacarpal joint)은 어떤 유형의 관절인가?", o:["경첩관절","절구관절","안장관절","융기관절"], a:2, exp:"엄지 손목손허리관절은 안장관절의 가장 분명한 예입니다." },
+  { q:"융기관절(condyloid joint)에서 허용되는 자유도는?", o:["1개","2개","3개","4개"], a:1, exp:"융기관절은 대개 자유도 2가 허용됩니다. 자유도 3을 갖지 못하는 이유는 인대와 뼈의 불일치성이 이를 제한하기 때문입니다." },
+  { q:"정강넙다리(무릎)관절은 어떤 유형의 관절인가?", o:["안장관절","타원관절","융기관절","평면관절"], a:2, exp:"정강넙다리관절(무릎)은 융기관절의 예입니다. 손허리손가락관절도 융기관절입니다." },
+  { q:"평면관절(plane joint)에서 일어나는 운동은?", o:["굽힘과 폄","미끄러짐 또는 미끄러짐과 돌림의 결합","세 개의 평면 운동","스핀만"], a:1, exp:"평면관절은 미끄러짐(병진운동) 또는 미끄러짐과 돌림의 결합이 주된 운동입니다." },
+
+  // 윤활관절 구성요소
+  { q:"윤활관절의 관절주머니에서 안쪽층의 기능은?", o:["뼈에 인대를 부착시킨다","윤활액을 분비한다","관절연골에 혈액을 공급한다","힘줄을 덮는다"], a:1, exp:"관절주머니의 안쪽층(윤활막)은 윤활액을 분비하며, 평균 3~10개의 세포층으로 이루어진 특수화된 결합조직입니다." },
+  { q:"윤활액(synovial fluid)의 주요 성분은?", o:["아교질과 탄력소","히알루론산과 당단백질을 포함한 혈장","유형 Ⅱ 아교질","프로테오글리칸과 GAG만"], a:1, exp:"윤활액은 히알루론산(hyaluronan)과 당단백질(glycoprotein)을 포함한 혈장으로 구성됩니다." },
+  { q:"인대(ligament)를 주로 구성하는 아교질 유형은?", o:["유형 Ⅰ 아교질","유형 Ⅱ 아교질","유형 Ⅲ 아교질","유형 Ⅳ 아교질"], a:0, exp:"인대는 주로 유형 Ⅰ 아교질로 구성되며, 이는 인대와 섬유성 관절주머니에서 적극적으로 발견됩니다." },
+  { q:"관절원반과 반달연골의 조직학적 구성은?", o:["유리연골","섬유연골","치밀결합조직","해면뼈"], a:1, exp:"관절원반과 반달연골은 섬유연골(fibrocartilage) 패드로, 관절의 일치성을 증가시키고 힘을 분산합니다." },
+
+  // 결합조직 유형 - 표 2.2
+  { q:"관절주위 결합조직의 3가지 유형이 아닌 것은?", o:["치밀결합조직","관절연골","섬유연골","유리연골"], a:3, exp:"관절주위 결합조직의 3가지 유형은 치밀결합조직, 관절연골(특수화된 유리연골), 섬유연골입니다." },
+  { q:"치밀결합조직(dense connective tissue)의 주된 아교질 유형은?", o:["유형 Ⅰ","유형 Ⅱ","유형 Ⅲ","유형 Ⅳ"], a:0, exp:"치밀결합조직은 유형 Ⅰ 아교질이 높은 비율로 존재하며, 인대·힘줄·관절주머니 섬유층에 분포합니다." },
+  { q:"관절연골(articular cartilage)에 많이 분포하는 아교질 유형은?", o:["유형 Ⅰ","유형 Ⅱ","유형 Ⅲ","유형 Ⅳ"], a:1, exp:"관절연골은 유형 Ⅱ 아교질이 높은 비율로 존재하며 이는 유리연골(특수화된 유리연골)입니다." },
+  { q:"섬유연골(fibrocartilage)의 임상적 예가 아닌 것은?", o:["무릎 반달연골","척추원반","머리뼈 봉합","턱관절 원반"], a:2, exp:"머리뼈 봉합은 섬유관절(부동관절)의 예입니다. 무릎 반달연골, 척추원반, 턱관절 원반은 섬유연골의 예입니다." },
+  { q:"발목 염좌(sprain)와 가장 관련이 깊은 관절주위 결합조직 유형은?", o:["관절연골","섬유연골","치밀결합조직","유리연골"], a:2, exp:"발목 염좌는 치밀결합조직(인대)의 손상이며, 이는 만관절불안정성과 외상후뼈관절염을 유발할 수 있습니다." },
+
+  // 감각수용기
+  { q:"유형 Ⅰ 감각수용기(루피니)의 주요 기능은?", o:["관절 가속도 피드백","정적인 관절 위치와 각도 피드백","유해 자극 신호 전달","조직 변형에 대한 피드백"], a:1, exp:"유형 Ⅰ/루피니는 느린 적응·낮은 역치 수용기로 정적인 관절위치와 관절 가도도에 대한 피드백을 제공합니다." },
+  { q:"인대(ligament)에 주로 위치하는 감각수용기 유형은?", o:["유형 Ⅰ (루피니)","유형 Ⅱ (파치니)","유형 Ⅲ (골지)","유형 Ⅳ (자유신경종말)"], a:2, exp:"유형 Ⅲ/골지와 비슷한 수용기는 인대에 위치하며 관절운동량 조절에 활동하고 조직변형에 대한 피드백을 제공합니다." },
+  { q:"관절에서 통증을 전달하는 감각수용기는?", o:["유형 Ⅰ","유형 Ⅱ","유형 Ⅲ","유형 Ⅳ (자유신경종말)"], a:3, exp:"유형 Ⅳ/자유신경종말은 높은 역치를 가지며 유해한 자극, 화학적·기계적 자극에 반응하여 신호를 보냅니다." },
+  { q:"유형 Ⅱ(파치니) 수용기의 특성은?", o:["느린 적응, 높은 역치","빠른 적응, 낮은 역치","느린 적응, 낮은 역치","빠른 적응, 높은 역치"], a:1, exp:"유형 Ⅱ/파치니는 빠른 적응·낮은 역치 수용기로 관절 가속도에 대한 피드백을 제공합니다." },
+
+  // 생물학적 기본물질
+  { q:"관절주위 결합조직을 구성하는 생물학적 기본물질의 범주에 포함되지 않는 것은?", o:["섬유단백질","바탕질","세포","혈관"], a:3, exp:"관절주위 결합조직을 구성하는 생물학적 기본물질은 섬유단백질, 바탕질, 세포(섬유모세포와 연골모세포) 3가지입니다." },
+  { q:"아교질(collagen)에 대한 설명으로 옳지 않은 것은?", o:["모든 단백질의 30%를 차지한다","가장 풍부한 단백질이다","3중의 나선형 방식으로 꼬여있다","신장이 잘 되는 탄력적인 섬유이다"], a:3, exp:"아교질은 장력을 받았을 때 신장이 잘 되지 않는 특성이 있습니다. 탄력섬유(elastin)와 구분해야 합니다." },
+  { q:"유형 Ⅱ 아교질의 주요 특성은?", o:["굵고 장력 저항에 특화","가늘고 약간 탄력성 있으며 유리연골 구조 유지","뼈조직에만 분포","치밀결합조직에 주로 분포"], a:1, exp:"유형 Ⅱ 아교질은 유형 Ⅰ보다 가늘며 약간의 탄력성을 보유하고 유리연골과 같이 유연한 구조 유지를 위한 틀을 제공합니다." },
+  { q:"GAG(글리코사미노글리칸)의 주요 특성은?", o:["소수성(hydrophobic)이며 물을 밀어낸다","음전하를 띠며 물과 용질을 결합한다","관절연골에만 분포한다","아교질과 동일한 기능을 한다"], a:1, exp:"GAG는 음전하를 띠는 반복단당류로, 물과 용질을 결합하여 조직의 팽창을 유발하고 바탕질 내 영양 확산의 체액 매개체 역할을 합니다." },
+  { q:"프로테오글리칸 복합체(proteoglycan complex)가 형성되는 방식은?", o:["GAG 사슬이 중심단백질에 부착 → 히알루론산에 결합","아교질이 탄력소와 직접 결합","세포막에서 직접 분비","바탕질이 없는 곳에서 단독 존재"], a:0, exp:"프로테오글리칸은 GAG 사슬이 중심단백질에 부착되며, 히알루론산에 결합하여 대형 프로테오글리칸 복합체를 형성합니다." },
+  { q:"섬유모세포(fibroblast)의 주요 기능은?", o:["관절연골 고유 세포","아교질 및 프로테오글리칸 합성·분비","뼈세포로 분화","연골 기질만 분비"], a:1, exp:"섬유모세포는 인대·힘줄·관절주머니에 위치하며 아교질 및 프로테오글리칸의 합성·분비 기능을 담당합니다." },
+
+  // 관절연골
+  { q:"관절연골(articular cartilage)의 가장 바깥 층은?", o:["깊은지대","석회화지대","얕은접선지대(STZ)","중간지대"], a:2, exp:"관절연골의 가장 표면층은 얕은접선지대(STZ, superficial tangential zone)로 관절면의 약 10~20%를 차지합니다." },
+  { q:"관절연골에 혈관과 신경이 없는 결과로 나타나는 임상적 문제는?", o:["과도한 염증반응","치유 능력의 제한","고통에 둔감해짐","관절이 매우 강해짐"], a:1, exp:"관절연골에는 혈관·신경이 없어 원시세포모세포의 공급을 받지 못하여 손상 시 부적절한 치유 결과가 초래될 수 있습니다." },
+  { q:"관절연골의 마찰계수(μ)는 얼마인가?", o:["0.05~0.1","0.005~0.02","0.5~1.0","0.1~0.3"], a:1, exp:"정상적인 관절연골의 마찰계수는 0.005~0.02 범위로, 얼음 위 얼음의 5~20배나 낮습니다." },
+
+  // 뼈와 볼프의 법칙
+  { q:"볼프의 법칙(Wolff's Law)의 핵심 내용은?", o:["뼈는 고정 상태에서 강해진다","뼈는 스트레스를 많이 받는 영역에서는 첨층·적은 영역에서는 저하수준이 낮아진다","관절연골이 뼈를 강화시킨다","GAG 감소가 뼈 강도를 결정한다"], a:1, exp:"볼프의 법칙: 뼈는 스트레스를 많이 받는 영역에서는 적층·적은 영역에서는 저하 — 즉 기계적 부하에 적응하여 구조를 바꿉니다." },
+  { q:"치밀뼈(compact bone)의 기본 구조 단위는?", o:["하버시안계(Haversian system)","겉솜뼈","뼈세관","뼈막"], a:0, exp:"치밀뼈는 하버시안계(Haversian system, 오스테온)을 구조적 소단위로 하며, 아교질과 무기물을 포함한 바탕질이 층판(lamella)으로 이루어진 동심원 나선 구조입니다." },
+  { q:"장기간 관절 고정이 관절주위 결합조직에 미치는 영향은?", o:["장력강도가 증가한다","물의 함량이 증가한다","장력강도가 현저하게 감소한다","아교질 양이 증가한다"], a:2, exp:"장기간 고정은 섬유단백질·바탕질·물의 양과 배열에 영향을 미쳐 구조적 강도(장력강도)를 현저하게 감소시킵니다." },
+
+  // 관절병리 & 노화
+  { q:"관절의 노화로 인해 GAG 감소 시 나타나는 현상은?", o:["관절연골이 단단해진다","세포바깥바탕질의 물 결합 능력이 저하된다","아교질이 증가한다","관절주머니가 두꺼워진다"], a:1, exp:"GAG 감소 → 세포바깥바탕질의 물 결합 능력 저하 → 관절연골의 내충격성 감소 → 뼈관절염으로 진행될 수 있습니다." },
+  { q:"뼈관절염(OA)과 류마티스관절염(RA)의 차이점으로 옳은 것은?", o:["OA는 강한 염증 요소를 가진다","RA는 전신적 자가면역 결합조직질환이다","OA와 RA는 같은 치료법을 사용한다","RA는 단지 관절에만 영향을 미친다"], a:1, exp:"RA는 강한 염증 요소를 갖는 전신적 자가면역 결합조직질환입니다. OA는 염증 성분이 낮고 점진적인 관절연골 손실이 특징입니다." },
+  { q:"뼈관절염을 의학 문헌에서 권고하는 정확한 명칭은?", o:["골관절염(osteoarthritis)","골관절증(osteoarthrosis)","류마티스관절염","퇴행성관절염"], a:1, exp:"최근의 연구에서는 뼈관절염 질환을 '뼈관절증(osteoarthrosis)'으로 언급하도록 권고합니다. 이는 염증보다 구조적 변화를 강조하는 용어입니다." },
+  { q:"사이토카인(cytokine)이 관절에 미치는 영향으로 옳은 것은?", o:["관절 통증을 감소시키고 항염증만 한다","관절 통증·운동 등에 중요한 영향을 미치며 염증을 촉진·유지한다","관절 구조를 강화하는 단백질이다","GAG 합성을 직접 촉진한다"], a:1, exp:"사이토카인은 관절 통증·운동 등에 중요한 영향을 미칩니다. 염증을 촉진하고 유지하는 역할 뿐만 아니라 항염증 시토카인(anti-inflammatory cytokine)도 있습니다." },
+  { q:"박리뼈연골증(osteochondritis dissecans)이란?", o:["뼈 내부의 종양","관절연골과 그 밑에 있는 뼈의 겉질이 관절 손상의 예","관절주머니의 비후","인대의 완전 파열"], a:1, exp:"박리뼈연골증은 관절연골과 연골밑뼈의 겉질을 수반하는 관절속 손상의 예로, 관절연골과 연골밑뼈가 관절면으로부터 박리되는 상황입니다." },
+
+  // 돌림축
+  { q:"순간적 돌림축(instantaneous axis of rotation)이란?", o:["관절의 영구적인 고정된 회전 중심","각 운동 호에 대한 순간적인 돌림축들의 위치를 연결한 선이 만나는 점","관절이 고정될 때 발생하는 축","인대에 의해 결정되는 축"], a:1, exp:"순간적 돌림축은 운동의 각 운동 호에 대한 순간적인 돌림축들의 위치를 점으로 표시할 수 있으며, 이를 연결하면 순간적 경로를 추폐선(evolute)이라 합니다." },
+];
+
+let current = [];
+let idx = 0;
+let score = 0;
+let wrongSet = new Set();
+let answered = [];
+let mode = 'all';
+
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz(m) {
+  mode = m;
+  document.getElementById('scoreBoard').classList.remove('show');
+  document.getElementById('wrongList').classList.remove('show');
+  if (m === 'wrong') {
+    if (wrongSet.size === 0) { alert('틀린 문제가 없습니다! 🎉'); return; }
+    current = shuffle(ALL_QUESTIONS.filter((_, i) => wrongSet.has(i)));
+  } else {
+    current = shuffle([...ALL_QUESTIONS]);
+    wrongSet.clear();
+    answered = new Array(ALL_QUESTIONS.length).fill(null);
+  }
+  idx = 0; score = 0;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (idx >= current.length) { showScore(); return; }
+  const q = current[idx];
+  const total = current.length;
+  const pct = (idx / total) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${idx} / ${total}`;
+
+  const opts = q.o.map((o, i) => `<button class="opt-btn" onclick="answer(this,${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-num">Q${idx + 1} / ${total}</div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-options">${opts}</div>
+      <div class="quiz-feedback" id="feedback"></div>
+      <div style="margin-top:14px;text-align:right;display:none" id="nextWrap">
+        <button class="btn btn-primary" onclick="nextQ()">다음 문제 →</button>
+      </div>
+    </div>`;
+}
+
+function answer(btn, chosen) {
+  const q = current[idx];
+  const btns = btn.parentElement.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('feedback');
+  const origIdx = ALL_QUESTIONS.indexOf(q);
+  if (chosen === q.a) {
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback show correct';
+    fb.innerHTML = `✅ 정답! ${q.exp}`;
+    score++;
+    if (origIdx >= 0) wrongSet.delete(origIdx);
+  } else {
+    btn.classList.add('wrong');
+    btns[q.a].classList.add('correct');
+    fb.className = 'quiz-feedback show wrong';
+    fb.innerHTML = `❌ 오답! 정답: ${String.fromCharCode(65 + q.a)}. ${q.o[q.a]}<br><small>${q.exp}</small>`;
+    if (origIdx >= 0) wrongSet.add(origIdx);
+  }
+  document.getElementById('nextWrap').style.display = 'block';
+  updateWrongBtn();
+}
+
+function nextQ() { idx++; renderQuestion(); }
+
+function showScore() {
+  document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('progressText').textContent = `${current.length} / ${current.length}`;
+  const board = document.getElementById('scoreBoard');
+  board.classList.add('show');
+  const pct = Math.round((score / current.length) * 100);
+  document.getElementById('scoreNum').textContent = `${pct}%`;
+  document.getElementById('scoreLabel').textContent = `${current.length}문제 중 ${score}개 정답 · 틀린 문제 ${wrongSet.size}개`;
+  const rb = document.getElementById('retryWrongBtn');
+  rb.style.display = wrongSet.size > 0 ? 'inline-block' : 'none';
+  if (wrongSet.size > 0) showWrongList();
+}
+
+function showWrongList() {
+  const sec = document.getElementById('wrongList');
+  sec.classList.add('show');
+  const items = [...wrongSet].map(i => {
+    const q = ALL_QUESTIONS[i];
+    return `<div style="background:white;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:4px solid #E74C3C;font-size:13px;">
+      <strong>Q.</strong> ${q.q}<br>
+      <span style="color:#27AE60;font-weight:700">▶ 정답: ${String.fromCharCode(65+q.a)}. ${q.o[q.a]}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('wrongItems').innerHTML = items;
+}
+
+function updateWrongBtn() {
+  const btn = document.getElementById('wrongBtn');
+  document.getElementById('wrongCount').textContent = wrongSet.size;
+  btn.style.display = wrongSet.size > 0 ? 'inline-block' : 'none';
+}
+
+function resetAll() {
+  wrongSet.clear(); idx = 0; score = 0; current = [];
+  document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('scoreBoard').classList.remove('show');
+  document.getElementById('wrongList').classList.remove('show');
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressText').textContent = '0 / 0';
+  updateWrongBtn();
+}
+</script>
+</body>
+</html>
