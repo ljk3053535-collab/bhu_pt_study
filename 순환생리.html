@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>순환 생리 — 국가시험 대비</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --surface: #FFFFFF;
+    --surface2: #F5F8FF;
+    --primary: #1E3A5F;
+    --accent: #2D6BE4;
+    --accent2: #4F8EF7;
+    --accent3: #0EA5E9;
+    --green: #059669;
+    --red: #DC2626;
+    --orange: #D97706;
+    --purple: #7C3AED;
+    --text: #1a2d45;
+    --text2: #4B6A8A;
+    --border: #C8D9F0;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10);
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #1E3A5F 0%, #2D6BE4 100%); padding: 22px 24px 18px; text-align: center; }
+  .header h1 { color: #fff; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+  .header p { color: rgba(255,255,255,0.75); font-size: 0.82rem; margin-top: 4px; }
+
+  /* TABS */
+  .tab-nav { display: flex; background: var(--primary); overflow-x: auto; }
+  .tab-btn { flex: 1; min-width: 90px; padding: 13px 6px 11px; color: rgba(255,255,255,0.65); font-size: 0.82rem; font-weight: 600; border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+  .tab-btn.active { color: #fff; border-bottom-color: #4F8EF7; background: rgba(255,255,255,0.07); }
+  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+  .tab-content { display: none; padding: 20px 16px 60px; max-width: 860px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* CARDS */
+  .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; border: 1px solid var(--border); }
+  .card-header { background: linear-gradient(90deg, #1E3A5F 0%, #2D6BE4 100%); color: #fff; padding: 11px 16px; font-size: 0.92rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .card-header .toggle-icon { font-size: 0.8rem; transition: transform .2s; }
+  .card-header.open .toggle-icon { transform: rotate(180deg); }
+  .card-body { padding: 14px 16px; display: none; }
+  .card-body.open { display: block; }
+
+  /* SECTION HEADING */
+  .sec-title { font-size: 1.05rem; font-weight: 700; color: var(--primary); margin: 18px 0 10px; display: flex; align-items: center; gap: 6px; }
+  .sec-title::before { content:''; display:inline-block; width:4px; height:18px; background: var(--accent); border-radius: 3px; }
+
+  /* BADGES */
+  .badge { display:inline-block; padding:2px 9px; border-radius:20px; font-size:0.72rem; font-weight:700; margin:2px 3px; }
+  .badge-blue { background:#DBEAFE; color:#1D4ED8; }
+  .badge-green { background:#D1FAE5; color:#065F46; }
+  .badge-red { background:#FEE2E2; color:#991B1B; }
+  .badge-orange { background:#FEF3C7; color:#92400E; }
+  .badge-purple { background:#EDE9FE; color:#5B21B6; }
+
+  /* TABLE */
+  .tbl { width:100%; border-collapse:collapse; font-size:0.82rem; margin:8px 0; }
+  .tbl th { background:#EEF4FF; color:var(--primary); padding:7px 9px; text-align:left; font-weight:700; border:1px solid var(--border); }
+  .tbl td { padding:7px 9px; border:1px solid var(--border); vertical-align:top; line-height:1.5; }
+  .tbl tr:nth-child(even) td { background:#F8FBFF; }
+
+  /* LIST */
+  .info-list { list-style:none; padding:0; }
+  .info-list li { padding:5px 0 5px 18px; position:relative; font-size:0.87rem; line-height:1.6; border-bottom:1px dashed #E2EAF8; }
+  .info-list li:last-child { border-bottom:none; }
+  .info-list li::before { content:'▸'; color:var(--accent); position:absolute; left:0; }
+  .info-list li strong { color:var(--primary); }
+
+  /* FLOW */
+  .flow { display:flex; align-items:center; flex-wrap:wrap; gap:4px; margin:6px 0; font-size:0.82rem; }
+  .flow-box { background:#EEF4FF; border:1px solid #C8D9F0; border-radius:6px; padding:4px 10px; color:var(--primary); font-weight:600; }
+  .flow-arrow { color:var(--accent); font-weight:700; }
+
+  /* KEYWORD GRID */
+  .kw-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:8px; margin:8px 0; }
+  .kw-item { background:linear-gradient(135deg,#EEF4FF,#F0F7FF); border:1px solid #C8D9F0; border-radius:8px; padding:8px 11px; font-size:0.82rem; }
+  .kw-item strong { display:block; color:var(--primary); font-size:0.88rem; margin-bottom:2px; }
+  .kw-item span { color:var(--text2); }
+
+  /* HIGHLIGHT BOX */
+  .hbox { border-left:4px solid var(--accent); background:#F0F7FF; padding:10px 13px; border-radius:0 8px 8px 0; margin:8px 0; font-size:0.85rem; line-height:1.6; }
+  .hbox.green { border-color:var(--green); background:#F0FDF4; }
+  .hbox.red { border-color:var(--red); background:#FFF5F5; }
+  .hbox.orange { border-color:var(--orange); background:#FFFBEB; }
+
+  /* QUIZ */
+  .quiz-controls { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .btn { padding:9px 18px; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem; font-weight:700; transition:all .15s; }
+  .btn-primary { background: linear-gradient(135deg,#2D6BE4,#1E3A5F); color:#fff; }
+  .btn-primary:hover { opacity:.88; }
+  .btn-secondary { background:#EEF4FF; color:var(--primary); border:1px solid var(--border); }
+  .btn-secondary:hover { background:#DDE8FB; }
+  .btn-danger { background:#FEE2E2; color:#991B1B; border:1px solid #FCA5A5; }
+
+  .progress-bar { background:#DDE8FB; border-radius:20px; height:10px; margin:10px 0 6px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,#2D6BE4,#4F8EF7); border-radius:20px; transition:width .4s; }
+  .progress-text { font-size:0.78rem; color:var(--text2); text-align:right; }
+  .score-display { font-size:0.88rem; color:var(--primary); font-weight:700; }
+
+  .quiz-card { background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px; border:2px solid var(--border); }
+  .quiz-card .q-num { font-size:0.72rem; color:var(--accent2); font-weight:700; margin-bottom:6px; }
+  .quiz-card .q-text { font-size:0.95rem; font-weight:600; color:var(--primary); line-height:1.6; margin-bottom:12px; }
+  .options { display:flex; flex-direction:column; gap:7px; }
+  .option-btn { text-align:left; padding:9px 14px; border-radius:8px; border:1.5px solid var(--border); background:var(--surface2); font-size:0.86rem; cursor:pointer; transition:all .15s; color:var(--text); }
+  .option-btn:hover:not([disabled]) { border-color:var(--accent); background:#EEF4FF; }
+  .option-btn.correct { background:#D1FAE5; border-color:#059669; color:#065F46; font-weight:700; }
+  .option-btn.wrong { background:#FEE2E2; border-color:#DC2626; color:#991B1B; }
+  .option-btn.reveal { background:#EEF4FF; border-color:var(--accent); color:var(--accent); font-weight:600; }
+  .feedback { margin-top:10px; padding:8px 12px; border-radius:8px; font-size:0.84rem; line-height:1.55; }
+  .feedback.correct { background:#D1FAE5; color:#065F46; }
+  .feedback.wrong { background:#FEE2E2; color:#991B1B; }
+
+  .quiz-end { text-align:center; padding:28px; }
+  .quiz-end .big-score { font-size:2.5rem; font-weight:800; color:var(--accent); }
+  .quiz-end .sub { color:var(--text2); font-size:0.9rem; margin-top:6px; }
+
+  /* OVERVIEW */
+  .chapter-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:10px; margin:10px 0; }
+  .ch-card { background:linear-gradient(135deg,#EEF4FF,#F0F7FF); border:1px solid #C8D9F0; border-radius:10px; padding:12px 14px; }
+  .ch-card .ch-num { font-size:0.72rem; color:var(--accent2); font-weight:700; text-transform:uppercase; }
+  .ch-card .ch-name { font-size:0.92rem; font-weight:700; color:var(--primary); margin:2px 0 6px; }
+  .ch-card .ch-keywords { font-size:0.78rem; color:var(--text2); line-height:1.6; }
+
+  /* COLLAPSIBLE SUBSECTION */
+  .sub-header { background:#EEF4FF; border:1px solid #C8D9F0; border-radius:8px; padding:9px 13px; cursor:pointer; font-size:0.88rem; font-weight:700; color:var(--primary); display:flex; justify-content:space-between; margin:6px 0; }
+  .sub-body { display:none; padding:8px 4px 4px; }
+  .sub-body.open { display:block; }
+
+  @media(max-width:500px){ .tab-btn { font-size:0.74rem; padding:11px 4px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🩸 순환 생리</h1>
+  <p>물리치료 국가시험 대비 · 2025</p>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ==================== 개요 탭 ==================== -->
+<div id="tab-overview" class="tab-content active">
+  <div class="sec-title">챕터 목차</div>
+  <div class="chapter-list">
+    <div class="ch-card">
+      <div class="ch-num">Chapter I</div>
+      <div class="ch-name">물질의 이동</div>
+      <div class="ch-keywords">단순확산 · 촉진확산 · 삼투 · 여과 · 능동수송 · 세포내이입 · 세포외유출</div>
+    </div>
+    <div class="ch-card">
+      <div class="ch-num">Chapter II</div>
+      <div class="ch-name">체액</div>
+      <div class="ch-keywords">세포내액(ICF) · 세포바깥액(ECF) · 스타링가설 · 탈수 · 부종</div>
+    </div>
+    <div class="ch-card">
+      <div class="ch-num">Chapter III</div>
+      <div class="ch-name">혈액</div>
+      <div class="ch-keywords">적혈구 · 백혈구 · 혈소판 · 혈장단백질 · 혈액응고 · ABO형 · Rh형</div>
+    </div>
+    <div class="ch-card">
+      <div class="ch-num">Chapter IV</div>
+      <div class="ch-name">면역</div>
+      <div class="ch-keywords">비특이적 · 특이적 · 세포성 · 체액성 · 면역글로불린(Ig)</div>
+    </div>
+  </div>
+
+  <div class="sec-title">핵심 키워드 정리</div>
+  <div class="kw-grid">
+    <div class="kw-item"><strong>단순확산</strong><span>인지질 직접 통과, 농도↑→속도↑</span></div>
+    <div class="kw-item"><strong>촉진확산</strong><span>수송단백질 이용, 에너지 불필요</span></div>
+    <div class="kw-item"><strong>삼투</strong><span>물(용매) 이동, ATP 불필요</span></div>
+    <div class="kw-item"><strong>여과</strong><span>압력차, 사구체여과 대표</span></div>
+    <div class="kw-item"><strong>능동수송</strong><span>ATP 필요, 저→고농도</span></div>
+    <div class="kw-item"><strong>Na-K 펌프</strong><span>Na³개 밖, K²개 안</span></div>
+    <div class="kw-item"><strong>스타링 가설</strong><span>세동맥35 vs 세정맥15 mmHg</span></div>
+    <div class="kw-item"><strong>혈장교질삼투압</strong><span>25mmHg, 알부민</span></div>
+    <div class="kw-item"><strong>적혈구</strong><span>120일, 핵X, 헤모글로빈</span></div>
+    <div class="kw-item"><strong>CO 친화성</strong><span>Hb에 O₂보다 250배 높음</span></div>
+    <div class="kw-item"><strong>혈소판</strong><span>25~40만개, 2~3일, 혈액응고</span></div>
+    <div class="kw-item"><strong>혈액응고 3단계</strong><span>트롬보플라스틴→트롬빈→피브린</span></div>
+    <div class="kw-item"><strong>IgG</strong><span>가장 많음(75%), 2차면역, 태반통과</span></div>
+    <div class="kw-item"><strong>IgA</strong><span>점막분비물, 외분비샘</span></div>
+    <div class="kw-item"><strong>IgM</strong><span>가장 먼저 생성, 1차 면역</span></div>
+    <div class="kw-item"><strong>IgE</strong><span>알레르기, 히스타민 방출</span></div>
+  </div>
+
+  <div class="sec-title">기출 회차 표시</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+    <span class="badge badge-red">46회 16번 - 혈소판</span>
+    <span class="badge badge-red">47회 16번 - 림프구</span>
+    <span class="badge badge-red">48회 13번 - 부종</span>
+    <span class="badge badge-red">49회 13번 - 탈수</span>
+    <span class="badge badge-red">50회 13번 - IgA</span>
+  </div>
+</div>
+
+<!-- ==================== 요약 탭 ==================== -->
+<div id="tab-summary" class="tab-content">
+
+  <!-- I. 물질의 이동 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      I. 물질의 이동 <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="sub-header" onclick="toggleSub(this)">1. 수동운반 (passive transport) — 에너지 불필요 ▾</div>
+      <div class="sub-body open">
+        <table class="tbl">
+          <tr><th>종류</th><th>구동력</th><th>이동 대상</th><th>대표 예시</th></tr>
+          <tr><td><strong>단순 확산</strong></td><td>농도차</td><td>용질 (인지질 직접 통과)</td><td>O₂/CO₂ 가스교환, 지용성 물질</td></tr>
+          <tr><td><strong>촉진 확산</strong></td><td>농도차</td><td>수송단백질 이용</td><td>Na⁺·K⁺ (전압개폐채널), 인슐린→포도당</td></tr>
+          <tr><td><strong>삼투</strong></td><td>농도차</td><td>물(용매)</td><td>적혈구 용혈, 탈수 시 혈장삼투압↑</td></tr>
+          <tr><td><strong>여과</strong></td><td>압력차</td><td>용질+물 모두</td><td>사구체여과, 모세혈관→조직액</td></tr>
+        </table>
+        <div class="hbox">
+          <strong>단순확산 촉진 조건:</strong> 극성 없음 / 지질 용해도 큼 / 분자 크기 작음 / 온도↑ / 농도차↑
+        </div>
+        <div class="hbox orange">
+          <strong>수송단백질 종류:</strong> ① 통로 단백질 (채널) — 통로 역할 &nbsp;② 운반체 단백질 — 결합 후 구조변화로 운반
+        </div>
+        <div class="hbox green">
+          <strong>삼투압:</strong> 반투과성 막이 받는 압력 / 농도차 클수록 큼 / ATP 사용 X
+        </div>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">2. 능동 수송 — 에너지(ATP) 필요 ▾</div>
+      <div class="sub-body open">
+        <ul class="info-list">
+          <li><strong>저농도 → 고농도</strong> 이동 (농도차를 거슬러 이동)</li>
+          <li>세포막 운반체 단백질이 관여</li>
+          <li><strong>Na-K 펌프:</strong> Na⁺ 3개 → 밖 / K⁺ 2개 → 안</li>
+          <li>세뇨관 포도당 재흡수 / 소장 포도당·아미노산 흡수</li>
+        </ul>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">3. 용적 운반 ▾</div>
+      <div class="sub-body open">
+        <table class="tbl">
+          <tr><th>종류</th><th>방향</th><th>특징</th><th>예시</th></tr>
+          <tr><td><strong>세포내 이입</strong></td><td>밖→안</td><td>능동적, 운반체단백질 무관<br>① 포식세포 작용 (고형 물질)<br>② 포음세포 작용 (액체)</td><td>백혈구의 세균 포식</td></tr>
+          <tr><td><strong>세포외 유출</strong></td><td>안→밖</td><td>분비소낭이 세포막과 융합</td><td>인슐린·글루카곤 분비<br>아세틸콜린 방출</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- II. 체액 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      II. 체액 <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="sub-header" onclick="toggleSub(this)">1. 체액의 분류 ▾</div>
+      <div class="sub-body open">
+        <table class="tbl">
+          <tr><th>구분</th><th>세포내액 (ICF)</th><th>세포바깥액 (ECF)</th></tr>
+          <tr><td>체중 비율</td><td>약 <strong>40%</strong></td><td>약 <strong>20%</strong> (사이질액 15% + 혈액 5%)</td></tr>
+          <tr><td>전기</td><td>음성(−)</td><td>양성(+)</td></tr>
+          <tr><td>주요 양이온</td><td>K⁺, Mg²⁺</td><td>Na⁺, Ca²⁺</td></tr>
+          <tr><td>주요 음이온</td><td>HPO₄²⁻ (인산염)</td><td>Cl⁻, HCO₃⁻ (중탄산염)</td></tr>
+        </table>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">2. 체액의 이동 — 스타링 가설 ▾</div>
+      <div class="sub-body open">
+        <table class="tbl">
+          <tr><th>힘</th><th>정의</th><th>크기</th><th>방향</th></tr>
+          <tr><td><strong>액압(HP)</strong></td><td>모세혈관내 혈액 압력</td><td>세동맥끝 35 / 세정맥끝 15 mmHg</td><td>혈관 → 조직</td></tr>
+          <tr><td><strong>혈장교질삼투압</strong></td><td>알부민이 물을 끌어당기는 힘</td><td>25 mmHg</td><td>조직 → 혈관</td></tr>
+          <tr><td><strong>조직압(IFP)</strong></td><td>조직 사이질 공간 압력</td><td>0 ~ −1 mmHg</td><td>혈관 → 조직 (도움)</td></tr>
+          <tr><td><strong>조직교질삼투압</strong></td><td>조직 단백질이 물 당기는 힘</td><td>약 2 mmHg</td><td>혈관 → 조직</td></tr>
+        </table>
+        <div class="hbox">
+          <strong>세동맥끝:</strong> 액압(35) &gt; 혈장교질삼투압(25) → 여과(혈관→조직)<br>
+          <strong>세정맥끝:</strong> 액압(15) &lt; 혈장교질삼투압(25) → 재흡수(조직→혈관)
+        </div>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">3. 체액 조절 이상 ★기출★ ▾</div>
+      <div class="sub-body open">
+        <div class="hbox red"><strong>탈수 (49회 13번)</strong><br>
+          세포외액 불균형 · 세포 위축 · 체중감소 · 혈압↓·심박출량↓<br>
+          ADH↑ → 소변 농축 · 심박수↑ · 대사성 산증 · 체온↑
+        </div>
+        <div class="hbox orange"><strong>부종 (48회 13번) 4가지 기전</strong><br>
+          ① 모세혈관 정수압 증가 → 수분 사이질로 이동<br>
+          ② 혈장콜로이드삼투압 감소 (혈장단백질↓) → 수분 유출<br>
+          ③ 모세혈관 투과성 증가 (염증) → 단백질 혈관 밖 누출<br>
+          ④ 림프관 폐쇄 → 조직액 회수 불가
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- III. 혈액 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      III. 혈액 <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="sub-header" onclick="toggleSub(this)">1. 혈구 ▾</div>
+      <div class="sub-body open">
+        <table class="tbl">
+          <tr><th>종류</th><th>수</th><th>수명</th><th>핵</th><th>주요 특징</th></tr>
+          <tr><td><strong>적혈구(RBC)</strong></td><td>남550만/여450만</td><td>120일</td><td>X</td><td>Hb로 O₂ 운반, CO 친화성 250배↑</td></tr>
+          <tr><td><strong>백혈구(WBC)</strong></td><td>6~8천개</td><td>수일~2주</td><td>O</td><td>아메바운동, 식균·면역</td></tr>
+          <tr><td><strong>혈소판</strong></td><td>25~40만개</td><td>2~3일</td><td>X</td><td>혈액응고, 트롬보키나아제</td></tr>
+        </table>
+        <div class="hbox">
+          <strong>빈혈:</strong> RBC &lt; 400만개/mm³ 이하 or Hb &lt; 10g/dl 이하 | 악성빈혈: 비타민 B₁₂ 부족
+        </div>
+        <div style="margin-top:10px"><strong style="color:var(--primary);font-size:0.88rem">백혈구 세부 분류</strong></div>
+        <table class="tbl" style="margin-top:6px">
+          <tr><th>구분</th><th>혈구</th><th>비율</th><th>핵심 특징</th></tr>
+          <tr><td rowspan="3">과립</td><td>중성구</td><td>50~70%</td><td>가장 많음, 급성 염증, 강한 포식작용</td></tr>
+          <tr><td>호산구</td><td>1~4%</td><td>알레르기 반응 조절 (히스타민 분해), 기생충↑</td></tr>
+          <tr><td>호염기구</td><td>0.5~1%</td><td>가장 적음, 히스타민·헤파린 분비, 아나필락시스</td></tr>
+          <tr><td rowspan="2">무과립</td><td>림프구 ★</td><td>20~40%</td><td>B(체액성·항체) / T(세포성) / NK(비특이)</td></tr>
+          <tr><td>단핵구</td><td>2~8%</td><td>가장 큼, 조직 이동→큰포식세포 분화</td></tr>
+        </table>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">2. 혈장 & 혈장단백질 ▾</div>
+      <div class="sub-body open">
+        <ul class="info-list">
+          <li>혈액의 <strong>55%</strong> (물 90%, 단백질 7~9%, 무기염류 1%, 포도당 0.1%)</li>
+          <li><strong>알부민 55%</strong> — 삼투질농도 조절 (간 생산)</li>
+          <li><strong>섬유소원 7%</strong> — 혈액응고 (간 생산)</li>
+          <li><strong>글로불린 30%</strong> — 면역기전 (림프구 생산)</li>
+          <li><strong>혈청:</strong> 혈장에서 피브리노겐이 제거된 상태</li>
+        </ul>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">3. 혈액응고 3단계 ▾</div>
+      <div class="sub-body open">
+        <div class="flow">
+          <div class="flow-box">혈소판+손상세포</div><div class="flow-arrow">→</div>
+          <div class="flow-box">트롬보플라스틴</div><div class="flow-arrow">+칼슘→</div>
+          <div class="flow-box">프로트롬빈→트롬빈</div><div class="flow-arrow">→</div>
+          <div class="flow-box">피브리노겐→피브린</div><div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:#DBEAFE">혈병 형성</div>
+        </div>
+        <div class="hbox orange" style="margin-top:8px">
+          <strong>응고인자:</strong> 1인자=피브리노겐 / 2인자=프로트롬빈(비타민K 필요) / 3인자=트롬보플라스틴 / 4인자=칼슘 / 8·9인자=혈우병<br>
+          <strong>항응고제:</strong> 헤파린(트롬빈 억제) / 큐마린(비타민K 저해) / 플라스민(피브린 분해)
+        </div>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">4. 혈액형 ▾</div>
+      <div class="sub-body open">
+        <table class="tbl">
+          <tr><th>혈액형</th><th>A형</th><th>B형</th><th>AB형</th><th>O형</th></tr>
+          <tr><td>응집원(적혈구)</td><td>A</td><td>B</td><td>A, B</td><td>없음</td></tr>
+          <tr><td>응집소(혈장)</td><td>β</td><td>α</td><td>없음</td><td>α, β</td></tr>
+        </table>
+        <div class="hbox" style="margin-top:8px">
+          <strong>수혈 원칙:</strong> 주는 응집원 ↔ 받는 응집소 → 응집반응 X여야 가능<br>
+          같은 혈액형 = 다량 수혈 가능 | 다른 혈액형 = 소량 수혈 가능<br>
+          O형 = 모든 혈액형에 소량 수혈 가능 (응집원 없음)
+        </div>
+        <div class="hbox green" style="margin-top:8px">
+          <strong>Rh식:</strong> Rh⁺ = 응집원 있음 → Rh⁺·Rh⁻ 모두 수혈 가능<br>
+          Rh⁻ = Rh⁻ 에게만 수혈 가능 (Rh⁺ 받으면 응집반응 위험)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IV. 면역 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      IV. 면역 <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="sub-header" onclick="toggleSub(this)">1. 비특이적 면역 (1차 방어, 선천성) ▾</div>
+      <div class="sub-body open">
+        <ul class="info-list">
+          <li>병원체 종류 구분 없이 <strong>동일한 방식</strong>으로 신속·광범위하게 작용</li>
+          <li><strong>외부 방어벽:</strong> 피부(각질층, 라이소자임, 피지샘 산성) / 점막(섬모, 위산)</li>
+          <li><strong>내부 방어:</strong> 포식작용(큰포식세포) / 염증반응(히스타민→혈관확장·투과성↑→백혈구 이동)</li>
+        </ul>
+      </div>
+
+      <div class="sub-header" onclick="toggleSub(this)">2. 특이적 면역 (후천성) ▾</div>
+      <div class="sub-body open">
+        <div class="hbox">
+          <strong>세포성 면역:</strong> 독성 T림프구가 감염세포·암세포 직접 파괴<br>
+          큰포식세포 항원제시 → 보조T 활성 → 독성T 활성 → 감염세포 파괴
+        </div>
+        <div class="hbox green" style="margin-top:6px">
+          <strong>체액성 면역:</strong> 형질세포 항체에 의해 항원 제거<br>
+          항원→보조T→B림프구 자극→형질세포(항체 생성)+기억세포<br>
+          <strong>1차:</strong> 항체 적음, 시간 오래 걸림 | <strong>2차:</strong> 기억세포→빠르고 많은 항체
+        </div>
+        <div style="margin-top:10px"><strong style="color:var(--primary);font-size:0.88rem">면역글로불린 (Ig) ★기출★</strong></div>
+        <table class="tbl" style="margin-top:6px">
+          <tr><th>종류</th><th>존재 장소</th><th>주요 기능</th></tr>
+          <tr><td><strong>IgG</strong></td><td>체액·혈장</td><td>가장 많음(75%), 2차면역, 태반통과→수동면역, 세균·바이러스 중화</td></tr>
+          <tr><td><strong>IgA ★50회</strong></td><td>침·눈물·콧물·모유</td><td>외분비샘 발생, 점막 부착 차단, 몸속 세균 방어</td></tr>
+          <tr><td><strong>IgM</strong></td><td>혈장</td><td>가장 먼저 생성, 1차면역 담당, 보체 활성화 가장 강함</td></tr>
+          <tr><td><strong>IgD</strong></td><td>B림프구 표면</td><td>B세포 항원 인식 도움</td></tr>
+          <tr><td><strong>IgE</strong></td><td>비만세포·호염기구</td><td>알레르기 반응, 히스타민·류코트리엔 방출</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 퀴즈 탭 ==================== -->
+<div id="tab-quiz" class="tab-content">
+  <div class="quiz-controls">
+    <button class="btn btn-primary" onclick="startQuiz('all')">🔀 전체 퀴즈 시작</button>
+    <button class="btn btn-secondary" onclick="startQuiz('wrong')">❌ 틀린 문제만</button>
+    <button class="btn btn-danger" onclick="resetAll()">🗑 초기화</button>
+  </div>
+  <div id="quiz-stats" style="margin-bottom:8px"></div>
+  <div id="quiz-area"></div>
+</div>
+
+<script>
+// ===== 문제 DB =====
+const ALL_QUESTIONS = [
+  // I. 물질의 이동
+  {id:1, topic:"물질이동", q:"단순 확산을 통해 잘 이동하는 물질의 조건을 모두 고른 것은?", opts:["극성이 강하고 분자가 큼","극성 없고, 지질 용해도 크며, 분자 크기 작음","수송 단백질이 있어야 함","ATP를 이용하여 이동함"], ans:1, exp:"단순 확산은 인지질 이중층을 직접 통과하므로, 극성 없음·지질 용해도 큼·분자 크기 작음 조건이 필요합니다."},
+  {id:2, topic:"물질이동", q:"촉진 확산과 단순 확산의 공통점은?", opts:["수송 단백질 필요","ATP 에너지 불필요","저농도 → 고농도 이동","세포내이입 포함"], ans:1, exp:"둘 다 농도 기울기를 따르며 에너지(ATP) 없이 이동합니다. 촉진 확산은 수송단백질을 사용하지만 에너지는 불필요합니다."},
+  {id:3, topic:"물질이동", q:"삼투(Osmosis)에 대한 설명으로 옳은 것은?", opts:["용질이 고농도에서 저농도로 이동","물(용매)이 용질 농도 낮은 곳 → 높은 곳으로 이동","ATP를 사용하는 능동 수송","압력차에 의해 일어남"], ans:1, exp:"삼투는 반투과성 막을 기준으로 물(용매)이 용질 농도가 낮은 곳 → 높은 곳으로 이동하는 현상으로 ATP는 불필요합니다."},
+  {id:4, topic:"물질이동", q:"사구체 여과(glomerular filtration)를 일으키는 주요 힘은?", opts:["농도차","삼투압","압력차","화학적 친화력"], ans:2, exp:"여과는 압력차에 의해 고압에서 저압으로 물질이 이동합니다. 사구체여과는 토리(사구체)의 혈압이 토리주머니보다 높기 때문에 발생합니다."},
+  {id:5, topic:"물질이동", q:"나트륨-칼륨 펌프(Na-K pump)에 대한 설명으로 옳은 것은?", opts:["Na⁺ 2개 밖으로, K⁺ 3개 안으로","Na⁺ 3개 밖으로, K⁺ 2개 안으로","에너지 없이 농도차로만 작동","삼투에 해당함"], ans:1, exp:"Na-K 펌프는 ATP를 이용하여 Na⁺ 3개를 세포 밖으로, K⁺ 2개를 세포 안으로 이동시키는 능동 수송입니다."},
+  {id:6, topic:"물질이동", q:"세포내 이입(endocytosis)의 특징으로 옳은 것은?", opts:["에너지 불필요","운반체 단백질이 반드시 필요","에너지 필요, 운반체 단백질은 관여 안 함","수동 수송임"], ans:2, exp:"세포내 이입은 능동 수송이지만, 운반체 단백질 없이 세포막이 물질을 감싸서 안으로 끌어들입니다."},
+  {id:7, topic:"물질이동", q:"세포외 유출(exocytosis)의 예시가 아닌 것은?", opts:["이자 세포에서 인슐린 분비","운동신경 말단에서 아세틸콜린 방출","백혈구가 세균 포식","이자 세포에서 글루카곤 분비"], ans:2, exp:"백혈구가 세균을 포식하는 것은 세포내 이입(포식세포 작용)입니다. 나머지는 모두 세포외 유출의 예입니다."},
+
+  // II. 체액
+  {id:8, topic:"체액", q:"세포내액(ICF)의 주요 양이온은?", opts:["Na⁺, Ca²⁺","K⁺, Mg²⁺","Cl⁻, HCO₃⁻","HPO₄²⁻, K⁺"], ans:1, exp:"세포내액의 주요 양이온은 칼륨(K⁺)과 마그네슘(Mg²⁺)입니다. Na⁺, Ca²⁺는 세포바깥액의 양이온입니다."},
+  {id:9, topic:"체액", q:"세포바깥액은 체중의 약 몇 %를 차지하는가?", opts:["10%","20%","40%","60%"], ans:1, exp:"세포바깥액(ECF)은 체중의 약 20%이며, 세포내액(ICF)은 약 40%입니다."},
+  {id:10, topic:"체액", q:"스타링 가설에서 세정맥 끝(세정맥측)에서 일어나는 현상은?", opts:["여과 — 액체가 혈관→조직으로","재흡수 — 액체가 조직→혈관으로","삼투압이 액압보다 낮음","혈관투과성이 최대가 됨"], ans:1, exp:"세정맥끝에서는 액압(15mmHg) < 혈장교질삼투압(25mmHg)이므로, 액체가 조직→혈관으로 재흡수됩니다."},
+  {id:11, topic:"체액", q:"세동맥끝에서의 액압(HP)은 몇 mmHg인가?", opts:["10mmHg","15mmHg","25mmHg","35mmHg"], ans:3, exp:"세동맥끝 액압은 35mmHg로, 혈장교질삼투압(25mmHg)보다 높아 여과가 일어납니다."},
+  {id:12, topic:"체액", q:"탈수 시 항이뇨호르몬(ADH)이 분비되는 이유는?", opts:["혈압이 증가하기 때문","혈장 삼투압이 증가하기 때문","체온이 감소하기 때문","림프관이 막히기 때문"], ans:1, exp:"탈수 → 혈장 삼투압 증가 → ADH 분비 → 집합관에서 수분 재흡수 증가 → 소변량 감소·농축"},
+  {id:13, topic:"체액", q:"부종(edema) 발생 기전으로 옳지 않은 것은?", opts:["모세혈관 정수압 증가","혈장 콜로이드 삼투압 감소","림프관 폐쇄","ADH 분비 증가"], ans:3, exp:"부종의 4가지 기전은 ①모세혈관 정수압↑ ②혈장콜로이드삼투압↓ ③모세혈관 투과성↑ ④림프관 폐쇄입니다. ADH 분비 증가는 탈수 기전입니다."},
+  {id:14, topic:"체액", q:"혈장교질삼투압(혈장콜로이드삼투압)을 만드는 주요 단백질은?", opts:["글로불린","섬유소원(피브리노겐)","알부민","트롬빈"], ans:2, exp:"혈장교질삼투압은 주로 알부민에 의해 형성되며 약 25mmHg입니다. 알부민은 간에서 생산됩니다."},
+
+  // III. 혈액
+  {id:15, topic:"혈액", q:"적혈구의 수명은?", opts:["2~3일","2주","60일","120일"], ans:3, exp:"적혈구의 수명은 약 120일이며, 골수에서 생성되고 간과 지라에서 파괴됩니다."},
+  {id:16, topic:"혈액", q:"일산화탄소(CO)가 위험한 이유는?", opts:["산소보다 Hb와 친화성이 10배 높아 O₂ 운반 방해","산소보다 Hb와 친화성이 250배 높아 O₂ 운반 방해","Hb와 전혀 결합하지 않음","적혈구를 파괴함"], ans:1, exp:"CO는 Hb와의 친화성이 O₂보다 250배 높아 산소 운반을 방해합니다."},
+  {id:17, topic:"혈액", q:"백혈구 중 수가 가장 많은 것은?", opts:["림프구","단핵구","중성구","호염기구"], ans:2, exp:"중성구(호중구)는 백혈구의 50~70%를 차지하여 가장 많으며, 급성 염증 반응과 강한 포식작용을 합니다."},
+  {id:18, topic:"혈액", q:"알레르기 반응 조절에 관여하고 기생충 감염 시 증가하는 백혈구는?", opts:["중성구","호산구","호염기구","단핵구"], ans:1, exp:"호산구는 히스타민 분해효소를 분비하여 알레르기 반응을 조절하고, 기생충 감염 시 수가 증가합니다."},
+  {id:19, topic:"혈액", q:"혈액응고 2단계에서 일어나는 반응은?", opts:["피브리노겐 → 피브린","트롬보플라스틴 생성","프로트롬빈 → 트롬빈","혈병 형성"], ans:2, exp:"혈액응고 3단계: 1단계=트롬보플라스틴 생성 / 2단계=프로트롬빈→트롬빈 / 3단계=피브리노겐→피브린→혈병"},
+  {id:20, topic:"혈액", q:"혈액응고 2인자(프로트롬빈) 합성에 필요한 비타민은?", opts:["비타민 A","비타민 B₁₂","비타민 C","비타민 K"], ans:3, exp:"프로트롬빈(응고인자 2인자) 합성에는 비타민 K가 필요합니다. 큐마린은 비타민 K 작용을 저해하는 항응고제입니다."},
+  {id:21, topic:"혈액", q:"악성 빈혈의 원인은?", opts:["비타민 K 부족","비타민 B₁₂ 부족","철분 부족","칼슘 부족"], ans:1, exp:"악성 빈혈(pernicious anemia)은 비타민 B₁₂ 부족으로 발생합니다."},
+  {id:22, topic:"혈액", q:"A형 혈액이 B형에게 수혈할 때 결과는?", opts:["다량 수혈 가능","소량 수혈 가능","응집 반응 → 수혈 불가","응집원이 없어 가능"], ans:2, exp:"A형의 응집원 A와 B형의 응집소 α가 반응하여 응집이 일어나므로 수혈이 불가합니다."},
+  {id:23, topic:"혈액", q:"O형 혈액의 특징으로 옳은 것은?", opts:["응집원 A, B 모두 있음","응집소가 없음","응집원이 없어 모든 혈액형에 소량 수혈 가능","AB형에게만 수혈 가능"], ans:2, exp:"O형은 응집원이 없어 어떤 혈액형의 응집소와도 반응하지 않으므로 모든 혈액형에 소량 수혈이 가능합니다."},
+  {id:24, topic:"혈액", q:"혈장에서 피브리노겐이 제거된 상태를 무엇이라 하는가?", opts:["혈청(serum)","혈장(plasma)","림프액","혈구"], ans:0, exp:"혈청(serum)은 혈장에서 응고인자인 피브리노겐이 제거된 상태입니다."},
+  {id:25, topic:"혈액", q:"Rh⁻형의 수혈 관계로 옳은 것은?", opts:["Rh⁺, Rh⁻ 모두 수혈 가능","Rh⁺에게만 수혈 가능","Rh⁻에게만 수혈 가능","수혈 불가"], ans:2, exp:"Rh⁻는 Rh 응집소가 없으나 Rh⁺의 응집원을 받으면 응집반응이 나타나 위험하므로, Rh⁻에게만 수혈 가능합니다."},
+  {id:26, topic:"혈액", q:"림프구 중 체액성 면역을 담당하는 것은?", opts:["T 림프구","B 림프구","NK 세포","단핵구"], ans:1, exp:"B 림프구는 형질세포와 기억세포로 분화하여 항체(감마글로불린)를 생성하는 체액성 면역을 담당합니다."},
+  {id:27, topic:"혈액", q:"혈소판 수가 감소할 때 나타나는 현상은?", opts:["빈혈","지혈 불량","면역 저하","혈장 단백질 감소"], ans:1, exp:"혈소판은 트롬보키나아제를 통해 혈액 응고에 관여하므로, 혈소판 부족 시 지혈이 잘 되지 않습니다."},
+  {id:28, topic:"혈액", q:"헤파린의 항응고 기전은?", opts:["칼슘 제거","트롬빈 작용 억제","비타민 K 작용 저해","피브린 분해"], ans:1, exp:"헤파린과 히루딘은 트롬빈 작용을 억제하는 항응고제입니다."},
+
+  // IV. 면역
+  {id:29, topic:"면역", q:"비특이적 면역(innate immunity)의 특징으로 옳은 것은?", opts:["항원의 종류를 인식하여 반응","후천적 면역","신속하고 광범위하게 일어남","기억세포를 형성함"], ans:2, exp:"비특이적 면역은 병원체 종류를 구분하지 않고 동일한 방식으로 신속·광범위하게 작용하는 선천적 면역입니다."},
+  {id:30, topic:"면역", q:"염증 반응에서 혈관 확장 및 투과성을 증가시키는 물질은?", opts:["인슐린","히스타민","트롬빈","알부민"], ans:1, exp:"손상 부위의 비만세포에서 히스타민이 방출되어 모세혈관을 확장시키고 혈관벽 투과성을 높여 백혈구·혈장이 상처 부위로 이동합니다."},
+  {id:31, topic:"면역", q:"세포성 면역의 주역 세포는?", opts:["B 림프구","형질세포","독성 T 림프구","NK 세포"], ans:2, exp:"세포성 면역에서는 독성 T 림프구(세포독성 T세포)가 바이러스 감염세포나 암세포를 직접 파괴합니다."},
+  {id:32, topic:"면역", q:"T 림프구는 어디서 성숙하는가?", opts:["골수","지라","가슴샘(흉선)","림프절"], ans:2, exp:"T 림프구는 골수의 조혈모세포에서 생성되어 가슴샘(흉선, thymus)에서 성숙합니다. B 림프구는 골수에서 성숙합니다."},
+  {id:33, topic:"면역", q:"IgG의 특징으로 옳은 것은? (50회 기출 유형)", opts:["가장 먼저 생성되어 1차 면역반응 담당","침·눈물·콧물 등 분비물에 많음","가장 많음(75%), 2차 면역반응 주도, 태반 통과 가능","알레르기 반응을 일으킴"], ans:2, exp:"IgG는 가장 많은 면역글로불린(75%)으로 2차 면역반응을 주도하고, 태반을 통과하여 태아에게 수동면역을 부여합니다."},
+  {id:34, topic:"면역", q:"IgA(50회 13번 기출)에 대한 설명으로 옳은 것은?", opts:["혈장에 주로 존재하며 1차 면역 담당","침·눈물·콧물 등 분비물에 많고 점막 방어","가장 많이 존재하며 태반 통과","알레르기 반응에 관여"], ans:1, exp:"IgA는 외분비샘에서 발생하며 침·눈물·콧물·모유 등의 분비물에 많습니다. 병원체가 점막에 부착하지 못하도록 차단하는 역할을 합니다."},
+  {id:35, topic:"면역", q:"2차 면역반응이 1차보다 빠르고 강한 이유는?", opts:["보조 T 림프구가 더 많기 때문","기억세포가 신속히 증식하여 형질세포로 분화하기 때문","NK 세포가 활성화되기 때문","IgM이 더 많이 분비되기 때문"], ans:1, exp:"1차 면역반응 시 형성된 기억세포가 같은 항원 재침입 시 빠르게 증식하여 형질세포로 분화, 많은 양의 항체를 신속하게 생성합니다."},
+  {id:36, topic:"면역", q:"IgM의 특징으로 옳은 것은?", opts:["2차 면역반응 주도","태반 통과 가능","가장 먼저 생성되고 보체 활성화 가장 강함","알레르기 반응 관여"], ans:2, exp:"IgM은 항원 침입 초기에 가장 먼저 생성되어 1차 면역반응을 담당하며, 보체 활성화 능력이 가장 강합니다."},
+  {id:37, topic:"면역", q:"IgE와 관련된 것은?", opts:["세균·바이러스 중화","태반 통과로 수동 면역","알레르기 반응, 히스타민 방출","1차 면역반응"], ans:2, exp:"IgE는 비만세포 및 호염기구 표면에 결합하고, 항원과 결합 시 히스타민·류코트리엔 등을 방출하여 알레르기 반응을 일으킵니다."},
+  {id:38, topic:"면역", q:"감마글로불린(IgG)이 태반을 통과하는 의미는?", opts:["모체가 항체를 소실함","태아에게 수동면역을 부여함","태반 손상을 일으킴","면역 억제를 유발함"], ans:1, exp:"IgG는 태반을 통과할 수 있는 유일한 면역글로불린으로, 태아에게 수동면역을 부여하여 신생아를 보호합니다."},
+  {id:39, topic:"면역", q:"체액성 면역 과정에서 항체를 실제로 생산·분비하는 세포는?", opts:["기억세포","보조 T세포","형질세포","큰포식세포"], ans:2, exp:"B림프구가 활성화되면 형질세포(plasma cell)와 기억세포로 분화합니다. 형질세포가 항체를 생성·분비하고, 기억세포는 기억을 유지합니다."},
+  {id:40, topic:"면역", q:"피부의 피지샘이 세균 억제에 기여하는 방식은?", opts:["라이소자임 분비","산성 물질 분비 → 세균 증식 억제","섬모 운동","항체 생성"], ans:1, exp:"피지샘은 산성 물질을 분비하여 피부 표면을 산성 환경으로 유지함으로써 세균 증식을 억제합니다."},
+];
+
+let wrongSet = JSON.parse(localStorage.getItem('wrongSet') || '[]');
+let currentQuiz = [];
+let currentIdx = 0;
+let score = 0;
+let answered = 0;
+let sessionWrong = [];
+
+function shuffle(arr) {
+  let a = [...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function startQuiz(mode) {
+  if(mode === 'wrong') {
+    if(wrongSet.length === 0){ alert('틀린 문제가 없습니다!'); return; }
+    currentQuiz = shuffle(ALL_QUESTIONS.filter(q => wrongSet.includes(q.id)));
+  } else {
+    currentQuiz = shuffle([...ALL_QUESTIONS]);
+  }
+  currentIdx = 0; score = 0; answered = 0; sessionWrong = [];
+  renderQuizCard();
+}
+
+function renderStats() {
+  document.getElementById('quiz-stats').innerHTML =
+    `<div class="score-display">📚 전체: ${ALL_QUESTIONS.length}문제 &nbsp;|&nbsp; ❌ 누적 오답: ${wrongSet.length}문제</div>
+     <div class="progress-bar"><div class="progress-fill" style="width:${currentQuiz.length?Math.round(answered/currentQuiz.length*100):0}%"></div></div>
+     <div class="progress-text">${answered} / ${currentQuiz.length} 완료 &nbsp; 정답률: ${answered?Math.round(score/answered*100):0}%</div>`;
+}
+
+function renderQuizCard() {
+  renderStats();
+  if(currentIdx >= currentQuiz.length) {
+    showEnd(); return;
+  }
+  const q = currentQuiz[currentIdx];
+  const optHtml = q.opts.map((o,i)=>`<button class="option-btn" onclick="checkAns(this,${i},${q.ans},'${encodeURIComponent(q.exp)}',${q.id})">${String.fromCharCode(9312+i)} ${o}</button>`).join('');
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-card">
+      <div class="q-num">${currentIdx+1} / ${currentQuiz.length} &nbsp;[${q.topic}]</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optHtml}</div>
+      <div id="feedback"></div>
+    </div>`;
+}
+
+function checkAns(btn, sel, ans, expEnc, qid) {
+  const btns = btn.parentElement.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  const exp = decodeURIComponent(expEnc);
+  const correct = sel === ans;
+  if(correct) {
+    btn.classList.add('correct'); score++;
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">✅ 정답입니다! ${exp}</div>`;
+    wrongSet = wrongSet.filter(id => id !== qid);
+  } else {
+    btn.classList.add('wrong');
+    btns[ans].classList.add('reveal');
+    document.getElementById('feedback').innerHTML = `<div class="feedback wrong">❌ 오답! ${exp}</div>`;
+    if(!wrongSet.includes(qid)) wrongSet.push(qid);
+    sessionWrong.push(qid);
+  }
+  answered++;
+  localStorage.setItem('wrongSet', JSON.stringify(wrongSet));
+  setTimeout(() => { currentIdx++; renderQuizCard(); }, 2000);
+}
+
+function showEnd() {
+  renderStats();
+  const pct = Math.round(score/currentQuiz.length*100);
+  const msg = pct>=90?'🎉 완벽해요!':pct>=70?'👍 좋아요!':pct>=50?'📖 더 복습해봐요':'💪 다시 도전!';
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-end">
+      <div class="big-score">${score} / ${currentQuiz.length}</div>
+      <div class="sub">${pct}% 정답 &nbsp; ${msg}</div>
+      ${sessionWrong.length>0?`<p style="margin-top:10px;font-size:0.85rem;color:#991B1B">이번 틀린 문제: ${sessionWrong.length}개가 오답 목록에 추가됐습니다.</p>`:''}
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="startQuiz('all')">🔀 다시 풀기</button>
+        ${wrongSet.length>0?`<button class="btn btn-secondary" onclick="startQuiz('wrong')">❌ 오답만 (${wrongSet.length}개)</button>`:''}
+      </div>
+    </div>`;
+}
+
+function resetAll() {
+  if(!confirm('오답 기록을 초기화할까요?')) return;
+  wrongSet = []; localStorage.removeItem('wrongSet');
+  document.getElementById('quiz-stats').innerHTML = '';
+  document.getElementById('quiz-area').innerHTML = '';
+  renderStats2();
+}
+function renderStats2(){
+  document.getElementById('quiz-stats').innerHTML =
+    `<div class="score-display">📚 전체: ${ALL_QUESTIONS.length}문제 &nbsp;|&nbsp; ❌ 누적 오답: ${wrongSet.length}문제</div>`;
+}
+
+// TAB
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='quiz') renderStats2();
+}
+
+// COLLAPSIBLE
+function toggleCard(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+function toggleSub(header) {
+  header.nextElementSibling.classList.toggle('open');
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  // open first card
+  document.querySelectorAll('.card-header').forEach(h => {
+    h.classList.add('open');
+    h.nextElementSibling.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
