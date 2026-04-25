@@ -197,8 +197,8 @@ body {
   <div class="header-top">
     <span class="header-badge">PT Study Portal</span>
   </div>
-  <h1>물리치료사 국가시험 스터디</h1>
-  <p>시험과목 → 분야 → 영역별 자료 연결 포털</p>
+  <h1진이랑 보려고 만듬</h1>
+  <p>정리해서 올릴거임</p>
 </div>
 
 <div class="stats">
@@ -263,7 +263,7 @@ body {
     <span class="field-toggle">▼</span>
   </div>
   <div class="area-list">
-    <a class="area-item has-file" href="뉴만_CH1.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 1</span><span class="area-link-icon">→</span></a>
+    <a class="area-item has-file" href="#" onclick="checkPassword('1', '뉴만_CH1.html'); return false;">
   </div>
 </div>
 
@@ -717,9 +717,13 @@ body {
 </div>
 
 <script>
-function toggle(id) {
-  const card = document.getElementById(id);
-  card.classList.toggle('open');
+function checkPassword(pw, url) {
+  const input = prompt('🔒 틀리면 못염');
+  if (input === pw) {
+    window.location.href = url;
+  } else if (input !== null) {
+    alert('❌ 틀림 수고요');
+  }
 }
 </script>
 </body>
