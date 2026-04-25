@@ -717,6 +717,12 @@ body {
 </div>
 
 <script>
+  <script>
+function toggle(id) {
+  const card = document.getElementById(id);
+  if (card) card.classList.toggle('open');
+}
+
 function checkPassword(pw, url) {
   const input = prompt('🔒 틀리면 못염');
   if (input === pw) {
