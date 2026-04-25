@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5 – 어깨복합체</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --bg: #f5f3ee;
+  --card: #ffffff;
+  --navy: #1a2744;
+  --blue: #2d5fa0;
+  --blue-light: #4a7fc0;
+  --teal: #1a7a6e;
+  --orange: #d4622a;
+  --purple: #6b3d8a;
+  --red: #b03030;
+  --green: #2e7050;
+  --text: #1a1a1a;
+  --text2: #555;
+  --border: #ddd8ce;
+  --tip-bg: #fffbf0;
+  --tip-border: #e8c840;
+  --keyword-bg: #eef4fc;
+  --keyword-color: #2d5fa0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+
+/* STICKY NAV */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 46px;
+  gap: 6px;
+  overflow-x: auto;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+}
+.topnav .ch-badge {
+  background: var(--blue);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.topnav a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 14px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.topnav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0f1e3a 0%, #1a3560 60%, #0f3a5a 100%);
+  color: white;
+  padding: 44px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(45,95,160,0.2);
+}
+.hero .badge {
+  display: inline-block;
+  border: 1px solid rgba(100,160,255,0.5);
+  background: rgba(45,95,160,0.3);
+  color: #90c0ff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 4px 18px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+.hero p { color: #9ab; font-size: 13px; }
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+}
+.hero-tags span {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #cde;
+  font-size: 11px;
+  padding: 3px 12px;
+  border-radius: 14px;
+}
+
+/* MAIN CONTAINER */
+.container { max-width: 880px; margin: 0 auto; padding: 22px 14px 70px; }
+
+/* CHAPTER SECTION BLOCK */
+.ch-block { margin-bottom: 10px; }
+
+.ch-header {
+  border-radius: 10px 10px 0 0;
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+.ch-header.blue { background: var(--blue); }
+.ch-header.teal { background: var(--teal); }
+.ch-header.orange { background: var(--orange); }
+.ch-header.purple { background: var(--purple); }
+.ch-header.red { background: var(--red); }
+.ch-header.green { background: var(--green); }
+.ch-header.navy { background: var(--navy); }
+.ch-header.dark-teal { background: #145a52; }
+.ch-header.brown { background: #7a3a1a; }
+
+.ch-header .ico { font-size: 22px; flex-shrink: 0; }
+.ch-header h2 { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.ch-header p { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+
+.ch-body {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 18px 18px 20px;
+  margin-bottom: 14px;
+}
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+th {
+  background: #f0ece4;
+  padding: 7px 10px;
+  text-align: left;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--navy);
+}
+td {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  font-size: 13px;
+}
+tr:nth-child(even) td { background: #faf9f6; }
+td strong { color: var(--blue); }
+td em { color: var(--teal); font-style: normal; font-weight: 600; }
+
+/* TIP */
+.tip {
+  background: var(--tip-bg);
+  border-left: 4px solid var(--tip-border);
+  padding: 9px 13px;
+  border-radius: 0 8px 8px 0;
+  margin: 9px 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.tip strong { color: #9a7010; }
+
+/* FORMULA BOX */
+.formula {
+  background: var(--navy);
+  color: #90c0ff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 11px 16px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 11px 0;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.3px;
+}
+
+/* HIGHLIGHT BOX */
+.hbox {
+  border: 2px solid var(--blue);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #f0f5fc;
+  margin: 10px 0;
+}
+.hbox .htitle { font-weight: 700; color: var(--blue); font-size: 13px; margin-bottom: 6px; }
+.hbox.green { border-color: var(--green); background: #f0faf4; }
+.hbox.green .htitle { color: var(--green); }
+.hbox.orange { border-color: var(--orange); background: #fdf5f0; }
+.hbox.orange .htitle { color: var(--orange); }
+.hbox.red { border-color: var(--red); background: #fdf0f0; }
+.hbox.red .htitle { color: var(--red); }
+
+/* BULLET LIST */
+ul.pts { padding-left: 18px; margin: 8px 0; }
+ul.pts li { margin-bottom: 4px; font-size: 13px; color: var(--text2); line-height: 1.6; }
+ul.pts li strong { color: var(--text); }
+
+p.note { font-size: 13px; color: var(--text2); margin-bottom: 7px; line-height: 1.65; }
+
+/* 2 COLUMN GRID */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.gcard {
+  background: #f8f5f0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 13px;
+}
+.gcard h4 { font-size: 13px; font-weight: 700; margin-bottom: 7px; }
+.gcard h4.blue { color: var(--blue); }
+.gcard h4.teal { color: var(--teal); }
+.gcard h4.orange { color: var(--orange); }
+.gcard h4.purple { color: var(--purple); }
+.gcard h4.red { color: var(--red); }
+.gcard h4.green { color: var(--green); }
+
+/* KEYWORD PILLS */
+.kw-wrap { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.kw {
+  background: var(--keyword-bg);
+  border: 1px solid #b8d0f0;
+  color: var(--keyword-color);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* DIVIDER */
+.div { height: 1px; background: var(--border); margin: 13px 0; }
+
+/* BADGE INLINE */
+.bi {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0 2px;
+}
+.bi-blue { background: #dbeafe; color: #1e40af; }
+.bi-green { background: #dcfce7; color: #166534; }
+.bi-red { background: #fee2e2; color: #991b1b; }
+.bi-orange { background: #ffedd5; color: #9a3412; }
+.bi-purple { background: #ede9fe; color: #6b21a8; }
+
+/* SECTION SUBHEADING */
+.sub-head {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 14px 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #e0dcd4;
+}
+
+@media (max-width: 600px) {
+  .g2 { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 21px; }
+  table { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="topnav">
+  <span class="ch-badge">Ch.5</span>
+  <a href="#s1">골학</a>
+  <a href="#s2">SC관절</a>
+  <a href="#s3">AC관절</a>
+  <a href="#s4">ST관절</a>
+  <a href="#s5">GH관절</a>
+  <a href="#s6">어깨위팔리듬</a>
+  <a href="#s7">신경지배</a>
+  <a href="#s8">어깨가슴근육</a>
+  <a href="#s9">팔올림근육</a>
+  <a href="#s10">RC기능</a>
+  <a href="#s11">모음폄돌림</a>
+  <a href="#s12">임상</a>
+  <a href="#keywords">키워드</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">CHAPTER 5</div>
+  <h1>어깨복합체<br><span style="font-size:18px; opacity:0.75">Shoulder Complex</span></h1>
+  <p>SC · AC · ST · GH 4개 관절의 구조, 기능, 근육, 임상</p>
+  <div class="hero-tags">
+    <span>골학</span><span>SC관절</span><span>AC관절</span>
+    <span>GH관절</span><span>어깨위팔리듬</span><span>돌림근띠</span>
+    <span>어깨뼈운동장애</span><span>봉우리밑충돌</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== 1. 골학 ===== -->
+<div class="ch-block" id="s1">
+  <div class="ch-header blue">
+    <span class="ico">🦴</span>
+    <div><h2>골학 (Osteology)</h2><p>빗장뼈 · 어깨뼈 · 위팔뼈 주요 구조</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="sub-head">빗장뼈 (Clavicle)</div>
+    <ul class="pts">
+      <li>이마면에 대해 약 <strong>20도 뒤쪽</strong>으로 향함</li>
+      <li><strong>원뿔인대결절(Conoid tubercle)</strong>: 원뿔인대 부착</li>
+      <li><strong>마름인대선(Trapezoid line)</strong>: 마름인대 부착</li>
+      <li><strong>갈비거친면(Costal tuberosity)</strong>: 갈비빗장인대 부착</li>
+    </ul>
+
+    <div class="sub-head">어깨뼈 (Scapula)</div>
+    <div class="g2">
+      <div class="gcard">
+        <h4 class="blue">3개 각(Angle)</h4>
+        <ul class="pts">
+          <li>아래각 (움직임 추적)</li>
+          <li>위각</li>
+          <li>가쪽각</li>
+        </ul>
+      </div>
+      <div class="gcard">
+        <h4 class="teal">3개 모서리(Border)</h4>
+        <ul class="pts">
+          <li>안쪽 = 척추모서리</li>
+          <li>가쪽 = 겨드랑모서리</li>
+          <li>위모서리</li>
+        </ul>
+      </div>
+    </div>
+    <table>
+      <tr><th>구조</th><th>설명</th></tr>
+      <tr><td><strong>어깨면(Scapular plane)</strong></td><td>이마면에 대해 앞쪽 <strong>30~40도</strong></td></tr>
+      <tr><td><strong>관절오목(Glenoid fossa)</strong></td><td>가로축 대해 약 4도 위쪽 기울임 / 30~40도 앞쪽 방향</td></tr>
+      <tr><td><strong>부리돌기(Coracoid process)</strong></td><td>짧은갈래·부리위팔근·작은가슴근 부착</td></tr>
+      <tr><td><strong>봉우리(Acromion)</strong></td><td>가장 높은 지점 / 가쪽·앞쪽으로 뻗음</td></tr>
+    </table>
+
+    <div class="sub-head">위팔뼈 (Humerus) – 몸쪽</div>
+    <table>
+      <tr><th>구조</th><th>내용</th></tr>
+      <tr><td><strong>경사각(Inclination)</strong></td><td>위팔뼈 긴 축에 대해 <strong>135도</strong></td></tr>
+      <tr><td><strong>뒤경사(Retroversion)</strong></td><td>수평면 내에서 앞-뒤축에 대해 약 <strong>30도 뒤쪽</strong></td></tr>
+      <tr><td><strong>큰결절 위면</strong></td><td>가시위근</td></tr>
+      <tr><td><strong>큰결절 중간면</strong></td><td>가시아래근</td></tr>
+      <tr><td><strong>큰결절 아래면</strong></td><td>작은원근</td></tr>
+      <tr><td><strong>작은결절</strong></td><td>어깨밑근</td></tr>
+      <tr><td><strong>결절사이고랑</strong></td><td>위팔두갈래근 긴갈래 힘줄 통과 / 넓은등근 부착</td></tr>
+    </table>
+    <div class="tip"><strong>💡 어깨복합체 4개 관절:</strong> 복장빗장(SC) · 봉우리빗장(AC) · 어깨가슴(ST) · 오목위팔(GH)</div>
+  </div>
+</div>
+
+<!-- ===== 2. SC관절 ===== -->
+<div class="ch-block" id="s2">
+  <div class="ch-header teal">
+    <span class="ico">🔗</span>
+    <div><h2>복장빗장관절 (SC Joint)</h2><p>안장관절 · 자유도3 · 팔의 바닥관절</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="g2">
+      <div class="gcard">
+        <h4 class="teal">일반적 특징</h4>
+        <ul class="pts">
+          <li>유형: <strong>안장관절(Saddle)</strong></li>
+          <li>자유도: <strong>3</strong></li>
+          <li>팔다리뼈대↔몸통뼈대 연결</li>
+          <li><strong>바닥관절(basilar joint)</strong></li>
+          <li>관절원반 있음 (사체 50%에서 완전)</li>
+        </ul>
+      </div>
+      <div class="gcard">
+        <h4 class="blue">관절주위 결합조직</h4>
+        <ul class="pts">
+          <li>앞·뒤 복장빗장인대</li>
+          <li><strong>갈비빗장인대(CCL)</strong> → 올림 제한</li>
+          <li><strong>빗장사이인대(ICL)</strong> → 내림 제한</li>
+          <li>목빗근, 복장방패근, 빗장밑근</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-head">SC관절 운동형상학</div>
+    <table>
+      <tr><th>운동</th><th>관절운동형상학</th><th>제한 구조</th></tr>
+      <tr><td><strong>올림 (35~45도)</strong></td><td>볼록→오목 위쪽 구르기+아래 미끄러짐</td><td>갈비빗장인대(CCL)</td></tr>
+      <tr><td><strong>내림 (10도)</strong></td><td>볼록→아래쪽 구르기+위쪽 미끄러짐</td><td>빗장사이인대(ICL), 위관절주머니</td></tr>
+      <tr><td><strong>내밈 (15~30도)</strong></td><td>오목→앞쪽 구르기+미끄러짐 동일방향</td><td>뒤관절주머니, CCL 뒤다발</td></tr>
+      <tr><td><strong>뒤당김 (15~30도)</strong></td><td>오목→뒤쪽 구르기+미끄러짐 동일방향</td><td>앞관절주머니(ACL), CCL 앞다발</td></tr>
+      <tr><td><strong>축돌림</strong></td><td>관절원반 가쪽면에 대한 복장끝의 스핀</td><td>어깨 벌림·굽힘과 연계 / 독립 불가</td></tr>
+    </table>
+    <div class="tip"><strong>💡 올림·내림 = 세로지름(볼록) / 내밈·뒤당김 = 가로지름(오목)</strong></div>
+  </div>
+</div>
+
+<!-- ===== 3. AC관절 ===== -->
+<div class="ch-block" id="s3">
+  <div class="ch-header orange">
+    <span class="ico">⚓</span>
+    <div><h2>봉우리빗장관절 (AC Joint)</h2><p>평면관절 · 부리빗장인대 · 탈구 주의</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="g2">
+      <div class="gcard">
+        <h4 class="orange">일반적 특징</h4>
+        <ul class="pts">
+          <li>유형: <strong>평면관절(Gliding)</strong></li>
+          <li>빗장뼈 가쪽끝 ↔ 어깨뼈 봉우리</li>
+          <li>관절원반 있음 (형태 다양)</li>
+        </ul>
+      </div>
+      <div class="gcard">
+        <h4 class="red">부리빗장인대 (Coracoclavicular Lig.)</h4>
+        <ul class="pts">
+          <li><strong>마름인대(Trapezoid)</strong>: 앞가쪽 / 납작한 사각형</li>
+          <li><strong>원뿔인대(Conoid)</strong>: 뒤안쪽 / 수직 / 원뿔 모양</li>
+          <li>AC관절의 가장 중요한 외재성 안정자</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-head">AC관절 운동 (돌림성 조절운동)</div>
+    <table>
+      <tr><th>운동</th><th>발생 면</th><th>발생 상황</th></tr>
+      <tr><td><strong>위쪽돌림 (최대 30도)</strong></td><td>이마면</td><td>어깨 벌림·올림 시 일차적 AC운동</td></tr>
+      <tr><td><strong>아래쪽돌림</strong></td><td>이마면</td><td>팔 내려올 때</td></tr>
+      <tr><td><strong>뒤기울임(Post. tilt)</strong></td><td>시상면</td><td>어깨뼈 위쪽돌림 시 AC관절 기여</td></tr>
+      <tr><td><strong>가쪽돌림(Ext. rotation)</strong></td><td>수평면</td><td>어깨뼈 위쪽돌림 시 AC관절 기여</td></tr>
+    </table>
+
+    <div class="hbox red">
+      <div class="htitle">⚠️ AC관절 탈구</div>
+      <ul class="pts">
+        <li>대학 미식축구 선수 어깨 손상의 약 <strong>40%</strong></li>
+        <li>수평 전단력 → <strong>위·아래관절주머니인대</strong>가 일차적 저항</li>
+        <li>심한 경우 → <strong>부리빗장인대</strong>가 이차적 저항 → 파열 시 탈구</li>
+        <li>불안정성 → 외상후뼈관절염 유발 가능</li>
+      </ul>
+    </div>
+    <div class="tip"><strong>💡 부리빗장인대 기전:</strong> 앞톱니근이 어깨뼈 위쪽돌림 → 부리빗장인대 팽팽해짐 → 크랭크처럼 빗장뼈 뒤쪽돌림 유발</div>
+  </div>
+</div>
+
+<!-- ===== 4. ST관절 ===== -->
+<div class="ch-block" id="s4">
+  <div class="ch-header purple">
+    <span class="ico">🏗️</span>
+    <div><h2>어깨가슴관절 (ST Joint)</h2><p>진짜 관절 아님 · SC+AC 합성운동 · 안정자세</p></div>
+  </div>
+  <div class="ch-body">
+    <p class="note">어깨가슴관절은 진짜 관절이 아니라 어깨뼈 앞면과 가슴의 뒤-가쪽벽 사이의 <strong>접촉부위</strong>다. ST에서의 움직임 = SC관절과 AC관절의 협동 합성운동</p>
+
+    <div class="sub-head">어깨가슴관절 움직임 6가지</div>
+    <table>
+      <tr><th>운동</th><th>설명</th><th>SC기여</th><th>AC기여</th></tr>
+      <tr><td><strong>올림</strong></td><td>어깨뼈 위쪽으로 미끄러짐</td><td>빗장뼈 올림</td><td>어깨뼈 아래쪽돌림</td></tr>
+      <tr><td><strong>내림</strong></td><td>올림의 역방향</td><td>빗장뼈 내림</td><td>—</td></tr>
+      <tr><td><strong>내밈</strong></td><td>안쪽모서리 앞-가쪽으로</td><td>SC 내밈</td><td>AC 안쪽돌림</td></tr>
+      <tr><td><strong>뒤당김</strong></td><td>내밈의 역방향</td><td>SC 뒤당김</td><td>AC 가쪽돌림</td></tr>
+      <tr><td><strong>위쪽돌림</strong></td><td>관절오목 위쪽 향함</td><td>빗장뼈 올림</td><td>AC 위쪽돌림</td></tr>
+      <tr><td><strong>아래쪽돌림</strong></td><td>위쪽돌림의 역방향</td><td>빗장뼈 내림</td><td>AC 아래쪽돌림</td></tr>
+    </table>
+
+    <div class="sub-head">어깨뼈 안정자세 (Resting Posture)</div>
+    <ul class="pts">
+      <li>앞기울임 약 <strong>10도</strong></li>
+      <li>위쪽돌림 약 <strong>5~10도</strong></li>
+      <li>안쪽돌림 약 <strong>30~40도</strong> (어깨면과 일치)</li>
+    </ul>
+
+    <div class="hbox green">
+      <div class="htitle">✅ 어깨뼈 완전한 위쪽돌림의 3가지 기능적 중요성</div>
+      <ul class="pts">
+        <li>① 관절오목을 위쪽·앞-가쪽으로 위치 → 팔의 위쪽·가쪽 손뻗기 최대화 (<strong>구조적 바닥부</strong>)</li>
+        <li>② 중간어깨세모근·가시위근 등 오목위팔관절 벌림근에 대한 <strong>최적의 길이-장력관계</strong> 유지</li>
+        <li>③ <strong>봉우리밑공간 유지</strong> → 충돌·손상 방지</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5. GH관절 ===== -->
+<div class="ch-block" id="s5">
+  <div class="ch-header red">
+    <span class="ico">⚽</span>
+    <div><h2>오목위팔관절 (GH Joint)</h2><p>관절주머니 · 인대 · 정적·동적 안정성</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="sub-head">일반적 특징</div>
+    <ul class="pts">
+      <li>관절주머니 공간 용적 = 위팔뼈머리 크기의 약 <strong>2배</strong> → 넓은 가동범위</li>
+      <li>아래 부분 = <strong>겨드랑주머니(axillary pouch)</strong> – 느슨한 오목(recess)</li>
+    </ul>
+
+    <div class="sub-head">GH관절 인대 (관절주머니인대)</div>
+    <table>
+      <tr><th>인대</th><th>팽팽해지는 동작</th><th>중요성</th></tr>
+      <tr><td><strong>위오목위팔인대</strong></td><td>가쪽돌림, 아래·앞 병진운동</td><td>아래방향 탈구 저항</td></tr>
+      <tr><td><strong>중간오목위팔인대</strong></td><td>45~90도 벌림+가쪽돌림</td><td>앞쪽 병진운동 저항</td></tr>
+      <tr><td><strong>아래오목위팔인대 (가장 중요)</strong></td><td>90도 벌림+완전 가쪽돌림 (앞섬유)<br>90도 벌림+완전 안쪽돌림 (뒤섬유)</td><td>벌림 시 앞방향 탈구 <strong>일차적 저항</strong></td></tr>
+      <tr><td><strong>부리위팔인대</strong></td><td>팔 옆에 있을 때</td><td>아래방향 탈구 저항</td></tr>
+      <tr><td><strong>부리봉우리인대</strong></td><td>부리돌기↔봉우리</td><td>부리봉우리 아치 형성 / 위쪽 탈구 방지</td></tr>
+      <tr><td><strong>가로인대</strong></td><td>결절사이고랑 위</td><td>두갈래근 긴갈래 힘줄 유지</td></tr>
+    </table>
+    <div class="tip"><strong>💡 봉우리밑공간(Subacromial Space)</strong> = 위팔뼈머리와 부리봉우리활 사이 / 건강한 성인 약 <strong>1 cm</strong> / 내부: 가시위근힘줄, 봉우리밑윤활주머니, 두갈래근 긴갈래</div>
+
+    <div class="sub-head">정적 안정자 (Static Stabilizer)</div>
+    <table>
+      <tr><th>구조</th><th>기능</th></tr>
+      <tr><td><strong>오목위팔관절주머니인대</strong></td><td>가동범위 끝 지점에서 최대 안정성</td></tr>
+      <tr><td><strong>오목테두리(Glenoid labrum)</strong></td><td>관절오목 깊이 약 <strong>50%</strong> 기여 / 접촉면적↑</td></tr>
+      <tr><td><strong>관절속 음압</strong></td><td>위팔뼈머리 흡착 유지</td></tr>
+      <tr><td><strong>정적 잠김기전(SCS)</strong></td><td>위관절주머니+부리위팔인대+가시위근힘줄 → 잠김압박력(CF) 발생</td></tr>
+    </table>
+    <div class="tip"><strong>💡 동적 안정자 = 돌림근띠(RC)</strong> → 관절이 어떤 위치에 있든 능동적 안정성 제공</div>
+
+    <div class="sub-head">GH관절 운동형상학</div>
+    <table>
+      <tr><th>운동</th><th>관절운동형상학</th><th>특이사항</th></tr>
+      <tr><td><strong>벌림</strong></td><td>위쪽 구르기 + 아래쪽 미끄러짐</td><td>AHD 최소 = 20~35도 (2.6mm)</td></tr>
+      <tr><td><strong>굽힘</strong></td><td>위팔뼈머리의 <strong>스핀</strong> (일차적)</td><td>최소 120도 / 완전굽힘=GH+ST위쪽돌림</td></tr>
+      <tr><td><strong>가쪽돌림</strong></td><td>뒤쪽 구르기 + <strong>앞쪽</strong> 미끄러짐</td><td>60~70도 / 90도벌림 시 거의 90도</td></tr>
+      <tr><td><strong>안쪽돌림</strong></td><td>앞쪽 구르기 + <strong>뒤쪽</strong> 미끄러짐</td><td>75~85도</td></tr>
+    </table>
+    <div class="tip"><strong>💡 동적 중심화:</strong> 구르기 + 미끄러짐의 협동 / 뒤관절주머니 타이트 → 위팔뼈머리 앞쪽이동 / 앞관절주머니 타이트 → 뒤쪽이동</div>
+  </div>
+</div>
+
+<!-- ===== 6. 어깨위팔리듬 ===== -->
+<div class="ch-block" id="s6">
+  <div class="ch-header green">
+    <span class="ico">🔄</span>
+    <div><h2>어깨위팔리듬 & 완전 벌림 6원리</h2><p>Scapulohumeral Rhythm · 2:1 · 6가지 운동형상학적 원리</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="formula">어깨위팔리듬 = 2 : 1 &nbsp;|&nbsp; GH 120도 + ST 60도 = 180도</div>
+
+    <div class="sub-head">완전한 어깨 벌림 6가지 운동형상학적 원리</div>
+    <table>
+      <tr><th>원리</th><th>내용</th><th>관절</th></tr>
+      <tr><td><strong>원리 1</strong></td><td>2:1 리듬 → GH <strong>120도</strong> + ST <strong>60도</strong> 동시 발생</td><td>GH + ST</td></tr>
+      <tr><td><strong>원리 2</strong></td><td>60도의 어깨뼈 위쪽돌림 = AC관절 위쪽돌림 + SC관절 올림 결합</td><td>AC + SC</td></tr>
+      <tr><td><strong>원리 3</strong></td><td>벌림 동안 빗장뼈는 SC관절에서 <strong>뒤당김</strong></td><td>SC</td></tr>
+      <tr><td><strong>원리 4</strong></td><td>완전 벌림 동안 어깨뼈는 <strong>뒤기울임</strong> + 약간 <strong>가쪽돌림</strong></td><td>AC</td></tr>
+      <tr><td><strong>원리 5</strong></td><td>빗장뼈는 자신의 축에 대해 <strong>뒤쪽으로 돌림</strong> (20~35도)</td><td>SC 축돌림</td></tr>
+      <tr><td><strong>원리 6</strong></td><td>GH관절은 <strong>가쪽으로 돌림</strong> → 큰결절이 봉우리밑공간 통과</td><td>GH</td></tr>
+    </table>
+
+    <div class="sub-head">각 관절별 수치 (그림 5.36)</div>
+    <div class="g2">
+      <div class="gcard">
+        <h4 class="blue">SC관절</h4>
+        <ul class="pts">
+          <li>올림: <strong>25도</strong></li>
+          <li>뒤당김: <strong>20도</strong></li>
+          <li>뒤쪽돌림(축돌림): <strong>25도</strong></li>
+        </ul>
+      </div>
+      <div class="gcard">
+        <h4 class="teal">AC관절</h4>
+        <ul class="pts">
+          <li>위쪽돌림: <strong>30도</strong></li>
+          <li>뒤기울임: <strong>20도</strong></li>
+          <li>GH 가쪽돌림: <strong>35~40도</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 원리 5 기전:</strong> 앞톱니근 수축 → 어깨뼈 위쪽돌림 → 부리빗장인대 팽팽 → 크랭크처럼 빗장뼈 뒤쪽돌림</div>
+    <div class="tip"><strong>💡 원리 6 이유:</strong> 가쪽돌림 없으면 큰결절이 봉우리 아래 높은 지점에 충돌 / 대부분 벌림 70~80도 전에 완료</div>
+  </div>
+</div>
+
+<!-- ===== 7. 신경지배 ===== -->
+<div class="ch-block" id="s7">
+  <div class="ch-header navy">
+    <span class="ico">⚡</span>
+    <div><h2>신경지배 (Innervation)</h2><p>팔신경얼기 C5~T1 · 표 5.3</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="sub-head">팔신경얼기 (Brachial Plexus) 구성</div>
+    <table>
+      <tr><th>줄기(Trunk)</th><th>신경뿌리</th></tr>
+      <tr><td><strong>위신경줄기</strong></td><td>C5 + C6</td></tr>
+      <tr><td><strong>중간신경줄기</strong></td><td>C7</td></tr>
+      <tr><td><strong>아래신경줄기</strong></td><td>C8 + T1</td></tr>
+    </table>
+
+    <div class="sub-head">어깨복합체 주요 신경지배 (표 5.3)</div>
+    <table>
+      <tr><th>신경</th><th>신경뿌리</th><th>지배 근육</th></tr>
+      <tr><td><strong>겨드랑신경</strong></td><td>C5, C6</td><td>어깨세모근 + 작은원근</td></tr>
+      <tr><td><strong>가슴등신경</strong></td><td>C6, C7, C8</td><td>넓은등근</td></tr>
+      <tr><td><strong>위어깨밑신경</strong></td><td>C5, C6</td><td>어깨밑근의 위섬유</td></tr>
+      <tr><td><strong>아래어깨밑신경</strong></td><td>C5, C6</td><td>어깨밑근의 아래섬유 + 큰원근</td></tr>
+      <tr><td><strong>어깨위신경</strong></td><td>C5, C6</td><td>가시위근 + 가시아래근</td></tr>
+      <tr><td><strong>빗장밑신경</strong></td><td>C5, C6</td><td>빗장밑근</td></tr>
+      <tr><td><strong>등쪽어깨신경</strong></td><td>C5</td><td>큰마름근 + 작은마름근 + 어깨올림근</td></tr>
+      <tr><td><strong>긴가슴신경</strong></td><td>C5, C6, C7</td><td>앞톱니근</td></tr>
+      <tr><td><strong>가쪽·안쪽가슴근신경</strong></td><td>C5~T1</td><td>큰가슴근 + 작은가슴근</td></tr>
+    </table>
+    <div class="tip"><strong>💡 관절 감각신경지배:</strong> SC관절 = 목신경얼기(C3,C4) / AC·GH관절 = 어깨위신경+겨드랑신경(C5,C6)</div>
+  </div>
+</div>
+
+<!-- ===== 8. 어깨가슴관절 근육 ===== -->
+<div class="ch-block" id="s8">
+  <div class="ch-header dark-teal">
+    <span class="ico">💪</span>
+    <div><h2>어깨가슴관절 근육</h2><p>올림 · 내림 · 내밈 · 뒤당김 · 위쪽돌림 · 아래쪽돌림</p></div>
+  </div>
+  <div class="ch-body">
+    <table>
+      <tr><th>기능</th><th>주요 근육</th><th>핵심 포인트</th></tr>
+      <tr>
+        <td><strong>올림근</strong></td>
+        <td>위등세모근, 어깨올림근, 큰·작은마름근</td>
+        <td>위등세모근 = SC관절에 대한 좋은 지레작용</td>
+      </tr>
+      <tr>
+        <td><strong>내림근</strong></td>
+        <td>아래등세모근, 넓은등근, 작은가슴근, 빗장밑근</td>
+        <td>목발보행(CKC): 아래등세모근+넓은등근 수축 필수</td>
+      </tr>
+      <tr>
+        <td><strong>내밈근</strong></td>
+        <td><em>앞톱니근</em> (가장 중요)</td>
+        <td>SC 수직 돌림축 중심 / push-up plus 작용</td>
+      </tr>
+      <tr>
+        <td><strong>뒤당김근</strong></td>
+        <td>중간등세모근, 마름근들, 아래등세모근</td>
+        <td>마름근+아래등세모근 힘선 결합 = 순수 뒤당김</td>
+      </tr>
+      <tr>
+        <td><strong>위쪽돌림근 (짝힘)</strong></td>
+        <td><em>앞톱니근(SA)</em> + 위등세모근(UT) + 아래등세모근(LT)</td>
+        <td>SA = 가장 큰 모멘트팔 / 가장 효율적인 위쪽돌림근</td>
+      </tr>
+      <tr>
+        <td><strong>아래쪽돌림근</strong></td>
+        <td>큰·작은마름근, 작은가슴근</td>
+        <td>—</td>
+      </tr>
+    </table>
+
+    <div class="sub-head">위쪽돌림 짝힘 (Force-couple) 분석 (그림 5.49·5.50)</div>
+    <table>
+      <tr><th>짝힘</th><th>결과 운동</th></tr>
+      <tr><td>앞톱니근(SA) + 아래등세모근(LT)</td><td>AC관절 돌림축 중심 <strong>뒤기울임</strong></td></tr>
+      <tr><td>앞톱니근(SA) + 중간등세모근(MT)</td><td>AC관절 돌림축 중심 <strong>가쪽돌림</strong></td></tr>
+      <tr><td>SA + UT + LT 전체 짝힘</td><td>어깨뼈 <strong>위쪽돌림</strong> 생성</td></tr>
+    </table>
+    <div class="tip"><strong>💡 앞톱니근 마비(긴가슴신경 손상)</strong> → 날개어깨뼈(winged scapula) / 머리 위로 팔 올리기 불가 / 마비 85%는 우세팔에서 발생</div>
+    <div class="tip"><strong>💡 "둥근 어깨(Rounded Shoulders)"</strong>: 어깨뼈 내림·아래쪽돌림·내밈 → SC·GH관절 스트레스 → 봉우리밑공간 내 조직 끼임</div>
+  </div>
+</div>
+
+<!-- ===== 9. 팔 올림 근육 ===== -->
+<div class="ch-block" id="s9">
+  <div class="ch-header blue">
+    <span class="ico">🙋</span>
+    <div><h2>팔을 올림시키는 근육</h2><p>GH 벌림근 · 굽힘근 · 이마면 vs 어깨면 벌림</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="g2">
+      <div class="gcard">
+        <h4 class="blue">GH관절 벌림 주동근</h4>
+        <ul class="pts">
+          <li><strong>앞어깨세모근</strong></li>
+          <li><strong>중간어깨세모근</strong></li>
+          <li><strong>가시위근</strong></li>
+        </ul>
+        <p class="note" style="margin-top:6px;">중간어깨세모근과 가시위근 = 거의 똑같은 단면적+모멘트팔 (10~12% 이내)</p>
+      </div>
+      <div class="gcard">
+        <h4 class="teal">GH관절 굽힘 주동근</h4>
+        <ul class="pts">
+          <li><strong>앞어깨세모근</strong></li>
+          <li><strong>부리위팔근</strong></li>
+          <li><strong>위팔두갈래근 긴갈래</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-head">이마면 vs 어깨면 벌림 비교</div>
+    <table>
+      <tr><th>구분</th><th>이마면 벌림</th><th>어깨면 벌림 (선호)</th></tr>
+      <tr><td>가쪽돌림 필요량</td><td>더 많이 필요</td><td><strong>더 적게 필요</strong></td></tr>
+      <tr><td>봉우리밑 충돌</td><td>위험↑</td><td>위험↓</td></tr>
+      <tr><td>자연스러움</td><td>비교적 부자연스러움</td><td><strong>더 자연스러운 동작</strong></td></tr>
+      <tr><td>가시위근 힘선</td><td>봉우리밑활 통과 어려움</td><td>봉우리밑활 통과 쉬움</td></tr>
+    </table>
+    <div class="tip"><strong>💡 어깨 가쪽돌림근 약화</strong> → 완전한 벌림 어려움 / 가시위근 마비 시 → 어깨세모근만으로 GH 완전 벌림 가능 / 둘 다 마비 → 완전 능동 벌림 불가</div>
+  </div>
+</div>
+
+<!-- ===== 10. 돌림근띠 기능 ===== -->
+<div class="ch-block" id="s10">
+  <div class="ch-header brown">
+    <span class="ico">🌀</span>
+    <div><h2>돌림근띠(RC) 기능</h2><p>동적 안정성 · 벌림 동안의 역할 · RC증후군</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="sub-head">RC 4개 근육의 역할</div>
+    <table>
+      <tr><th>근육</th><th>벌림 동안 역할</th></tr>
+      <tr><td><strong>가시위근</strong></td><td>위팔뼈머리 위쪽 구르기 유발 / 관절오목에 견고하게 압박 / 반경체 간격장치(spacer)로 과도한 위쪽 병진운동 제한</td></tr>
+      <tr><td><strong>가시아래근</strong></td><td>위팔뼈머리에 아래쪽으로 힘 발휘 + 가쪽돌림</td></tr>
+      <tr><td><strong>작은원근</strong></td><td>위팔뼈머리에 아래쪽으로 힘 발휘 + 가쪽돌림</td></tr>
+      <tr><td><strong>어깨밑근</strong></td><td>위팔뼈머리에 아래쪽으로 힘 발휘 (안쪽돌림도 기여)</td></tr>
+    </table>
+
+    <div class="hbox">
+      <div class="htitle">📌 동적 중심화 (Dynamic Centering, Special Focus 5.5)</div>
+      <ul class="pts">
+        <li>돌림근띠 근육 = 구르기 + 미끄러짐을 협동 조절하여 위팔뼈머리를 <strong>관절오목에 중심화</strong></li>
+        <li>가시아래근 수축 → 뒤쪽 구르기 / 앞관절주머니인대(ACL) 신장 → 앞쪽 미끄러짐 유도</li>
+        <li>과도한 <strong>뒤관절주머니 타이트함</strong> → 가쪽돌림 시 위팔뼈머리 앞쪽이동 → 봉우리밑충돌 위험</li>
+        <li>과도한 <strong>앞관절주머니 타이트함</strong> → 위팔뼈머리 뒤쪽이동 → 불안정성</li>
+      </ul>
+    </div>
+
+    <div class="sub-head">돌림근띠증후군 (Special Focus 5.9)</div>
+    <ul class="pts">
+      <li>가시위근힘줄의 과도한 마모·열상·염증</li>
+      <li>원인: 반복된 부딪힘, 노화, 외상, 과사용</li>
+      <li>가시위근 MA = 약 <strong>1:20</strong> → 부하 무게보다 20배 더 큰 힘 필요</li>
+      <li>임상: 물체를 신체 가까이에서 잡도록 권장 (외적 모멘트팔 감소)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== 11. 모음·폄·안쪽돌림·가쪽돌림 ===== -->
+<div class="ch-block" id="s11">
+  <div class="ch-header purple">
+    <span class="ico">🔃</span>
+    <div><h2>모음·폄·안쪽돌림·가쪽돌림 근육</h2><p>최대 토크 순서 · 안쪽돌림 > 가쪽돌림</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="sub-head">일차적인 모음근이자 폄근 (5개)</div>
+    <table>
+      <tr><th>근육</th><th>특징</th></tr>
+      <tr><td><strong>뒤어깨세모근</strong></td><td>모음+폄+가쪽돌림+<em>수평벌림(일차적)</em> / 겨드랑신경</td></tr>
+      <tr><td><strong>넓은등근</strong></td><td>모음+폄+안쪽돌림 / 가장 큰 모멘트팔 / 수영·목발보행</td></tr>
+      <tr><td><strong>큰원근</strong></td><td>모음+폄+안쪽돌림 / 아래어깨밑신경</td></tr>
+      <tr><td><strong>위팔세갈래근 긴갈래</strong></td><td>모음+폄 보조</td></tr>
+      <tr><td><strong>큰가슴근 복장갈비갈래</strong></td><td>모음+폄 / 팔 30도 이상에서 큰 모멘트팔</td></tr>
+    </table>
+
+    <div class="sub-head">어깨 최대 토크 순서 (그림 5.57)</div>
+    <div class="formula">폄 &gt; 모음 &gt; 굽힘 &gt; 벌림 &gt; 안쪽돌림 &gt; 가쪽돌림</div>
+
+    <div class="sub-head">안쪽돌림근 vs 가쪽돌림근</div>
+    <div class="g2">
+      <div class="gcard">
+        <h4 class="red">안쪽돌림근 (IR)</h4>
+        <ul class="pts">
+          <li>어깨밑근, 큰가슴근, 넓은등근, 큰원근, 앞어깨세모근</li>
+          <li>가쪽돌림근보다 <strong>약 40~70%</strong> 더 큰 토크</li>
+          <li>팔 30도 올림 시 어깨밑근 = 가장 큰 모멘트팔</li>
+        </ul>
+      </div>
+      <div class="gcard">
+        <h4 class="green">가쪽돌림근 (ER)</h4>
+        <ul class="pts">
+          <li>가시아래근, 작은원근, 뒤어깨세모근</li>
+          <li>어깨 근육무리 중 <strong>가장 낮은</strong> 최대 토크</li>
+          <li>기능적으로 매우 중요 (GH 동적 안정성)</li>
+          <li>가쪽돌림 없으면 벌림 시 큰결절 충돌</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hbox">
+      <div class="htitle">📌 뒤어깨세모근 (Special Focus 5.10)</div>
+      <ul class="pts">
+        <li><strong>폄근 + 모음근 + 가쪽돌림근 + 수평벌림근</strong> 동시에</li>
+        <li>강한 수축 시 <strong>아래등세모근</strong>에 의해 어깨뼈가 견고하게 안정되어야 함</li>
+        <li>활 쏘기 동작 = 뒤어깨세모근과 아래등세모근의 협력 관계 잘 나타냄</li>
+        <li>겨드랑신경 과신장 → 완전 마비 가능 → 폄·수평벌림 어려움</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 12. 임상 요약 ===== -->
+<div class="ch-block" id="s12">
+  <div class="ch-header red">
+    <span class="ico">🏥</span>
+    <div><h2>임상 요약</h2><p>어깨뼈 운동장애 · 봉우리밑충돌 · 유착성관절주머니염 · 재활</p></div>
+  </div>
+  <div class="ch-body">
+    <div class="sub-head">어깨뼈 운동장애 (Scapular Dyskinesis)</div>
+    <ul class="pts">
+      <li>정의: 원인에 관계없이 어깨뼈의 비정상적 위치나 움직임</li>
+      <li>흔한 임상 표현: 감소된 위쪽돌림 / 과도한 아래쪽돌림 / 앞쪽돌림 / 앞기울임</li>
+      <li>"발음성 어깨뼈(snapping scapula)": 가슴에 대한 어깨뼈의 삐걱소리</li>
+    </ul>
+
+    <div class="sub-head">봉우리밑 부딪힘 증후군 (Subacromial Impingement Syndrome)</div>
+    <ul class="pts">
+      <li>원인: 벌림 시 아래쪽 미끄러짐 부족 → 봉우리밑공간 내 반복 압박</li>
+      <li>손상 조직: 가시위근 힘줄, 봉우리밑윤활주머니, 두갈래근 긴갈래</li>
+      <li>기여 요인: 어깨뼈 위쪽돌림 부족 / 뒤관절주머니 타이트함 / RC 근육 약화</li>
+    </ul>
+
+    <div class="sub-head">유착성관절주머니염 (Adhesive Capsulitis)</div>
+    <ul class="pts">
+      <li>아래관절주머니인대의 과도한 뻣뻣함 → 벌림 시 아래쪽 미끄러짐 부족 → 부리봉우리활에 걸림</li>
+    </ul>
+
+    <div class="sub-head">보존적 치료 목표</div>
+    <ol style="padding-left:20px; font-size:13px; color:var(--text2);">
+      <li style="margin-bottom:4px;">관절에 대한 일차적·이차적 스트레스 감소</li>
+      <li style="margin-bottom:4px;">관절운동형상학의 정상화</li>
+      <li style="margin-bottom:4px;">능동·수동 가동범위의 회복</li>
+      <li style="margin-bottom:4px;">근력 증진</li>
+      <li>통증·염증 감소</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ===== 키워드 ===== -->
+<div class="ch-block" id="keywords">
+  <div class="ch-header navy">
+    <span class="ico">🔑</span>
+    <div><h2>Chapter 5 핵심 키워드 총정리</h2></div>
+  </div>
+  <div class="ch-body">
+    <div class="kw-wrap">
+      <span class="kw">SC=안장관절·자유도3</span>
+      <span class="kw">갈비빗장인대=올림제한</span>
+      <span class="kw">빗장사이인대=내림제한</span>
+      <span class="kw">AC=평면관절</span>
+      <span class="kw">부리빗장인대=AC핵심안정자</span>
+      <span class="kw">원뿔인대=뒤안쪽</span>
+      <span class="kw">마름인대=앞가쪽</span>
+      <span class="kw">AC탈구=40%</span>
+      <span class="kw">ST=진짜관절아님</span>
+      <span class="kw">어깨뼈안정자세=앞기울임10+위쪽돌림5~10+안쪽돌림30~40</span>
+      <span class="kw">GH=공간2배</span>
+      <span class="kw">아래오목위팔인대=가장중요</span>
+      <span class="kw">오목테두리=50%기여</span>
+      <span class="kw">봉우리밑공간=1cm</span>
+      <span class="kw">부리봉우리인대=위쪽탈구방지</span>
+      <span class="kw">어깨위팔리듬=2:1</span>
+      <span class="kw">GH120+ST60=180</span>
+      <span class="kw">6가지벌림원리</span>
+      <span class="kw">SC25도올림+AC30도위쪽돌림</span>
+      <span class="kw">빗장뼈뒤쪽돌림=부리빗장인대팽팽</span>
+      <span class="kw">GH가쪽돌림=큰결절회피</span>
+      <span class="kw">겨드랑신경=어깨세모근+작은원근</span>
+      <span class="kw">어깨위신경=가시위근+가시아래근</span>
+      <span class="kw">긴가슴신경=앞톱니근</span>
+      <span class="kw">등쪽어깨신경=마름근+어깨올림근</span>
+      <span class="kw">가슴등신경=넓은등근</span>
+      <span class="kw">앞톱니근=가장중요한내밈근·위쪽돌림근</span>
+      <span class="kw">push-up plus=앞톱니근</span>
+      <span class="kw">날개어깨뼈=긴가슴신경손상</span>
+      <span class="kw">위쪽돌림짝힘=SA+UT+LT</span>
+      <span class="kw">SA=가장큰모멘트팔</span>
+      <span class="kw">SA+LT=뒤기울임</span>
+      <span class="kw">SA+MT=가쪽돌림</span>
+      <span class="kw">벌림주동근=앞·중간어깨세모근+가시위근</span>
+      <span class="kw">어깨면벌림=자연스러움</span>
+      <span class="kw">RC=동적안정자</span>
+      <span class="kw">가시위근=간격장치+압박</span>
+      <span class="kw">RC MA=1:20</span>
+      <span class="kw">동적중심화=구르기+미끄러짐협동</span>
+      <span class="kw">뒤관절주머니타이트=앞쪽이동</span>
+      <span class="kw">넓은등근=모음·폄·안쪽돌림·가장큰MA</span>
+      <span class="kw">최대토크=폄>모음>굽힘>벌림>안쪽>가쪽</span>
+      <span class="kw">안쪽돌림>가쪽돌림(40~70%)</span>
+      <span class="kw">뒤어깨세모근=폄·모음·가쪽돌림·수평벌림</span>
+      <span class="kw">어깨뼈운동장애=scapular dyskinesis</span>
+      <span class="kw">봉우리밑충돌=아래쪽미끄러짐부족</span>
+      <span class="kw">유착성관절주머니염=아래관절주머니타이트</span>
+      <span class="kw">투수골절=비틀림성전단력</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 6 — 팔꿈치와 아래팔</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161820;
+    --bg3: #1d1f2a;
+    --card: #1e2130;
+    --card2: #252839;
+    --border: #2e3250;
+    --accent1: #6c8cff;
+    --accent2: #ff6b9d;
+    --accent3: #43e8b0;
+    --accent4: #ffd166;
+    --accent5: #ff9f43;
+    --text: #e8eaf6;
+    --text2: #9fa8c9;
+    --text3: #6b7394;
+    --highlight: rgba(108,140,255,0.15);
+    --highlight2: rgba(255,107,157,0.12);
+    --highlight3: rgba(67,232,176,0.12);
+    --highlight4: rgba(255,209,102,0.12);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0f1117 0%, #1a1f3a 40%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top:-80px; right:-80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(108,140,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom:-60px; left:20%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,107,157,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; position:relative; z-index:1; }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight:600;
+    color: var(--accent1);
+    background: rgba(108,140,255,0.1);
+    border: 1px solid rgba(108,140,255,0.25);
+    padding: 4px 12px; border-radius: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 42px; font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent1); }
+  .hero-sub {
+    font-size: 18px; color: var(--text2);
+    font-weight: 300; letter-spacing: 3px;
+    margin-bottom: 24px;
+  }
+  .hero-pills { display: flex; flex-wrap:wrap; gap:8px; }
+  .pill {
+    font-size: 11px; font-weight:500;
+    padding: 4px 14px; border-radius: 20px;
+    border: 1px solid;
+  }
+  .pill-blue { color: var(--accent1); border-color: rgba(108,140,255,0.3); background: rgba(108,140,255,0.07); }
+  .pill-pink { color: var(--accent2); border-color: rgba(255,107,157,0.3); background: rgba(255,107,157,0.07); }
+  .pill-green { color: var(--accent3); border-color: rgba(67,232,176,0.3); background: rgba(67,232,176,0.07); }
+  .pill-yellow { color: var(--accent4); border-color: rgba(255,209,102,0.3); background: rgba(255,209,102,0.07); }
+  .pill-orange { color: var(--accent5); border-color: rgba(255,159,67,0.3); background: rgba(255,159,67,0.07); }
+
+  /* NAV */
+  .toc {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    position: sticky; top:0; z-index:100;
+  }
+  .toc-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; gap: 0; overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar { display:none; }
+  .toc-item {
+    font-size: 12px; font-weight:500;
+    color: var(--text3);
+    padding: 14px 16px;
+    white-space: nowrap;
+    cursor:pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+    text-decoration:none;
+  }
+  .toc-item:hover { color: var(--text); border-bottom-color: var(--accent1); }
+
+  /* LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 60px;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight:600;
+    color: var(--accent1);
+    background: rgba(108,140,255,0.1);
+    border: 1px solid rgba(108,140,255,0.2);
+    width:36px; height:36px;
+    border-radius: 8px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px; font-weight:700;
+    color: #fff;
+  }
+  .section-title span { color: var(--accent1); }
+
+  /* SUBSECTION */
+  .sub {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 16px;
+  }
+  .sub-title {
+    font-size: 13px; font-weight:700;
+    color: var(--accent3);
+    margin-bottom: 14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sub-title::before {
+    content:'';
+    width:3px; height:14px;
+    background: var(--accent3);
+    border-radius:2px;
+    flex-shrink:0;
+  }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x:auto; margin: 8px 0; }
+  table {
+    width:100%; border-collapse:collapse;
+    font-size: 13px;
+  }
+  thead tr { background: rgba(108,140,255,0.08); }
+  th {
+    text-align:left; padding: 10px 14px;
+    font-weight:600; color: var(--accent1);
+    font-size: 12px; letter-spacing:.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(46,50,80,0.5);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td strong { color: var(--accent4); }
+  td em { color: var(--accent2); font-style:normal; font-weight:500; }
+
+  /* HIGHLIGHT BOX */
+  .box {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    border-left: 3px solid;
+    font-size: 13px;
+  }
+  .box-blue { background: var(--highlight); border-color: var(--accent1); }
+  .box-pink { background: var(--highlight2); border-color: var(--accent2); }
+  .box-green { background: var(--highlight3); border-color: var(--accent3); }
+  .box-yellow { background: var(--highlight4); border-color: var(--accent4); }
+  .box-title {
+    font-weight:700; font-size:12px;
+    letter-spacing:.5px; margin-bottom:6px;
+  }
+  .box-blue .box-title { color: var(--accent1); }
+  .box-pink .box-title { color: var(--accent2); }
+  .box-green .box-title { color: var(--accent3); }
+  .box-yellow .box-title { color: var(--accent4); }
+
+  /* GRID */
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  @media(max-width:700px) { .grid2,.grid3 { grid-template-columns:1fr; } }
+
+  /* STAT CARD */
+  .stat-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    text-align:center;
+  }
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px; font-weight:700;
+    line-height:1.1;
+  }
+  .stat-label { font-size:11px; color:var(--text2); margin-top:4px; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    font-size:10px; font-weight:700;
+    padding: 2px 8px; border-radius:4px;
+    margin-left:4px; vertical-align:middle;
+  }
+  .badge-red { background:rgba(255,107,157,0.15); color:var(--accent2); }
+  .badge-green { background:rgba(67,232,176,0.15); color:var(--accent3); }
+  .badge-blue { background:rgba(108,140,255,0.15); color:var(--accent1); }
+
+  /* KEY POINT */
+  .key-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .key-list li {
+    display:flex; align-items:flex-start; gap:10px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size:13px;
+  }
+  .key-list li::before {
+    content:'★';
+    color: var(--accent4);
+    font-size:11px;
+    margin-top:2px;
+    flex-shrink:0;
+  }
+
+  /* FLOW */
+  .flow {
+    display:flex; align-items:center; flex-wrap:wrap; gap:4px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; margin: 10px 0;
+  }
+  .flow-box {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius:6px;
+    padding: 5px 10px;
+    color: var(--text);
+  }
+  .flow-arrow { color: var(--accent1); font-size:14px; }
+
+  /* SPECIAL FOCUS */
+  .sf {
+    background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(108,140,255,0.06));
+    border: 1px solid rgba(255,107,157,0.2);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin: 16px 0;
+  }
+  .sf-tag {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; font-weight:700;
+    color: var(--accent2);
+    letter-spacing:2px;
+    margin-bottom:6px;
+  }
+  .sf-title { font-size:15px; font-weight:700; color:#fff; margin-bottom:12px; }
+
+  /* FINAL TABLE */
+  .final-table thead tr { background: rgba(255,209,102,0.08); }
+  .final-table th { color: var(--accent4); }
+
+  p { color: var(--text2); font-size:13px; line-height:1.8; margin:6px 0; }
+  code {
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    background:rgba(108,140,255,0.12);
+    color:var(--accent1);
+    padding:1px 6px; border-radius:4px;
+  }
+
+  hr { border:none; border-top:1px solid var(--border); margin:20px 0; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">CHAPTER 6</div>
+    <h1>팔꿈치와 <span>아래팔</span></h1>
+    <div class="hero-sub">Elbow and Forearm</div>
+    <div class="hero-pills">
+      <span class="pill pill-blue">골학</span>
+      <span class="pill pill-pink">관절학</span>
+      <span class="pill pill-green">운동형상학</span>
+      <span class="pill pill-yellow">팔꿈치 근육</span>
+      <span class="pill pill-orange">뒤침·엎침 근육</span>
+      <span class="pill pill-blue">신경지배</span>
+      <span class="pill pill-pink">Special Focus ×8</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-inner">
+    <a class="toc-item" href="#s1">1. 기본구성</a>
+    <a class="toc-item" href="#s2">2. 골학</a>
+    <a class="toc-item" href="#s3">3. 관절학</a>
+    <a class="toc-item" href="#s4">4. 결합조직</a>
+    <a class="toc-item" href="#s5">5. 운동형상학</a>
+    <a class="toc-item" href="#s6">6. 뼈사이막</a>
+    <a class="toc-item" href="#s7">7. 아래팔관절</a>
+    <a class="toc-item" href="#s8">8. 돌림 ROM</a>
+    <a class="toc-item" href="#s9">9. 굽힘근</a>
+    <a class="toc-item" href="#s10">10. 폄근</a>
+    <a class="toc-item" href="#s11">11. 뒤침근</a>
+    <a class="toc-item" href="#s12">12. 엎침근</a>
+    <a class="toc-item" href="#s13">핵심요약</a>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ① 기본 구성 -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">기본 구성</div>
+  </div>
+
+  <div class="grid2">
+    <div class="sub">
+      <div class="sub-title">뼈 구성</div>
+      <ul class="key-list">
+        <li>위팔뼈 (Humerus)</li>
+        <li>노뼈 (Radius)</li>
+        <li>자뼈 (Ulna)</li>
+      </ul>
+    </div>
+    <div class="sub">
+      <div class="sub-title">4개의 관절</div>
+      <ul class="key-list">
+        <li>① 위팔자관절 (Humero-ulnar joint) — 팔꿈치</li>
+        <li>② 위팔노관절 (Humeroradial joint) — 팔꿈치</li>
+        <li>③ 몸쪽노자관절 (Proximal radio-ulnar joint) — 아래팔</li>
+        <li>④ 먼쪽노자관절 (Distal radio-ulnar joint) — 아래팔</li>
+      </ul>
+    </div>
+  </div>
+  <div class="box box-blue">
+    <div class="box-title">기능 구분</div>
+    ①②는 팔꿈치 구성 → 굽힘·폄 / ③④는 아래팔 관절 → <strong>뒤침·엎침</strong> 담당
+  </div>
+</section>
+
+<!-- ② 골학 -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">골학 <span>Osteology</span></div>
+  </div>
+
+  <!-- 위팔뼈 -->
+  <div class="sub">
+    <div class="sub-title">위팔뼈 (Humerus) — 중간~먼쪽 끝</div>
+    <div class="grid2">
+      <div>
+        <p style="color:var(--accent3);font-weight:700;margin-bottom:8px;">앞면</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>구조물</th><th>특징</th></tr></thead>
+            <tbody>
+              <tr><td><strong>도르래 (Trochlea)</strong></td><td>자뼈와 관절 / 안쪽용기 &gt; 가쪽용기 돌출 / 도르래고랑: 뒤→앞 나선형</td></tr>
+              <tr><td><strong>작은머리 (Capitulum)</strong></td><td>노뼈와 관절 (위팔노관절)</td></tr>
+              <tr><td>노오목 (Radial fossa)</td><td>작은머리 앞 몸쪽</td></tr>
+              <tr><td>갈고리오목 (Coronoid fossa)</td><td>도르래 앞 몸쪽</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p style="color:var(--accent2);font-weight:700;margin-bottom:8px;">뒷면</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>구조물</th><th>특징</th></tr></thead>
+            <tbody>
+              <tr><td><strong>팔꿈치오목 (Olecranon fossa)</strong></td><td>도르래 뒤 몸쪽</td></tr>
+              <tr><td>자신경고랑</td><td>안쪽위관절융기 뒤쪽</td></tr>
+              <tr><td><em>안쪽위관절융기</em></td><td>굽힘근·엎침근 온힘줄 / <strong>Golf's elbow</strong></td></tr>
+              <tr><td><em>가쪽위관절융기</em></td><td>폄근·뒤침근 온힘줄 / <strong>Tennis elbow</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자뼈 -->
+  <div class="sub">
+    <div class="sub-title">자뼈 (Ulna)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>구조물</th><th>특징 / 임상</th></tr></thead>
+        <tbody>
+          <tr><td><strong>팔꿈치머리돌기 (Olecranon process)</strong></td><td>몸쪽 끝 / 위팔세갈래근 부착</td></tr>
+          <tr><td><strong>갈고리돌기 (Coronoid process)</strong></td><td>앞면 날카롭게 돌출</td></tr>
+          <tr><td><strong>도르래패임 (Trochlear notch)</strong></td><td>위팔뼈 도르래와 관절 → 위팔자관절 형성</td></tr>
+          <tr><td>노패임 (Radial notch)</td><td>도르래패임 아래가쪽 / 노뼈머리와 관절</td></tr>
+          <tr><td>뒤침근능선 (Supinator crest)</td><td>노패임 뒤쪽 / 뒤침근 부착</td></tr>
+          <tr><td><strong>자뼈거친면 (Tuberosity of the ulna)</strong></td><td>갈고리돌기 먼쪽 / <strong style="color:var(--accent2)">위팔근(brachialis) 부착</strong></td></tr>
+          <tr><td>자뼈머리 (Ulnar head)</td><td>먼쪽 끝 / 관절연골 3/4 덮임</td></tr>
+          <tr><td>붓돌기 (Styloid process)</td><td>가장 먼쪽 뒤-안쪽</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 노뼈 -->
+  <div class="sub">
+    <div class="sub-title">노뼈 (Radius)</div>
+    <div class="box box-green" style="margin-bottom:12px;">
+      <div class="box-title">핵심</div>
+      완전 뒤침 시 노뼈와 자뼈는 <strong>서로 평행</strong>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>구조물</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td><strong>노뼈머리 (Radial head)</strong></td><td>몸쪽 끝 원반형 / 관절연골 280° 덮임</td></tr>
+          <tr><td>노뼈목 (Radial neck)</td><td>머리 바로 아래</td></tr>
+          <tr><td>노뼈머리오목 (Fovea)</td><td>위팔뼈 작은머리와 관절 → 위팔노관절</td></tr>
+          <tr><td><strong>노뼈(두갈래근)거친면</strong></td><td><strong style="color:var(--accent2)">위팔두갈래근(biceps brachii) 부착</strong></td></tr>
+          <tr><td>자패임 (Ulnar notch)</td><td>먼쪽 끝 / 자뼈머리와 관절 → 먼쪽노자관절</td></tr>
+          <tr><td>붓돌기 (Styloid process)</td><td>자뼈붓돌기보다 더 먼쪽 위치</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="box box-yellow">
+    <div class="box-title">핵심 암기 — 부착부위</div>
+    <strong>자뼈거친면</strong> → 위팔근 / <strong>노뼈거친면</strong> → 위팔두갈래근
+  </div>
+</section>
+
+<!-- ③ 관절학 -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">관절학 <span>Arthrology</span></div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">팔꿈치 관절의 특징</div>
+    <div class="grid2">
+      <div class="box box-blue">
+        <div class="box-title">위팔자관절</div>
+        도르래 ↔ 도르래패임 / <strong>주 안정성</strong> 담당 / 수정된 경첩관절
+      </div>
+      <div class="box box-pink">
+        <div class="box-title">위팔노관절</div>
+        작은머리 ↔ 노뼈머리오목 / 압박력 전달 + 안정성 보조 / 박굽이 저항 <strong>50%</strong>
+      </div>
+    </div>
+    <p style="margin-top:10px;">팔꿈치 = <strong style="color:var(--accent3)">수정된 경첩관절 (Modified Hinge Joint)</strong> → 굽힘/폄 + 소량 축돌림·측면운동</p>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">정상 박굽이팔꿈치 (Cubitus Valgus)</div>
+    <div class="grid3">
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent3)">15°</div>
+        <div class="stat-label">정상 박굽이각도<br>(Normal cubitus valgus)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent2)">30°</div>
+        <div class="stat-label">과도한 박굽이팔꿈치<br>(Excessive cubitus valgus)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent4)">5°</div>
+        <div class="stat-label">안굽이팔꿈치<br>(Cubitus varus)</div>
+      </div>
+    </div>
+    <div class="box box-yellow" style="margin-top:12px;">
+      <div class="box-title">참고</div>
+      여성이 남성보다 평균 <strong>2° 더 큰</strong> 박굽이각도 / 평균 13°, 표준편차 약 6°
+    </div>
+  </div>
+</section>
+
+<!-- ④ 관절주위 결합조직 -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">관절주위 결합조직</div>
+  </div>
+
+  <!-- MCL -->
+  <div class="sub">
+    <div class="sub-title">안쪽결인대 (MCL — Medial Collateral Ligament)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>섬유</th><th>부착</th><th>기능</th><th>장력 증가 동작</th></tr></thead>
+        <tbody>
+          <tr><td><strong>앞섬유 ★</strong></td><td>안쪽위관절융기 → 갈고리돌기</td><td>가장 강하고 뻣뻣 / <em>박굽이 주 저항</em></td><td><strong>박굽이 + 폄</strong></td></tr>
+          <tr><td>뒤섬유</td><td>안쪽위관절융기 → 팔꿈치머리돌기</td><td>박굽이 저항</td><td>박굽이 + 굽힘</td></tr>
+          <tr><td>가로섬유</td><td>같은 뼈(자뼈)에서 시작</td><td>관절 안정성만</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box box-pink" style="margin-top:10px;">
+      <div class="box-title">MCL 손상 & 수술</div>
+      손상 기전: 팔 뻗고 낙상 (과신전+뒤침) → 노뼈머리 골절 동반 가능<br>
+      수술: <strong>Tommy John surgery</strong> — 긴손바닥근/두덩정강근/장딴지빗근 자가건 이식
+    </div>
+  </div>
+
+  <!-- LCL -->
+  <div class="sub">
+    <div class="sub-title">가쪽결인대복합체 (Lateral Collateral Ligament Complex)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>인대</th><th>주행</th><th>기능</th></tr></thead>
+        <tbody>
+          <tr><td>노쪽결인대 (RCL)</td><td>가쪽위관절융기 → 머리띠인대와 섞임</td><td>머리띠인대 보강</td></tr>
+          <tr><td><strong>가쪽(자쪽)결인대 (LUCL) ★</strong></td><td>가쪽위관절융기 → 자뼈 뒤침근능선</td><td><em>안굽이 저항 + 뒤-가쪽 회전 불안정성 방지</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 결인대 장력 표 -->
+  <div class="sub">
+    <div class="sub-title">결인대별 장력 증가 동작 (표 6.1)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>인대</th><th>장력을 증가시키는 동작</th></tr></thead>
+        <tbody>
+          <tr><td>안쪽결인대 앞섬유</td><td><strong>박굽이 + 폄</strong></td></tr>
+          <tr><td>안쪽결인대 뒤섬유</td><td>박굽이 + 굽힘</td></tr>
+          <tr><td>노쪽결인대</td><td>안굽이</td></tr>
+          <tr><td>가쪽(자쪽)결인대</td><td>안굽이 + 팔꿈치복합체 가쪽돌림 + 굽힘</td></tr>
+          <tr><td>머리띠인대</td><td>노뼈의 견인</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SF 6.1 -->
+  <div class="sf">
+    <div class="sf-tag">SPECIAL FOCUS 6.1</div>
+    <div class="sf-title">팔꿈치 위험 삼징후 손상 (Terrible Triad of the Elbow)</div>
+    <div class="grid3">
+      <div class="box box-pink"><div class="box-title">① 팔꿈치관절 탈구</div>과도한 인대 손상 동반</div>
+      <div class="box box-pink"><div class="box-title">② 노뼈머리 골절</div></div>
+      <div class="box box-pink"><div class="box-title">③ 갈고리돌기 골절</div></div>
+    </div>
+    <p style="margin-top:10px;">기전: 팔 뻗고 낙상 → 뒤-가쪽 비틀림 스트레스 → LUCL 완전 파열 → 뒤-가쪽 돌림 불안정성 / 치료: 인공노뼈머리 삽입 흔함</p>
+  </div>
+</section>
+
+<!-- ⑤ 운동형상학 -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">팔꿈치 운동형상학</div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">굽힘/폄 가동범위</div>
+    <div class="grid3">
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent1)">-5° ~ 145°</div>
+        <div class="stat-label">전체 ROM</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent3)">30° ~ 130°</div>
+        <div class="stat-label">기능적 ROM (100°)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent4)">85~95°</div>
+        <div class="stat-label">최대 굽힘 토크 각도</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="sub">
+      <div class="sub-title">위팔자관절 운동형상학</div>
+      <ul class="key-list">
+        <li>오목한 도르래패임 ↔ 볼록한 도르래</li>
+        <li>굽힘 시: 구르기 + 미끄러짐 <strong>같은 방향</strong></li>
+        <li>갈고리돌기: 굽힘 시 위팔뼈에 대한 자뼈 뒤쪽 이동 저항</li>
+      </ul>
+    </div>
+    <div class="sub">
+      <div class="sub-title">위팔노관절 운동형상학</div>
+      <ul class="key-list">
+        <li>볼록한 작은머리 ↔ 오목한 노뼈머리오목</li>
+        <li>굽힘 시: 노뼈머리오목이 작은머리 위에서 구르기+미끄러짐</li>
+        <li>능동 굽힘 시: 근육 수축에 의해 작은머리 쪽으로 당겨짐</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 뼈사이막 -->
+<section class="section" id="s6">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">뼈사이막 <span>Interosseous Membrane</span></div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">구조 및 성분</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>성분</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td><strong>중심띠 (Central band)</strong></td><td>주된 성분 / 두께 다른 섬유의 약 2배 / 무릎힘줄과 유사한 장력</td></tr>
+          <tr><td>빗끈 (Oblique cord)</td><td>자뼈거친면 → 노뼈거친면 (몸쪽 방향)</td></tr>
+          <tr><td>먼쪽빗섬유 (Distal oblique fibers)</td><td>뼈사이막의 약 40%에서만 존재</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">압박력 전달 경로</div>
+    <div class="flow">
+      <div class="flow-box">손목 압박력</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--accent3);color:var(--accent3)">노손목관절 <strong>80%</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">노뼈</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--accent1);color:var(--accent1)">중심띠 팽팽</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">자뼈</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">위팔자관절</div>
+    </div>
+    <div class="flow" style="margin-top:6px;">
+      <div class="flow-box">손목 압박력</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--accent2);color:var(--accent2)">자손목공간 <strong>20%</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">자뼈 직접 전달</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="box box-blue">
+      <div class="box-title">기능 (3가지)</div>
+      ① 노뼈를 자뼈에 견고하게 결합<br>
+      ② 외재성 근육들을 위한 안정된 부착부위<br>
+      ③ 팔을 통해 몸쪽으로 힘 전달 기전
+    </div>
+    <div class="box box-green">
+      <div class="box-title">등척성 작용</div>
+      중심띠 ≈ 돌림축과 <strong>평행 배열</strong><br>
+      엎침·뒤침 내내 일정한 안정화 장력 유지<br>
+      완전 엎침: 최소 팽팽 / 완전 뒤침: 최대 팽팽
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 아래팔 관절 -->
+<section class="section" id="s7">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">아래팔의 관절</div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">몸쪽노자관절 (Proximal Radio-Ulnar Joint)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>구조</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>섬유뼈고리 구성</td><td>머리띠인대 <strong>75%</strong> + 자뼈 노패임 <strong>25%</strong></td></tr>
+          <tr><td><strong>머리띠인대</strong></td><td>노패임 양면 → 자뼈 부착 / 속면 연골로 마찰 감소 / 바깥면: 관절주머니·노쪽결인대·뒤침근 부착</td></tr>
+          <tr><td>네모인대</td><td>노패임 바로 아래 → 노뼈목 안쪽면 / 몸쪽노자관절 안정 / 뒤침 시 특히 긴장</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sf" style="margin-top:12px;">
+      <div class="sf-tag">SPECIAL FOCUS 6.2</div>
+      <div class="sf-title">당겨진팔꿈치증후군 (Pulled Elbow Syndrome)</div>
+      <p>= Nurse maid's elbow / Babysitter's elbow</p>
+      <p><strong>기전:</strong> 손 강하게 당김 → 노뼈머리가 머리띠인대 먼쪽 끝 통해 빠져나감</p>
+      <p><strong>대상:</strong> 어린이 (인대 느슨함, 뼈 미골화, 근력 약함)</p>
+      <p><strong>정복법:</strong> 아래팔에 <strong style="color:var(--accent3)">뒤침-굽힘</strong> 또는 엎침 적용</p>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">먼쪽노자관절 (Distal Radio-Ulnar Joint) & TFCC</div>
+    <div class="grid2">
+      <div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>항목</th><th>내용</th></tr></thead>
+            <tbody>
+              <tr><td>관절 형태</td><td>오목한 노뼈 자패임 ↔ 볼록한 자뼈머리</td></tr>
+              <tr><td>정상 먼쪽 노뼈 이동</td><td><strong>5.5mm</strong></td></tr>
+              <tr><td>초과 시</td><td>병리적 불안정성</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="box box-pink">
+        <div class="box-title">TFCC (삼각섬유연골복합체)</div>
+        먼쪽노자관절의 <strong>일차적 안정자</strong><br>
+        자뼈머리와 손목뼈 자쪽면 사이 자손목공간 차지<br>
+        <strong>TFCC 마모 = 류마티스관절염 첫 번째 임상적 징후</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">먼쪽노자관절의 안정자</div>
+    <div class="grid2">
+      <ul class="key-list">
+        <li>세모섬유연골복합체 (TFCC)</li>
+        <li>네모엎침근</li>
+      </ul>
+      <ul class="key-list">
+        <li>자쪽손목폄근의 힘줄</li>
+        <li>뼈사이막의 먼쪽빗섬유</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ 돌림 ROM -->
+<section class="section" id="s8">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title">아래팔 돌림 운동형상학</div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">가동범위</div>
+    <div class="grid3">
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent3)">85°</div>
+        <div class="stat-label">뒤침 (Supination)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent2)">75°</div>
+        <div class="stat-label">엎침 (Pronation)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent4)">각 50°</div>
+        <div class="stat-label">기능적 ROM (총 100°)</div>
+      </div>
+    </div>
+    <div class="box box-blue" style="margin-top:10px;">
+      중립위치 = <strong>Thumb-up position</strong> (엄지를 위로 한 자세)
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">뒤침·엎침을 가장 제한하는 구조 (표 6.2)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>제한 방향</th><th>제한 구조</th></tr></thead>
+        <tbody>
+          <tr><td><strong>뒤침 제한</strong></td><td>원엎침근, 네모엎침근, 노쪽손목굽힘근, 외재성 손가락굽힘근들, TFCC(바닥쪽관절주머니인대), 뼈사이막(중심띠), 네모인대</td></tr>
+          <tr><td><strong>엎침 제한</strong></td><td>위팔두갈래근, 뒤침근, 노쪽 손목 폄근들, 긴엄지폄근, TFCC(등쪽관절주머니인대)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">CKC vs OKC 비교 (표 6.3)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>CKC (체중부하 — 노뼈·손 고정)</th><th>OKC (비체중부하 — 노뼈·손 자유)</th></tr></thead>
+        <tbody>
+          <tr><td>몸쪽노자관절</td><td>머리띠인대와 노패임이 고정된 노뼈머리에 대해 <strong>돌림</strong></td><td>고리 내에서 노뼈머리 돌림</td></tr>
+          <tr><td>먼쪽노자관절</td><td>구르기·미끄러짐 방향 <em>서로 반대</em></td><td>구르기·미끄러짐 방향 <em>서로 같음</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ 굽힘근 -->
+<section class="section" id="s9">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title">팔꿈치 굽힘근육</div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">일차적 팔꿈치 굽힘근 4가지</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>근육</th><th>몸쪽 부착</th><th>먼쪽 부착</th><th>신경지배</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>위팔두갈래근</strong><br><em>Biceps brachii</em></td>
+            <td>어깨뼈 (긴·짧은 갈래)</td>
+            <td>노뼈거친면 + 섬유띠</td>
+            <td>근육피부신경 C⁵,C⁶</td>
+            <td>굽힘+<strong>뒤침</strong> 동시 시 최대 EMG / 엎침 시 활성 감소</td>
+          </tr>
+          <tr>
+            <td><strong>위팔근 ★사역마</strong><br><em>Brachialis</em></td>
+            <td>위팔뼈 앞쪽 몸쪽</td>
+            <td>자뼈거친면</td>
+            <td>근육피부신경 C⁵,C⁶</td>
+            <td>팔꿈치 굽힘 <strong>전용</strong> / 최대 단면적 7.0cm²</td>
+          </tr>
+          <tr>
+            <td><strong>위팔노근</strong><br><em>Brachioradialis</em></td>
+            <td>가쪽위관절융기위능선</td>
+            <td>노뼈 붓돌기 근처</td>
+            <td>노신경 C⁵,C⁶</td>
+            <td>가장 <strong>긴</strong> 팔꿈치 근육 / 활시위 형성 / 최대 모멘트팔</td>
+          </tr>
+          <tr>
+            <td><strong>원엎침근</strong><br><em>Pronator teres</em></td>
+            <td>안쪽위관절융기·갈고리돌기</td>
+            <td>노뼈 중간 가쪽</td>
+            <td>정중신경 C⁶,C⁷</td>
+            <td>굽힘 + 엎침 / 최소 단면적(3.4)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">생체역학적 변수 비교 (표 6.5)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>근육</th><th>용적(cm³)</th><th>수축전폭(cm)</th><th>최대힘 단면적(cm²)</th><th>내적 모멘트팔(cm)</th></tr></thead>
+        <tbody>
+          <tr><td>위팔두갈래근(긴갈래)</td><td>33.4</td><td>13.6</td><td>2.5</td><td>3.20</td></tr>
+          <tr><td>위팔두갈래근(짧은갈래)</td><td>30.8</td><td>15.0</td><td>2.1</td><td>3.20</td></tr>
+          <tr><td><strong style="color:var(--accent3)">위팔근 ★</strong></td><td><strong style="color:var(--accent3)">59.3</strong></td><td>9.0</td><td><strong style="color:var(--accent3)">7.0</strong></td><td>1.98</td></tr>
+          <tr><td>위팔노근</td><td>21.9</td><td>16.4</td><td>1.5</td><td><strong style="color:var(--accent1)">5.19</strong></td></tr>
+          <tr><td>원엎침근</td><td>18.7</td><td>5.6</td><td>3.4</td><td>2.01</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">팔꿈치 토크 (표 6.6)</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>운동</th><th>남자 (kg-cm)</th><th>여자 (kg-cm)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>굽힘</strong></td><td><strong>725</strong></td><td>336</td></tr>
+          <tr><td>폄</td><td>421</td><td>210</td></tr>
+          <tr><td>엎침</td><td>73</td><td>36</td></tr>
+          <tr><td>뒤침</td><td>91</td><td>44</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box box-yellow" style="margin-top:10px;">
+      굽힘 토크 &gt; 폄 토크 약 <strong>70%</strong> / 최대 굽힘 토크 = <strong>85~95° 굽힘</strong> / 뒤침 시 굽힘 토크 <strong>20~25% 증가</strong>
+    </div>
+  </div>
+
+  <div class="sf">
+    <div class="sf-tag">SPECIAL FOCUS — 위팔근: 사역마</div>
+    <div class="sf-title">위팔근 (Brachialis) — "Workhorse"</div>
+    <ul class="key-list">
+      <li>팔꿈치 굽힘 시 뒤침·엎침에 관계없이 <strong>항상</strong> 동원됨</li>
+      <li>자뼈에 부착 → 엎침·뒤침 동작은 길이·힘선·모멘트팔에 영향 없음</li>
+      <li>용적(59.3) = 모든 팔꿈치 굽힘근 중 최대</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ⑩ 폄근 -->
+<section class="section" id="s10">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div class="section-title">팔꿈치 폄근육</div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">근육 구성</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>근육</th><th>갈래</th><th>몸쪽 부착</th><th>신경지배</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3"><strong>위팔세갈래근</strong><br><em>Triceps brachii</em></td>
+            <td>긴갈래</td><td>어깨뼈 오목아래결절</td><td rowspan="3">노신경 C⁷,C⁸</td><td>어깨 폄·모음 가능 / 최대 용적(66.6) / 예비적 폄근</td></tr>
+          <tr><td><strong>안쪽갈래 ★</strong></td><td>위팔뼈 노신경고랑 아래</td><td><em>폄근의 사역마</em> / 가장 먼저 동원</td></tr>
+          <tr><td>가쪽갈래</td><td>위팔뼈 노신경고랑 위</td><td>중간 파워 시 동원</td></tr>
+          <tr><td><strong>팔꿈치근</strong><br><em>Anconeus</em></td><td>—</td><td>가쪽위관절융기</td><td>노신경 C⁷,C⁸</td><td>느린연축 / 바탕적 관절 안정 / 폄 토크 <strong>15%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">폄근 단계적 동원 순서 (절약의 법칙)</div>
+    <div class="flow">
+      <div class="flow-box" style="border-color:var(--accent3)">낮은 수준</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">팔꿈치근 + 안쪽갈래</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--accent4)">중간 수준</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">가쪽갈래 추가</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--accent2)">높은 수준</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">긴갈래 (예비) 동원</div>
+    </div>
+  </div>
+
+  <div class="sf">
+    <div class="sf-tag">SPECIAL FOCUS 6.6</div>
+    <div class="sf-title">C⁶ 팔다리마비 — 위팔세갈래근 대신 어깨 근육 사용</div>
+    <p>C⁶ 이하 신경뿌리 → 팔꿈치 폄근 현저한 마비</p>
+    <p><strong>대상동작:</strong> 큰가슴근 빗장갈래 + 앞어깨세모근 → 어깨 굽힘 → 팔꿈치 잠금(lock) 유발</p>
+    <p>→ 체중지지 가능 (손·손목이 지면에 고정된 상태 필요)</p>
+  </div>
+</section>
+
+<!-- ⑪ 뒤침근 -->
+<section class="section" id="s11">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <div class="section-title">뒤침근육과 엎침근육의 기능</div>
+  </div>
+
+  <div class="grid2">
+    <div class="sub">
+      <div class="sub-title">일차적 뒤침근육</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>근육</th><th>특징</th></tr></thead>
+          <tbody>
+            <tr><td><strong>뒤침근 (Supinator)</strong></td><td>광범위한 몸쪽 부착 / 엎침 위치에서 꼬여 지레작용 최대 / 낮은 파워 뒤침 담당 / 노신경 깊은가지 사이를 통과</td></tr>
+            <tr><td><strong>위팔두갈래근 (Biceps)</strong></td><td>뒤침근 단면적의 <strong>3배</strong> / 90° 굽힘+빠른 뒤침 시 최대 / 팔꿈치 각도에 민감</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="sub-title">이차적 뒤침근육</div>
+      <ul class="key-list">
+        <li>노쪽 손목 폄근들</li>
+        <li>긴엄지폄근</li>
+        <li>집게폄근</li>
+        <li>위팔노근 (엎침 위치에서 → 중립위까지)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">뒤침 토크 계산 — 팔꿈치 각도 영향</div>
+    <div class="grid2">
+      <div class="box box-green">
+        <div class="box-title">90° 굽힘 시</div>
+        T = 500N × 1cm = <strong>500 Ncm</strong><br>
+        힘줄이 돌림축과 거의 직각 → 최대 효율
+      </div>
+      <div class="box box-yellow">
+        <div class="box-title">30° 굽힘 시</div>
+        T = sin30° × 500N × 1cm = <strong>250 Ncm</strong><br>
+        직각 상실 → 토크 <strong>50% 감소</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="sub">
+      <div class="sub-title">일차적 엎침근육</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>근육</th><th>특징</th></tr></thead>
+          <tbody>
+            <tr><td><strong>원엎침근 (Pronator teres)</strong></td><td>위팔갈래 + 자갈래 / <strong>정중신경</strong>이 두 갈래 사이 통과 → 신경압박 위험 / 팔꿈치 굽힘 기능도</td></tr>
+            <tr><td><strong>네모엎침근 (Pronator quadratus)</strong></td><td>항상 먼저 동원 / 먼쪽노자관절 <strong>안정화</strong> / 돌림축과 거의 수직 힘선</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="sub-title">이차적 엎침근육</div>
+      <ul class="key-list">
+        <li>노쪽손목굽힘근 (FCR)</li>
+        <li>긴손바닥근 (Palmaris longus)</li>
+        <li>위팔노근 (뒤침 위치에서 → 중립위까지)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sf">
+    <div class="sf-tag">SPECIAL FOCUS 6.7</div>
+    <div class="sf-title">뒤침 토크 &gt; 엎침 토크 — 왜?</div>
+    <div class="grid2">
+      <div class="box box-blue">
+        <div class="box-title">수치</div>
+        뒤침 등척성 토크가 엎침보다 약 <strong>25% 더 큼</strong><br>
+        이유: 뒤침근 생리학적 단면적 = 엎침근의 약 <strong>2배</strong>
+      </div>
+      <div class="box box-green">
+        <div class="box-title">나사 방향성</div>
+        오른나사 조임 = <strong>뒤침</strong> (시계방향)<br>
+        오른손잡이에게 강한 뒤침 선호 설명
+      </div>
+    </div>
+  </div>
+
+  <div class="sf">
+    <div class="sf-tag">SPECIAL FOCUS 6.8</div>
+    <div class="sf-title">엎침근육에 적용된 절약의 법칙</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>파워 수준</th><th>동원 근육</th></tr></thead>
+        <tbody>
+          <tr><td>낮은 파워 엎침</td><td>네모엎침근만</td></tr>
+          <tr><td>높은 파워 엎침</td><td>네모엎침근 + 원엎침근 + 위팔두갈래근 보조</td></tr>
+          <tr><td>낮은 파워 뒤침</td><td>뒤침근 + 네모엎침근</td></tr>
+          <tr><td>높은 파워 뒤침</td><td>위팔두갈래근 + 원엎침근 추가 동원</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ⑫ 신경지배 -->
+<section class="section" id="s12">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <div class="section-title">신경지배 요약 (표 6.4)</div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>분류</th><th>근육</th><th>신경</th><th>척수신경뿌리</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="4">팔꿈치 굽힘근</td><td>위팔근</td><td>근육피부신경</td><td>C⁵, C⁶</td></tr>
+        <tr><td>위팔두갈래근</td><td>근육피부신경</td><td>C⁵, C⁶</td></tr>
+        <tr><td>위팔노근</td><td>노신경</td><td>C⁵, C⁶</td></tr>
+        <tr><td>원엎침근</td><td>정중신경</td><td>C⁶, C⁷</td></tr>
+        <tr><td rowspan="2">팔꿈치 폄근</td><td>위팔세갈래근</td><td>노신경</td><td>C⁷, C⁸</td></tr>
+        <tr><td>팔꿈치근</td><td>노신경</td><td>C⁷, C⁸</td></tr>
+        <tr><td rowspan="2">아래팔 엎침근</td><td>네모엎침근</td><td>정중신경(앞뼈사이신경)</td><td>C⁸, T¹</td></tr>
+        <tr><td>원엎침근</td><td>정중신경</td><td>C⁶, C⁷</td></tr>
+        <tr><td rowspan="2">아래팔 뒤침근</td><td>위팔두갈래근</td><td>근육피부신경</td><td>C⁵, C⁶</td></tr>
+        <tr><td>뒤침근</td><td>노신경(깊은가지)</td><td>C⁶</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub" style="margin-top:16px;">
+    <div class="sub-title">신경 위험 부위</div>
+    <div class="grid2">
+      <div class="box box-pink">
+        <div class="box-title">노신경 (Radial nerve)</div>
+        뒤침근의 얕은·깊은 섬유 <strong>사이</strong>를 통과<br>
+        → 뒤사이신경 (Posterior interosseous nerve)으로 명명
+      </div>
+      <div class="box box-yellow">
+        <div class="box-title">정중신경 (Median nerve)</div>
+        원엎침근의 위팔갈래·자갈래 <strong>사이</strong>를 통과<br>
+        → 앞뼈사이신경 (Anterior interosseous nerve)으로 분지
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑬ 최종 요약 -->
+<section class="section" id="s13">
+  <div class="section-header">
+    <div class="section-num">★</div>
+    <div class="section-title">Chapter 6 최종 핵심 요약</div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="final-table">
+      <thead><tr><th>주제</th><th>핵심 내용</th></tr></thead>
+      <tbody>
+        <tr><td>팔꿈치·아래팔 관절 (4개)</td><td>위팔자, 위팔노, 몸쪽노자, 먼쪽노자</td></tr>
+        <tr><td>안정성 핵심 관절</td><td><strong>위팔자관절</strong> (도르래 ↔ 도르래패임)</td></tr>
+        <tr><td>박굽이 정상값</td><td><strong>15°</strong> / 여성이 2° 더 큼 / 평균 13°</td></tr>
+        <tr><td>MCL 핵심 섬유</td><td><strong>앞섬유</strong> = valgus 주 저항 / Tommy John surgery</td></tr>
+        <tr><td>LUCL 기능</td><td>뒤-가쪽 회전 불안정성 방지 (varus + 수평면)</td></tr>
+        <tr><td>Terrible Triad</td><td>탈구 + 노뼈머리 골절 + 갈고리돌기 골절</td></tr>
+        <tr><td>기능적 굽힘 ROM</td><td><strong>30~130°</strong> (100° 범위)</td></tr>
+        <tr><td>기능적 뒤침/엎침 ROM</td><td>각 <strong>50°</strong> (총 100°) / 중립 = thumb-up</td></tr>
+        <tr><td>뼈사이막 압박력 분배</td><td>노손목관절 <strong>80%</strong> / 자손목공간 <strong>20%</strong></td></tr>
+        <tr><td>굽힘근 사역마</td><td><strong>위팔근</strong> (굽힘 전용 / 최대 단면적 7.0cm²)</td></tr>
+        <tr><td>폄근 사역마</td><td><strong>위팔세갈래근 안쪽갈래</strong></td></tr>
+        <tr><td>최대 굽힘 토크 각도</td><td><strong>85~95°</strong></td></tr>
+        <tr><td>최대 폄 토크 각도</td><td><strong>80~90°</strong></td></tr>
+        <tr><td>굽힘 &gt; 폄 토크</td><td>약 <strong>70%</strong> 더 큼</td></tr>
+        <tr><td>뒤침 &gt; 엎침 토크</td><td>약 <strong>25%</strong> 더 큼</td></tr>
+        <tr><td>위팔두갈래근 뒤침 최대 각도</td><td><strong>90° 굽힘</strong></td></tr>
+        <tr><td>네모엎침근 부가 기능</td><td>먼쪽노자관절 <strong>안정화</strong> / 항상 먼저 동원</td></tr>
+        <tr><td>TFCC 임상적 의미</td><td>먼쪽노자관절 일차 안정자 / <strong>RA 초기 손상 지표</strong></td></tr>
+        <tr><td>당겨진팔꿈치증후군</td><td>어린이 / 손 당김 → 노뼈머리 탈구 → <strong>뒤침-굽힘</strong>으로 정복</td></tr>
+        <tr><td>노신경 위험부위</td><td>뒤침근 두 섬유 <strong>사이</strong></td></tr>
+        <tr><td>정중신경 위험부위</td><td>원엎침근 두 갈래 <strong>사이</strong></td></tr>
+        <tr><td>CKC 아래팔 엎침</td><td>위팔뼈·자뼈의 <strong>가쪽돌림</strong>으로 표현</td></tr>
+        <tr><td>엎침구축 예방 고정</td><td><strong>부분 뒤침 위치</strong> 권장</td></tr>
+        <tr><td>C⁶ 팔꿈치 폄 대상</td><td>큰가슴근 빗장갈래 + 앞어깨세모근</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+
+  // Stagger animations
+  const sections = document.querySelectorAll('.section');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if(entry.isIntersecting) {
+        entry.target.style.animationDelay = '0s';
+        entry.target.style.opacity = '1';
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  sections.forEach(s => {
+    s.style.opacity = '0';
+    obs.observe(s);
+  });
+</script>
+</body>
+</html>
