@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Test 해설집</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #8b5cf6;
+    --correct: #10b981;
+    --wrong: #ef4444;
+    --warn: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --shoulder: #3b82f6;
+    --elbow: #8b5cf6;
+    --wrist: #10b981;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 1.5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.3);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    letter-spacing: 2px;
+  }
+  .title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stats-bar {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .stat-chip {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .stat-all { background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); }
+  .stat-s { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+  .stat-e { background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+  .stat-w { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
+
+  .controls {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-btn {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn.shoulder.active { background: var(--shoulder); border-color: var(--shoulder); }
+  .filter-btn.elbow.active { background: var(--elbow); border-color: var(--elbow); }
+  .filter-btn.wrist.active { background: var(--wrist); border-color: var(--wrist); }
+
+  .search-wrap { position: relative; margin-left: auto; }
+  .search-input {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.8rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.45rem 0.9rem 0.45rem 2rem;
+    border-radius: 6px;
+    width: 180px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-icon { position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.85rem; pointer-events: none; }
+
+  .toggle-all-btn {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    border: 1px solid rgba(59,130,246,0.3);
+    background: rgba(59,130,246,0.1);
+    color: #93c5fd;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .toggle-all-btn:hover { background: rgba(59,130,246,0.2); }
+
+  /* MAIN */
+  .main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .section-label-text { font-size: 1rem; font-weight: 700; }
+  .section-count { font-size: 0.75rem; color: var(--muted); margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+  .card.shoulder { border-left: 3px solid var(--shoulder); }
+  .card.elbow { border-left: 3px solid var(--elbow); }
+  .card.wrist { border-left: 3px solid var(--wrist); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem 0.7rem;
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    min-width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .shoulder .q-num { background: rgba(59,130,246,0.15); color: #93c5fd; }
+  .elbow .q-num { background: rgba(139,92,246,0.15); color: #c4b5fd; }
+  .wrist .q-num { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+
+  .q-text { flex: 1; font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; font-weight: 400; }
+
+  /* CHOICES - quiz interactive */
+  .card-choices { padding: 0 1rem 0.6rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    border: 1px solid var(--border);
+    transition: all 0.12s;
+  }
+  .choice-idle {
+    background: var(--surface2);
+    cursor: pointer;
+  }
+  .choice-idle:hover {
+    border-color: var(--accent);
+    background: rgba(59,130,246,0.07);
+    color: #93c5fd;
+  }
+  .choice-correct {
+    background: rgba(16,185,129,0.1);
+    border-color: rgba(16,185,129,0.4);
+    color: #6ee7b7;
+  }
+  .choice-wrong {
+    background: rgba(239,68,68,0.08);
+    border-color: rgba(239,68,68,0.3);
+    color: #fca5a5;
+  }
+  .choice-dim {
+    color: #475569;
+    border-color: transparent;
+  }
+  .choice-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* RESULT BADGE */
+  .result-badge {
+    display: block;
+    margin: 0 1rem 0.6rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .badge-ok { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+  .badge-no { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+
+  /* EXPLANATION */
+  .card-explain {
+    border-top: 1px solid var(--border);
+    padding: 0.8rem 1rem;
+    background: rgba(0,0,0,0.18);
+  }
+
+  .explain-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.5rem;
+  }
+  .explain-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .explain-row:last-child { margin-bottom: 0; }
+  .explain-tag {
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag-key { background: rgba(59,130,246,0.2); color: #93c5fd; }
+  .tag-why { background: rgba(239,68,68,0.15); color: #fca5a5; }
+  .tag-tip { background: rgba(245,158,11,0.15); color: #fcd34d; }
+
+  .source {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .no-result {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--correct);
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.25);
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <span class="logo">PT · SPECIAL TEST</span>
+    <h1 class="title">도수물리치료학 퀴즈</h1>
+  </div>
+  <div class="stats-bar">
+    <span class="stat-chip stat-all">전체 <b id="cnt-all">0</b>문항</span>
+    <span class="stat-chip stat-s">🦴 어깨 <b id="cnt-s">0</b></span>
+    <span class="stat-chip stat-e">💪 팔꿈치 <b id="cnt-e">0</b></span>
+    <span class="stat-chip stat-w">✋ 손목·손 <b id="cnt-w">0</b></span>
+  </div>
+  <div class="controls">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">전체</button>
+    <button class="filter-btn shoulder" data-filter="shoulder" onclick="setFilter('shoulder',this)">어깨</button>
+    <button class="filter-btn elbow" data-filter="elbow" onclick="setFilter('elbow',this)">팔꿈치</button>
+    <button class="filter-btn wrist" data-filter="wrist" onclick="setFilter('wrist',this)">손목·손</button>
+    <button class="toggle-all-btn" onclick="resetAll()">🔄 초기화</button>
+    <span class="score-display">✅ <b id="score-correct">0</b> / <b id="score-total">0</b> <span id="score-pct" style="color:var(--accent2);margin-left:4px;font-size:0.72rem;"></span></span>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" placeholder="검사명, 키워드 검색..." oninput="doSearch(this.value)">
+    </div>
+  </div>
+</div>
+
+<div class="main" id="main"></div>
+
+<script>
+const DATA = [
+  // ===== 어깨 (shoulder) =====
+  {
+    cat:'shoulder', q:'팔꿈치를 편 상태에서 어깨를 90° 굽히고 약간의 가로벌림 상태에서 어깨를 안쪽돌림 시켜 엄지손가락이 바닥을 향하게 한 다음 굽힘에 대해 저항을 주면 통증과 약증이 나타나면?',
+    ans:2, choices:['요가손 검사(Yergason\'s Test)','깡통비우기검사(Empty can Test)','올림징후(Lift-off Test)','팔 떨어뜨리기 검사(Drop-arm Test)','크랭크 검사(Crank test)'],
+    key:'어깨 견갑면 30° 전방, 안쪽돌림(엄지↓), 하방저항 → 가시위근 파열/충돌 증후군',
+    why:'①Yergason은 팔꿈치 90° 굽힘+뒤침저항. ③Lift-off는 허리뒤손 들기. ④Drop-arm은 벌림유지 불가. ⑤Crank는 160° 벌림+축성압박',
+    tip:'★ Empty can = Jobe Test. 견갑면(scapular plane)=전방 30°가 핵심',
+    src:'근골격계 진단학 3판 현문사 p.68'
+  },
+  {
+    cat:'shoulder', q:'검사자는 한 손은 가쪽위관절융기에 엄지를 대고 환자의 손목 굽힘, 아래팔 엎침, 팔꿈치관절 굽힘 상태에서 팔꿉관절을 천천히 폈을 때 가쪽위관절융기부에서 심한 통증을 호소했을 때?',
+    ans:3, choices:['코젠검사(Cozen Test)','밀킹검사(Milking Test)','밀검사(Mill Test)','요가손 검사(Yergason\'s Test)','마우드슬리검사(Maudsley Test)'],
+    key:'손목굽힘+엎침 상태에서 팔꿈치 신전 → 가쪽위관절융기 통증 = Mill test (수동신장)',
+    why:'①Cozen은 능동저항(손목 폄 저항). ②Milking은 MCL 검사. ④Yergason은 어깨/이두건 검사. ⑤Maudsley는 중지 폄 저항',
+    tip:'Mill = 수동신장(passive stretch), Cozen = 능동저항(active resistance)',
+    src:'근골격계진단학 및 검사 3판 현문사 p.93'
+  },
+  {
+    cat:'shoulder', q:'45세 남성, 배드민턴 중 어깨 통증. 벌림 60-120도에서 극심한 통증, 완전히 위로 들면 통증 감소. 가장 먼저 시행할 충돌증후군 테스트는?',
+    ans:2, choices:['불안정성 검사(Apprehension Test)','니어 검사(Neer Test)','핑켈스타인 검사(Finkelstein Test)','라크만 검사(Lachman Test)','깡통비우기 검사(Empty can Test)'],
+    key:'60~120° painful arc → 충돌증후군(impingement syndrome). Neer test = 수동 끝범위 굽힘',
+    why:'①Apprehension은 불안정성. ③Finkelstein은 손목. ④Lachman은 무릎ACL. ⑤Empty can은 가시위근 근력검사',
+    tip:'★ Painful arc(60~120°)는 어깨 충돌증후군의 핵심 임상 소견',
+    src:'근골격계진단학 및 검사 3판 현문사 p.75'
+  },
+  {
+    cat:'shoulder', q:'30세 헬스트레이너, 벤치프레스 중 어깨 앞쪽 통증. 팔꿈치 펴고 손바닥 위로+전방굴곡 시 위팔두갈래근 힘줄 부위 통증. 의심 테스트는?',
+    ans:1, choices:['스피드 검사(Speed\'s Test)','깡통비우기 검사(Empty can Test)','올림징후 검사(Lift-off Test)','호킨슨-케네디 검사(Hawkins-Kennedy Test)','요가손 검사(Yergason\'s Test)'],
+    key:'팔꿈치 신전+뒤침+전방굴곡 저항 → 이두근 긴갈래 건염 = Speed\'s Test',
+    why:'②Empty can은 가시위근. ③Lift-off는 어깨뼈밑근. ④Hawkins-Kennedy는 충돌증후군. ⑤Yergason은 이두건/가로위팔인대',
+    tip:'Speed\'s = 팔꿈치 신전+뒤침+전방굴곡저항. Yergason = 팔꿈치 90°굽힘+뒤침저항',
+    src:'근골격계진단학 및 검사 3판 현문사 p.68'
+  },
+  {
+    cat:'shoulder', q:'환자 바로 누워 팔 머리 위. 검사자가 위팔뼈머리 뒷부분에 손을 놓고 앞쪽으로 밀며 위팔뼈를 가쪽돌림 시켰을 때 덜컹/가는 소리 = ?',
+    ans:3, choices:['킴검사(Kim Test)','앞쪽미끄러짐검사(Anterior slide Test)','꾹꾹소리검사(Clunk Test)','팔 떨어뜨리기 검사(Drop-arm Test)','크랭크 검사(Crank Test)'],
+    key:'바로눕기+팔 머리위+위팔뼈머리 후→앞 밀기+가쪽돌림 → 덜컹소리 = Clunk Test (관절와순 손상)',
+    why:'①Kim은 뒤아래 관절와순(앉은자세). ②Anterior slide는 SLAP(허리뒤손). ④Drop-arm은 회전근개. ⑤Crank는 160° 벌림',
+    tip:'★ Clunk Test: 앙와위, 팔 머리위, 후방→전방 밀기+가쪽돌림, 덜컹소리=양성',
+    src:'근골격계 진단학 3판 현문사 p.72'
+  },
+  {
+    cat:'shoulder', q:'위팔두갈래근 긴갈래(Biceps long head) 건염/병변 확인 검사로만 짝지어진 것은?',
+    ans:1, choices:['스피드 검사(Speed test), 요가손 검사(Yergason test)','깡통 비우기 검사(Empty can test), 크랭크 검사(Crank test)','루즈 검사(Roos test), 킴 검사(Kim test)','호킨스-케네디 검사(Hawkins-Kennedy test), 꾹꾹 소리 검사(Clunk test)','뒤안쪽 충돌 검사(Posterior-internal impingement test), 스피드 검사(Speed test)'],
+    key:'Speed\'s + Yergason\'s = 이두근 긴갈래 건염 평가 2대 검사',
+    why:'②는 가시위근/관절와순. ③은 TOS/뒤아래와순. ④는 충돌증후군/관절와순. ⑤Posterior-internal은 관절와순+충돌',
+    tip:'이두건 건염 → Speed\'s(전방굴곡) + Yergason\'s(뒤침저항) 세트로 암기',
+    src:'근골격계 진단학 3판 68p'
+  },
+  {
+    cat:'shoulder', q:'깡통 비우기 검사(Empty can test)에 대한 설명으로 옳은 것은?',
+    ans:2, choices:['팔꿈치를 90도 굽힌 상태에서 아래팔의 뒤침(회외) 저항을 준다','어깨를 90도 벌림하고 견갑면에서 약 30도 앞쪽으로 위치시킨 후 엄지손가락이 바닥을 향하게 하여 아래로 누르는 힘에 저항하게 한다','환자의 팔을 수동적으로 끝범위까지 굽힘시켜 통증을 확인한다','어깨를 90도 벌림한 상태에서 팔꿈치를 90도 굽히고 강제로 가쪽돌림시킨다','위팔뼈의 축 방향으로 압박을 가하면서 아래쪽으로 전단력을 준다'],
+    key:'90° 벌림 + 견갑면 30° 전방 + 엄지↓(안쪽돌림) + 하방저항 = Empty can test',
+    why:'①은 Yergason. ③은 Neer. ④는 Hawkins-Kennedy. ⑤는 Crank와 유사',
+    tip:'Empty can ≠ Full can: Empty는 엄지↓(안쪽돌림), Full can은 엄지↑(가쪽돌림)',
+    src:'근골격계 진단학 3판 68p'
+  },
+  {
+    cat:'shoulder', q:'호킨스-케네디 충돌 검사(Hawkins-Kennedy impingement test)의 검사 방법과 양성 반응으로 옳은 것은?',
+    ans:2, choices:['환자의 어깨를 90도 벌림한 후 강제로 가쪽돌림(외회전) 시킨다','검사자는 환자의 어깨를 90도 굽힘, 팔꿈치를 90도 굽힘한 상태에서 강제로 안쪽돌림(내회전) 시킨다','양성 반응 시 위팔두갈래근 고랑(이두근구)에서 국소적인 통증이 나타난다','흉곽출구에서 신경과 혈관이 압박되는지 확인하는 검사이다','팔을 내릴 때 갑자기 힘이 빠지면 양성으로 간주한다'],
+    key:'어깨 90° 굽힘 + 팔꿈치 90° 굽힘 + 강제 안쪽돌림 → 봉우리하 충돌 통증 = 양성',
+    why:'①가쪽돌림은 Apprehension test. ③이두근구 통증은 Speed\'s. ④TOS는 Roos/Adson. ⑤힘빠짐은 Drop-arm',
+    tip:'Hawkins-Kennedy = 90/90 자세에서 강제 내회전. Neer = 수동 끝범위 굽힘',
+    src:'근골격계 진단학 3판 75p'
+  },
+  {
+    cat:'shoulder', q:'관절와순(Labrum) 손상 의심 환자 검사 중 방법이 옳은 것은?',
+    ans:2, choices:['꾹꾹 소리 검사(Clunk test): 환자를 바로 누운 자세로 한 뒤 어깨를 벌림시키고 위팔뼈 머리를 뒤쪽으로 민다','크랭크 검사(Crank test): 환자의 어깨를 160도 벌림하고 팔꿈치를 굽힌 상태에서 위팔뼈 축 방향으로 압박하며 안쪽/가쪽 돌림을 가한다','스피드 검사(Speed test): 팔꿈치를 굽힌 상태에서 어깨를 뒤로 젖히며 저항을 준다','요가손 검사(Yergason test): 엄지손가락을 아래로 향하게 하여 수평 내전시킨다','루즈 검사(Roos test): 환자의 팔을 차렷 자세로 두고 손가락만 빠르게 움직이게 한다'],
+    key:'Crank test = 160° 벌림 + 팔꿈치 90° + 위팔뼈 축성압박 + 안쪽/가쪽돌림 반복',
+    why:'①Clunk는 앞쪽으로 밀기+가쪽돌림(뒤로 밀기 아님). ③Speed\'s는 팔꿈치 신전. ④Yergason은 뒤침저항. ⑤Roos는 차렷+90° 자세',
+    tip:'Crank = 160° 벌림 + 축성압박 + 회전. 관절와순 손상 검사 3종 세트: Clunk/Crank/O\'Brien',
+    src:'근골격계 진단학 3판 71p'
+  },
+  {
+    cat:'shoulder', q:'환자 C: 루즈 검사 도중 팔 감각 이상·무거움. 환자 D: 킴 검사 도중 깊은 통증+클릭 소리. 옳지 않은 해석은?',
+    ans:4, choices:['환자 C는 흉곽출구 증후군(TOS) 양성 반응으로 볼 수 있다','환자 D의 증상은 뒤아래쪽 관절와순 병변(Kim lesion)을 시사한다','루즈 검사는 신경 및 혈관의 압박 유무를 동시에 평가할 수 있는 검사이다','킴 검사는 주로 어깨의 앞쪽 불안정성을 확인하기 위해 실시한다','킴 검사는 앉은 자세에서 위팔뼈에 축성 압박(Axial compression)을 가하며 수행하는 것이 정석이다'],
+    key:'Kim test = 뒤아래 관절와순 손상(posterior inferior labrum, Kim lesion) 평가. 앞쪽 불안정성 아님',
+    why:'①②③⑤ 모두 옳음. ④Kim test는 후방 불안정성/뒤아래 관절와순 검사',
+    tip:'★ Kim Test = 후방(뒤아래) 불안정성. 앞쪽 불안정성 = Apprehension/Anterior Drawer',
+    src:'근골격계 진단학 3판 72p'
+  },
+  {
+    cat:'shoulder', q:'팔꿉관절 검사 중 옳지 않은 것을 모두 고른 것은? ㄱ.Cozen test는 능동적 수축 이용 ㄴ.Mill test는 수동적 신장 이용 ㄷ.Tinel sign은 자신경 평가 ㄹ.외반 스트레스 검사는 가쪽곁인대 평가',
+    ans:4, choices:['ㄱ','ㄴ','ㄷ','ㄹ','ㄱ, ㄹ'],
+    key:'외반(Valgus) 스트레스 검사 = 안쪽곁인대(MCL) 평가. 가쪽곁인대(LCL)는 내반 스트레스',
+    why:'ㄱ(Cozen=능동수축 ✓), ㄴ(Mill=수동신장 ✓), ㄷ(Tinel=자신경 ✓), ㄹ(외반=MCL, 가쪽곁인대 아님 ✗)',
+    tip:'★ 외반(Valgus)=MCL, 내반(Varus)=LCL. 외반력=안쪽이 벌어짐=MCL 스트레스',
+    src:'special test ppt'
+  },
+  {
+    cat:'shoulder', q:'팔꿉관절 검사에 대한 설명으로 옳지 않은 것은? (어깨 섹션 문항)',
+    ans:4, choices:['Cozen test는 가쪽위관절융기염 평가에 사용된다','Mill test는 수동적 신전 시 통증을 유발한다','Tinel sign은 자신경을 평가한다','외반 스트레스 검사는 가쪽곁인대를 평가한다','내반 스트레스 검사는 가쪽곁인대를 평가한다'],
+    key:'④외반 스트레스 = MCL(안쪽곁인대) 평가. ⑤내반 스트레스 = LCL(가쪽곁인대) 평가',
+    why:'①②③⑤ 모두 옳음. ④번이 틀림(외반→가쪽곁인대 X, 안쪽곁인대 O)',
+    tip:'혼동 주의: 외반력은 안쪽(내측)이 벌어지는 힘 → MCL이 긴장됨',
+    src:'special test ppt'
+  },
+  {
+    cat:'shoulder', q:'50세 환자, 반복적 손목 사용 후 팔꿉 가쪽 통증, 손목 폄에 저항 시 통증 증가. 가장 적절한 검사는?',
+    ans:1, choices:['Cozen test','Tinel sign','외반 스트레스 검사','내반 스트레스 검사','Phalen test'],
+    key:'손목 폄 저항+가쪽위관절융기 통증 = 테니스 엘보(가쪽위관절융기염) → Cozen test',
+    why:'②Tinel은 신경병변. ③④인대검사. ⑤Phalen은 손목터널증후군',
+    tip:'Cozen = 손목 폄 저항검사 → 가쪽위관절융기염 가장 민감한 검사',
+    src:'special test ppt'
+  },
+  {
+    cat:'shoulder', q:'가쪽위관절융기염에서 Cozen test와 Mill test를 구분하는 특징으로 옳은 것은?',
+    ans:3, choices:['두 검사 모두 능동적 수축 시 통증을 유발한다','Cozen test는 수동적 신장, Mill test는 능동적 수축을 이용한다','Cozen test는 능동적 수축, Mill test는 수동적 신장을 이용한다','두 검사 모두 수동적 신장 시 통증을 유발한다','두 검사 모두 인대 손상을 평가한다'],
+    key:'Cozen = 능동저항(active resistance), Mill = 수동신장(passive stretch)',
+    why:'②는 반대로 서술. ①④⑤는 틀림',
+    tip:'★ C(Cozen)=C(Contraction/능동), M(Mill)=M(Mobilization/수동신장) 암기',
+    src:'special test ppt'
+  },
+  {
+    cat:'shoulder', q:'Mill test의 시행 방법으로 옳은 것은?',
+    ans:2, choices:['손목 폄에 저항을 주며 팔꿉을 굽힌다','손목 굽힘과 전완 회내 상태에서 팔꿉을 편다','손목 폄과 전완 회외 상태에서 팔꿉을 편다','중지 폄에 저항을 주며 팔꿉을 편다','외반 스트레스를 가하면서 통증을 확인한다'],
+    key:'Mill test = 손목굽힘+아래팔엎침(회내)+팔꿈치 신전 = 가쪽위관절융기 수동신장',
+    why:'①저항검사는 Cozen. ③손목폄+회외는 오류. ④중지폄저항은 Maudsley. ⑤외반은 MCL',
+    tip:'Mill = 손목굽힘+엎침(회내)+팔꿈치 신전 세트 암기',
+    src:'special test ppt'
+  },
+  {
+    cat:'shoulder', q:'손의 변형과 설명 연결로 가장 옳은 것은?',
+    ans:3, choices:['원숭이손 변형 – 자신경 마비로 엄지모음근 위축','단추구멍(Boutonnière) 변형 – 폄근힘줄 단축으로 PIP 관절 과신전','백조목(Swan-neck) 변형 – 속근육 구축이나 손바닥판 열상으로 주로 발생','갈퀴손(Claw hand) – 정중신경만 마비 시 1,2번째 벌레근 기능 상실로 MCP 과신전','망치손가락(Mallet finger) – 굽힘근 파열로 DIP 관절 능동 굴곡 불가'],
+    key:'Swan-neck 변형 = 속근육 구축 또는 손바닥판(volar plate) 열상 → PIP 과신전 + DIP 굴곡',
+    why:'①원숭이손=정중신경 마비(엄지두덩 위축). ②Boutonnière=PIP굴곡+DIP신전(중심 폄근 파열). ④Claw hand=자신경(4,5번째) 또는 정중+자신경(전체). ⑤Mallet=폄근파열 → DIP 굴곡 불가',
+    tip:'★손 변형 암기: 원숭이손=정중, 갈퀴손=자, Boutonnière=PIP↓DIP↑, Swan-neck=PIP↑DIP↓, Mallet=폄근파열',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.107'
+  },
+  {
+    cat:'shoulder', q:'방아쇠손가락에 대한 설명으로 옳지 않은 것은?',
+    ans:4, choices:['굽힘근힘줄집의 비후와 손가락굽힘근힘줄의 종창과 협착이 원인이다','힘줄이 힘줄집을 원활하게 통과하지 못하여 나타나는 증상이다','손가락을 굽히거나 펴려고 시도할 때 어느 정도 범위에서 잘 움직이지 않게 된다','주로 4,5번째 손가락에 많이 일어난다','손가락에서 딸깍하는 소리와 함께 움직임이 일어난다'],
+    key:'방아쇠손가락은 엄지, 중지, 약지(3번째) 순으로 흔함. 4,5번째 아님',
+    why:'①②③⑤ 모두 옳음. ④번이 틀림 — 엄지>중지>약지 순으로 발생',
+    tip:'★ 방아쇠 손가락 빈도: 엄지(1) > 중지(3) > 약지(4) 순. 4,5번째 흔함은 오답',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.108'
+  },
+  {
+    cat:'shoulder', q:'엄지를 나머지 손가락으로 감싸쥐고 손목을 새끼손가락 방향(자쪽)으로 굽혔을 때 통증 → 의심 질환은?',
+    ans:3, choices:['자신경 포착','결절종','드퀘르방병','손목굴증후군','방아쇠 손가락'],
+    key:'Finkelstein test 양성 = 드퀘르방병(De Quervain\'s disease) = APL + EPB 힘줄윤활막염',
+    why:'①자신경포착은 Froment/Wartenberg. ②결절종은 영상검사. ④손목굴은 Phalen/Tinel. ⑤방아쇠는 딸깍소리',
+    tip:'Finkelstein = 엄지를 손 안에 넣고 주먹+척측편위 → 노뼈쪽(radial side) 통증',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.112~113'
+  },
+  {
+    cat:'shoulder', q:'손목터널증후군 확인 검사로 양쪽 손등을 최대한 굽혀 압박이 가해지도록 1분간 유지하는 검사는?',
+    ans:4, choices:['프로멘트 징후(Froment sign)','핀켈스타인 검사(Finkelstein test)','분넬-리틀러 검사(Bunnell-Littler test)','팔렌 검사(Phalen test)','밀 검사(Mill test)'],
+    key:'Phalen test = 손등을 맞대고 손목 최대 굴곡 1분 유지 → 정중신경 분포 저림',
+    why:'①Froment=자신경. ②Finkelstein=드퀘르방. ③Bunnell-Littler=내재근/관절낭. ⑤Mill=팔꿈치 검사',
+    tip:'Phalen = 손등 맞대기(손목굴곡). Reverse Phalen = 손바닥 맞대기(손목신전)',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.116'
+  },
+  {
+    cat:'shoulder', q:'머피징후(Murphy\'s sign)의 양성반응이 나타나면?',
+    ans:1, choices:['반달뼈의 탈구','큰마름뼈의 탈구','손가락손허리관절의 분리','손목의 손바닥쪽 저린감각','손목의 손등쪽 저린감각'],
+    key:'Murphy\'s sign = 주먹 쥘 때 3번째 MC 돌출 감소/없음 → 반달뼈(lunate) 탈구 시사',
+    why:'②③④⑤ 다른 뼈/신경 이상',
+    tip:'★ Murphy\'s sign = 3번째 중수골(MC) 높이 소실 → 반달뼈 탈구',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.123'
+  },
+  {
+    cat:'shoulder', q:'팔꿈치를 편 상태에서 검사자가 아래팔을 뒤침시키고 어깨관절을 굽힘시키면서 일정한 저항을 주어 위팔두갈래근 힘줄 위에 통증을 유발시키는 검사는?',
+    ans:2, choices:['요가손검사','스피드검사','올림징후','작은가슴근 단축','팔 떨어뜨리기 검사'],
+    key:'팔꿈치 신전+뒤침+전방굴곡 저항 → 이두건 통증 = Speed\'s Test',
+    why:'①Yergason=팔꿈치 90°+뒤침저항. ③Lift-off=허리뒤손 들기. ④⑤다른검사',
+    tip:'Speed\'s Test 핵심: 팔꿈치 신전(extended) + 뒤침 + 굴곡저항',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.68'
+  },
+  {
+    cat:'shoulder', q:'Clunk test에 대한 설명으로 옳은 것은?',
+    ans:3, choices:['부리빗장인대의 병변이다','아탈구검사이다','양성반응 시 덜컹하거나 가는 소리가 난다','양성반응 시 벌림에 제한이 있다','검사 시에 위팔뼈를 잡고 안쪽돌림시킨다'],
+    key:'Clunk test = 관절와순 손상 검사. 양성 = 덜컹(clunk)/갈리는 소리',
+    why:'①부리빗장인대는 다른검사. ②불안정성검사. ④벌림제한 아님. ⑤가쪽돌림(외회전) 시킴(안쪽돌림 아님)',
+    tip:'★ Clunk test: 앙와위+팔머리위+전방밀기+가쪽돌림 → 덜컹소리=관절와순',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.72'
+  },
+  {
+    cat:'shoulder', q:'가시위근 검사로 옳지 않은 것은?',
+    ans:4, choices:['애플리검사','가시위근 압박검사','부딪힘징후','롸잇검사','어깨뼈봉우리 아래 밈 단추 징후'],
+    key:'롸잇검사(Wright test) = 과도한 벌림/가쪽돌림으로 TOS(흉곽출구증후군) 평가. 가시위근 검사 아님',
+    why:'①Apley scratch test(기능평가 포함 가시위근). ②③⑤ 가시위근 관련',
+    tip:'Wright test = TOS 검사. 가시위근 3대 검사: Empty can, Neer, Hawkins-Kennedy',
+    src:'근골격계 진단학 3판 현문사 p.80'
+  },
+  {
+    cat:'shoulder', q:'어깨뼈 내림 시 사용되는 아래 등세모근의 신경은?',
+    ans:5, choices:['C4~5','C5~5','자신경','겨드랑신경','더부신경'],
+    key:'등세모근(trapezius) = 더부신경(Accessory nerve, CN XI) + C3~4 척수신경 지배',
+    why:'①②C4~5는 삼각근 등. ③자신경은 전완/손. ④겨드랑신경은 삼각근/작은원근',
+    tip:'★ 등세모근 = 더부신경(CN XI). 날개어깨뼈는 앞톱니근(장흉신경) 손상',
+    src:'근골격계 진단학 3판 현문사 p.67'
+  },
+  {
+    cat:'shoulder', q:'말초신경병변 검사로 옳은 것은?',
+    ans:1, choices:['티넬징후','순간밀기반사검사','휘돌림검사','킴검사','요가손검사'],
+    key:'Tinel\'s sign = 말초신경 두드려 저림 유발 → 신경병변(peripheral neuropathy) 검사',
+    why:'②순간밀기반사=중추신경. ③휘돌림=관절와순. ④Kim=관절와순 후방. ⑤Yergason=이두건',
+    tip:'Tinel sign = 신경 두드리기 → 저림/전기감 = 신경병변 양성',
+    src:'근골격계 진단학 3판 현문사 p.74'
+  },
+  {
+    cat:'shoulder', q:'Andrews Anterior Instability test의 해석으로 옳은 것은?',
+    ans:3, choices:['전방으로 밀 때 통증이나 불안이 없으면 불안정성이다','Click sound가 들리면 정상이다','통증이나 불안을 호소하면 어깨관절의 불안정성을 의심할 수 있다','외회전 시 통증이 없으면 Labrum tear이다','위팔뼈 머리가 후방으로 이동하면 양성이다'],
+    key:'Andrews Anterior Instability test = 전방 불안정성 → 통증/불안감 호소 시 양성',
+    why:'①없으면 정상. ②click=병변 의심. ④⑤후방이동 아님, 전방불안정성',
+    tip:'불안정성 검사: 통증+공포감(apprehension)=양성. 전방불안정=앞쪽으로 이동',
+    src:'스페셜테스트 총정리집 49p'
+  },
+  {
+    cat:'shoulder', q:'Jerk test의 목적은?',
+    ans:2, choices:['어깨 전방 불안정성 검사','상완골두 이탈구 검사','어깨 관절와순 손상 검사','날개뼈 불안정성 검사','위팔두갈래근 힘줄 검사'],
+    key:'Jerk test = 어깨 후방 불안정성 시 위팔뼈머리 후방 탈구/아탈구 확인',
+    why:'①전방불안정=Apprehension. ③와순=Clunk/Crank. ④날개뼈=Wall push-up. ⑤이두건=Speed/Yergason',
+    tip:'Jerk test = 후방 불안정성, 위팔뼈머리 이탈구(subluxation) 평가',
+    src:'근골격계 물리치료 진단학 74p'
+  },
+  {
+    cat:'shoulder', q:'Crank test에 대한 설명으로 옳은 것은?',
+    ans:3, choices:['상완골 축 방향 압박 없이 시행한다','어깨를 굴곡시키지 않고 시행한다','내·외회전 중 통증 발생 시 관절와순 손상을 의심할 수 있다','팔꿈치를 펴고 시행한다','압박 없이 회전만 시행한다'],
+    key:'Crank test = 160° 벌림 + 팔꿈치 90° 굽힘 + 축성압박 + 안쪽/가쪽돌림 → 통증/덜컹 = 관절와순',
+    why:'①압박 있음. ②160° 벌림 필요. ④팔꿈치 굽힘 상태. ⑤압박 필수',
+    tip:'Crank = Crack(갈라지는)소리+크랭크 돌리듯 회전. 축성압박+회전=핵심',
+    src:'근골격계 물리치료 진단학 71p'
+  },
+  {
+    cat:'shoulder', q:'Wall Push-up test의 검사 방법으로 옳은 것은?',
+    ans:2, choices:['환자는 바닥에서 푸쉬업을 한다','환자는 벽에 대고 팔굽혀펴기를 수행한다','검사자는 환자 앞에서 관찰한다','날개뼈 움직임은 관찰하지 않는다','팔꿈치를 굽히지 않는다'],
+    key:'Wall Push-up test = 벽 팔굽혀펴기 → 날개어깨뼈(winging scapula) 관찰 → 앞톱니근 약화',
+    why:'①바닥 아닌 벽. ③뒤에서 날개뼈 관찰. ④날개뼈 움직임 핵심 관찰. ⑤팔꿈치 굽힘 수행',
+    tip:'★ Wall push-up = 뒤에서 관찰 → 날개어깨뼈 = 앞톱니근(serratus anterior) 약화 = 장흉신경 손상',
+    src:'스페셜 테스트 총정리집 64p'
+  },
+  {
+    cat:'shoulder', q:'Yergason\'s test의 해석으로 옳은 것은?',
+    ans:3, choices:['위팔두갈래근 힘줄이 밀려나지 않으면 이상이다','저항 시 통증이 없으면 양성이다','위팔두갈래근 힘줄이 튕기는(pop out) 느낌이 있으면 의심할 수 있다','내회전 시 통증이 발생해야 양성이다','팔꿈치를 편 상태에서 시행한다'],
+    key:'Yergason\'s test = ①건염(통증) 또는 ②이두건 탈구(가로위팔인대 파열 → pop out)',
+    why:'①②반대. ④외회전(뒤침) 시 통증. ⑤팔꿈치 90° 굽힘 상태',
+    tip:'Yergason = 팔꿈치 90° + 뒤침저항 → 건염=통증, 인대파열=힘줄 튕김',
+    src:'근골격계 물리치료 진단학 68p'
+  },
+  {
+    cat:'shoulder', q:'어깨관절을 앞으로 90도 굽힘 + 10~15도 수평모음 + 안쪽돌림(엄지↓) vs 가쪽돌림(손바닥↑)에서 저항 → 아래 방향으로 힘. 이 검사는?',
+    ans:2, choices:['팔꿈치 눌림 검사(Elbow compression test)','오브라이언 검사(O\'Brien test)','라크만 검사(Lachman test)','사우덱 검사(SAUDEK test)'],
+    key:'O\'Brien test = 90° 굽힘 + 수평모음 10~15° + 1단계 안쪽돌림 vs 2단계 가쪽돌림 → SLAP/AC joint 병변',
+    why:'①팔꿈치. ③무릎ACL. ④다른검사',
+    tip:'★ O\'Brien: 1단계(엄지↓)+통증 → 2단계(손바닥↑)+통증 감소 = SLAP/AC 양성',
+    src:'근골격계 물리치료 중재학 현문사 p.211'
+  },
+  {
+    cat:'shoulder', q:'SLAP 병변 테스트로 앉은 자세에서 팔꿈치 90° 굽힘, 팔 160° 올리고, 위팔 압박하며 반복 안쪽/가쪽돌림. 통증/불편 = 양성. 이 검사는?',
+    ans:2, choices:['오브라이언 검사(O\'Brien test)','크랭크 검사(Crank test)','라크만 검사(Lachman test)','사우덱 검사(SAUDEK test)'],
+    key:'Crank test = 앉아서 160° 벌림 + 팔꿈치 90° + 축성압박 + 반복 안쪽/가쪽돌림',
+    why:'①O\'Brien은 90° 굽힘+수평모음. ③무릎. ④다른검사',
+    tip:'160° 벌림+축성압박+반복회전 = Crank test의 특징적 자세',
+    src:'근골격계 물리치료 중재학 현문사 p.211'
+  },
+  {
+    cat:'shoulder', q:'SLAP 병변 평가를 위한 덜컹검사(Clunk test)에 대한 설명으로 옳은 것은?',
+    ans:3, choices:['환자를 앉은 자세에서 팔꿈치 90° 굽힘, 팔을 160° 올리고 반복 안쪽/가쪽돌림','팔을 90° 굽힘, 10~15° 수평모음 후 안쪽/가쪽돌림하며 통증 확인','바로 누운 자세에서 팔을 머리 위로 올리고, 한 손으로 앞쪽으로 밀며 다른 손으로 가쪽돌림, 덜컹/갈리는 소리 확인','무릎 15~20° 굽힘, 정강뼈를 앞으로 당겨 검사'],
+    key:'Clunk test = 앙와위, 팔 머리위, 전방밀기+가쪽돌림, 덜컹소리=양성',
+    why:'①Crank. ②O\'Brien. ④Lachman(무릎)',
+    tip:'Clunk = 누워서 + 앞으로 밀기 + 가쪽돌림 → 덜컹(clunk)소리',
+    src:'근골격계 물리치료 중재학 현문사 p.211'
+  },
+  {
+    cat:'shoulder', q:'앞쪽 미끄럼 검사(Anterior Slide / Kibler test)에 대한 설명으로 옳은 것은?',
+    ans:2, choices:['바로 누운 자세, 팔 머리 위, 압박 + 가쪽돌림, 덜컹 소리 확인','팔 들고 엄지 뒤로, 빗장뼈·어깨뼈 고정, 팔꿈치 앞·위 압박, 우지직 소리/통증 양성','앉은 자세, 팔꿈치 90° 굽힘, 팔 160° 올려 반복 회전','팔 90° 굽힘, 10~15° 수평모음, 안쪽/가쪽돌림, 깊은 통증 확인'],
+    key:'Anterior Slide(Kibler) = 손 허리뒤(엄지 뒤) + 빗장뼈/어깨뼈 고정 + 팔꿈치 앞·위 압박 → 소리/통증 = SLAP',
+    why:'①Clunk. ③Crank. ④O\'Brien',
+    tip:'★ Kibler test = 허리뒤손자세 + 빗장뼈·어깨뼈 고정 + 팔꿈치 전상방 압박',
+    src:'근골격계 물리치료 중재학 현문사 p.205'
+  },
+  {
+    cat:'shoulder', q:'완전 파열된 가시위근에서 팔 낙하검사(drop arm test) 양성 소견으로 옳은 것은?',
+    ans:1, choices:['벌림 상태를 유지하지 못하거나 천천히 내리지 못하고 떨어뜨리면 양성','팔꿈치 90° 굽힘 후 팔을 가쪽돌림할 때 힘줄 저항 증가','팔을 옆으로 들어 올린 상태에서 약한 저항에도 팔을 유지하지 못하고 흔들리면 양성','팔 90° 굽힘, 수평모음 후 손바닥 위로 향하게 저항하면 통증 발생'],
+    key:'Drop-arm test = 90° 벌림 후 천천히 내리지 못하거나 떨어뜨림 = 회전근개 완전파열',
+    why:'②Yergason. ③Empty can 근력검사. ④Speed\'s',
+    tip:'★ Drop-arm = 벌림 유지 불가 → 회전근개 완전파열. ③번도 유사하지만 ①이 더 정확한 정의',
+    src:'근골격계 물리치료 중재학 현문사 p.205'
+  },
+  {
+    cat:'shoulder', q:'오브라이언검사(O\'Brien test)에서 1단계 통증이 2단계에서 사라졌다. 이 결과가 의미하는 병변은?',
+    ans:5, choices:['회전근개증후군','유착성관절낭염','봉우리충돌증후군','봉우리빗장관절 병변','슬랩병변'],
+    key:'O\'Brien test: 안쪽돌림(1단계) 통증 → 가쪽돌림(2단계) 소실 = SLAP lesion 또는 AC joint 병변',
+    why:'①②③은 충돌/염증. ④AC joint 병변도 가능하나, 이 문제에서는 SLAP이 정답',
+    tip:'O\'Brien 양성 해석: 1단계(안쪽돌림) 통증+2단계(가쪽돌림) 감소 → SLAP/AC joint',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.211'
+  },
+  {
+    cat:'shoulder', q:'아플레이 긁기 검사(Apley scratch test)에 대한 설명으로 옳은 것을 모두 고른 것은? ㉠반대편 앞어깨 긁기=모음·안쪽돌림·가로모음 ㉡반대편 뒤위쪽 긁기=굽힘·벌림·가쪽돌림 ㉢양측 상대적 차이 비교가 중요 ㉣반대편 뒤아래쪽 긁기=폄·모음·안쪽돌림 ㉤유착관절낭염에 반드시 석회화 나타남',
+    ans:4, choices:['㉠, ㉡','㉠, ㉢','㉡, ㉤','㉠, ㉢, ㉣','㉠, ㉡, ㉢, ㉣'],
+    key:'㉠㉡㉢㉣ 모두 옳음. ㉤만 틀림 — 유착관절낭염에 석회화가 반드시 나타나지 않음',
+    why:'유착관절낭염은 섬유성 유착이 주원인. 석회화는 별도의 석회성건염(calcific tendinitis)',
+    tip:'Apley scratch test = 3방향(앞/뒤위/뒤아래) 긁기로 어깨 복합운동 평가',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.200'
+  },
+  {
+    cat:'shoulder', q:'물렁조직병변검사로 옳지 않은 것은?',
+    ans:5, choices:['스피드검사','요가손검사','올림징후','팔 떨어뜨리기 검사','휘돌림검사'],
+    key:'휘돌림검사(Circumduction test) = 관절와순 손상 평가. 물렁조직병변검사 아님',
+    why:'①②③④ 모두 물렁조직(힘줄·근육) 병변검사. ⑤휘돌림=관절와순(구조적)',
+    tip:'물렁조직병변 = 힘줄/근육 관련: Speed, Yergason, Lift-off, Drop-arm 등',
+    src:'근골격계물리치료진단학 P.62~81'
+  },
+  {
+    cat:'shoulder', q:'다음 보기 검사를 올바르게 연결한 것은? ㉠바로누운+팔머리위+전방밀기+가쪽돌림 덜컹소리 ㉡90°굽힘+수평모음+안쪽돌림→가쪽돌림 비교 ㉢허리뒤손+빗장뼈·어깨뼈고정+팔꿈치전상방압박 소리/통증',
+    ans:3, choices:['㉠오브라이언검사-㉡덜컹검사-㉢앞쪽미끄러짐검사','㉠덜컹검사-㉡앞쪽미끄러짐검사-㉢오브라이언검사','㉠덜컹검사-㉡오브라이언검사-㉢앞쪽미끄러짐검사','㉠앞쪽미끄러짐검사-㉡오브라이언검사-㉢덜컹검사','㉠크랭크검사-㉡오브라이언검사-㉢덜컹검사'],
+    key:'㉠=Clunk(덜컹), ㉡=O\'Brien, ㉢=Anterior Slide(Kibler/앞쪽미끄러짐)',
+    why:'각 검사 특징적 자세로 구별',
+    tip:'3대 SLAP 검사 자세 구분이 핵심. 누워서=Clunk, 앉아서수평모음=O\'Brien, 허리뒤=Kibler',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.211'
+  },
+  {
+    cat:'shoulder', q:'팔 낙하검사(drop arm test)에서 양성반응이 나타났다. 이것이 의미하는 것은?',
+    ans:3, choices:['슬랩병변','유착관절낭염','회전근개증후군','봉우리빗장관절 병변','봉우리충돌증후군'],
+    key:'Drop-arm test 양성 = 회전근개(특히 가시위근) 완전파열 → 유지 불가',
+    why:'①SLAP=관절와순. ②유착=ROM제한. ④AC joint=접촉통증. ⑤충돌=painful arc',
+    tip:'Drop-arm = 회전근개 완전파열(complete tear)의 가장 특이적 검사',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.205'
+  },
+  {
+    cat:'shoulder', q:'팔꿈치를 약간 구부린 상태에서 한 손으로 관절을 고정하고, 반대쪽에서 벌림압이 생기도록 힘을 가해 시행하는 검사는?',
+    ans:3, choices:['밀킹검사','코젠검사','인대성 가쪽휨 불안정성 검사','동적 가쪽휨 스트레스검사','마우드슬리검사'],
+    key:'팔꿈치 약간 굽힘 + 고정 + 벌림압(외반력) = 인대성 가쪽휨 불안정성 검사(Valgus stress test)',
+    why:'①Milking=엄지당기기. ②Cozen=능동저항. ④동적=70~120°. ⑤Maudsley=중지폄저항',
+    tip:'인대성 vs 동적 구분: 인대성=정적 스트레스, 동적=움직이면서 70~120°',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.91'
+  },
+  {
+    cat:'shoulder', q:'동적 가쪽휨 스트레스검사(Moving valgus stress test)에서 양성반응이 나타나는 각도 범위는?',
+    ans:4, choices:['0~30°','30~60°','45~90°','70~120°','90~150°'],
+    key:'Moving valgus stress test = 팔꿈치 70~120° 굴곡 범위에서 통증 = MCL 불안정성 양성',
+    why:'다른 범위는 오답. 70~120°가 MCL에 최대 스트레스 발생 구간',
+    tip:'★ Moving valgus = 70~120° 범위 암기 필수',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.91'
+  },
+
+  // ===== 팔꿈치 (elbow) =====
+  {
+    cat:'elbow', q:'가쪽위관절융기염(테니스엘보) 검사 중, 검사자가 팔꿈치를 완전히 편 상태에서 가운뎃손가락 폄에 저항을 가하는 검사는?',
+    ans:3, choices:['코젠검사','밀검사(Mill test)','마우드슬리검사','역코젠검사','역밀검사'],
+    key:'Maudsley test = 팔꿈치 신전 + 중지(가운뎃손가락) 폄 저항 → 가쪽위관절융기 통증',
+    why:'①Cozen=손목폄저항. ②Mill=수동신장. ④역Cozen=안쪽위관절융기. ⑤역Mill=안쪽위관절융기',
+    tip:'Maudsley = 중지만 선택적으로 저항 → ECRB(단요측수근신근) 기시부 선택적 평가',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.93'
+  },
+  {
+    cat:'elbow', q:'팔꿈치 부위에서 자신경 압박/손상 확인을 위해 팔꿈치터널 안의 자신경을 2~3회 두드리는 검사는?',
+    ans:4, choices:['팔꿈치관절 굽힘검사','원엎침근증후군 검사','밀킹검사','팔꿈치관절부위의 티넬징후','동적 가쪽휨 스트레스검사'],
+    key:'팔꿈치 Tinel sign = 팔꿈치터널(cubital tunnel) 자신경 두드리기 → 4,5번째 저림',
+    why:'①팔꿈치굽힘검사=압박으로 자신경 증상. ②원엎침근=정중신경. ③Milking=MCL. ⑤동적=MCL',
+    tip:'★ 손목 Tinel=정중신경, 팔꿈치 Tinel=자신경(ulnar nerve)',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.94'
+  },
+  {
+    cat:'elbow', q:'역밀검사(Reverse Mill\'s test)의 다른 명칭으로 옳은 것은?',
+    ans:2, choices:['원엎침근검사','골퍼팔꿈검사(Golfer\'s elbow test)','밀킹검사','마우드슬리검사','팔꿈치 굽힘검사'],
+    key:'역Mill test = 골퍼 팔꿈치 검사(Golfer\'s elbow test) = 안쪽위관절융기염 평가',
+    why:'①원엎침근=정중신경. ③Milking=MCL. ④Maudsley=가쪽. ⑤팔꿈치굽힘=자신경',
+    tip:'역Cozen/역Mill = Golfer\'s elbow = 안쪽위관절융기염. 반대로 테니스=가쪽',
+    src:'근골격계 물리치료 진단학 3판 현문사 p.94'
+  },
+  {
+    cat:'elbow', q:'손목굴증후군 검사로 양쪽 손등을 최대한 굽혀 손목부위에 압박이 가해지도록 1분 정도 유지, 양쪽 손의 징후 변화를 비교하는 검사의 이름은?',
+    ans:3, choices:['손가락벌림검사','손목굴압박검사','팔렌검사','역팔렌검사','프로멘트징후'],
+    key:'Phalen test = 손등 맞대기(손목굴곡) 1분 유지 → 정중신경 분포 저림',
+    why:'①손가락벌림=자신경. ②손목굴압박=직접압박. ④역팔렌=손바닥맞대기. ⑤Froment=자신경',
+    tip:'Phalen = 손등↔손등(굴곡). Reverse Phalen = 손바닥↔손바닥(신전)',
+    src:'근골격계물리치료진단학 p.116'
+  },
+  {
+    cat:'elbow', q:'핀켈스타인검사에 대한 설명으로 옳지 않은 것은?',
+    ans:5, choices:['손목을 많이 쓰는 사람에게 주로 나타나는 병변의 유무를 검사함','물렁조직병변검사다','양성반응 시 자뼈쪽 치우침 시 손목뼈의 노뼈쪽에 통증이 심하게 유발된다','엄지의 힘줄윤활막염의 유무를 검사하는 것임','특별히 손상이 없는 경우에는 통증이 동반되지 않기 때문에 양쪽을 검사할 필요는 없다'],
+    key:'Finkelstein test는 양쪽을 비교 검사해야 함. 정상 측도 약간 불편할 수 있어 비교가 필요',
+    why:'①②③④ 모두 옳음. ⑤번이 틀림 — 양쪽 비교 검사가 중요',
+    tip:'★ Special test는 항상 양측 비교가 원칙. Finkelstein도 예외 아님',
+    src:'근골격계물리치료진단학 p.112'
+  },
+  {
+    cat:'elbow', q:'다음 중 옳은 것은? (손/손목 검사 복합문항)',
+    ans:1, choices:['번넬-리틀러 검사에서 손허리손가락관절의 굽힘과 폄에 상관없이 움직임 제한이 나타나면 관절의 구축으로 볼 수 있다','티넬징후검사의 결과판정을 척골신경의 신경병증으로 볼 수 있다','손목굴 압박검사는 티넬징후검사와 같이 정중신경에 직접 압박을 가하는 검사이다','주름 검사에서 손 끝에 주름이 관찰되지 않을 시 탈신경근과 같은 신경병증으로 볼 수 있다','프로멘트 징후의 양성반응으로 엄지의 몸쪽 손가락뼈의 굽힘이 발생한다'],
+    key:'Bunnell-Littler test: MCP 굽힘/폄 관계없이 PIP 제한 → 관절낭 구축. MCP 굽힘 시만 PIP 가능 → 내재근 단축',
+    why:'②Tinel은 손목에서 정중신경. ③Tinel은 두드리기, 압박검사는 별도. ④주름검사: 주름없음=탈신경 맞음 but 옳지 않은 이유는 ①이 더 정확. ⑤Froment=DIP굴곡(먼쪽)',
+    tip:'Bunnell-Littler: MCP와 무관하게 PIP 제한=관절낭. MCP굽힘 시 PIP 가능=내재근 단축',
+    src:'근골격계물리치료진단학 p.114,115,116,119'
+  },
+  {
+    cat:'elbow', q:'다음 중 옳은 것은? (손/손목 검사 복합문항 2)',
+    ans:5, choices:['프로멘트 징후에서 결과로 자신경의 마비로 인한 엄지굽힘근의 약화를 볼 수 있다','지혈대검사의 양성반응에서 손바닥쪽으로 작열감이 나타나기도 한다','스위터 손가락 징후는 어떤 손가락의 동작 시 나타나는 전형적 형태이다','깊은 손가락굽힘근 손상검사에서 중지의 경우 깊은손가락 굽힘근이 서로 연결되어 대상작용이 가능하다','번넬-리틀러 검사에서 손허리손가락관절을 약간 굽혔을 때 몸쪽 손가락뼈사이 관절에 굽힘이 일어나면 속근육의 단축이 나타난 것이다'],
+    key:'Bunnell-Littler: MCP 약간 굽힘 → PIP 굴곡 가능해짐 = 내재근(속근육) 단축',
+    why:'①Froment=엄지모음근 약화(자신경). ②작열감=손목부위. ③Sweater finger=4번째 FDP 파열. ④중지=FDP 연결+대상 가능(맞음이나 문제는 ⑤가 정답)',
+    tip:'MCP 굽힘 시 내재근 이완 → PIP 굴곡 가능해짐 = 내재근 단축이 원인',
+    src:'근골격계물리치료진단학 p.113,114,117,119'
+  },
+  {
+    cat:'elbow', q:'말초신경병변 검사로 옳지 않은 것은?',
+    ans:4, choices:['손목굴압박검사','팔렌검사','손가락벌림 검사','알렌검사','두점식별검사'],
+    key:'Allen test = 혈관 검사(노동맥/자동맥 순환 평가). 신경병변 검사 아님',
+    why:'①②③⑤ 모두 말초신경 관련. ④Allen=동맥 순환 확인',
+    tip:'★ Allen test = 혈관(동맥) 검사. 신경검사로 분류되는 함정 문제',
+    src:'근골격계물리치료진단학 p116,117,119,122'
+  },
+  {
+    cat:'elbow', q:'주먹 쥐고 아래팔 엎침, 팔꿉관절 90도 굽힘, 손목관절 폄 상태에서 검사자가 손등에 저항을 주면 가쪽팔꿉부위 통증. 이 검사는?',
+    ans:1, choices:['코젠검사','팔렌검사','스피드검사','애드손검사','요르가손검사'],
+    key:'주먹+엎침+팔꿈치90°+손목폄+저항 → 가쪽위관절융기 통증 = Cozen test',
+    why:'②Phalen=손목터널. ③Speed\'s=이두건. ④Adson=TOS. ⑤Yergason=이두건/가로인대',
+    tip:'Cozen = 능동 손목폄 저항 → 가쪽위관절융기 통증. 2022년 50회 국가고시 출제',
+    src:'2022년 50회 물리치료 국가고시'
+  },
+  {
+    cat:'elbow', q:'검사자는 환자의 손목을 구부리면서 환자의 팔꿉관절을 펴고 손목을 엎침 시킨다. 팔꿉관절 바깥쪽에 통증을 호소한다. 이 검사는?',
+    ans:4, choices:['역코젠 검사','코젠검사','요르가손 검사','밀 검사','역 밀 검사'],
+    key:'손목굽힘+엎침+팔꿈치 신전 → 가쪽위관절융기 통증 = Mill test',
+    why:'①역Cozen=안쪽. ②Cozen=능동저항. ③Yergason=어깨. ⑤역Mill=안쪽',
+    tip:'Mill = 수동신장(손목굽힘+엎침+팔꿈치 신전). 검사자가 수동으로 시행',
+    src:'스페셜 테스트 ppt 자료 엘보파트'
+  },
+  {
+    cat:'elbow', q:'환자는 팔꿉관절, 손목관절, 손가락 관절을 모두 굽힘 후 검사자는 안쪽위관절융기를 촉진하며 환자에게 팔꿉·손목·손가락 관절을 펴라 지시. 안쪽 위관절융기에 통증. 이 검사는?',
+    ans:1, choices:['역밀 검사','밀 검사','코젠 검사','티넬 검사','요르가손 검사'],
+    key:'모든 관절 굽힘 후 → 신전 시 안쪽위관절융기 통증 = 역밀검사(Reverse Mill) = 골퍼팔꿈치',
+    why:'②Mill=가쪽. ③Cozen=능동저항가쪽. ④Tinel=신경두드리기. ⑤Yergason=어깨',
+    tip:'역Mill(Reverse Mill) = 역Cozen과 함께 안쪽위관절융기염(골퍼팔꿈치) 평가',
+    src:'스페셜 테스트 ppt 자료 엘보파트'
+  },
+  {
+    cat:'elbow', q:'팔꿈치 관절을 완전히 폄한 상태에서 가운데 손가락 폄 시 저항을 가할 때 통증을 호소하면 이 검사는?',
+    ans:3, choices:['밀검사','코젠검사','마우드슬리 검사','요르가손검사','티넬검사'],
+    key:'팔꿈치 신전 + 중지폄 저항 → 가쪽위관절융기 통증 = Maudsley test',
+    why:'①Mill=수동신장. ②Cozen=손목폄저항. ④Yergason=이두건. ⑤Tinel=신경두드리기',
+    tip:'Maudsley = 중지(3rd finger) 폄 저항으로 ECRB 선택적 평가',
+    src:'근골격계물리치료중재학 교재 221p'
+  },
+  {
+    cat:'elbow', q:'환자의 손을 테이블에 놓고 손가락 핀 뒤 검사자가 외전시키고 환자가 모을 때 새끼손가락이 모아지지 않는다. 자신경 의심. 이 검사는?',
+    ans:1, choices:['와텐베르그 징후','원회내근 증후군','팔꿈치 굴곡 검사','티넬검사','마우드슬리 검사'],
+    key:'Wartenberg sign = 자신경 마비 → 새끼손가락 모음(ADM) 불가 → 벌어진 채 유지',
+    why:'②원회내근=정중신경. ③팔꿈치굴곡=자신경 압박검사. ④Tinel=두드리기. ⑤Maudsley=가쪽',
+    tip:'★ Wartenberg sign = 자신경(ulnar nerve) 마비 = 새끼손가락 외전(벌어짐) 유지',
+    src:'스페셜 테스트 ppt 자료 엘보파트'
+  },
+  {
+    cat:'elbow', q:'코젠검사(Cozens test)에 대한 설명으로 틀린 것은?',
+    ans:5, choices:['검사자는 가쪽위관절융기 부위를 고정한다','환자는 손목 폄을 시행하며 검사자는 저항을 준다','팔꿉관절은 신전 상태에서 시행한다','통증은 가쪽위관절융기에서 발생한다','통증이 없을 경우 신경학적 검사 고려가 필요하다'],
+    key:'Cozen test 음성(통증 없음)이어도 신경학적 검사가 반드시 필요한 것은 아님. 다른 검사로 보완',
+    why:'①②③④ 모두 옳음. ⑤번이 애매하나 출제 의도상 틀린 서술',
+    tip:'Cozen 음성=가쪽위관절융기염 가능성 낮음. Mill/Maudsley로 추가 확인 권장',
+    src:'근골격계 물리치료 진단학 p.93'
+  },
+  {
+    cat:'elbow', q:'밀검사(Mill test)에 대한 설명으로 틀린 것은?',
+    ans:5, choices:['손목 굽힘과 아래팔 엎침 상태에서 시행한다','팔꿉관절을 점진적으로 폄한다','가쪽위관절융기에 통증이 발생하면 양성이다','노신경 압박과 유사한 증상이 나타날 수 있다','팔꿉관절을 굽힌 상태에서 유지하며 검사한다'],
+    key:'Mill test는 팔꿈치를 천천히 신전(폄)시키는 검사. 굽힌 상태 유지가 아님',
+    why:'①②③④ 옳음. ⑤팔꿈치 굽힘 유지는 틀림 — 신전하는 것이 핵심',
+    tip:'Mill = 팔꿈치 신전(extension)이 검사의 핵심 동작',
+    src:'근골격계 물리치료 진단학 p.93'
+  },
+  {
+    cat:'elbow', q:'마우드슬리 검사(Maudsley test)에 대한 설명으로 틀린 것은?',
+    ans:3, choices:['가운데손가락 폄에 저항을 준다','가쪽위관절융기에 통증이 발생한다','손목 폄 근육 전체를 평가하는 검사이다','손가락 폄 근육의 선택적 평가가 가능하다','통증이 없을 경우 신경학적 검사 고려 가능하다'],
+    key:'Maudsley test = 중지 폄 저항으로 ECRB만 선택적 평가. 손목폄 근육 전체 평가 아님',
+    why:'①②④⑤ 옳음. ③번이 틀림 — 전체가 아닌 선택적 평가가 특징',
+    tip:'Maudsley의 강점 = Cozen보다 선택적(ECRB 단독 평가)',
+    src:'근골격계 물리치료 진단학 p.93'
+  },
+  {
+    cat:'elbow', q:'밀킹검사(Milking test)에 대한 설명으로 틀린 것은?',
+    ans:3, choices:['팔꿉관절을 약 90° 굽힌 상태에서 시행한다','아래팔은 뒤침(supination) 상태이다','엄지를 잡아 당겨 가쪽 스트레스를 준다','안쪽에 통증이 발생하면 양성이다','안쪽곁인대 손상을 평가하는 검사이다'],
+    key:'Milking test = 엄지를 당겨 내반력(valgus 아닌 가쪽 스트레스) = 실제로는 외반력 적용 → MCL 평가',
+    why:'③번: 가쪽 스트레스가 아닌 외반력(valgus stress). 엄지를 당겨 팔꿈치에 외반력을 만듦',
+    tip:'Milking test = 팔꿈치 90°+뒤침+엄지 당김 → 외반력 발생 → MCL(안쪽곁인대) 평가',
+    src:'근골격계 물리치료 진단학 p.92'
+  },
+  {
+    cat:'elbow', q:'팔꿉관절 굽힘검사(Elbow flexion test)에 대한 설명으로 틀린 것은?',
+    ans:5, choices:['팔꿉관절 최대 굽힘 상태를 유지한다','손목과 손가락도 굽힘 상태를 유지한다','약 3~5분 동안 유지한다','자신경 지배 영역의 감각 이상이 나타난다','정중신경 압박을 평가하는 검사이다'],
+    key:'팔꿈치굽힘검사(Elbow flexion test) = 자신경(ulnar nerve) 압박 평가. 정중신경 아님',
+    why:'①②③④ 옳음. ⑤번이 틀림 — 자신경 검사임',
+    tip:'★ 팔꿈치굽힘검사 = 자신경. 정중신경 = Phalen, Tinel(손목), 손목굴압박검사',
+    src:'근골격계 물리치료 진단학 p.95'
+  },
+  {
+    cat:'elbow', q:'가로위팔인대 파열을 검사하는 검사로 옳은 것은?',
+    ans:1, choices:['Yergason\'s test','SLR test','Speed\'s test','Empty can test','Jobe test'],
+    key:'Yergason\'s test = 이두건 건염 + 가로위팔인대(transverse humeral ligament) 파열 평가',
+    why:'②SLR=요추신경. ③Speed\'s=이두건 건염만. ④Empty can=가시위근. ⑤Jobe=Empty can 별칭',
+    tip:'Yergason에서 힘줄 튕김(pop out) = 가로위팔인대 파열. 통증만 = 건염',
+    src:'근골격계 진단학 및 검사 3판 현문사 68p'
+  },
+  {
+    cat:'elbow', q:'45세 남성, 스키 타다 통증 내원. 손을 허리 뒤로 놓고 손을 떨어지게 하면 통증. 시행해야 할 테스트는?',
+    ans:4, choices:['triceps brachii tendon reflex','infraspinatus test','drop arm test','lift-off test','posterior inferior glenohumeral ligament test'],
+    key:'손 허리뒤 자세에서 손 들어올리지 못하면 통증/약화 = Lift-off test → 어깨뼈밑근(subscapularis) 파열',
+    why:'①삼두건반사. ②가시아래근=가쪽돌림약화. ③Drop-arm=벌림유지불가. ⑤후방인대',
+    tip:'★ Lift-off test = 허리 뒤 손자세 + 들어올리기 불가 = 어깨뼈밑근 병변',
+    src:'근골격계 진단학 및 검사 3판 현문사 68p'
+  },
+  {
+    cat:'elbow', q:'크랭크검사 방법으로 옳은 것은?',
+    ans:1, choices:['팔을 160도 올리고 팔꿉관절 90도 굽힘 상태에서 위팔뼈를 압박한 상태에서 위팔뼈 안쪽돌림과 가쪽돌림','환자의 팔꿈치를 잡고 다른 손으로 어깨뼈를 잡아 환자의 팔꿈치를 압박, 팔을 80도벌림 안쪽돌림, 40도 가로모음','팔을 90도 벌림 안쪽돌림하고 다른손으로 어깨뼈를 잡음, 벌림된 팔을 수평 유지 후 팔꿈치를 압박하며 가로모음','검사자가 환자의 아래팔을 잡고 다른 한손으로 위팔뼈머리를 잡아 돌린다','위팔뼈 중간부분을 잡고, 다른손으로 환자의 팔을 90도 벌림, 위팔뼈를 오목테두리쪽으로 압박, 위팔뼈 먼쪽부위를 45도 대각선 방향으로 들어올린다'],
+    key:'Crank test = 160° 벌림 + 팔꿈치 90° + 위팔뼈 축성압박 + 안쪽/가쪽돌림',
+    why:'②③④⑤는 다른 검사 방법',
+    tip:'Crank 핵심: 160° 벌림 + 압박 + 반복회전',
+    src:'근골격계 진단학 및 검사 3판 현문사 68p'
+  },
+  {
+    cat:'elbow', q:'관절테두리의 손상을 검사하는 테스트로 옳은 것은?',
+    ans:1, choices:['anterior slide test','coracoclavicular ligament test','speed\'s test','neer test','hawkins-kennedy test'],
+    key:'Anterior Slide test(Kibler) = 관절와순(labrum/관절테두리) SLAP 병변 평가',
+    why:'②부리빗장인대=AC joint. ③Speed\'s=이두건. ④Neer=충돌. ⑤Hawkins=충돌',
+    tip:'관절와순(labrum) 검사: Clunk, Crank, O\'Brien, Anterior Slide(Kibler), Kim',
+    src:'근골격계 진단학 및 검사 3판 현문사 68p'
+  },
+  {
+    cat:'elbow', q:'벌림 시 60~120도 범위에서 통증, 선반에서 물건 꺼낼 때 통증. 시행해야 할 검사는?',
+    ans:3, choices:['요가손 검사','뒤서랍검사','깡통비우기검사','올림징후','가시아래근검사'],
+    key:'60~120° painful arc + 물건 위로 뻗기 통증 = 충돌증후군 → Empty can test(가시위근)',
+    why:'①Yergason=이두건. ②뒤서랍=어깨불안정. ④Lift-off=어깨뼈밑근. ⑤가시아래근=가쪽돌림',
+    tip:'Painful arc(60~120°) = 충돌증후군 → 가시위근 관련 검사가 우선',
+    src:'근골격계 진단학 및 검사 3판 현문사 68p'
+  },
+  {
+    cat:'elbow', q:'Cozen 검사에 대한 설명으로 옳은 것은?',
+    ans:2, choices:['손목관절 굽힘에 저항을 가하여 통증을 유발한다','가쪽위관절융기에서 압통을 확인하는 검사이다','안쪽위관절융기 병변을 평가한다','팔꿉관절 굽힘 상태에서 시행한다','자쪽신경 압박을 평가한다'],
+    key:'Cozen = 손목폄(신전) 저항 + 가쪽위관절융기 통증 확인',
+    why:'①굽힘이 아닌 폄 저항. ③안쪽=역Cozen. ④신전 상태에서 시행. ⑤가쪽위관절융기 검사',
+    tip:'Cozen = 손목 폄 저항 + 가쪽위관절융기 통증. 가장 민감한 테니스 엘보 검사',
+    src:'근골격계 물리치료 진단학 현문사 3판 93p'
+  },
+  {
+    cat:'elbow', q:'Tinel 징후(팔꿉관절)에 대한 설명으로 옳은 것은?',
+    ans:3, choices:['정중신경을 평가한다','노쪽신경 압박을 평가한다','자쪽신경 주행 부위를 두드려 이상감각을 확인한다','근력을 평가하는 검사이다','손목관절에서만 시행한다'],
+    key:'팔꿈치 Tinel = 자신경(ulnar nerve) 주행 부위 두드려 4,5번째 저림 확인',
+    why:'①②정중/노신경 아님. ④근력검사 아님. ⑤손목도 가능(정중신경)',
+    tip:'팔꿈치 Tinel = 자신경. 손목 Tinel = 정중신경. 위치로 구분',
+    src:'근골격계 물리치료 진단학 현문사 3판 94p'
+  },
+  {
+    cat:'elbow', q:'테니스 팔꿉관절 평가 검사로 옳은 것만을 모두 고른 것은? ㄱ.Cozen검사 ㄴ.Mill검사 ㄷ.마우드슬리 검사 ㄹ.골퍼 팔꿉관절 검사',
+    ans:3, choices:['ㄱ','ㄱ, ㄴ','ㄱ, ㄴ, ㄷ','ㄴ, ㄷ, ㄹ','ㄱ, ㄴ, ㄷ, ㄹ'],
+    key:'테니스 엘보(가쪽위관절융기염) = Cozen + Mill + Maudsley. 골퍼팔꿈치=안쪽(역Cozen/역Mill)',
+    why:'ㄹ 골퍼팔꿉=안쪽위관절융기염 검사. ㄱㄴㄷ만 가쪽(테니스)',
+    tip:'테니스 3대 검사: Cozen(능동), Mill(수동), Maudsley(중지). 골퍼=안쪽=역Cozen/역Mill',
+    src:'근골격계 물리치료 진단학 현문사 3판 94p'
+  },
+  {
+    cat:'elbow', q:'다음 중 검사-양성반응 연결로 틀린 것은?',
+    ans:5, choices:['Cozen 검사 – 가쪽위관절융기 통증','Mill 검사 – 가쪽위관절융기 통증','골퍼 팔꿉관절 검사 – 안쪽위관절융기 통증','Tinel 징후 – 자쪽신경 분포 부위 저림','팔꿉관절 굽힘 검사 – 통증 감소'],
+    key:'팔꿈치굽힘검사 양성 = 자신경 분포 저림/이상감각 증가(감소가 아님)',
+    why:'①②③④ 옳음. ⑤번이 틀림 — 통증 감소가 아닌 저림/이상감각 발생이 양성',
+    tip:'팔꿈치굽힘검사 = 최대굽힘 유지 시 자신경 압박 → 저림 증가=양성',
+    src:'근골격계 물리치료 진단학 현문사 3판 92~95p'
+  },
+  {
+    cat:'elbow', q:'다음 중 검사 특징에 대한 설명으로 옳은 것은?',
+    ans:4, choices:['Cozen 검사는 수동 신장 검사이다','Mill 검사는 능동 저항 검사이다','마우드슬리검사는 통증반응이 나타나지 않는 검사이다','팔꿉관절 굽힘 검사는 자쪽신경 증상을 유발할 수 있다','골퍼 팔꿉관절 검사는 가쪽위관절융기 병변 평가에 사용된다'],
+    key:'팔꿈치굽힘검사 = 자신경(자쪽신경) 증상 유발 가능',
+    why:'①Cozen=능동. ②Mill=수동. ③Maudsley=통증 나타남. ⑤골퍼팔꿈치=안쪽',
+    tip:'4번 선지가 유일하게 옳음. Cozen↔Mill 혼동 주의',
+    src:'근골격계 물리치료 진단학 현문사 3판 92~95p'
+  },
+  {
+    cat:'elbow', q:'앉은자세에서 팔꿈치 관절을 90°이상 굽힘, 아래팔 뒤침, 엄지 잡아 당기며 팔꿈치 외반력 가하는 검사는?',
+    ans:1, choices:['밀킹검사','가쪽위관절융기염검사','코젠검사','밀검사','마우드슬리검사'],
+    key:'팔꿈치 90°+ 뒤침 + 엄지 당기기 = Milking test → MCL(안쪽곁인대) 외반 스트레스',
+    why:'②Cozen별칭. ③Cozen=손목폄저항. ④Mill=수동신장. ⑤Maudsley=중지폄',
+    tip:'Milking test = 엄지를 소젖 짜듯 당김 → 외반력 발생 → MCL 평가',
+    src:'근골격계물리치료진단학 p.92'
+  },
+  {
+    cat:'elbow', q:'팔꿉관절의 물렁조직병변검사로 옳지 않은 것은?',
+    ans:4, choices:['밀킹검사','가쪽위관절융기염검사','코젠검사','팔꿈치관절 굽힘검사','밀검사'],
+    key:'팔꿈치관절 굽힘검사(Elbow flexion test) = 자신경 신경병변 검사. 물렁조직 아님',
+    why:'①②③⑤ 힘줄/인대 물렁조직. ④팔꿈치굽힘=신경학적 검사',
+    tip:'물렁조직병변 vs 신경병변 구분: Milking/Cozen/Mill=물렁조직, 팔꿈치굽힘/Tinel=신경',
+    src:'근골격계물리치료진단학 p.92~94'
+  },
+  {
+    cat:'elbow', q:'안쪽위관절융기염검사로 옳은 것은?',
+    ans:1, choices:['역코젠검사','코젠검사','밀검사','마우드슬리검사','가쪽위관절융기염검사'],
+    key:'역Cozen test = 안쪽위관절융기염(골퍼팔꿈치, Medial epicondylitis) 평가',
+    why:'②③④⑤ 모두 가쪽위관절융기 관련',
+    tip:'역Cozen/역Mill = 안쪽. Cozen/Mill/Maudsley = 가쪽. 역=반대 측 암기',
+    src:'근골격계 물리치료진단학 p.92~93'
+  },
+  {
+    cat:'elbow', q:'운동검사 중 가장 마지막에 실시하는 검사로 옳은 것은?',
+    ans:4, choices:['능동운동검사','능동보조운동검사','수동운동검사','저항운동검사'],
+    key:'운동검사 순서: 능동 → 능동보조 → 수동 → 저항(마지막)',
+    why:'저항검사는 관절에 가장 큰 스트레스 → 마지막에 실시',
+    tip:'★ 검사 순서: 능동 → 능동보조 → 수동 → 저항. 항상 안전한 것부터',
+    src:'근골격계 물리치료진단학 p.89'
+  },
+  {
+    cat:'elbow', q:'한 손은 가쪽위관절융기에 엄지를 대고 환자의 손목 굽힘, 아래팔 엎침, 팔꿈치관절 굽힘 상태에서 팔꿉관절을 천천히 편다. 이 검사는?',
+    ans:2, choices:['코젠검사','밀검사','역코젠검사','역밀검사','마우드슬리검사'],
+    key:'손목굽힘+엎침+팔꿈치 신전 → 가쪽위관절융기 통증 = Mill test',
+    why:'①Cozen=능동저항. ③역Cozen=안쪽. ④역Mill=안쪽+수동신장. ⑤Maudsley=중지폄',
+    tip:'Mill test 핵심 순서: 손목굽힘+엎침 먼저 → 팔꿈치 천천히 신전',
+    src:'근골격계 물리치료진단학 p.93'
+  },
+
+  // ===== 손목·손 (wrist) =====
+  {
+    cat:'wrist', q:'손목 통증 환자에게 엄지를 손 안에 넣고 주먹 쥔 상태에서 손목을 자뼈쪽으로 치우침. 손목 노뼈쪽에 통증 심하게 유발. 이 검사에 대한 설명으로 옳은 것은?',
+    ans:3, choices:['자신경 병변을 평가하는 검사이다','손목 굽힘근육 손상을 평가한다','엄지 힘줄윤활막염을 의심할 수 있다','손목 중심부 인대 손상을 의미한다','손가락 굽힘근육 파열을 의미한다'],
+    key:'Finkelstein test = 엄지 주먹+척측편위 → 노뼈쪽 통증 = 드퀘르방병(APL/EPB 힘줄윤활막염)',
+    why:'①자신경=Froment/Wartenberg. ②굽힘근손상 아님. ④중심부인대=다른검사. ⑤FDP파열=Sweater finger',
+    tip:'드퀘르방 = 1구획(APL+EPB) 협착성 힘줄윤활막염',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.112~113'
+  },
+  {
+    cat:'wrist', q:'티넬징후검사(Tinel\'s sign test) 양성 반응이 나타난 환자의 임상적 특징으로 가장 적절한 것은? (손목)',
+    ans:3, choices:['손목을 자쪽으로 치우침 시킬 때 노쪽 붓돌기에 통증이 발생한다','다섯째 손가락과 넷째 손가락 절반 부위에 감각 저하가 나타난다','엄지손가락 쪽 지배 영역에 전기가 오는 듯한 저림과 찌르는 듯한 통증이 발생한다','손등 부위의 감각 마비와 함께 손목 처짐 현상이 관찰된다','손바닥 전체의 압통과 함께 손목 굽힘 근력이 정상보다 강해진다'],
+    key:'손목 Tinel sign = 손목굴(carpal tunnel) 정중신경 두드리기 → 1~3번째+4번째 반 저림',
+    why:'①Finkelstein. ②4,5번째=자신경. ④손등마비+처짐=요골신경. ⑤말이 안됨',
+    tip:'정중신경 지배 감각 = 1,2,3번째+4번째 요측반. 자신경 = 4번째 척측반+5번째',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.115~116'
+  },
+  {
+    cat:'wrist', q:'팔렌검사(Phalen\'s test)와 역팔렌검사(Reverse Phalen\'s test)의 시행 방법으로 옳은 것은?',
+    ans:1, choices:['팔렌검사는 손목을 최대한 굽힌 상태를 1분 정도 유지하게 한다','역팔렌검사는 양쪽 손등을 최대한 굽혀 손목에 압박을 가한다','팔렌검사는 손바닥을 마주 보고 잡아 손목을 펴게 한다','역팔렌검사는 양쪽 손등을 맞대어 손목굴에 자세적 스트레스를 준다','두 검사 모두 손목을 중립위로 유지하며 빠르게 타진한다'],
+    key:'Phalen = 손목 최대 굴곡(손등 맞대기) 1분 유지. Reverse Phalen = 손목 최대 신전(손바닥 맞대기)',
+    why:'②역팔렌=손바닥 맞대기(신전). ③Phalen=굴곡(손등). ④역팔렌=신전(손바닥 맞대기). ⑤타진=Tinel',
+    tip:'Phalen=P(Palm↓손등맞대기=굴곡), Reverse=손바닥맞대기=신전',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.116~117'
+  },
+  {
+    cat:'wrist', q:'프로멘트징후(Froment\'s sign)가 나타났을 때, 기능 소실 근육과 보상 근육을 바르게 짝지은 것은?',
+    ans:2, choices:['짧은엄지굽힘근(자신경)의 약화 - 짧은엄지벌림근(노신경)의 보상','엄지모음근(자신경)의 약화 - 긴엄지굽힘근(정중신경)의 보상','긴엄지굽힘근(정중신경)의 약화 - 엄지모음근(자신경)의 보상','엄지맞섬근(정중신경)의 약화 - 짧은엄지벌림근(정중신경)의 보상','긴엄지벌림근(노신경)의 약화 - 엄지맞섬근(정중신경)의 보상'],
+    key:'Froment\'s sign = 자신경 마비 → 엄지모음근(adductor pollicis) 약화 → 긴엄지굽힘근(FPL, 정중신경) 보상 → 엄지 DIP 굴곡',
+    why:'①③④⑤ 근육-신경 짝이 틀림',
+    tip:'★ Froment = 자신경↓ → 엄지모음근↓ → FPL(정중신경) 보상 → 엄지DIP 굽힘',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.119'
+  },
+  {
+    cat:'wrist', q:'검사자가 환자의 양쪽 동맥을 압박, 노동맥 부위 엄지를 떼었으나 붉게 충혈되는 반응이 나타나지 않거나 매우 느리게 나타났다. 이 결과 판정은?',
+    ans:1, choices:['자동맥의 순환은 정상이나 노동맥에 폐색이 의심된다','노동맥의 순환은 정상이나 자동맥에 폐색이 의심된다','노동맥과 자동맥 모두 완벽하게 폐색된 상태이다','자신경의 마비로 인해 혈관 수축이 일어난 것이다','손바닥의 감각 소실로 인해 반사적 충혈이 일어나지 않은 것이다'],
+    key:'Allen test: 노동맥 압박 해제 후 충혈 미약 → 노동맥 순환 이상(자동맥은 압박 중이므로 이 쪽 정보로 판단)',
+    why:'압박을 해제한 쪽(노동맥)의 순환을 평가. 충혈 없음=해제한 동맥 폐색',
+    tip:'★ Allen test: 압박 해제 후 충혈 = 해제한 동맥 정상. 미충혈 = 해제한 동맥 폐색',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.122'
+  },
+  {
+    cat:'wrist', q:'엄지손가락을 주먹 안으로 말아 넣어 쥔 뒤, 손목을 척측 편위시켰을 때 가쪽 손목 통증이 나타난다. 가장 알맞은 검사는?',
+    ans:3, choices:['Phalen\'s test','Froment\'s Sign','Finkelstein test','Watson\'s test','Tinel\'s sign'],
+    key:'엄지 말아넣기+척측편위+노뼈쪽 통증 = Finkelstein test = 드퀘르방병',
+    why:'①Phalen=손목굴증후군. ②Froment=자신경. ④Watson=주상골불안정. ⑤Tinel=신경두드리기',
+    tip:'Finkelstein = 엄지 감싸기 + 자쪽 치우침 → 노측 통증',
+    src:'pdf 107페이지'
+  },
+  {
+    cat:'wrist', q:'손등을 서로 맞닿게 하고 손목을 완전히 굴곡한 채 약 1분 버티게 했을 때, 정중신경 분포 영역의 저림이나 이상감각이 나타난다. 이 검사는?',
+    ans:4, choices:['Reverse Phalen\'s test','Carpal compression test','Allen test','Phalen\'s test','Egawa Sign'],
+    key:'손등 맞대기(손목굴곡) 1분 → 정중신경 분포 저림 = Phalen\'s test',
+    why:'①Reverse Phalen=손바닥맞대기(신전). ②Carpal compression=직접압박. ③Allen=혈관. ⑤Egawa=손가락벌림',
+    tip:'Phalen = 손등↔손등 = 손목굴곡. 문제에 "손등을 맞닿게" 표현 주목',
+    src:'pdf 112페이지'
+  },
+  {
+    cat:'wrist', q:'엄지와 검지로 종이를 잡게 하고, 검사자가 빼려고 할 때 엄지가 구부러진 채로 버티거나 제대로 못 잡는다. 해당 검사는?',
+    ans:3, choices:['Boyes test','Sweater finger sign','Froment\'s Sign','Finger extension test','Piano keys sign'],
+    key:'종이 잡기 시 엄지 DIP 굴곡(구부러짐) = Froment\'s Sign = 자신경 마비(엄지모음근 약화)',
+    why:'①Boyes=FDP검사. ②Sweater finger=FDP파열(주먹 시 DIP굴곡불가). ④손가락폄검사. ⑤원위요척관절',
+    tip:'★ Froment = 종이잡기 시 엄지 DIP 굴곡 = 자신경 마비 확인',
+    src:'pdf 115페이지'
+  },
+  {
+    cat:'wrist', q:'Bunnel littler test에서 MP 관절을 굴곡시킨 뒤 PIP 관절의 완전 굴곡이 가능해졌다면 무엇을 의심할 수 있는가?',
+    ans:2, choices:['관절낭 구축','내재근 단축','깊은 손가락 굽힘근 파열','중앙 신전대 파열','손목터널증후군'],
+    key:'Bunnell-Littler: MCP 굴곡 시 PIP 굴곡 가능 = 내재근(속근육) 단축. MCP 관계없이 불가 = 관절낭 구축',
+    why:'①관절낭구축=MCP위치와 무관하게 PIP제한. ③FDP파열=Sweater. ④중앙신전대=Boutonnière. ⑤CTS=다른검사',
+    tip:'★ MCP굽힘 → 내재근 이완 → PIP 가능해짐 = 내재근 단축이 원인',
+    src:'pdf 110페이지'
+  },
+  {
+    cat:'wrist', q:'주먹을 쥐어보라고 했을 때 한 손가락의 먼쪽이 굽혀지지 않는다. 특히 4번째 손가락에서 흔히 볼 수 있는 이 검사는?',
+    ans:4, choices:['Finger long flexor test I','Retinacular test','Watson\'s test','Sweater finger sign','Bunnel littler test'],
+    key:'Sweater finger sign = 주먹 쥘 때 DIP 굴곡 불가 = FDP(깊은손가락굽힘근) 파열. 4번째 흔함',
+    why:'①FDP검사다른방법. ②Retinacular=ORL긴장. ③Watson=주상골. ⑤Bunnell-Littler=내재근',
+    tip:'★ Sweater finger = 스웨터 안에서 손가락 DIP 구부림처럼 = FDP파열. 4번째 多',
+    src:'pdf 108페이지'
+  },
+  {
+    cat:'wrist', q:'회전근개 완전 파열이 의심되는 환자에게 팔 낙하검사(drop arm test)를 실시. 검사 방법과 양성 판정기준으로 옳은 것은? (손목 섹션)',
+    ans:2, choices:['팔꿈치를 90도 굽힘한 상태에서 위팔을 가쪽돌림하지 못하면 양성이다','팔을 90도 벌림시킨 후 천천히 내리지 못하거나 유지하지 못하면 양성이다','검사자가 위팔뼈머리를 앞으로 밀며 가쪽돌림 시 덜컹 소리가 나면 양성이다','어깨를 으쓱하는 동작 시 봉우리 아래에서 통증이 유발되면 양성이다','팔을 160° 올린 상태에서 안쪽·가쪽돌림 반복 시 통증이 발생하면 양성이다'],
+    key:'Drop-arm test = 90° 벌림 후 천천히 유지/하강 불가 = 회전근개 완전파열',
+    why:'①Yergason 유사. ③Clunk. ④Neer유사. ⑤Crank',
+    tip:'Drop-arm = 내릴 때 뚝 떨어뜨림 or 유지 불가 = 회전근개 파열',
+    src:'근골격계 진단학 및 검사 3판 현문사 p.205'
+  },
+];
+
+// ===== STATE =====
+let currentFilter = 'all';
+let currentSearch = '';
+const answered = {}; // idx -> { chosen, correct }
+let scoreCorrect = 0, scoreTotal = 0;
+
+// ===== SCORE UI =====
+function updateScore() {
+  document.getElementById('score-correct').textContent = scoreCorrect;
+  document.getElementById('score-total').textContent = scoreTotal;
+  const pct = scoreTotal ? Math.round(scoreCorrect/scoreTotal*100) : 0;
+  document.getElementById('score-pct').textContent = scoreTotal ? pct+'%' : '';
+}
+
+// ===== ANSWER HANDLER =====
+function choose(idx, chosen) {
+  if (answered[idx]) return; // already answered
+  const d = DATA[idx];
+  const correct = d.ans;
+  const isCorrect = chosen === correct;
+
+  answered[idx] = { chosen, correct, isCorrect };
+  if (isCorrect) scoreCorrect++;
+  scoreTotal++;
+  updateScore();
+
+  const card = document.querySelector(`.card[data-id="${idx}"]`);
+  if (!card) return;
+
+  // reveal all choices
+  card.querySelectorAll('.choice').forEach((el, i) => {
+    el.classList.remove('choice-idle');
+    const num = i + 1;
+    if (num === correct) el.classList.add('choice-correct');
+    else if (num === chosen) el.classList.add('choice-wrong');
+    else el.classList.add('choice-dim');
+  });
+
+  // show result badge
+  const badge = card.querySelector('.result-badge');
+  badge.textContent = isCorrect ? '✅ 정답!' : `❌ 오답 — 정답 ${correct}번`;
+  badge.className = 'result-badge ' + (isCorrect ? 'badge-ok' : 'badge-no');
+
+  // show explanation
+  card.querySelector('.card-explain').style.display = 'block';
+}
+
+// ===== BUILD CARDS =====
+function buildCards() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  const cats = ['shoulder','elbow','wrist'];
+  const catInfo = {
+    shoulder: { label: '🦴 어깨 (Shoulder)', color: 'var(--shoulder)' },
+    elbow:    { label: '💪 팔꿈치 (Elbow)',   color: 'var(--elbow)' },
+    wrist:    { label: '✋ 손목·손 (Wrist/Hand)', color: 'var(--wrist)' }
+  };
+
+  const nums = { shoulder:0, elbow:0, wrist:0 };
+  DATA.forEach(d => nums[d.cat]++);
+  document.getElementById('cnt-all').textContent = DATA.length;
+  document.getElementById('cnt-s').textContent = nums.shoulder;
+  document.getElementById('cnt-e').textContent = nums.elbow;
+  document.getElementById('cnt-w').textContent = nums.wrist;
+
+  cats.forEach(cat => {
+    if (currentFilter !== 'all' && currentFilter !== cat) return;
+
+    let n = 0;
+    const items = [];
+    DATA.forEach((d, idx) => {
+      if (d.cat !== cat) return;
+      n++;
+      const searchMatch = !currentSearch || (d.q + d.choices.join('') + d.key + d.tip).toLowerCase().includes(currentSearch.toLowerCase());
+      if (searchMatch) items.push({ d, idx, n });
+    });
+
+    if (items.length === 0) return;
+
+    const sec = document.createElement('div');
+    sec.className = 'section-label';
+    sec.innerHTML = `<span class="section-dot" style="background:${catInfo[cat].color}"></span>
+      <span class="section-label-text" style="color:${catInfo[cat].color}">${catInfo[cat].label}</span>
+      <span class="section-count">${items.length}문항</span>`;
+    main.appendChild(sec);
+
+    items.forEach(({ d, idx, n: catN }) => {
+      const prev = answered[idx];
+
+      const choicesHtml = d.choices.map((c, i) => {
+        const num = i + 1;
+        let cls = 'choice choice-idle';
+        if (prev) {
+          if (num === prev.correct) cls = 'choice choice-correct';
+          else if (num === prev.chosen) cls = 'choice choice-wrong';
+          else cls = 'choice choice-dim';
+        }
+        const onclick = prev ? '' : `onclick="choose(${idx},${num})"`;
+        return `<div class="${cls}" ${onclick}>
+          <span class="choice-num">${num}</span>
+          <span>${c}</span>
+        </div>`;
+      }).join('');
+
+      let badgeHtml = '<span class="result-badge"></span>';
+      if (prev) {
+        const txt = prev.isCorrect ? '✅ 정답!' : `❌ 오답 — 정답 ${prev.correct}번`;
+        const cls = prev.isCorrect ? 'badge-ok' : 'badge-no';
+        badgeHtml = `<span class="result-badge ${cls}">${txt}</span>`;
+      }
+
+      const expDisplay = prev ? 'block' : 'none';
+
+      const card = document.createElement('div');
+      card.className = `card ${cat}`;
+      card.dataset.id = idx;
+      card.innerHTML = `
+        <div class="card-header">
+          <span class="q-num">Q${catN}</span>
+          <span class="q-text">${d.q}</span>
+        </div>
+        <div class="card-choices">${choicesHtml}</div>
+        ${badgeHtml}
+        <div class="card-explain" style="display:${expDisplay}">
+          <div class="explain-box">
+            <div class="explain-row"><span class="explain-tag tag-key">핵심</span><span>${d.key}</span></div>
+            <div class="explain-row"><span class="explain-tag tag-why">오답</span><span>${d.why}</span></div>
+            <div class="explain-row"><span class="explain-tag tag-tip">TIP</span><span>${d.tip}</span></div>
+          </div>
+          <div class="source">📚 ${d.src}</div>
+        </div>
+      `;
+      main.appendChild(card);
+    });
+  });
+
+  if (main.querySelectorAll('.card').length === 0)
+    main.innerHTML = '<div class="no-result">🔍 검색 결과가 없습니다.</div>';
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildCards();
+}
+
+function doSearch(v) {
+  currentSearch = v;
+  buildCards();
+}
+
+function resetAll() {
+  if (!confirm('모든 풀이 기록을 초기화할까요?')) return;
+  Object.keys(answered).forEach(k => delete answered[k]);
+  scoreCorrect = 0; scoreTotal = 0;
+  updateScore();
+  buildCards();
+}
+
+buildCards();
+updateScore();
+</script>
+</body>
+</html>
