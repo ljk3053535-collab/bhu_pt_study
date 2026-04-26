@@ -3,1454 +3,1261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 8 · 손 (Hand) — 중간고사 노트</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Chapter 8 · 손(Hand) — 코르셋 노트</title>
 <style>
-  :root {
-    --bg: #0d0f14;
-    --surface: #13161e;
-    --surface2: #1a1e2a;
-    --border: #252a38;
-    --accent: #6c8fff;
-    --accent2: #ff6b9d;
-    --accent3: #00e5a0;
-    --accent4: #ffb347;
-    --text: #e8eaf2;
-    --text-dim: #8b90a8;
-    --text-bright: #ffffff;
-    --red: #ff4f6a;
-    --purple: #b06bff;
-    --teal: #00c9c9;
-  }
+:root {
+  --bg: #EEF4FF;
+  --surface: #FFFFFF;
+  --surface2: #F0F5FF;
+  --border: #D0DEFF;
+  --accent: #1E3A5F;
+  --accent2: #2E5CA8;
+  --accent3: #3B82F6;
+  --accent-light: #DBEAFE;
+  --green: #059669;
+  --green-light: #D1FAE5;
+  --red: #DC2626;
+  --red-light: #FEE2E2;
+  --yellow: #D97706;
+  --yellow-light: #FEF3C7;
+  --purple: #7C3AED;
+  --purple-light: #EDE9FE;
+  --text: #1E293B;
+  --text-dim: #64748B;
+  --text-bright: #0F172A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 14px;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #1E3A5F 0%, #2E5CA8 60%, #3B82F6 100%);
+  padding: 44px 40px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+.hero h1 span { color: #93C5FD; }
+.hero-sub { color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 8px; }
 
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    font-size: 14px;
-  }
+/* TAB NAV */
+.tab-nav {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.08);
+}
+.tab-btn {
+  flex: 1;
+  padding: 14px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-light); }
+.tab-btn:hover:not(.active) { color: var(--accent2); background: var(--surface2); }
 
-  /* ── HEADER ── */
-  .hero {
-    position: relative;
-    padding: 60px 40px 50px;
-    background: linear-gradient(135deg, #0d0f14 0%, #131929 50%, #0d1520 100%);
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -80px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(108,143,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: 20%;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(0,229,160,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent3);
-    border: 1px solid rgba(0,229,160,0.3);
-    padding: 3px 10px;
-    border-radius: 3px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .hero h1 {
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 900;
-    color: var(--text-bright);
-    letter-spacing: -1px;
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-  .hero h1 span { color: var(--accent); }
-  .hero-sub {
-    color: var(--text-dim);
-    font-size: 14px;
-    margin-top: 12px;
-  }
+/* TAB CONTENT */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 
-  /* ── NAVIGATION ── */
-  .toc {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 40px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .toc::-webkit-scrollbar { display: none; }
-  .toc a {
-    display: block;
-    padding: 14px 16px;
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-  }
-  .toc a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+/* CONTAINER */
+.container { max-width: 1000px; margin: 0 auto; padding: 32px 24px 80px; }
 
-  /* ── MAIN LAYOUT ── */
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 40px 80px;
-  }
+/* SECTION */
+.section { margin-bottom: 40px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent2);
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+.section-title { font-size: 18px; font-weight: 800; color: var(--accent); }
 
-  /* ── SECTION ── */
-  .section {
-    margin-bottom: 60px;
-    scroll-margin-top: 60px;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 24px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    background: rgba(108,143,255,0.1);
-    border: 1px solid rgba(108,143,255,0.3);
-    padding: 3px 8px;
-    border-radius: 3px;
-    min-width: 36px;
-    text-align: center;
-  }
-  .section-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-bright);
-    letter-spacing: -0.3px;
-  }
+/* SUBSECTION */
+.sub-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent2);
+  margin: 18px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sub-title::before {
+  content: '';
+  display: block;
+  width: 3px; height: 13px;
+  background: var(--accent3);
+  border-radius: 2px;
+}
 
-  /* ── CARDS GRID ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  @media(max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+@media(max-width:700px) { .grid-2,.grid-3 { grid-template-columns: 1fr; } }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: rgba(108,143,255,0.4); }
-  .card-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    font-family: 'JetBrains Mono', monospace;
-  }
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(30,58,95,0.1); }
+.card-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+  font-family: monospace;
+}
 
-  /* ── TABLES ── */
-  .tbl-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; }
-  thead tr { background: var(--surface2); }
-  th {
-    padding: 10px 14px;
-    text-align: left;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  td {
-    padding: 9px 14px;
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-    vertical-align: top;
-  }
-  tr:hover td { background: rgba(255,255,255,0.02); }
+/* TABLE */
+.tbl-wrap { overflow-x: auto; margin: 12px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: linear-gradient(90deg, var(--accent-light), var(--surface2)); }
+th {
+  padding: 9px 13px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+td {
+  padding: 8px 13px;
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:hover td { background: var(--surface2); }
 
-  /* ── HIGHLIGHT BOXES ── */
-  .alert {
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 13px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-  .alert-warn { background: rgba(255,180,71,0.08); border: 1px solid rgba(255,180,71,0.3); }
-  .alert-warn .alert-icon { color: var(--accent4); }
-  .alert-info { background: rgba(108,143,255,0.08); border: 1px solid rgba(108,143,255,0.3); }
-  .alert-info .alert-icon { color: var(--accent); }
-  .alert-danger { background: rgba(255,79,106,0.08); border: 1px solid rgba(255,79,106,0.3); }
-  .alert-danger .alert-icon { color: var(--red); }
-  .alert-success { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.3); }
-  .alert-success .alert-icon { color: var(--accent3); }
+/* ALERT */
+.alert {
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 13px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.alert-icon { font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+.alert-warn { background: var(--yellow-light); border: 1px solid #FCD34D; }
+.alert-info { background: var(--accent-light); border: 1px solid #93C5FD; }
+.alert-danger { background: var(--red-light); border: 1px solid #FCA5A5; }
+.alert-success { background: var(--green-light); border: 1px solid #6EE7B7; }
+.alert-purple { background: var(--purple-light); border: 1px solid #C4B5FD; }
 
-  /* ── CODE BLOCKS (flow diagrams) ── */
-  .flow {
-    background: #0a0c12;
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 6px;
-    padding: 16px 20px;
-    margin: 16px 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    line-height: 1.9;
-    color: var(--text);
-    white-space: pre-wrap;
-  }
-  .flow .c-accent { color: var(--accent); }
-  .flow .c-green { color: var(--accent3); }
-  .flow .c-red { color: var(--red); }
-  .flow .c-yellow { color: var(--accent4); }
-  .flow .c-purple { color: var(--purple); }
+/* FLOW BOX */
+.flow {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent3);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 12px 0;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--text);
+  white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
+}
+.fc-blue { color: var(--accent2); font-weight: 700; }
+.fc-green { color: var(--green); font-weight: 700; }
+.fc-red { color: var(--red); font-weight: 700; }
+.fc-yellow { color: var(--yellow); font-weight: 700; }
+.fc-purple { color: var(--purple); font-weight: 700; }
 
-  /* ── BADGE TAGS ── */
-  .badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-family: 'JetBrains Mono', monospace;
-    vertical-align: middle;
-    margin-left: 4px;
-  }
-  .badge-star { background: rgba(255,180,71,0.2); color: var(--accent4); }
-  .badge-clinic { background: rgba(255,79,106,0.2); color: var(--red); }
-  .badge-nerve { background: rgba(176,107,255,0.2); color: var(--purple); }
+/* ITEM LIST */
+.item-list { list-style: none; }
+.item-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(30,58,95,0.06);
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+.item-list li:last-child { border-bottom: none; }
+.item-list li::before { content: '▸'; color: var(--accent3); font-size: 10px; flex-shrink: 0; margin-top: 3px; }
 
-  /* ── LIST ITEMS ── */
-  .item-list { list-style: none; }
-  .item-list li {
-    padding: 7px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
-    font-size: 13px;
-  }
-  .item-list li:last-child { border-bottom: none; }
-  .item-list li::before {
-    content: '▸';
-    color: var(--accent);
-    font-size: 10px;
-    flex-shrink: 0;
-  }
+/* NERVE ROW */
+.nerve-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.nerve-radial { background: var(--yellow-light); border: 1px solid #FCD34D; }
+.nerve-median { background: var(--green-light); border: 1px solid #6EE7B7; }
+.nerve-ulnar { background: var(--purple-light); border: 1px solid #C4B5FD; }
+.nerve-label { font-size: 13px; font-weight: 800; display: flex; flex-direction: column; gap: 2px; }
+.nerve-radial .nerve-label { color: var(--yellow); }
+.nerve-median .nerve-label { color: var(--green); }
+.nerve-ulnar .nerve-label { color: var(--purple); }
+.nerve-content { font-size: 12px; line-height: 1.6; }
+@media(max-width:700px) { .nerve-row { grid-template-columns: 1fr; } }
 
-  /* ── SUBSECTION ── */
-  .subsection {
-    margin: 24px 0 16px;
-  }
-  .subsection-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--accent3);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .subsection-title::before {
-    content: '';
-    display: block;
-    width: 3px;
-    height: 14px;
-    background: var(--accent3);
-    border-radius: 2px;
-  }
+/* DEFORM CARD */
+.deform-card { border-radius: 10px; padding: 18px; border: 1px solid; }
+.deform-swan { background: #F0FDF4; border-color: #6EE7B7; }
+.deform-bout { background: #FFF1F2; border-color: #FCA5A5; }
+.deform-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+.deform-swan .deform-title { color: var(--green); }
+.deform-bout .deform-title { color: var(--red); }
+.deform-posture { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; font-weight: 700; font-size: 12px; }
+.joint-ext { background: var(--green); color: #fff; padding: 2px 7px; border-radius: 4px; }
+.joint-flex { background: var(--red); color: #fff; padding: 2px 7px; border-radius: 4px; }
+.vs-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: start; margin: 14px 0; }
+.vs-divider { display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--text-dim); padding-top: 20px; }
+@media(max-width:600px) { .vs-grid { grid-template-columns: 1fr; } .vs-divider { display: none; } }
 
-  /* ── COMPARISON ── */
-  .vs-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; margin: 16px 0; }
-  .vs-divider { display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: var(--text-dim); padding-top: 20px; }
-  @media(max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } .vs-divider { display: none; } }
+/* GRIP CARD */
+.grip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  transition: all 0.2s;
+}
+.grip-card:hover { border-color: var(--accent3); box-shadow: 0 2px 10px rgba(59,130,246,0.15); }
+.grip-num { font-size: 22px; font-weight: 900; color: var(--accent-light); color: #BFDBFE; line-height: 1; margin-bottom: 6px; }
+.grip-name { font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+.grip-en { font-size: 11px; color: var(--text-dim); margin-bottom: 8px; font-style: italic; }
+.grip-desc { font-size: 12px; line-height: 1.6; }
 
-  /* ── NERVE MAP ── */
-  .nerve-row {
-    display: grid;
-    grid-template-columns: 140px 1fr 1fr;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    align-items: start;
-  }
-  .nerve-radial { background: rgba(255,180,71,0.07); border: 1px solid rgba(255,180,71,0.2); }
-  .nerve-median { background: rgba(0,229,160,0.07); border: 1px solid rgba(0,229,160,0.2); }
-  .nerve-ulnar { background: rgba(176,107,255,0.07); border: 1px solid rgba(176,107,255,0.2); }
-  .nerve-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .nerve-radial .nerve-label { color: var(--accent4); }
-  .nerve-median .nerve-label { color: var(--accent3); }
-  .nerve-ulnar .nerve-label { color: var(--purple); }
-  .nerve-col-title { font-size: 10px; color: var(--text-dim); font-weight: 400; }
-  .nerve-content { font-size: 12px; line-height: 1.6; }
+/* BADGE */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.badge-star { background: var(--yellow-light); color: var(--yellow); }
+.badge-clinic { background: var(--red-light); color: var(--red); }
+.badge-nerve { background: var(--purple-light); color: var(--purple); }
 
-  /* ── DEFORMITY CARDS ── */
-  .deform-card {
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid;
-  }
-  .deform-swan { background: rgba(0,201,201,0.06); border-color: rgba(0,201,201,0.3); }
-  .deform-bout { background: rgba(255,107,157,0.06); border-color: rgba(255,107,157,0.3); }
-  .deform-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .deform-swan .deform-title { color: var(--teal); }
-  .deform-bout .deform-title { color: var(--accent2); }
-  .deform-posture {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 12px;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  .joint-pip-ext { background: var(--accent3); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
-  .joint-dip-flex { background: var(--red); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
-  .joint-pip-flex { background: var(--accent2); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
-  .joint-dip-ext { background: var(--accent4); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+/* KEYWORD INDEX */
+.kw-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+.kw-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  cursor: default;
+  transition: transform 0.15s;
+}
+.kw-tag:hover { transform: scale(1.05); }
+.kw-blue { background: var(--accent-light); color: var(--accent2); border: 1px solid #93C5FD; }
+.kw-green { background: var(--green-light); color: var(--green); border: 1px solid #6EE7B7; }
+.kw-red { background: var(--red-light); color: var(--red); border: 1px solid #FCA5A5; }
+.kw-yellow { background: var(--yellow-light); color: var(--yellow); border: 1px solid #FCD34D; }
+.kw-purple { background: var(--purple-light); color: var(--purple); border: 1px solid #C4B5FD; }
 
-  /* ── GRIP GRID ── */
-  .grip-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    transition: all 0.2s;
-  }
-  .grip-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .grip-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 24px;
-    font-weight: 700;
-    color: rgba(108,143,255,0.2);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .grip-name { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
-  .grip-en { font-size: 11px; color: var(--text-dim); margin-bottom: 10px; font-style: italic; }
-  .grip-desc { font-size: 12px; line-height: 1.6; color: var(--text); }
+/* COLLAPSIBLE */
+.collapse-btn {
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+  margin-bottom: 4px;
+}
+.collapse-btn:hover { background: var(--accent-light); }
+.collapse-btn .arrow { transition: transform 0.2s; font-size: 11px; }
+.collapse-btn.open .arrow { transform: rotate(180deg); }
+.collapse-body {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 16px;
+  margin-bottom: 6px;
+}
+.collapse-body.open { display: block; }
 
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-dim);
-    font-size: 12px;
-    border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-  }
+/* ───── QUIZ STYLES ───── */
+#quiz-panel { background: var(--bg); }
+.quiz-header {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  padding: 20px 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.quiz-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.quiz-stat { font-size: 12px; opacity: 0.85; }
+.quiz-stat span { font-weight: 800; font-size: 16px; display: block; opacity: 1; }
+.progress-wrap { margin: 12px 0; }
+.progress-label { font-size: 11px; color: #fff; opacity: 0.8; margin-bottom: 4px; }
+.progress-bar { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: #93C5FD; border-radius: 4px; transition: width 0.4s; }
 
-  /* ── DIVIDER ── */
-  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.06);
+}
+.q-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.q-num {
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--accent-light);
+  color: var(--accent2);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.q-cat {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.q-text { font-size: 15px; font-weight: 700; color: var(--text-bright); margin-bottom: 16px; line-height: 1.5; }
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.q-opt {
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+  background: var(--surface2);
+  text-align: left;
+  width: 100%;
+}
+.q-opt:hover:not(:disabled) { border-color: var(--accent3); background: var(--accent-light); }
+.q-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 700; }
+.q-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.q-opt.reveal-correct { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 700; }
+.q-opt:disabled { cursor: default; }
+.q-explain {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--accent-light);
+  border-left: 4px solid var(--accent3);
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  display: none;
+}
+.q-explain.show { display: block; }
+.q-explain strong { color: var(--accent); }
 
-  strong { color: var(--text-bright); font-weight: 700; }
-  em { color: var(--accent4); font-style: normal; }
+.quiz-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-secondary { background: var(--surface); color: var(--accent); border: 1.5px solid var(--border); }
+.btn-secondary:hover { background: var(--accent-light); }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-danger:hover { background: #B91C1C; }
+
+.result-banner {
+  text-align: center;
+  padding: 30px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-top: 20px;
+}
+.result-score { font-size: 48px; font-weight: 900; color: var(--accent); }
+.result-label { font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+
+/* REVIEW MODE */
+.review-badge {
+  display: inline-block;
+  background: var(--red-light);
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-dim);
+  font-size: 11px;
+  border-top: 1px solid var(--border);
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+strong { color: var(--text-bright); font-weight: 700; }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-tag">Chapter 8 · Hand</div>
   <h1>손 <span>(Hand)</span></h1>
-  <p class="hero-sub">근육뼈대계통의 기능해부학 | 중간고사 완전 정리 노트 · pp. 277–327</p>
+  <p class="hero-sub">근육뼈대계통의 기능해부학 | pp. 277–327 · 중간고사 완전 정리</p>
 </div>
 
-<!-- TOC -->
-<nav class="toc">
-  <a href="#s1">01 골학</a>
-  <a href="#s2">02 관절학</a>
-  <a href="#s3">03 활·운동형학</a>
-  <a href="#s4">04 CMC관절</a>
-  <a href="#s5">05 MCP관절</a>
-  <a href="#s6">06 IP관절</a>
-  <a href="#s7">07 신경지배</a>
-  <a href="#s8">08 근육분류</a>
-  <a href="#s9">09 굽힘근</a>
-  <a href="#s10">10 펴근육</a>
-  <a href="#s11">11 내재성근육</a>
-  <a href="#s12">12 외재·내재 상호작용</a>
-  <a href="#s13">13 잡기</a>
-  <a href="#s14">14 RA 변형</a>
-  <a href="#s15">15 임상</a>
-</nav>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview')">📋 분류/개요</button>
+  <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+</div>
 
+<!-- ════════════════════════════════════════
+     TAB 1 : 분류/개요
+════════════════════════════════════════ -->
+<div id="overview-panel" class="tab-panel active">
 <div class="container">
 
-<!-- ══════════════════════════════════════════════════════
-     SECTION 1: 골학
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s1">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2 class="section-title">골학 (Osteology)</h2>
-  </div>
-
-  <div class="grid-2">
-    <div>
-      <div class="subsection-title">손허리뼈 (Metacarpal) 골학적 특징</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>구조</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td><strong>손허리뼈몸통</strong></td><td>긴 몸통(shaft), 바닥쪽 세로로 약간 오목</td></tr>
-            <tr><td><strong>손허리뼈바닥</strong></td><td>손목뼈와 관절</td></tr>
-            <tr><td><strong>손허리뼈머리</strong></td><td>크고 볼록, 주먹 쥘 때 Knuckles</td></tr>
-            <tr><td><strong>손허리뼈목</strong></td><td>골절 흔한 부위 (5번째 특히)</td></tr>
-            <tr><td><strong>뒤결절</strong></td><td>MCP관절 곁인대 부착부위</td></tr>
-          </tbody>
-        </table>
+  <!-- 목차 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">INDEX</span>
+      <h2 class="section-title">챕터 목차</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="padding:14px">
+        <div class="card-title">골학 & 관절학</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>01 골학 — 손허리·손가락뼈</li>
+          <li>02 관절학 & 운동용어</li>
+          <li>03 손의 활 & 기능적 위치</li>
+          <li>04 CMC관절 ★★★</li>
+          <li>05 MCP관절 ★★★</li>
+          <li>06 IP관절</li>
+        </ul>
       </div>
-      <div class="alert alert-warn">
-        <span class="alert-icon">⚠️</span>
-        <span><strong>엄지 손허리뼈:</strong> 다른 손가락과 달리 <strong>약 90도 안쪽으로 돌림</strong> → 바닥쪽면이 손 중심선을 향함</span>
+      <div class="card" style="padding:14px">
+        <div class="card-title">신경 & 근육</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>07 신경지배 ★★★</li>
+          <li>08 근육 분류</li>
+          <li>09 외재성 굽힘근 & 도르래 ★★★</li>
+          <li>10 외재성 펴근육 & 기전 ★★★</li>
+          <li>11 내재성 근육 ★★★</li>
+          <li>12 외재·내재 상호작용 ★★★</li>
+        </ul>
       </div>
-    </div>
-    <div>
-      <div class="subsection-title">손가락뼈 (Phalanges) 골학적 특징</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>구조</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td><strong>총 개수</strong></td><td>14개 (엄지 2개, 나머지 각 3개)</td></tr>
-            <tr><td><strong>종류</strong></td><td>몸쪽·중간·먼쪽 손가락뼈</td></tr>
-            <tr><td><strong>거친면(tuberosity)</strong></td><td>먼쪽손가락뼈에만 존재 → 속질(pulp) 고정</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="subsection-title" style="margin-top:20px">주요 뼈 명칭</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>한국어</th><th>영어</th></tr></thead>
-          <tbody>
-            <tr><td>손목뼈</td><td>Carpals</td></tr>
-            <tr><td>손허리뼈</td><td>Metacarpal</td></tr>
-            <tr><td>몸쪽손가락뼈</td><td>Proximal phalanx</td></tr>
-            <tr><td>중간손가락뼈</td><td>Middle phalanx</td></tr>
-            <tr><td>먼쪽손가락뼈</td><td>Distal phalanx</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 2: 관절학
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s2">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2 class="section-title">관절학 (Arthrology) — 관절 계층 & 운동 용어</h2>
-  </div>
-
-  <div class="flow">
-<span class="c-accent">손 각 "손가락선"에 있는 공통 관절</span>
-CMC (손목손허리관절)
- ↓
-MCP (손허리손가락관절)
- ↓
-IP 관절
- ├─ 엄지: <span class="c-yellow">IP 1개만</span>
- └─ 나머지: <span class="c-green">PIP</span> + <span class="c-green">DIP</span>
-  </div>
-
-  <div class="grid-2" style="margin-top:20px">
-    <div>
-      <div class="subsection-title">손가락 운동 용어 (2~5지)</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>운동</th><th>면</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td>굽힘</td><td>시상면</td><td>손가락 구부림</td></tr>
-            <tr><td>폄</td><td>시상면</td><td>손가락 펴기</td></tr>
-            <tr><td>벌림</td><td>이마면</td><td>가운뎃손가락 기준 멀어짐</td></tr>
-            <tr><td>모음</td><td>이마면</td><td>가운뎃손가락 기준 모임</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div>
-      <div class="subsection-title">엄지 특수 운동 용어 ★</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>운동</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td>굽힘</td><td>바닥쪽면이 이마면 내에서 손바닥 가로지름</td></tr>
-            <tr><td>폄</td><td>해부학적 위치로 되돌아옴</td></tr>
-            <tr><td>벌림</td><td>이시상면 내에서 손바닥으로부터 멀어짐</td></tr>
-            <tr><td>모음</td><td>손바닥 쪽으로 되돌아옴</td></tr>
-            <tr><td><strong>맞섬(opposition)</strong></td><td>엄지가 다른 손가락 끝부분과 접촉</td></tr>
-            <tr><td><strong>재배치(reposition)</strong></td><td>맞섬 후 해부학적 위치로 복귀</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection-title" style="margin-top:20px">손바닥 주름 — 임상 랜드마크</div>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>주름</th><th>위치/임상 의미</th></tr></thead>
-      <tbody>
-        <tr><td>몸쪽손목주름</td><td>가로손목인대의 몸쪽 테두리 위치 표시</td></tr>
-        <tr><td>먼쪽손목주름</td><td>가로손목인대 몸쪽 테두리</td></tr>
-        <tr><td>엄지두덩주름</td><td>엄지가 손바닥 가로지를 때 형성</td></tr>
-        <tr><td>몸쪽손가락주름</td><td>MCP관절의 실제 관절선 먼쪽에 위치</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 3: 손의 활
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s3">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <h2 class="section-title">손의 활 (Arches) & 운동형학</h2>
-  </div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title">몸쪽가로활</div>
-      <p style="font-size:12px">Proximal transverse arch</p>
-      <hr style="margin:10px 0">
-      <ul class="item-list">
-        <li>손목뼈 먼쪽줄에 의해 형성</li>
-        <li>손굴(carpal tunnel) 형성</li>
-        <li><strong>쐐기돌 = 알머리뼈(capitate)</strong></li>
-        <li>단단하고 고정적</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title">먼쪽가로활</div>
-      <p style="font-size:12px">Distal transverse arch</p>
-      <hr style="margin:10px 0">
-      <ul class="item-list">
-        <li>MCP관절 사이로 지나감</li>
-        <li>양 옆면은 <strong>가동성 있음</strong></li>
-        <li>손 접기 동작 가능</li>
-        <li>쐐기돌 = 둘째·셋째 MCP</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title">세로활</div>
-      <p style="font-size:12px">Longitudinal arch</p>
-      <hr style="margin:10px 0">
-      <ul class="item-list">
-        <li>둘째·셋째 손가락선 형성</li>
-        <li>CMC관절로 손목뼈에 연결</li>
-        <li>먼쪽 끝 = 매우 가동적</li>
-        <li>세로 안정성 제공</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="alert alert-info" style="margin-top:16px">
-    <span class="alert-icon">📌</span>
-    <span>3개의 모든 활은 역학적으로 서로 연결. 쐐기돌은 <strong>둘째·셋째 MCP관절</strong>에 의해 제공되며 세로활과 먼쪽가로활 모두에 작용.</span>
-  </div>
-
-  <div class="subsection-title" style="margin-top:24px">기능적 위치 (Position of Function) ★★★</div>
-  <div class="flow">
-손목:      <span class="c-yellow">20~30° 폄</span> + 약간 자쪽치우침
-MCP:       <span class="c-yellow">35~45° 굽힘</span>
-PIP·DIP:   <span class="c-yellow">15~30° 굽힘</span>
-엄지 CMC:  <span class="c-yellow">35~45° 벌림</span>
-
-→ 손바닥을 약간 개방해서 오므린 위치
-→ 잡기 기능 최대화 / 근육 최적 길이 유지
-→ <span class="c-red">임상:</span> 뇌졸중·척수손상 환자에게 보조기 적용 시 이 위치 유지
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 4: CMC관절
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s4">
-  <div class="section-header">
-    <span class="section-num">04</span>
-    <h2 class="section-title">손목손허리관절 (CMC Joint) ★★★</h2>
-  </div>
-
-  <div class="subsection-title">CMC 관절별 가동성</div>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>CMC</th><th>관절하는 뼈</th><th>가동성</th><th>역할</th></tr></thead>
-      <tbody>
-        <tr><td><strong>2번째</strong></td><td>작은마름뼈 + 알머리뼈 + 큰마름뼈 일부</td><td>가장 적음</td><td rowspan="2" style="color:var(--accent3)">중심기둥 (central pillar) — 안정성</td></tr>
-        <tr><td><strong>3번째</strong></td><td>알머리뼈 먼쪽 관절면</td><td>가장 적음</td></tr>
-        <tr><td><strong>4번째</strong></td><td>갈고리뼈 먼쪽 + 알머리뼈 일부</td><td>약 20° 굽힘/폄, 27° 안쪽돌림</td><td rowspan="2" style="color:var(--accent4)">주변부 — 가동성 / 맞섬 보조</td></tr>
-        <tr><td><strong>5번째</strong></td><td>갈고리뼈 먼쪽 관절면만</td><td>약 44° (4번 자유로울 때)</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grid-2" style="margin-top:20px">
-    <div>
-      <div class="subsection-title">엄지 CMC관절 — 안장관절 ★★★</div>
-      <div class="card">
-        <ul class="item-list">
-          <li>큰마름뼈(trapezium) ↔ 첫째손허리뼈</li>
-          <li><strong>안장관절(saddle joint)</strong> — 각 면이 한쪽 볼록+다른 쪽 오목</li>
-          <li>가장 복잡한 CMC관절</li>
-          <li><strong>완전한 맞섬(opposition) 가능</strong></li>
-          <li>자유도 2 (굽힘·폄 + 벌림·모음)</li>
+      <div class="card" style="padding:14px">
+        <div class="card-title">기능 & 임상</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>13 잡기(Prehension) 분류 ★★★</li>
+          <li>14 RA 손 변형 ★★★</li>
+          <li>15 임상 종합</li>
         </ul>
       </div>
     </div>
-    <div>
-      <div class="subsection-title">엄지 CMC 맞섬 2단계</div>
-      <div class="flow">
-<span class="c-yellow">1단계:</span> 엄지 손허리뼈 <span class="c-green">벌림</span>
-   (큰마름뼈 관절면 → 바닥쪽 구르기 + 등쪽 미끄러짐)
+  </div>
 
-<span class="c-yellow">2단계:</span> 손허리뼈 → 손바닥 가로질러
-   새끼손가락 쪽으로 <span class="c-green">굽힘 + 안쪽돌림</span>
+  <!-- 핵심 키워드 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">KEYWORDS</span>
+      <h2 class="section-title">핵심 키워드 분류</h2>
+    </div>
 
-→ 완전 맞섬 = <span class="c-accent">CMC 닫힌위치</span>
-→ 45~60도 안쪽돌림 포함
-      </div>
+    <div class="sub-title">관절 & 구조</div>
+    <div class="kw-grid">
+      <span class="kw-tag kw-blue">CMC관절</span>
+      <span class="kw-tag kw-blue">MCP관절</span>
+      <span class="kw-tag kw-blue">PIP관절</span>
+      <span class="kw-tag kw-blue">DIP관절</span>
+      <span class="kw-tag kw-blue">안장관절</span>
+      <span class="kw-tag kw-blue">바닥판(palmar plate)</span>
+      <span class="kw-tag kw-blue">결인대(collateral lig.)</span>
+      <span class="kw-tag kw-blue">빗지지띠인대(ORL)</span>
+      <span class="kw-tag kw-blue">제지고삐인대</span>
+      <span class="kw-tag kw-blue">손의 3활(arches)</span>
+      <span class="kw-tag kw-blue">기능적 위치</span>
+    </div>
+
+    <div class="sub-title">근육 & 신경</div>
+    <div class="kw-grid">
+      <span class="kw-tag kw-green">FDS / FDP / FPL</span>
+      <span class="kw-tag kw-green">ED / EI / EDM</span>
+      <span class="kw-tag kw-green">EPL / EPB / APL</span>
+      <span class="kw-tag kw-green">엄지두덩 근육 (정중신경)</span>
+      <span class="kw-tag kw-green">새끼두덩 근육 (자신경)</span>
+      <span class="kw-tag kw-green">벌레근 (가쪽2:정중 / 안쪽2:자)</span>
+      <span class="kw-tag kw-green">뼈사이근 (자신경)</span>
+      <span class="kw-tag kw-green">엄지모음근 (자신경)</span>
+      <span class="kw-tag kw-yellow">노신경 — 외재성 펴근육</span>
+      <span class="kw-tag kw-yellow">정중신경 — 굽힘근 + 엄지두덩</span>
+      <span class="kw-tag kw-purple">자신경 — 내재성 대부분</span>
+    </div>
+
+    <div class="sub-title">기전 & 병리</div>
+    <div class="kw-grid">
+      <span class="kw-tag kw-red">갈퀴변형 (Claw)</span>
+      <span class="kw-tag kw-red">백조목변형 (Swan-neck)</span>
+      <span class="kw-tag kw-red">단추구멍변형 (Boutonnière)</span>
+      <span class="kw-tag kw-red">자쪽이동 (Ulnar drift)</span>
+      <span class="kw-tag kw-red">원숭이손 (정중신경 손상)</span>
+      <span class="kw-tag kw-red">CTS (손목굴증후군)</span>
+      <span class="kw-tag kw-red">방아쇠손가락 (A₁ 도르래)</span>
+      <span class="kw-tag kw-blue">힘줄고정작용 (Tenodesis)</span>
+      <span class="kw-tag kw-blue">내재성-플러스</span>
+      <span class="kw-tag kw-blue">외재성-플러스</span>
+      <span class="kw-tag kw-green">PAD / DAB</span>
+    </div>
+
+    <div class="sub-title">잡기 분류</div>
+    <div class="kw-grid">
+      <span class="kw-tag kw-blue">Power grip (강력한 잡기)</span>
+      <span class="kw-tag kw-green">Precision grip (정밀한 잡기)</span>
+      <span class="kw-tag kw-yellow">Key pinch (열쇠 집기)</span>
+      <span class="kw-tag kw-purple">Precision pinch (정밀한 집기)</span>
+      <span class="kw-tag kw-red">Hook grip (갈고리식 잡기)</span>
     </div>
   </div>
 
-  <div class="subsection-title">엄지 CMC 인대 (표 8.1) ★</div>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>인대</th><th>몸쪽 부착</th><th>먼쪽 부착</th><th>특징 & 팽팽해지는 때</th></tr></thead>
-      <tbody>
-        <tr><td>앞(바닥쪽)빗인대</td><td>큰마름뼈 바닥쪽결절</td><td>엄지 손허리뼈바닥 바닥쪽("부리")</td><td>가늘고 약함 / 맞섬·굽힘·벌림 시 <strong>느슨</strong></td></tr>
-        <tr><td>자쪽결인대</td><td>가로손목인대 노쪽면</td><td>엄지 손허리뼈바닥 바닥쪽-자쪽</td><td>벌림·폄 시 팽팽</td></tr>
-        <tr><td>손허리뼈사이인대</td><td>둘째손허리뼈바닥 등쪽-노쪽</td><td>엄지 손허리뼈바닥 바닥쪽-자쪽</td><td>맞섬·굽힘·벌림 시 팽팽</td></tr>
-        <tr><td><strong>노쪽결인대†</strong></td><td>큰마름뼈 노쪽면</td><td>엄지 손허리뼈바닥 등쪽</td><td><strong>두껍고 강함</strong> / 감각섬유 풍부 / 맞섬된 CMC 일차 안정자</td></tr>
-        <tr><td><strong>뒤빗인대†</strong></td><td>큰마름뼈 뒤-노쪽 모서리</td><td>엄지 손허리뼈바닥 바닥쪽-자쪽</td><td><strong>두껍고 강함</strong> / 감각섬유 풍부 / 맞섬된 CMC 일차 안정자</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="alert alert-danger">
-    <span class="alert-icon">🔴</span>
-    <span><strong>임상:</strong> CMC 골관절염(50~60대 여성 호발) → 앞빗인대·노쪽결인대 파열 → 노쪽 탈구 + <strong>혹(hump) 형성</strong>. 치료: NSAID·부목·코티코스테로이드 → 실패 시 관절성형술.</span>
-  </div>
+</div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     SECTION 5: MCP관절
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s5">
-  <div class="section-header">
-    <span class="section-num">05</span>
-    <h2 class="section-title">손허리손가락관절 (MCP Joint) ★★★</h2>
-  </div>
+<!-- ════════════════════════════════════════
+     TAB 2 : 요약
+════════════════════════════════════════ -->
+<div id="summary-panel" class="tab-panel">
+<div class="container">
 
-  <div class="grid-2">
-    <div>
-      <div class="subsection-title">일반 특징</div>
-      <ul class="item-list">
-        <li><strong>볼록한 손허리뼈머리</strong> ↔ <strong>오목한 몸쪽손가락뼈</strong></li>
-        <li>비교적 큰 달걀형 관절</li>
-        <li><strong>자유도 2</strong>: 굽힘·폄(시상면) + 벌림·모음(이마면)</li>
-        <li>손허리뼈머리 캠(cam) 형태 → 굽힘 시 결인대 팽팽</li>
-      </ul>
-      <div class="tbl-wrap" style="margin-top:12px">
-        <table>
-          <thead><tr><th>손가락</th><th>굽힘 범위</th></tr></thead>
-          <tbody>
-            <tr><td>집게손가락(2번)</td><td>약 90°</td></tr>
-            <tr><td>새끼손가락(5번)</td><td>약 110~115°</td></tr>
-            <tr><td>벌림·모음</td><td>셋째 기준 양쪽 약 20°</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div>
-      <div class="subsection-title">MCP 결합조직 구조</div>
-      <div class="flow" style="font-size:11px">
-MCP관절 안정화 구조
-├── <span class="c-accent">노쪽결인대 + 자쪽결인대</span>
-│    ├── 끈부분(cord part): 굵고 강함
-│    └── 덧부분(accessory part): 바닥판에 부착
-├── <span class="c-green">바닥판(palmar plate)</span>
-│    └── 굳고 뻣뻣 / 과다폄 제한
-│    └── 굽힘건 도르래(A₁ pulley) 역할
-├── <span class="c-yellow">섬유손가락집</span>
-│    └── 바닥판 바닥쪽(앞쪽)면에 고정
-└── <span class="c-purple">깊은가로손허리인대</span> (3개)
-     └── 2~5번째 손허리뼈 바닥판 연결
-      </div>
-    </div>
-  </div>
-
-  <div class="alert alert-warn" style="margin-top:16px">
-    <span class="alert-icon">📌</span>
-    <span><strong>MCP 닫힌위치 = 굽힘 약 60~70°</strong> (캠 형태 때문에 굽힘 시 결인대 끈부분 신장으로 일치성 최대). <strong>임상: 골절 후 부목 고정 시 MCP를 70° 굽힘 상태로 → 폄구축 방지!</strong></span>
-  </div>
-  <div class="alert alert-info">
-    <span class="alert-icon">📌</span>
-    <span>반대로 <strong>IP관절(PIP·DIP)의 닫힌위치 = 완전 폄</strong> → 고정 시 펴진 위치로 (굽힘구축 방지)</span>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 6: IP관절
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s6">
-  <div class="section-header">
-    <span class="section-num">06</span>
-    <h2 class="section-title">손가락뼈사이관절 (IP Joint)</h2>
-  </div>
-
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>항목</th><th>PIP관절</th><th>DIP관절</th></tr></thead>
-      <tbody>
-        <tr><td>위치</td><td>몸쪽손가락뼈머리 ↔ 중간손가락뼈바닥</td><td>중간손가락뼈머리 ↔ 먼쪽손가락뼈바닥</td></tr>
-        <tr><td>자유도</td><td colspan="2">1 (굽힘·폄만)</td></tr>
-        <tr><td>굽힘 범위</td><td>약 100~120°</td><td>약 70~90°</td></tr>
-        <tr><td>폄 범위</td><td>과다폄 약간 허용</td><td>중립 넘어 약 30° 허용</td></tr>
-        <tr><td>관절면 형태</td><td colspan="2">은촉이음(tongue-in-groove) — 두 개의 둥근 관절융기 ↔ 두 개의 알은 오목 관절면</td></tr>
-        <tr><td>특징 구조</td><td><strong>제지고삐인대(check-rein lig.)</strong> 있음<br><small>→ 병리조직화 시 굽힘구축 유발</small></td><td>제지고삐인대 없음</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="subsection-title" style="margin-top:20px">빗지지띠인대 (ORL) — PIP↔DIP 협응 ★</div>
-  <div class="flow">
-<span class="c-accent">빗지지띠인대(oblique retinacular ligament, ORL)</span>
-= PIP 바닥쪽 섬유손가락집 → DIP 등쪽 가쪽띠 (사선 주행)
-
-기전:
-① 내재성 근육 활성 → <span class="c-green">PIP 폄</span>
-② PIP 폄 → <span class="c-yellow">ORL 신장</span>
-③ 신장된 ORL → 수동력 DIP쪽 전달
-④ <span class="c-green">DIP 수동 폄</span> 유발
-
-→ "연결인대(link ligament)" = PIP·DIP 폄이 협응되는 기전
-
-<span class="c-red">임상:</span> ORL 타이트 → PIP 굽힘구축 + DIP 과다굽힘
-→ <strong>뒤퓨트랑구축(Dupuytren's contracture)</strong> 연관
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 7: 신경지배
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s7">
-  <div class="section-header">
-    <span class="section-num">07</span>
-    <h2 class="section-title">손의 신경지배 ★★★</h2>
-  </div>
-
-  <div class="nerve-row nerve-radial">
-    <div class="nerve-label">
-      노신경
-      <span style="font-size:10px; color:var(--text-dim)">Radial nerve</span>
-    </div>
-    <div class="nerve-content">
-      <div class="nerve-col-title" style="margin-bottom:4px">▸ 운동지배</div>
-      외재성 펴근육 전체: 손가락폄근, 새끼폄근, 집게폄근, 긴엄지폄근, 짧은엄지폄근, 긴엄지벌림근
-    </div>
-    <div class="nerve-content">
-      <div class="nerve-col-title" style="margin-bottom:4px">▸ 감각지배</div>
-      손·손목 등쪽면, 물갈퀴공간 등쪽, 엄지 CMC 등쪽 관절주머니
-    </div>
-  </div>
-
-  <div class="nerve-row nerve-median" style="margin-top:8px">
-    <div class="nerve-label">
-      정중신경
-      <span style="font-size:10px; color:var(--text-dim)">Median nerve</span>
-    </div>
-    <div class="nerve-content">
-      <div class="nerve-col-title" style="margin-bottom:4px">▸ 운동지배</div>
-      알은손가락굽힘근(FDS), 깊은손가락굽힘근 <strong>가쪽 절반</strong>(FDP), 긴엄지굽힘근(FPL)<br>
-      내재성: <strong>엄지두덩 3근육</strong> + 가쪽 2개 벌레근
-    </div>
-    <div class="nerve-content">
-      <div class="nerve-col-title" style="margin-bottom:4px">▸ 감각지배</div>
-      가쪽 손가락 3개(엄지~셋째) + 넷째 손가락 가쪽 1/2 바닥쪽면
-      <div style="margin-top:6px; color:var(--red); font-size:11px">⚠ 손상 → 엄지두덩 위축, 맞섬 불가 (원숭이손)</div>
-    </div>
-  </div>
-
-  <div class="nerve-row nerve-ulnar" style="margin-top:8px">
-    <div class="nerve-label">
-      자신경
-      <span style="font-size:10px; color:var(--text-dim)">Ulnar nerve</span>
-    </div>
-    <div class="nerve-content">
-      <div class="nerve-col-title" style="margin-bottom:4px">▸ 운동지배</div>
-      깊은손가락굽힘근 <strong>안쪽 절반</strong>, 내재성: 새끼두덩 근육 전체, 안쪽 2개 벌레근, <strong>모든 뼈사이근</strong>, 엄지모음근
-    </div>
-    <div class="nerve-content">
-      <div class="nerve-col-title" style="margin-bottom:4px">▸ 감각지배</div>
-      다섯째 손가락 전체 + 넷째 손가락 자쪽 1/2 자쪽모서리
-      <div style="margin-top:6px; color:var(--red); font-size:11px">⚠ 손상 → 안쪽 내재성 마비 → 갈퀴(claw) 변형</div>
-    </div>
-  </div>
-
-  <div class="alert alert-info" style="margin-top:16px">
-    <span class="alert-icon">📌</span>
-    <span><strong>척수신경뿌리:</strong> C⁶ = 엄지·집게 / C⁷ = 가운뎃손가락 / C⁸ = 반지·새끼손가락</span>
-  </div>
-
-  <div class="alert alert-warn">
-    <span class="alert-icon">🔬</span>
-    <span><strong>내재성 근육 신경지배 특징:</strong> 축삭 1개 → 100개의 근섬유 신경지배 (cf. 장딴지근: 1개 → 2,000개) → 정밀한 미세조절 가능</span>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 8: 근육 분류
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s8">
-  <div class="section-header">
-    <span class="section-num">08</span>
-    <h2 class="section-title">손의 근육 분류 (표 8.3)</h2>
-  </div>
-
-  <div class="grid-2">
-    <div>
-      <div class="subsection-title">외재성 근육 (Extrinsic)</div>
-      <div class="card">
-        <div style="margin-bottom:12px">
-          <div class="card-title">손가락 굽힘근</div>
-          <ul class="item-list">
-            <li>알은손가락굽힘근 (FDS)</li>
-            <li>깊은손가락굽힘근 (FDP)</li>
-            <li>긴엄지굽힘근 (FPL)</li>
-          </ul>
-        </div>
-        <div style="margin-bottom:12px">
-          <div class="card-title">손가락 펴근</div>
-          <ul class="item-list">
-            <li>손가락폄근 (ED)</li>
-            <li>집게폄근 (EI)</li>
-            <li>새끼폄근 (EDM)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="card-title">엄지 펴근</div>
-          <ul class="item-list">
-            <li>긴엄지폄근 (EPL)</li>
-            <li>짧은엄지폄근 (EPB)</li>
-            <li>긴엄지벌림근 (APL)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="subsection-title">내재성 근육 (Intrinsic)</div>
-      <div class="card">
-        <div style="margin-bottom:12px">
-          <div class="card-title">엄지두덩 (Thenar)</div>
-          <ul class="item-list">
-            <li>짧은엄지벌림근 (APB) — 정중신경</li>
-            <li>짧은엄지굽힘근 (FPB) — 정중신경</li>
-            <li>엄지맞섬근 (OP) — 정중신경</li>
-          </ul>
-        </div>
-        <div style="margin-bottom:12px">
-          <div class="card-title">새끼두덩 (Hypothenar)</div>
-          <ul class="item-list">
-            <li>새끼벌림근 (ADM) — 자신경</li>
-            <li>새끼굽힘근 (FDM) — 자신경</li>
-            <li>새끼맞섬근 (ODM) — 자신경</li>
-            <li>짧은손바닥근 — 자신경</li>
-          </ul>
-        </div>
-        <div>
-          <div class="card-title">기타</div>
-          <ul class="item-list">
-            <li>엄지모음근 (AdP) — 자신경 (2갈래)</li>
-            <li>벌레근 (Lm) 4개 — 가쪽2: 정중 / 안쪽2: 자</li>
-            <li>바닥쪽뼈사이근 (PI) 4개 — 자신경</li>
-            <li>등쪽뼈사이근 (DI) 4개 — 자신경</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 9: 굽힘근 & 도르래
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s9">
-  <div class="section-header">
-    <span class="section-num">09</span>
-    <h2 class="section-title">외재성 굽힘근 & 굽힘근도르래 ★★★</h2>
-  </div>
-
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>근육</th><th>부착</th><th>주작용</th><th>특징</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>알은손가락굽힘근</strong><br><small>FDS</small></td>
-          <td>중간손가락뼈 바닥쪽 양 옆면</td>
-          <td><strong>PIP 굽힘</strong></td>
-          <td>PIP 수준에서 갈라져 FDP 힘줄 통과시킴 (분리)</td>
-        </tr>
-        <tr>
-          <td><strong>깊은손가락굽힘근</strong><br><small>FDP</small></td>
-          <td>먼쪽손가락뼈 바닥쪽면</td>
-          <td><strong>DIP 굽힘</strong> (유일)</td>
-          <td>집게손가락은 독립조절 가능 / 자쪽윤활집에 쌓임</td>
-        </tr>
-        <tr>
-          <td><strong>긴엄지굽힘근</strong><br><small>FPL</small></td>
-          <td>엄지 먼쪽손가락뼈 바닥쪽</td>
-          <td>엄지 IP·MCP·CMC 굽힘</td>
-          <td>노쪽윤활집에 둘러싸임 / CMC에서 상당한 굽힘 토크</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grid-2" style="margin-top:20px">
-    <div>
-      <div class="subsection-title">굽힘근도르래 시스템</div>
-      <div class="flow" style="font-size:11px">
-섬유손가락집 안에 존재
-├── <span class="c-yellow">고리도르래(annular pulley): A₁~A₅</span>
-│    ├── <span class="c-accent">A₂:</span> 몸쪽손가락뼈몸통 (가장 중요)
-│    └── <span class="c-accent">A₄:</span> 중간손가락뼈몸통 (두 번째로 중요)
-└── 십자도르래(cruciate pulley): C₁~C₃
-
-엄지: 고리인대(A₁·A₂) + 빗인대(oblique lig.)
-      </div>
-    </div>
-    <div>
-      <div class="subsection-title">임상 — 활시위·방아쇠손가락</div>
-      <div class="alert alert-danger">
-        <span class="alert-icon">⚠️</span>
-        <div>
-          <strong>활시위(bowstringing):</strong> 도르래 손상 → 힘줄이 관절 돌림축에서 멀어짐 → 굽힘 효율 급감<br><br>
-          <strong>방아쇠손가락(trigger finger):</strong> 힘줄윤활막염 → 결절 형성 → A₁ 도르래 협착 → 보존치료(부목·코티손) → 실패 시 A₁ 도르래 수술적 절개
-        </div>
-      </div>
-      <div class="alert alert-warn">
-        <span class="alert-icon">🏥</span>
-        <div>
-          <strong>손목굴증후군(CTS):</strong> 정중신경 + 굽힘근 힘줄 9개가 손목굴 통과 → 압박 → 감각이상·엄지두덩 위축. 치료: 부목·교육 → 수술적 감압
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 10: 펴근육 & 펴근육기전
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s10">
-  <div class="section-header">
-    <span class="section-num">10</span>
-    <h2 class="section-title">외재성 펴근육 & 펴근육기전 (Extensor Mechanism) ★★★</h2>
-  </div>
-
-  <div class="grid-2">
-    <div>
-      <div class="subsection-title">외재성 펴근육</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>근육</th><th>주요 기능</th></tr></thead>
-          <tbody>
-            <tr><td><strong>손가락폄근 (ED)</strong></td><td>주요 손가락 펴근 / 손목 폄 모멘트팔 큼</td></tr>
-            <tr><td><strong>집게폄근 (EI)</strong></td><td>집게손가락 전용 / 힘줄 1개 / 독립 조절</td></tr>
-            <tr><td><strong>새끼폄근 (EDM)</strong></td><td>새끼손가락 연결 / 힘줄 2개</td></tr>
-            <tr><td><strong>긴엄지폄근 (EPL)</strong></td><td>IP·MCP·CMC 폄 / 재배치 구성요소</td></tr>
-            <tr><td><strong>짧은엄지폄근 (EPB)</strong></td><td>엄지 MCP·CMC 폄</td></tr>
-            <tr><td><strong>긴엄지벌림근 (APL)</strong></td><td>CMC 벌림·폄 / <strong>재배치 유일 근육</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div>
-      <div class="subsection-title">힘줄고정 작용 (Tenodesis) ★★★</div>
-      <div class="flow">
-<span class="c-green">손목 폄</span> → 손가락·엄지 <span class="c-accent">수동 굽힘</span>
-<span class="c-red">손목 굽힘</span> → 손가락·엄지 <span class="c-accent">수동 폄</span>
-
-<span class="c-yellow">C⁶ 척수손상 환자 임상 활용:</span>
-짧은노쪽손목폄근(신경지배 유지)
-→ 능동 손목 폄
-→ 굽힘근 수동 신장
-→ 컵 잡기 가능!
-      </div>
-      <div class="alert alert-info" style="margin-top:12px">
-        <span class="alert-icon">📌</span>
-        <span><strong>해부학적 코담배갑:</strong> EPL ↔ EPB+APL 사이 공간 → 손배뼈 촉진 부위</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection-title" style="margin-top:20px">펴근육기전 성분 (표 8.4) ★★★</div>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>성분</th><th>해부학</th><th>일차 기능</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>중심띠</strong><br><small>central band</small></td>
-          <td>손가락폄근 힘줄 직접 연장 → 중간손가락뼈바닥 등쪽 부착</td>
-          <td>펴근육기전의 "중추" / 폄 힘을 PIP관절까지 전달</td>
-        </tr>
-        <tr>
-          <td><strong>가쪽띠</strong><br><small>lateral band</small></td>
-          <td>중심띠에서 갈라져 먼쪽손가락뼈 등쪽에 종말힘줄로 합쳐짐 / 세모인대로 등쪽 연결</td>
-          <td>손가락폄근·벌레근·뼈사이근 힘이 PIP·DIP 펴도록 전달</td>
-        </tr>
-        <tr>
-          <td><strong>등쪽덮개</strong><br><small>dorsal hood</small></td>
-          <td>가로섬유: MCP 바닥판↔힘줄 연결 / 빗섬유: 가쪽띠와 합쳐짐</td>
-          <td>가로섬유: MCP 등쪽면 폄근힘줄 고정 / 빗섬유: PIP·DIP 폄 보조</td>
-        </tr>
-        <tr>
-          <td><strong>빗지지띠인대</strong><br><small>ORL</small></td>
-          <td>섬유손가락집 → 가쪽띠로 사선 주행</td>
-          <td>PIP·DIP 움직임 협응 (위 Section 6 참조)</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="alert alert-warn">
-    <span class="alert-icon">⚠️</span>
-    <span><strong>핵심 원칙:</strong> 손가락폄근(ED) 단독 수축 → MCP 과다폄 O, PIP·DIP 폄 X. <strong>완전한 PIP·DIP 폄 = ED + 벌레근/뼈사이근 협력 필수!</strong></span>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     SECTION 11: 내재성 근육
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s11">
-  <div class="section-header">
-    <span class="section-num">11</span>
-    <h2 class="section-title">손의 내재성 근육 — 세부 ★★★</h2>
-  </div>
-
-  <div class="grid-2">
-    <div>
-      <div class="subsection-title">엄지두덩 근육</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>근육</th><th>신경</th><th>주작용</th></tr></thead>
-          <tbody>
-            <tr><td>짧은엄지벌림근 (APB)</td><td>정중</td><td>CMC·MCP 벌림</td></tr>
-            <tr><td>짧은엄지굽힘근 (FPB)</td><td>정중</td><td>CMC·MCP 굽힘</td></tr>
-            <tr><td>엄지맞섬근 (OP)</td><td>정중</td><td>CMC 굽힘+안쪽돌림 (맞섬 핵심)</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="subsection-title" style="margin-top:16px">새끼두덩 근육</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>근육</th><th>신경</th><th>주작용</th></tr></thead>
-          <tbody>
-            <tr><td>새끼굽힘근 (FDM)</td><td>자신경</td><td>MCP 굽힘</td></tr>
-            <tr><td>새끼벌림근 (ADM)</td><td>자신경</td><td>MCP 벌림</td></tr>
-            <tr><td>새끼맞섬근 (ODM)</td><td>자신경</td><td>5번 CMC 맞섬</td></tr>
-            <tr><td>짧은손바닥근</td><td>자신경</td><td>손바닥 오목함 깊게 함</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div>
-      <div class="subsection-title">벌레근 vs 뼈사이근 (표 8.5)</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>항목</th><th>벌레근</th><th>등쪽뼈사이근</th><th>바닥쪽뼈사이근</th></tr></thead>
-          <tbody>
-            <tr><td>신경지배</td><td>가쪽2: 정중<br>안쪽2: 자신경</td><td>자신경</td><td>자신경</td></tr>
-            <tr><td>기원</td><td>FDP 힘줄</td><td>손허리뼈 양면 (깃근육)</td><td>손허리뼈 한쪽</td></tr>
-            <tr><td>부착</td><td>펴근육기전 가쪽띠</td><td>등쪽덮개 빗섬유 + 몸쪽손가락뼈 바닥 옆면</td><td>같음</td></tr>
-            <tr><td>주작용</td><td><strong>MCP 굽힘 + PIP·DIP 폄</strong></td><td>손가락 <strong>벌림</strong> + MCP 굽힘 + IP 폄</td><td>손가락 <strong>모음</strong> + MCP 굽힘 + IP 폄</td></tr>
-            <tr><td>수축 특성</td><td>긴 거리, 작은 힘</td><td>짧은 거리, 큰 힘</td><td>–</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="alert alert-info" style="margin-top:12px">
-        <span class="alert-icon">🧠</span>
-        <span><strong>기억법:</strong> PAD = Palmar ADduction (바닥쪽 → 모음) / DAB = Dorsal ABduction (등쪽 → 벌림)</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection-title" style="margin-top:20px">엄지모음근 (Adductor Pollicis)</div>
-  <div class="grid-2">
-    <div class="card">
-      <ul class="item-list">
-        <li><strong>가로갈래(transverse head):</strong> 셋째손허리뼈 바닥쪽면 → 엄지 몸쪽손가락뼈바닥 자쪽면</li>
-        <li><strong>빗갈래(oblique head):</strong> 알머리뼈·둘째·셋째손허리뼈바닥 → 동일 먼쪽 부착</li>
-        <li>신경: <strong>자신경</strong></li>
-        <li>주기능: CMC에서 가장 큰 굽힘+모음 토크 / 가위질·집기의 핵심</li>
-      </ul>
-    </div>
-    <div class="alert alert-warn" style="margin:0">
-      <span class="alert-icon">⚠️</span>
+  <!-- S1: 골학 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>01 · 골학 (Osteology)</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="grid-2">
       <div>
-        <strong>정중신경 손상 영향:</strong><br>
-        엄지두덩 3근육 마비 → 맞섬 불가 → 손바닥 편평(위축)<br><br>
-        <strong>자신경 손상 영향:</strong><br>
-        새끼두덩 + 안쪽 내재성 모두 마비 → 새끼두덩 편평 + 갈퀴 변형
+        <div class="sub-title">손허리뼈 특징</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>구조</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td><strong>손허리뼈목</strong></td><td>골절 흔한 부위 (5번째 특히)</td></tr>
+              <tr><td><strong>뒤결절</strong></td><td>MCP결인대 부착부위</td></tr>
+              <tr><td><strong>엄지 손허리뼈</strong></td><td>약 90° 안쪽으로 돌림 → 바닥쪽면이 중심선 향함</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="sub-title">손가락뼈</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>종류</th><th>특이사항</th></tr></thead>
+            <tbody>
+              <tr><td>총 14개</td><td>엄지 2개, 나머지 각 3개</td></tr>
+              <tr><td>먼쪽손가락뼈</td><td>거친면(tuberosity) — 속질 고정</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- S2: 관절학 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>02–03 · 관절학 & 손의 활</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="grid-3" style="margin-bottom:14px">
+      <div class="card">
+        <div class="card-title">몸쪽가로활</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>손목뼈 먼쪽줄 형성</li>
+          <li>손굴(carpal tunnel) 형성</li>
+          <li>쐐기돌 = 알머리뼈</li>
+          <li>고정적, 단단</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">먼쪽가로활</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>MCP관절 사이</li>
+          <li>쐐기돌 = 2·3번 MCP</li>
+          <li>양 옆면 가동성 있음</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">세로활</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>2·3번 손가락선 형성</li>
+          <li>CMC로 손목뼈 연결</li>
+          <li>먼쪽 끝 매우 가동적</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-title">기능적 위치 ★★★</div>
+    <div class="flow">손목: <span class="fc-yellow">20~30° 폄</span> + 약간 자쪽치우침
+MCP: <span class="fc-yellow">35~45° 굽힘</span>
+PIP·DIP: <span class="fc-yellow">15~30° 굽힘</span>
+엄지 CMC: <span class="fc-yellow">35~45° 벌림</span>
+→ <span class="fc-red">임상:</span> 뇌졸중·척수손상 환자 보조기 적용 시 이 위치 유지</div>
+  </div>
+
+  <!-- S4: CMC -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>04 · CMC관절 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>CMC</th><th>가동성</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td><strong>2·3번째</strong></td><td>가장 적음</td><td style="color:var(--green)">중심기둥 — 안정성</td></tr>
+          <tr><td><strong>4번째</strong></td><td>약 20° 굽힘/폄, 27° 안쪽돌림</td><td style="color:var(--yellow)">주변부 — 가동성</td></tr>
+          <tr><td><strong>5번째</strong></td><td>약 44°</td><td style="color:var(--yellow)">주변부 — 맞섬 보조</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sub-title">엄지 CMC — 안장관절 (Saddle Joint)</div>
+    <div class="grid-2">
+      <div class="flow"><span class="fc-yellow">맞섬 2단계:</span>
+1단계: 손허리뼈 <span class="fc-green">벌림</span> (바닥쪽 구르기 + 등쪽 미끄러짐)
+2단계: 손바닥 가로질러 <span class="fc-green">굽힘 + 안쪽돌림</span>
+→ 완전 맞섬 = CMC 닫힌위치 (45~60° 안쪽돌림)</div>
+      <div>
+        <div class="alert alert-danger">
+          <span class="alert-icon">🔴</span>
+          <span><strong>CMC 골관절염</strong>(50~60대 여성 호발) → 앞빗인대·노쪽결인대 파열 → 노쪽 탈구 + 혹(hump) 형성. 치료: NSAID → 관절성형술</span>
+        </div>
+        <div class="alert alert-info">
+          <span class="alert-icon">📌</span>
+          <span><strong>강한 인대 2개:</strong> 노쪽결인대 + 뒤빗인대 — 두껍고 강함, 감각섬유 풍부, 맞섬된 CMC 일차 안정자</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5: MCP -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>05–06 · MCP / IP관절 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="alert alert-warn">
+      <span class="alert-icon">📌</span>
+      <span><strong>MCP 닫힌위치 = 60~70° 굽힘</strong> (캠 형태 → 결인대 팽팽). <strong>골절 후 부목: MCP 70° 굽힘 → 폄구축 방지!</strong><br>반대로 <strong>IP관절 닫힌위치 = 완전 폄</strong> → 굽힘구축 방지</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>항목</th><th>PIP</th><th>DIP</th></tr></thead>
+        <tbody>
+          <tr><td>굽힘 범위</td><td>100~120°</td><td>70~90°</td></tr>
+          <tr><td>특징 구조</td><td><strong>제지고삐인대</strong> 있음 → 굽힘구축 유발</td><td>제지고삐인대 없음</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sub-title">빗지지띠인대 (ORL) ★</div>
+    <div class="flow">PIP 바닥쪽 → DIP 등쪽 가쪽띠 (사선 주행)
+내재성 근육 활성 → <span class="fc-green">PIP 폄</span> → ORL 신장 → <span class="fc-green">DIP 수동 폄</span>
+→ "연결인대": PIP·DIP 폄이 협응되는 기전
+<span class="fc-red">임상:</span> ORL 타이트 → PIP 굽힘구축 + DIP 과다굽힘</div>
+  </div>
+
+  <!-- S7: 신경 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>07 · 신경지배 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="nerve-row nerve-radial">
+      <div class="nerve-label">노신경<span style="font-size:10px; font-weight:400; color:var(--text-dim)">Radial</span></div>
+      <div class="nerve-content"><strong>운동:</strong> 외재성 펴근육 전체 (ED, EI, EDM, EPL, EPB, APL)</div>
+      <div class="nerve-content"><strong>감각:</strong> 손·손목 등쪽면, 물갈퀴공간 등쪽</div>
+    </div>
+    <div class="nerve-row nerve-median">
+      <div class="nerve-label">정중신경<span style="font-size:10px; font-weight:400; color:var(--text-dim)">Median</span></div>
+      <div class="nerve-content"><strong>운동:</strong> FDS, FDP 가쪽절반, FPL + 엄지두덩 3근육 + 가쪽 2개 벌레근</div>
+      <div class="nerve-content"><strong>감각:</strong> 엄지~셋째손가락 + 넷째 가쪽 1/2 바닥쪽<br><span style="color:var(--red); font-size:11px">⚠ 손상 → 엄지두덩 위축, 맞섬 불가 (원숭이손)</span></div>
+    </div>
+    <div class="nerve-row nerve-ulnar">
+      <div class="nerve-label">자신경<span style="font-size:10px; font-weight:400; color:var(--text-dim)">Ulnar</span></div>
+      <div class="nerve-content"><strong>운동:</strong> FDP 안쪽절반, 새끼두덩 전체, 안쪽2 벌레근, 모든 뼈사이근, 엄지모음근</div>
+      <div class="nerve-content"><strong>감각:</strong> 새끼손가락 전체 + 넷째 자쪽 1/2<br><span style="color:var(--red); font-size:11px">⚠ 손상 → 안쪽 내재성 마비 → 갈퀴(claw)</span></div>
+    </div>
+    <div class="alert alert-info" style="margin-top:10px">
+      <span class="alert-icon">📌</span>
+      <span><strong>척수근:</strong> C⁶ = 엄지·집게 / C⁷ = 가운뎃손가락 / C⁸ = 반지·새끼 | <strong>내재성 신경지배:</strong> 축삭 1개 → 100개 근섬유 (정밀 조절!)</span>
+    </div>
+  </div>
+
+  <!-- S9: 굽힘근 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>09 · 외재성 굽힘근 & 도르래 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>근육</th><th>부착</th><th>주작용</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td><strong>FDS</strong></td><td>중간손가락뼈 양 옆면</td><td>PIP 굽힘</td><td>PIP에서 갈라져 FDP 통과시킴</td></tr>
+          <tr><td><strong>FDP</strong></td><td>먼쪽손가락뼈 바닥쪽</td><td>DIP 굽힘 (유일)</td><td>집게손가락 독립조절 가능</td></tr>
+          <tr><td><strong>FPL</strong></td><td>엄지 먼쪽손가락뼈 바닥쪽</td><td>엄지 IP·MCP·CMC 굽힘</td><td>노쪽윤활집에 둘러싸임</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="sub-title">굽힘근도르래 시스템</div>
+        <div class="flow" style="font-size:11px">고리도르래(Annular): A₁~A₅
+  <span class="fc-blue">A₂</span>: 몸쪽손가락뼈몸통 (가장 중요)
+  <span class="fc-blue">A₄</span>: 중간손가락뼈몸통 (두 번째)
+십자도르래(Cruciate): C₁~C₃
+엄지: A₁·A₂ + 빗인대</div>
+      </div>
+      <div>
+        <div class="alert alert-danger">
+          <span class="alert-icon">⚠️</span>
+          <span><strong>방아쇠손가락:</strong> 힘줄윤활막염 → 결절 → A₁ 도르래 협착 → 보존치료(부목·코티손) → 실패 시 A₁ 도르래 절개</span>
+        </div>
+        <div class="alert alert-warn">
+          <span class="alert-icon">🏥</span>
+          <span><strong>CTS:</strong> 정중신경 + 굽힘근 힘줄 9개 압박 → 감각이상·엄지두덩 위축</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S10: 펴근 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>10 · 외재성 펴근육 & 펴근육기전 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="grid-2">
+      <div>
+        <div class="sub-title">힘줄고정작용 (Tenodesis)</div>
+        <div class="flow"><span class="fc-green">손목 폄</span> → 손가락 <span class="fc-blue">수동 굽힘</span>
+<span class="fc-red">손목 굽힘</span> → 손가락 <span class="fc-blue">수동 폄</span>
+<span class="fc-yellow">C⁶ SCI 활용:</span>
+짧은노쪽손목폄근(유지) → 능동 손목 폄
+→ 굽힘근 수동 신장 → 컵 잡기 가능!</div>
+      </div>
+      <div>
+        <div class="sub-title">펴근육기전 핵심</div>
+        <div class="tbl-wrap" style="margin:0">
+          <table>
+            <thead><tr><th>성분</th><th>기능</th></tr></thead>
+            <tbody>
+              <tr><td><strong>중심띠</strong></td><td>폄 힘 → PIP 전달</td></tr>
+              <tr><td><strong>가쪽띠</strong></td><td>ED+내재성 힘 → PIP·DIP 폄</td></tr>
+              <tr><td><strong>등쪽덮개</strong></td><td>ED힘줄 등쪽 고정 / PIP·DIP 폄 보조</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <span><strong>핵심:</strong> ED 단독 수축 → MCP 과다폄 O, PIP·DIP 폄 X. <strong>완전한 PIP·DIP 폄 = ED + 벌레근/뼈사이근 필수!</strong></span>
+    </div>
+  </div>
+
+  <!-- S11: 내재성 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>11 · 내재성 근육 세부 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>항목</th><th>벌레근</th><th>등쪽뼈사이근</th><th>바닥쪽뼈사이근</th></tr></thead>
+        <tbody>
+          <tr><td>신경</td><td>가쪽2: 정중 / 안쪽2: 자</td><td>자신경</td><td>자신경</td></tr>
+          <tr><td>기원</td><td>FDP 힘줄</td><td>손허리뼈 양면</td><td>손허리뼈 한쪽</td></tr>
+          <tr><td>주작용</td><td>MCP 굽힘 + IP 폄</td><td><strong>벌림</strong> + MCP 굽힘 + IP 폄</td><td><strong>모음</strong> + MCP 굽힘 + IP 폄</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-purple">
+      <span class="alert-icon">🧠</span>
+      <span><strong>PAD</strong> = Palmar ADduction (바닥쪽→모음) / <strong>DAB</strong> = Dorsal ABduction (등쪽→벌림)</span>
+    </div>
+  </div>
+
+  <!-- S12: 상호작용 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>12 · 외재·내재 상호작용 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="vs-grid">
+      <div class="deform-card deform-swan">
+        <div class="deform-title">🟢 내재성-플러스</div>
+        <div class="deform-posture">
+          <span class="joint-ext">MCP 굽힘</span><span>+</span><span class="joint-ext">IP 폄</span>
+        </div>
+        <ul class="item-list" style="font-size:12px">
+          <li>내재성 근육 과활성</li>
+          <li>기능적으로 유용한 자세</li>
+          <li>집기 동작에 적합</li>
+        </ul>
+      </div>
+      <div class="vs-divider">VS</div>
+      <div class="deform-card deform-bout">
+        <div class="deform-title">🔴 외재성-플러스 (갈퀴)</div>
+        <div class="deform-posture">
+          <span class="joint-flex">MCP 과다폄</span><span>+</span><span class="joint-flex">IP 굽힘</span>
+        </div>
+        <ul class="item-list" style="font-size:12px">
+          <li>내재성 마비 (자신경 손상)</li>
+          <li>잡기 기능 심각 저하</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-title">손 펴기 3단계 ★★★</div>
+    <div class="flow"><span class="fc-yellow">A. 초기:</span> ED가 MCP 일차 폄 / 내재성 근육 사용 X
+<span class="fc-yellow">B. 중간:</span> 내재성 근육 개입 → PIP·DIP 폄 시작 / ED: MCP 과다폄 못 하도록 굽힘 토크
+<span class="fc-yellow">C. 후기:</span> 완전한 손가락 폄 완성 / ED + 내재성 협력</div>
+    <div class="sub-title">손 쥐기 2단계 ★★★</div>
+    <div class="flow"><span class="fc-yellow">A. 초기:</span> FDP·FDS·뼈사이근 능동 굽힘 / <span class="fc-red">벌레근 비활성</span>
+<span class="fc-yellow">B. 후기:</span> ECRB 활성 → 손목 폄 유지 / ED: MCP 굽힘 제동기
+<span class="fc-red">⚠ 내재성 마비:</span> MCP 굽힘 시작 지연 → 물건 잡기 방해</div>
+  </div>
+
+  <!-- S13: 잡기 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>13 · 잡기(Prehension) 분류 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+      <div class="grip-card">
+        <div class="grip-num">01</div>
+        <div class="grip-name">강력한 잡기</div>
+        <div class="grip-en">Power grip</div>
+        <div class="grip-desc">큰 힘, 정밀 불필요. 손가락굽힘근+내재성+엄지 모음·굽힘. <em>예: 망치</em></div>
+      </div>
+      <div class="grip-card">
+        <div class="grip-num">02</div>
+        <div class="grip-name">정밀한 잡기</div>
+        <div class="grip-en">Precision grip</div>
+        <div class="grip-desc">조절 필요, 엄지 부분 벌림+나머지 굽힘. 3점 집기. <em>예: 야구공·계란</em></div>
+      </div>
+      <div class="grip-card">
+        <div class="grip-num">03</div>
+        <div class="grip-name">강력한 집기</div>
+        <div class="grip-en">Key/Lateral pinch</div>
+        <div class="grip-desc">엄지↔집게 가쪽 큰 힘. 엄지모음근+첫째등쪽뼈사이근. <em>예: 열쇠</em></div>
+      </div>
+      <div class="grip-card">
+        <div class="grip-num">04</div>
+        <div class="grip-name">정밀한 집기</div>
+        <div class="grip-en">Precision pinch</div>
+        <div class="grip-desc">엄지↔집게 미세조절. 손끝집기(tip-to-tip). <em>예: 바늘집기</em></div>
+      </div>
+      <div class="grip-card">
+        <div class="grip-num">05</div>
+        <div class="grip-name">갈고리식 잡기</div>
+        <div class="grip-en">Hook grip</div>
+        <div class="grip-desc">엄지 미사용. PIP·DIP 부분 굽힘. 정적 유지. <em>예: 가방 들기</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S14: RA 변형 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>14 · RA 손 변형 ★★★</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="sub-title">엄지 지그재그변형</div>
+    <div class="flow">CMC (굽힘+모음) → 손허리뼈 <span class="fc-red">노쪽 탈구</span>
+→ MCP <span class="fc-red">과다폄</span> → IP <span class="fc-red">굽힘</span> = 지그재그</div>
+    <div class="sub-title">손가락 RA 변형 2가지 ★★★</div>
+    <div class="vs-grid">
+      <div class="deform-card deform-swan">
+        <div class="deform-title">🦢 백조목변형 (Swan-neck)</div>
+        <div class="deform-posture">
+          <span class="joint-ext">PIP 과다폄</span><span>+</span><span class="joint-flex">DIP 굽힘</span>
+        </div>
+        <ul class="item-list" style="font-size:12px">
+          <li>바닥판 과신장·약화</li>
+          <li>내재성 근육 수축·섬유증</li>
+          <li>가쪽띠 등쪽으로 이동</li>
+        </ul>
+        <div style="font-size:11px; color:var(--text-dim); margin-top:8px">치료: PIP 과다폄 차단 보장구</div>
+      </div>
+      <div class="vs-divider">VS</div>
+      <div class="deform-card deform-bout">
+        <div class="deform-title">🔘 단추구멍변형 (Boutonnière)</div>
+        <div class="deform-posture">
+          <span class="joint-flex">PIP 굽힘</span><span>+</span><span class="joint-ext">DIP 과다폄</span>
+        </div>
+        <ul class="item-list" style="font-size:12px">
+          <li>중심띠 + 세모인대 파열</li>
+          <li>가쪽띠 바닥쪽으로 미끄러짐</li>
+          <li>PIP 굽힘시키는 힘으로 전환</li>
+        </ul>
+        <div style="font-size:11px; color:var(--text-dim); margin-top:8px">치료: PIP 폄 상태 부목</div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card">
+        <div class="card-title" style="color:var(--red)">바닥쪽탈구</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>굽힘근 활시위 힘 → 결인대 파열</li>
+          <li>손 세로활·가로활 붕괴 → 편평해짐</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--purple)">자쪽이동 (Ulnar drift)</div>
+        <ul class="item-list" style="font-size:12px">
+          <li>등쪽덮개 가로섬유 파열</li>
+          <li>ED힘줄 자쪽 이동 → 굽힘 토크 발생</li>
+          <li>악순환: 자쪽이동↑ → 완전 탈구</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S15: 임상 -->
+  <button class="collapse-btn" onclick="toggleCollapse(this)">
+    <span>15 · 임상 종합</span><span class="arrow">▼</span>
+  </button>
+  <div class="collapse-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>병변</th><th>신경/구조</th><th>임상 소견</th><th>치료</th></tr></thead>
+        <tbody>
+          <tr><td><strong>정중신경 손상</strong></td><td>C⁶~T¹</td><td>엄지두덩 위축, 맞섬 불가, 원숭이손, 가쪽 3.5지 감각이상</td><td>감압/봉합, 엄지두덩 재건</td></tr>
+          <tr><td><strong>자신경 손상</strong></td><td>C⁸~T¹</td><td>갈퀴변형(반지·새끼), 새끼두덩 위축, 자쪽 1.5지 감각이상</td><td>봉합, MCP 굽힘 보조 보장구</td></tr>
+          <tr><td><strong>CTS</strong></td><td>정중신경 압박</td><td>야간 통증·감각이상, 엄지두덩 위축, Tinel·Phalen (+)</td><td>부목·NSAID → 수술적 감압</td></tr>
+          <tr><td><strong>방아쇠손가락</strong></td><td>A₁ 도르래 협착</td><td>잠김, 찰각 소리, 결절 촉지</td><td>부목·코티손 → A₁ 도르래 절개</td></tr>
+          <tr><td><strong>CMC 골관절염</strong></td><td>엄지 CMC</td><td>50~60대 여성, 혹 형성, 노쪽 탈구, 집기 통증</td><td>부목·NSAID → 관절성형술</td></tr>
+          <tr><td><strong>C⁶ 척수손상</strong></td><td>외재성 굽힘근 마비</td><td>손가락 굽힘 불가, 손목 폄 유지</td><td>힘줄고정(tenodesis) 재활</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     SECTION 12: 외재성-내재성 상호작용
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s12">
-  <div class="section-header">
-    <span class="section-num">12</span>
-    <h2 class="section-title">외재성·내재성 근육의 상호작용 ★★★</h2>
-  </div>
-
-  <div class="vs-grid">
-    <div class="deform-card deform-swan">
-      <div class="deform-title">내재성-플러스 (Intrinsic-plus)</div>
-      <div class="deform-posture">
-        <span class="joint-pip-ext">MCP 굽힘</span>
-        <span>+</span>
-        <span class="joint-pip-ext">IP 폄</span>
-      </div>
-      <ul class="item-list">
-        <li>내재성 근육(벌레근·뼈사이근) 과활성</li>
-        <li>기능적으로는 유용한 자세</li>
-        <li>집기 동작에 적합</li>
-      </ul>
-    </div>
-    <div class="vs-divider">VS</div>
-    <div class="deform-card deform-bout">
-      <div class="deform-title">외재성-플러스 (Extrinsic-plus) = 갈퀴(Claw)</div>
-      <div class="deform-posture">
-        <span class="joint-dip-flex">MCP 과다폄</span>
-        <span>+</span>
-        <span class="joint-dip-flex">IP 굽힘</span>
-      </div>
-      <ul class="item-list">
-        <li>내재성 근육 마비 (주로 자신경 손상)</li>
-        <li>"내재성-마이너스" 자세</li>
-        <li>잡기 기능 심각 저하</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="subsection-title" style="margin-top:24px">손 펴기: 손가락 폄 3단계 (그림 8.51) ★★★</div>
-  <div class="flow">
-<span class="c-yellow">A. 초기단계</span>
-   → 손가락폄근(ED)이 MCP관절을 일차적으로 <span class="c-green">폄</span>
-   → <span class="c-red">내재성 근육 사용 X</span>
-
-<span class="c-yellow">B. 중간단계</span>
-   → 내재성 근육(벌레근·뼈사이근) 개입
-   → PIP·DIP 펴기 시작
-   → ED: MCP 과다폄 못 하도록 굽힘 토크 생산
-
-<span class="c-yellow">C. 후기단계</span>
-   → 완전한 손가락 폄 완성
-   → ED + 내재성 근육 협력
-   → 노쪽손목굽힘근(FCR) 활성: 손목 약간 굽힘 → 손가락폄근 최적 길이 유지
-  </div>
-
-  <div class="subsection-title">손 쥐기: 손가락 굽힘 단계 (그림 8.54) ★★★</div>
-  <div class="flow">
-<span class="c-yellow">A. 초기단계</span>
-   → FDP·FDS·뼈사이근 능동 굽힘
-   → <span class="c-red">벌레근 비활성</span>
-   → 정상: PIP·DIP 먼저 굽힘 → MCP 따라 굽힘
-
-<span class="c-yellow">B. 후기단계</span>
-   → 근육 활성 계속 유지, 벌레근 여전히 비활성
-   → 짧은노쪽손목폄근(ECRB) 활성: 손목 약간 폄 유지
-   → 손가락폄근: MCP 굽힘 <span class="c-accent">제동기(extension brake)</span> 역할
-
-<span class="c-red">⚠ 내재성 마비 시:</span> MCP 굽힘 시작 지연
-→ 손가락끝이 손바닥 향하는 대신 MCP만 구부러짐
-→ 물건 잡기 방해
-  </div>
-
-  <div class="subsection-title">손가락 굽힘/폄 동안 손목 근육의 역할</div>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>동작</th><th>손목 근육 역할</th><th>이유</th></tr></thead>
-      <tbody>
-        <tr><td>손가락 <strong>폄</strong> 시</td><td>손목 <strong>굽힘근</strong> 활성 (FCR 등)</td><td>손목 폄 경향 상쇄 → 손가락폄근 최적 길이 유지</td></tr>
-        <tr><td>강한 주먹 <strong>쥐기</strong> 시</td><td>손목 <strong>폄근</strong> 활성 (ECRB 등)</td><td>손목 폄 유지 → 굽힘근 모멘트팔 최적화</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="alert alert-danger">
-    <span class="alert-icon">⚠️</span>
-    <span><strong>손목 폄근 마비</strong> → 주먹 쥐기 불가 (손가락굽힘근의 힘 대부분이 손목 굽힘에 소비됨)</span>
-  </div>
+<!-- ════════════════════════════════════════
+     TAB 3 : 퀴즈
+════════════════════════════════════════ -->
+<div id="quiz-panel" class="tab-panel">
+<div class="container">
+  <div id="quiz-area"></div>
+</div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     SECTION 13: 잡기 분류
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s13">
-  <div class="section-header">
-    <span class="section-num">13</span>
-    <h2 class="section-title">효과기로서의 손 — 잡기(Prehension) 분류 ★★★</h2>
-  </div>
+<div class="footer">Chapter 8 · Hand (pp.277–327) &nbsp;·&nbsp; 근육뼈대계통의 기능해부학 &nbsp;·&nbsp; 코르셋 버전</div>
 
-  <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
-    <div class="grip-card">
-      <div class="grip-num">01</div>
-      <div class="grip-name">강력한 잡기</div>
-      <div class="grip-en">Power grip</div>
-      <div class="grip-desc">큰 힘, 정밀함 불필요. 공 모양·원통 모양 물체. 손가락굽힘근+내재성+엄지 모음·굽힘근. <em>예: 망치</em></div>
-    </div>
-    <div class="grip-card">
-      <div class="grip-num">02</div>
-      <div class="grip-name">정밀한 잡기</div>
-      <div class="grip-en">Precision grip</div>
-      <div class="grip-desc">조절 필요, 엄지 부분 벌림+나머지 굽힘. 3점 집기 = 집게·가운뎃+엄지 접촉. <em>예: 야구공·계란</em></div>
-    </div>
-    <div class="grip-card">
-      <div class="grip-num">03</div>
-      <div class="grip-name">강력한(열쇠) 집기</div>
-      <div class="grip-en">Key/Lateral pinch</div>
-      <div class="grip-desc">엄지↔집게 가쪽모서리 사이 큰 힘. 엄지모음근+첫째등쪽뼈사이근 필요. <em>예: 열쇠</em></div>
-    </div>
-    <div class="grip-card">
-      <div class="grip-num">04</div>
-      <div class="grip-name">정밀한 집기</div>
-      <div class="grip-en">Precision pinch</div>
-      <div class="grip-desc">엄지↔집게 미세조절, 힘 불필요. 손끝집기(tip-to-tip), 손가락패드 집기 포함. <em>예: 바늘집기</em></div>
-    </div>
-    <div class="grip-card">
-      <div class="grip-num">05</div>
-      <div class="grip-name">갈고리식 잡기</div>
-      <div class="grip-en">Hook grip</div>
-      <div class="grip-desc">엄지 미사용. PIP·DIP 부분 굽힘. 장시간 정적 유지에 사용. <em>예: 가방 들기</em></div>
-    </div>
-  </div>
-</div>
+<script>
+// ─── TAB SWITCH ───
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name + '-panel').classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'quiz' && !quizInitialized) initQuiz();
+}
 
-<!-- ══════════════════════════════════════════════════════
-     SECTION 14: RA 변형
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s14">
-  <div class="section-header">
-    <span class="section-num">14</span>
-    <h2 class="section-title">류마티스관절염(RA) 손 변형 ★★★</h2>
-  </div>
+// ─── COLLAPSE ───
+function toggleCollapse(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
 
-  <div class="subsection-title">엄지의 지그재그변형</div>
-  <div class="flow">
-CMC관절 굽힘·모음
-→ 손허리뼈 <span class="c-red">노쪽 탈구</span>
-→ MCP관절 <span class="c-red">과다폄</span>
-→ IP관절 <span class="c-red">굽힘</span>
-= CMC(굽힘+모음) + MCP(과다폄) + IP(굽힘) <span class="c-yellow">지그재그</span>
-  </div>
+// ─── QUIZ DATA (35 questions) ───
+const ALL_QUESTIONS = [
+  // 골학·관절학
+  {cat:"골학", catColor:"#3B82F6", q:"손허리뼈목(metacarpal neck) 골절이 가장 흔하게 발생하는 손가락은?", opts:["2번째 (집게)", "3번째 (가운뎃)", "4번째 (반지)", "5번째 (새끼)"], ans:3, exp:"5번째 손허리뼈목은 '권투선수 골절'로 알려진 가장 흔한 골절 부위입니다."},
+  {cat:"골학", catColor:"#3B82F6", q:"엄지 손허리뼈가 나머지 손가락과 다른 특징은?", opts:["손허리뼈목이 없다", "약 90° 안쪽으로 돌아 있어 바닥쪽면이 중심선을 향한다", "관절면이 오목하다", "손허리뼈머리가 작다"], ans:1, exp:"엄지 손허리뼈는 약 90° 안쪽으로 돌아 있어 그 바닥쪽면이 손 중심선을 향합니다. 이것이 엄지의 맞섬 동작을 가능하게 합니다."},
+  {cat:"관절학", catColor:"#2E5CA8", q:"손의 3활 중 '쐐기돌(keystone)'이 알머리뼈(capitate)인 활은?", opts:["세로활", "몸쪽가로활", "먼쪽가로활", "엄지가로활"], ans:1, exp:"몸쪽가로활은 손목뼈 먼쪽줄에 의해 형성되며 알머리뼈가 쐐기돌 역할을 합니다. 손굴(carpal tunnel)을 형성합니다."},
+  {cat:"관절학", catColor:"#2E5CA8", q:"기능적 위치(position of function)에서 손목 각도는?", opts:["0° 중립", "10~15° 굽힘", "20~30° 폄 + 약간 자쪽치우침", "45° 폄"], ans:2, exp:"기능적 위치: 손목 20~30° 폄 + 약간 자쪽치우침, MCP 35~45° 굽힘, PIP·DIP 15~30° 굽힘, 엄지 CMC 35~45° 벌림."},
+  // CMC
+  {cat:"CMC관절", catColor:"#059669", q:"엄지 CMC관절의 관절 형태는?", opts:["경첩관절", "평면관절", "안장관절(saddle joint)", "타원관절"], ans:2, exp:"엄지 CMC관절은 안장관절로 각 면이 한쪽은 볼록, 다른 쪽은 오목합니다. 완전한 맞섬(opposition)이 가능한 가장 복잡한 CMC관절입니다."},
+  {cat:"CMC관절", catColor:"#059669", q:"CMC관절 중 '중심기둥(central pillar)'으로 안정성을 담당하는 것은?", opts:["1·2번째", "2·3번째", "3·4번째", "4·5번째"], ans:1, exp:"2번째와 3번째 CMC관절이 중심기둥으로 가동성이 가장 적고 안정성을 담당합니다. 4·5번째는 가동성이 있어 맞섬을 보조합니다."},
+  {cat:"CMC관절", catColor:"#059669", q:"엄지 CMC 맞섬(opposition) 2단계를 순서대로 나열한 것은?", opts:["굽힘+안쪽돌림 → 벌림", "벌림 → 굽힘+안쪽돌림", "모음+가쪽돌림 → 폄", "폄 → 모음+가쪽돌림"], ans:1, exp:"1단계: 손허리뼈 벌림 (바닥쪽 구르기+등쪽 미끄러짐), 2단계: 손바닥 가로질러 굽힘+안쪽돌림 → 완전 맞섬(닫힌위치, 45~60° 안쪽돌림)"},
+  {cat:"CMC관절", catColor:"#059669", q:"엄지 CMC 골관절염에서 주로 파열되어 노쪽 탈구를 유발하는 인대는?", opts:["자쪽결인대", "앞빗인대·노쪽결인대", "뒤빗인대·손허리뼈사이인대", "세모인대"], ans:1, exp:"CMC 골관절염에서 앞빗인대와 노쪽결인대가 파열되어 노쪽 탈구와 혹(hump) 형성이 발생합니다. 주로 50~60대 여성에게 발생합니다."},
+  // MCP/IP
+  {cat:"MCP관절", catColor:"#7C3AED", q:"MCP관절의 닫힌위치(closed-packed position)는?", opts:["완전 폄", "30° 굽힘", "60~70° 굽힘", "완전 굽힘"], ans:2, exp:"MCP관절의 닫힌위치는 60~70° 굽힘입니다(캠 형태로 이 위치에서 결인대 팽팽). 골절 후 부목 시 이 위치로 고정해 폄구축을 방지합니다."},
+  {cat:"MCP관절", catColor:"#7C3AED", q:"IP관절(PIP·DIP)의 닫힌위치는?", opts:["완전 굽힘", "30° 굽힘", "완전 폄", "10° 폄"], ans:2, exp:"IP관절의 닫힌위치는 완전 폄입니다. 골절 후 부목 시 펴진 위치로 고정해 굽힘구축을 방지합니다(MCP와 반대!)."},
+  {cat:"IP관절", catColor:"#7C3AED", q:"빗지지띠인대(ORL)의 기능으로 옳은 것은?", opts:["MCP관절 벌림·모음 담당", "DIP 굽힘을 PIP에 전달", "PIP 폄 시 DIP를 수동으로 폄", "힘줄을 뼈 가까이 유지"], ans:2, exp:"ORL은 PIP 바닥쪽→DIP 등쪽 가쪽띠로 사선 주행. PIP 폄→ORL 신장→DIP 수동 폄. PIP·DIP 폄을 협응시키는 '연결인대'입니다."},
+  {cat:"IP관절", catColor:"#7C3AED", q:"제지고삐인대(check-rein ligament)가 있는 관절은?", opts:["CMC관절", "MCP관절", "PIP관절", "DIP관절"], ans:2, exp:"제지고삐인대는 PIP관절에만 있습니다. 병리조직화 시 굽힘구축을 유발합니다. DIP관절에는 없습니다."},
+  // 신경
+  {cat:"신경지배", catColor:"#DC2626", q:"손의 내재성 근육 대부분을 지배하는 신경은?", opts:["노신경", "정중신경", "자신경", "근피신경"], ans:2, exp:"자신경은 새끼두덩 전체, 안쪽 2개 벌레근, 모든 뼈사이근, 엄지모음근을 지배합니다. 내재성 근육의 대부분이 자신경 지배입니다."},
+  {cat:"신경지배", catColor:"#DC2626", q:"정중신경이 지배하는 엄지두덩 근육 3가지는?", opts:["APB, FPB, AdP", "APB, FPB, OP", "APB, OP, AdP", "FPB, OP, AdP"], ans:1, exp:"정중신경: 짧은엄지벌림근(APB), 짧은엄지굽힘근(FPB), 엄지맞섬근(OP). 엄지모음근(AdP)은 자신경 지배입니다."},
+  {cat:"신경지배", catColor:"#DC2626", q:"노신경(radial nerve)이 지배하는 운동은?", opts:["손가락 굽힘", "외재성 펴근육 전체", "내재성 근육", "엄지 맞섬"], ans:1, exp:"노신경은 외재성 펴근육 전체(ED, EI, EDM, EPL, EPB, APL)를 지배합니다. 내재성 근육은 지배하지 않습니다."},
+  {cat:"신경지배", catColor:"#DC2626", q:"자신경 손상 시 나타나는 갈퀴변형이 주로 나타나는 손가락은?", opts:["1·2번째", "2·3번째", "3·4번째", "4·5번째(반지·새끼)"], ans:3, exp:"자신경은 안쪽 2개 벌레근(4·5번 손가락 담당)을 지배하므로, 자신경 손상 시 반지·새끼손가락에 갈퀴변형이 발생합니다."},
+  {cat:"신경지배", catColor:"#DC2626", q:"손목굴증후군(CTS)에서 손상되는 신경은?", opts:["노신경", "자신경", "정중신경", "척골신경"], ans:2, exp:"손목굴(carpal tunnel)에는 정중신경 + 굽힘근 힘줄 9개가 통과합니다. 압박 시 감각이상·야간 통증·엄지두덩 위축이 나타납니다. Tinel·Phalen 검사 양성."},
+  // 굽힘근·도르래
+  {cat:"굽힘근", catColor:"#059669", q:"DIP관절을 굽힐 수 있는 유일한 근육은?", opts:["알은손가락굽힘근(FDS)", "깊은손가락굽힘근(FDP)", "벌레근", "뼈사이근"], ans:1, exp:"FDP(깊은손가락굽힘근)만이 먼쪽손가락뼈에 부착하여 DIP관절을 굽힐 수 있는 유일한 근육입니다."},
+  {cat:"굽힘근", catColor:"#059669", q:"가장 중요한 굽힘근 도르래(annular pulley)는?", opts:["A₁", "A₂", "A₃", "A₅"], ans:1, exp:"A₂ 도르래(몸쪽손가락뼈몸통)가 가장 중요하고, A₄(중간손가락뼈몸통)가 두 번째로 중요합니다. 손상 시 활시위 현상(bowstringing)이 발생합니다."},
+  {cat:"굽힘근", catColor:"#059669", q:"방아쇠손가락(trigger finger)의 원인 구조는?", opts:["A₂ 도르래 파열", "A₁ 도르래 협착", "FDS 힘줄 파열", "벌레근 섬유증"], ans:1, exp:"힘줄윤활막염으로 결절이 형성되어 A₁ 도르래가 협착됩니다. 치료: 부목·코티코스테로이드 주사 → 실패 시 A₁ 도르래 수술적 절개."},
+  // 펴근육기전
+  {cat:"펴근육기전", catColor:"#2E5CA8", q:"ED(손가락폄근) 단독 수축 시 일어나는 현상은?", opts:["MCP·PIP·DIP 모두 폄", "MCP 과다폄 O, PIP·DIP 폄 X", "PIP만 폄", "손목 굽힘"], ans:1, exp:"ED 단독으로는 MCP 과다폄만 발생하고 PIP·DIP는 폄되지 않습니다. 완전한 PIP·DIP 폄 = ED + 벌레근/뼈사이근 협력이 필수입니다."},
+  {cat:"펴근육기전", catColor:"#2E5CA8", q:"힘줄고정작용(tenodesis)에서 손목 폄 시 발생하는 것은?", opts:["손가락 수동 굽힘", "손가락 수동 폄", "손가락 벌림", "손가락 모음"], ans:0, exp:"손목 폄 → 굽힘근 수동 신장 → 손가락 수동 굽힘. 반대로 손목 굽힘 → 폄근 신장 → 손가락 수동 폄. C⁶ 척수손상 재활에 활용됩니다."},
+  {cat:"펴근육기전", catColor:"#2E5CA8", q:"단추구멍변형(Boutonnière) 발생 기전은?", opts:["가쪽띠 등쪽으로 이동 → PIP 과다폄", "중심띠+세모인대 파열 → 가쪽띠 바닥쪽 이동 → PIP 굽힘", "바닥판 파열 → DIP 과다굽힘", "ORL 단축 → DIP 폄"], ans:1, exp:"단추구멍변형: 중심띠+세모인대 파열 → 가쪽띠 바닥쪽으로 미끄러짐 → PIP 굽힘+DIP 과다폄. 치료: PIP 폄 상태 부목."},
+  {cat:"펴근육기전", catColor:"#2E5CA8", q:"백조목변형(Swan-neck deformity)의 관절 자세는?", opts:["PIP 굽힘 + DIP 과다폄", "PIP 과다폄 + DIP 굽힘", "MCP 과다폄 + PIP 굽힘", "MCP 굽힘 + DIP 폄"], ans:1, exp:"백조목변형: PIP 과다폄 + DIP 굽힘. 원인: 바닥판 과신장·약화, 내재성 근육 수축·섬유증, 가쪽띠 등쪽으로 이동. 치료: PIP 과다폄 차단 보장구."},
+  // 내재성 근육
+  {cat:"내재성근육", catColor:"#7C3AED", q:"PAD와 DAB 기억법에서 '바닥쪽뼈사이근'의 주기능은?", opts:["손가락 벌림", "손가락 모음", "MCP 폄", "IP 굽힘"], ans:1, exp:"PAD = Palmar ADduction: 바닥쪽뼈사이근 → 모음. DAB = Dorsal ABduction: 등쪽뼈사이근 → 벌림."},
+  {cat:"내재성근육", catColor:"#7C3AED", q:"벌레근의 기원(기시)은?", opts:["손허리뼈 양면", "손허리뼈 한쪽", "FDP 힘줄", "섬유손가락집"], ans:2, exp:"벌레근은 FDP 힘줄에서 기시하여 펴근육기전의 가쪽띠에 부착합니다. 주기능: MCP 굽힘 + PIP·DIP 폄."},
+  {cat:"내재성근육", catColor:"#7C3AED", q:"엄지모음근(adductor pollicis)의 신경지배는?", opts:["정중신경", "노신경", "자신경", "근피신경"], ans:2, exp:"엄지모음근은 자신경 지배입니다. 가위질·집기의 핵심 근육으로, CMC에서 가장 큰 굽힘+모음 토크를 발생시킵니다."},
+  // 상호작용
+  {cat:"근육상호작용", catColor:"#059669", q:"내재성 마비 시 나타나는 변형은?", opts:["내재성-플러스 (MCP굽힘+IP폄)", "외재성-플러스 = 갈퀴변형 (MCP과다폄+IP굽힘)", "백조목변형", "단추구멍변형"], ans:1, exp:"내재성 마비 → 외재성-플러스(=갈퀴/Claw 변형): MCP 과다폄 + IP 굽힘. 잡기 기능이 심각하게 저하됩니다."},
+  {cat:"근육상호작용", catColor:"#059669", q:"손 펴기 초기 단계에서 먼저 작용하는 근육은?", opts:["벌레근", "뼈사이근", "손가락폄근(ED)", "FDS"], ans:2, exp:"손 펴기 A. 초기: ED가 MCP관절을 일차적으로 폄, 내재성 근육 사용 X. B. 중간: 내재성 근육 개입 → PIP·DIP 폄 시작. C. 후기: ED+내재성 협력으로 완전 폄."},
+  {cat:"근육상호작용", catColor:"#059669", q:"강한 주먹 쥐기 시 손목 폄근이 활성화되는 이유는?", opts:["손가락폄근의 길이 유지를 위해", "손목 폄 경향 상쇄를 위해", "굽힘근의 모멘트팔 최적화를 위해 손목 폄 유지", "벌레근 억제를 위해"], ans:2, exp:"강한 주먹 쥐기 시 ECRB 등 손목 폄근이 활성화되어 손목 폄을 유지 → 굽힘근의 모멘트팔 최적화. 반대로 손목 폄근 마비 시 주먹 쥐기 불가."},
+  // 잡기
+  {cat:"잡기분류", catColor:"#D97706", q:"열쇠를 사용할 때 사용하는 잡기 유형은?", opts:["Power grip", "Precision grip", "Key/Lateral pinch", "Hook grip"], ans:2, exp:"Key/Lateral pinch(강력한 집기): 엄지↔집게 가쪽 모서리 사이 큰 힘. 엄지모음근+첫째등쪽뼈사이근 필요. 예: 열쇠 사용, 지갑에서 카드 빼기."},
+  {cat:"잡기분류", catColor:"#D97706", q:"갈고리식 잡기(Hook grip)의 특징은?", opts:["엄지가 필수적으로 참여", "PIP·DIP 부분 굽힘으로 엄지 미사용", "정밀한 조절이 필요", "MCP 과다폄 자세"], ans:1, exp:"갈고리식 잡기: 엄지 미사용, PIP·DIP 부분 굽힘. 장시간 정적 유지에 사용(가방 들기 등). 손가락굽힘근만 주로 사용."},
+  // RA 변형
+  {cat:"RA변형", catColor:"#DC2626", q:"RA에서 자쪽이동(ulnar drift)의 악순환 기전은?", opts:["자쪽이동↑ → 모멘트팔↑ → 더 큰 토크 → 완전 탈구", "자쪽이동↑ → 결인대 강화 → 안정화", "자쪽이동↑ → 내재성 근육 강화", "자쪽이동↑ → 바닥판 강화"], ans:0, exp:"악순환: 자쪽이동↑ → ED힘줄 자쪽으로 이동 → 굽힘 토크 발생 → 모멘트팔↑ → 더 큰 토크 → 완전 탈구"},
+  {cat:"RA변형", catColor:"#DC2626", q:"RA 엄지 지그재그변형에서 CMC·MCP·IP 관절의 자세는?", opts:["CMC(폄) + MCP(굽힘) + IP(폄)", "CMC(굽힘+모음) + MCP(과다폄) + IP(굽힘)", "CMC(벌림) + MCP(굽힘) + IP(과다폄)", "CMC(모음) + MCP(폄) + IP(굽힘)"], ans:1, exp:"엄지 지그재그변형: CMC(굽힘+모음) → 손허리뼈 노쪽 탈구 → MCP(과다폄) → IP(굽힘) = 지그재그"},
+  {cat:"임상종합", catColor:"#1E3A5F", q:"C⁶ 척수손상 환자 재활에서 활용하는 기전은?", opts:["기능적 전기자극", "힘줄고정작용(tenodesis)", "도수적 저항운동", "A₂ 도르래 강화"], ans:1, exp:"C⁶ SCI: 짧은노쪽손목폄근(신경지배 유지) → 능동 손목 폄 → 굽힘근 수동 신장 → tenodesis 작용으로 컵 잡기 가능. 재활의 핵심 기전입니다."}
+];
 
-  <div class="subsection-title">MCP관절 변형 2가지</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title" style="color:var(--red)">바닥쪽탈구 (Palmar dislocation)</div>
-      <ul class="item-list">
-        <li>굽힘근 활시위 힘 → 결인대 파열</li>
-        <li>몸쪽손가락뼈 바닥쪽 탈구</li>
-        <li>손의 세로활·가로활 붕괴</li>
-        <li>→ 손 편평해짐</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title" style="color:var(--accent2)">자쪽이동 (Ulnar drift)</div>
-      <ul class="item-list">
-        <li>자쪽 방향 활시위 힘</li>
-        <li>등쪽덮개 가로섬유 파열</li>
-        <li>ED힘줄 자쪽으로 이동 → 굽힘 토크 발생</li>
-        <li>→ 악순환: 자쪽이동↑ → 모멘트팔↑ → 더 큰 토크 → 완전 탈구</li>
-      </ul>
-    </div>
-  </div>
+// ─── QUIZ ENGINE ───
+let quizInitialized = false;
+let state = {
+  mode: 'quiz',  // 'quiz' or 'review'
+  queue: [],
+  current: 0,
+  answered: 0,
+  correct: 0,
+  wrong: [],   // indices of wrong answers
+  done: false
+};
 
-  <div class="subsection-title" style="margin-top:20px">손가락 RA 변형 2가지 ★★★</div>
-  <div class="vs-grid">
-    <div class="deform-card deform-swan">
-      <div class="deform-title">🦢 백조목변형 (Swan-neck)</div>
-      <div class="deform-posture">
-        <span class="joint-pip-ext">PIP 과다폄</span>
-        <span>+</span>
-        <span class="joint-dip-flex">DIP 굽힘</span>
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initQuiz() {
+  quizInitialized = true;
+  state = { mode: 'quiz', queue: shuffle([...Array(ALL_QUESTIONS.length).keys()]), current: 0, answered: 0, correct: 0, wrong: [], done: false };
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  const isReview = state.mode === 'review';
+  const total = state.queue.length;
+  const pct = total ? Math.round((state.answered / total) * 100) : 0;
+
+  let headerHtml = `
+    <div class="quiz-header">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:18px;font-weight:900">${isReview ? '🔄 오답 재풀기' : '❓ 퀴즈'} <span style="font-size:12px;font-weight:400;opacity:0.7">Chapter 8 · 손</span>${isReview ? '<span class="review-badge">REVIEW</span>' : ''}</div>
+          <div style="font-size:12px;margin-top:4px;opacity:0.7">총 ${total}문제 · ${ALL_QUESTIONS.length}개 핵심 문항 수록</div>
+        </div>
+        <div style="font-size:28px;font-weight:900">${state.correct}<span style="font-size:14px;font-weight:400;opacity:0.7">/${state.answered}</span></div>
       </div>
-      <ul class="item-list">
-        <li>바닥판 과신장·약화</li>
-        <li>내재성 근육 수축·섬유증</li>
-        <li>가쪽띠 등쪽으로 이동</li>
-      </ul>
-      <div style="margin-top:10px; font-size:11px; color:var(--text-dim)">
-        치료: PIP 과다폄 차단 보장구 / 바닥판 복구 또는 전관절성형술
+      <div class="progress-wrap">
+        <div class="progress-label">${state.answered}/${total} 완료 (${pct}%)</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
       </div>
+      <div class="quiz-stats">
+        <div class="quiz-stat"><span>${state.correct}</span>정답</div>
+        <div class="quiz-stat"><span>${state.answered - state.correct}</span>오답</div>
+        <div class="quiz-stat"><span>${total - state.answered}</span>남은 문제</div>
+      </div>
+    </div>`;
+
+  if (state.done) {
+    const score = state.answered > 0 ? Math.round((state.correct / state.answered) * 100) : 0;
+    let msg = score >= 90 ? '🏆 완벽합니다!' : score >= 70 ? '👍 잘했어요!' : '💪 다시 도전해보세요!';
+    area.innerHTML = headerHtml + `
+      <div class="result-banner">
+        <div class="result-score">${score}점</div>
+        <div class="result-label">${state.correct}/${state.answered} 정답 · ${msg}</div>
+        ${state.wrong.length > 0 ? `<div style="margin-top:16px;font-size:13px;color:var(--red)">오답 <strong>${state.wrong.length}문제</strong>가 있습니다.</div>` : ''}
+      </div>
+      <div class="quiz-controls">
+        <button class="btn btn-primary" onclick="restartQuiz()">🔀 전체 다시 풀기</button>
+        ${state.wrong.length > 0 ? `<button class="btn btn-danger" onclick="reviewWrong()">❌ 오답만 다시 풀기 (${state.wrong.length})</button>` : ''}
+      </div>`;
+    return;
+  }
+
+  const qi = state.queue[state.current];
+  const q = ALL_QUESTIONS[qi];
+  const shuffledOpts = shuffle(q.opts.map((o,i) => ({text:o, orig:i})));
+
+  let optsHtml = shuffledOpts.map((o,i) => 
+    `<button class="q-opt" id="opt-${i}" onclick="selectOpt(${i}, ${o.orig}, ${qi})">${o.text}</button>`
+  ).join('');
+
+  area.innerHTML = headerHtml + `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-num">Q${state.current + 1} / ${total}</span>
+        <span class="q-cat" style="background:${q.catColor}22;color:${q.catColor};border:1px solid ${q.catColor}44">${q.cat}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">${optsHtml}</div>
+      <div class="q-explain" id="explain"></div>
     </div>
-    <div class="vs-divider">VS</div>
-    <div class="deform-card deform-bout">
-      <div class="deform-title">🔘 단추구멍변형 (Boutonnière)</div>
-      <div class="deform-posture">
-        <span class="joint-pip-flex">PIP 굽힘</span>
-        <span>+</span>
-        <span class="joint-dip-ext">DIP 과다폄</span>
-      </div>
-      <ul class="item-list">
-        <li>중심띠 + 세모인대 파열</li>
-        <li>가쪽띠 바닥쪽으로 미끄러짐</li>
-        <li>PIP 굽힘시키는 힘으로 전환</li>
-      </ul>
-      <div style="margin-top:10px; font-size:11px; color:var(--text-dim)">
-        치료: PIP 폄 상태 부목 / 중심띠 복구 또는 가쪽띠 재정렬 수술
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="skipQ()">건너뛰기 →</button>
+      <button class="btn btn-secondary" onclick="restartQuiz()">🔀 처음부터</button>
+    </div>`;
+  
+  // store shuffled mapping
+  window._currentShuffle = shuffledOpts;
+}
 
-<!-- ══════════════════════════════════════════════════════
-     SECTION 15: 임상 종합
-══════════════════════════════════════════════════════ -->
-<div class="section" id="s15">
-  <div class="section-header">
-    <span class="section-num">15</span>
-    <h2 class="section-title">임상 종합 — 손상·질환·치료 요약</h2>
-  </div>
+function selectOpt(btnIdx, origIdx, qi) {
+  const q = ALL_QUESTIONS[qi];
+  const correct = q.ans;
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach(o => o.disabled = true);
 
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>병변/상황</th><th>관련 신경/구조</th><th>임상 소견</th><th>치료 원칙</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>정중신경 손상</strong></td>
-          <td>정중신경 (C⁶~T¹)</td>
-          <td>엄지두덩 위축, 맞섬 불가, 원숭이손, 가쪽 3.5지 감각이상</td>
-          <td>신경 감압 또는 봉합 / 엄지두덩 기능 재건</td>
-        </tr>
-        <tr>
-          <td><strong>자신경 손상</strong></td>
-          <td>자신경 (C⁸~T¹)</td>
-          <td>갈퀴 변형(반지·새끼), 새끼두덩 위축, 자쪽 1.5지 감각이상</td>
-          <td>신경 봉합 / MCP 굽힘 보조 보장구</td>
-        </tr>
-        <tr>
-          <td><strong>손목굴증후군(CTS)</strong></td>
-          <td>정중신경 압박</td>
-          <td>야간 통증·감각이상, 엄지두덩 위축, Tinel·Phalen 검사 (+)</td>
-          <td>부목·교육·NSAID → 실패 시 수술적 감압</td>
-        </tr>
-        <tr>
-          <td><strong>방아쇠손가락</strong></td>
-          <td>A₁ 도르래 협착</td>
-          <td>손가락 잠김, 찰각 소리, 결절 촉지</td>
-          <td>보존: 부목·코티손 주사 → 실패 시 A₁ 도르래 절개</td>
-        </tr>
-        <tr>
-          <td><strong>CMC 골관절염</strong></td>
-          <td>엄지 CMC 관절</td>
-          <td>50~60대 여성, 혹(hump) 형성, 노쪽 탈구, 집기 통증</td>
-          <td>부목·NSAID·코티손 → 인대 재건 + 관절성형술</td>
-        </tr>
-        <tr>
-          <td><strong>RA 손 변형</strong></td>
-          <td>MCP·CMC 결합조직</td>
-          <td>바닥쪽탈구, 자쪽이동, 백조목, 단추구멍, 엄지 지그재그</td>
-          <td>관절 보호 교육 / 보장구 / 전관절성형술(TJA)</td>
-        </tr>
-        <tr>
-          <td><strong>C⁶ 척수손상</strong></td>
-          <td>외재성 굽힘근 마비</td>
-          <td>손가락 굽힘 불가, 손목 폄 유지됨</td>
-          <td>힘줄고정 작용(tenodesis) 활용 재활</td>
-        </tr>
-        <tr>
-          <td><strong>갈퀴 변형 치료</strong></td>
-          <td>MCP 과다폄</td>
-          <td>MCP 과다폄 → IP 굽힘 자세</td>
-          <td>MCP 폄 제한 보장구 / 신경 우회 수술</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  if (origIdx === correct) {
+    opts[btnIdx].classList.add('correct');
+    state.correct++;
+  } else {
+    opts[btnIdx].classList.add('wrong');
+    // highlight correct
+    window._currentShuffle.forEach((o, i) => {
+      if (o.orig === correct) opts[i].classList.add('reveal-correct');
+    });
+    state.wrong.push(qi);
+  }
+  state.answered++;
 
-  <div class="subsection-title" style="margin-top:20px">Chapter 8 핵심 원칙 — 최종 요약</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">관절 계층 원칙</div>
-      <div class="flow" style="font-size:11px; margin:0">
-CMC → MCP → IP
-<span class="c-accent">몸쪽(안정)</span> ←————→ <span class="c-green">먼쪽(가동)</span>
-2번·3번 CMC = 중심기둥(안정)
-4번·5번 CMC = 주변부(가동, 맞섬)
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">근육 협력 원칙</div>
-      <div class="flow" style="font-size:11px; margin:0">
-완전한 손가락 <span class="c-green">폄</span>:
-  ED + 벌레근/뼈사이근 협력 필수
+  const explain = document.getElementById('explain');
+  explain.innerHTML = `<strong>해설:</strong> ${q.exp}`;
+  explain.classList.add('show');
 
-완전한 손가락 <span class="c-accent">굽힘</span>:
-  FDP + FDS + 뼈사이근 + 손목폄근
+  // Update header score
+  setTimeout(() => {
+    state.current++;
+    if (state.current >= state.queue.length) { state.done = true; }
+    renderQuiz();
+  }, 1800);
+}
 
-내재성 마비 → <span class="c-red">갈퀴(외재성-플러스)</span>
-내재성 과활성 → <span class="c-yellow">내재성-플러스</span>
-      </div>
-    </div>
-  </div>
-</div>
+function skipQ() {
+  state.current++;
+  if (state.current >= state.queue.length) { state.done = true; }
+  renderQuiz();
+}
 
-</div><!-- /container -->
+function restartQuiz() {
+  state = { mode: 'quiz', queue: shuffle([...Array(ALL_QUESTIONS.length).keys()]), current: 0, answered: 0, correct: 0, wrong: [], done: false };
+  renderQuiz();
+}
 
-<div class="footer">
-  Chapter 8 · Hand (pp.277–327) &nbsp;·&nbsp; 근육뼈대계통의 기능해부학 &nbsp;·&nbsp; 중간고사 완전 정리
-</div>
-
+function reviewWrong() {
+  const wrongQ = [...new Set(state.wrong)];
+  state = { mode: 'review', queue: shuffle(wrongQ), current: 0, answered: 0, correct: 0, wrong: [], done: false };
+  renderQuiz();
+}
+</script>
 </body>
 </html>
