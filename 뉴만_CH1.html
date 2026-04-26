@@ -5,24 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter 1 – 근육뼈대계통 기본 개념</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
 
 :root {
-  --bg: #f5f3ee;
+  --bg: #EEF4FF;
   --card: #ffffff;
-  --navy: #1a2744;
-  --blue: #2d5fa0;
-  --teal: #1a7a6e;
-  --orange: #d4622a;
-  --purple: #6b3d8a;
-  --red: #b03030;
-  --green: #2e7050;
-  --brown: #7a4a1a;
-  --text: #1a1a1a;
-  --text2: #555;
-  --border: #ddd8ce;
-  --tip-bg: #fffbf0;
-  --tip-border: #e8c840;
+  --navy: #1E3A5F;
+  --blue: #2563EB;
+  --blue2: #3B82F6;
+  --teal: #0D9488;
+  --orange: #EA580C;
+  --purple: #7C3AED;
+  --red: #DC2626;
+  --green: #16A34A;
+  --sky: #0EA5E9;
+  --text: #1E293B;
+  --text2: #475569;
+  --border: #CBD5E1;
+  --acc: #DBEAFE;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,170 +30,183 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--bg);
   color: var(--text);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.75;
 }
 
-/* STICKY NAV */
-.topnav {
-  position: sticky; top: 0; z-index: 200;
+/* ── TAB BAR ── */
+.tabbar {
+  position: sticky; top: 0; z-index: 300;
   background: var(--navy);
-  display: flex; align-items: center;
-  padding: 0 14px; height: 46px; gap: 5px;
-  overflow-x: auto;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  display: flex; align-items: stretch;
+  height: 50px;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.35);
 }
-.topnav .ch-badge {
-  background: var(--blue); color: white;
-  font-size: 11px; font-weight: 700;
-  padding: 3px 12px; border-radius: 12px;
-  white-space: nowrap; flex-shrink: 0;
+.tabbar .ch-badge {
+  background: var(--blue);
+  color: white; font-size: 12px; font-weight: 900;
+  padding: 0 18px; display: flex; align-items: center;
+  letter-spacing: 1px; flex-shrink: 0;
+  border-right: 1px solid rgba(255,255,255,0.1);
 }
-.topnav a {
-  color: #aaa; text-decoration: none;
-  font-size: 12px; font-weight: 500;
-  padding: 4px 10px; border-radius: 14px;
-  white-space: nowrap; transition: all 0.15s;
+.tabbar button {
+  background: none; border: none; cursor: pointer;
+  color: #94A3B8; font-size: 13px; font-weight: 600;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 0 20px; height: 100%;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
 }
-.topnav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.tabbar button:hover { color: white; background: rgba(255,255,255,0.06); }
+.tabbar button.active { color: #93C5FD; border-bottom-color: #3B82F6; background: rgba(59,130,246,0.08); }
 
-/* HERO */
+/* ── HERO ── */
 .hero {
-  background: linear-gradient(135deg, #0f1e3a 0%, #1a3560 60%, #0f3a5a 100%);
-  color: white; padding: 44px 20px 36px;
+  background: linear-gradient(135deg, #0F1E3A 0%, #1E3A5F 55%, #163354 100%);
+  color: white; padding: 42px 20px 34px;
   text-align: center; position: relative; overflow: hidden;
 }
 .hero::before {
-  content: ''; position: absolute;
-  top: -40px; right: -40px;
-  width: 220px; height: 220px; border-radius: 50%;
-  background: rgba(45,95,160,0.15);
+  content: ''; position: absolute; top: -50px; right: -50px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
 }
 .hero::after {
-  content: ''; position: absolute;
-  bottom: -30px; left: -30px;
-  width: 160px; height: 160px; border-radius: 50%;
-  background: rgba(26,122,110,0.15);
+  content: ''; position: absolute; bottom: -40px; left: -40px;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(13,148,136,0.18) 0%, transparent 70%);
 }
 .hero .badge {
   display: inline-block;
-  border: 1px solid rgba(100,160,255,0.5);
-  background: rgba(45,95,160,0.3);
-  color: #90c0ff; font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; padding: 4px 18px;
+  border: 1px solid rgba(100,160,255,0.45);
+  background: rgba(59,130,246,0.2);
+  color: #93C5FD; font-size: 11px; font-weight: 700;
+  letter-spacing: 2.5px; padding: 4px 20px;
   border-radius: 20px; margin-bottom: 14px;
+  position: relative; z-index: 1;
 }
-.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
-.hero p { color: #9ab; font-size: 13px; }
+.hero h1 { font-size: 26px; font-weight: 900; margin-bottom: 8px; line-height: 1.3; position: relative; z-index: 1; }
+.hero p { color: #94A3B8; font-size: 13px; position: relative; z-index: 1; }
 .hero-tags {
   display: flex; flex-wrap: wrap;
-  justify-content: center; gap: 6px; margin-top: 18px;
+  justify-content: center; gap: 6px; margin-top: 16px;
+  position: relative; z-index: 1;
 }
 .hero-tags span {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #cde; font-size: 11px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #CBD5E1; font-size: 11.5px;
   padding: 3px 12px; border-radius: 14px;
 }
 
-/* CONTAINER */
-.container { max-width: 880px; margin: 0 auto; padding: 22px 14px 70px; }
+/* ── PANEL ── */
+.panel { display: none; }
+.panel.active { display: block; }
+.container { max-width: 900px; margin: 0 auto; padding: 24px 16px 80px; }
 
-/* BLOCK */
-.block { margin-bottom: 14px; }
-
-.bhead {
-  border-radius: 10px 10px 0 0;
-  padding: 13px 18px;
-  display: flex; align-items: center; gap: 12px;
-  color: white;
+/* ── CLASSIFY TAB ── */
+.toc-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px; margin-bottom: 28px;
 }
-.bhead.blue   { background: var(--blue); }
-.bhead.teal   { background: var(--teal); }
-.bhead.orange { background: var(--orange); }
-.bhead.purple { background: var(--purple); }
-.bhead.red    { background: var(--red); }
-.bhead.green  { background: var(--green); }
-.bhead.navy   { background: var(--navy); }
-.bhead.brown  { background: var(--brown); }
-.bhead.dark   { background: #2a2a3e; }
-
-.bhead .ico { font-size: 22px; flex-shrink: 0; }
-.bhead h2 { font-size: 15px; font-weight: 700; line-height: 1.3; }
-.bhead p { font-size: 11px; opacity: 0.8; margin-top: 2px; }
-
-.bbody {
-  background: var(--card);
+.toc-card {
+  background: white; border-radius: 12px;
   border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 10px 10px;
-  padding: 18px 18px 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(30,58,95,0.06);
+  transition: transform 0.15s, box-shadow 0.15s;
 }
+.toc-card:hover { transform: translateY(-2px); box-shadow: 0 4px 18px rgba(30,58,95,0.13); }
+.toc-card-head {
+  padding: 12px 16px;
+  color: white; display: flex; align-items: center; gap: 10px;
+}
+.toc-card-head .ico { font-size: 20px; }
+.toc-card-head h3 { font-size: 13.5px; font-weight: 700; }
+.toc-card-head p { font-size: 11px; opacity: 0.82; margin-top: 2px; }
+.toc-card-body { padding: 12px 16px; }
+.kw-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+.kw {
+  background: #EFF6FF; border: 1px solid #BFDBFE;
+  color: var(--blue); padding: 2px 9px;
+  border-radius: 10px; font-size: 11px; font-weight: 600;
+}
+.kw.teal { background: #F0FDFA; border-color: #99F6E4; color: var(--teal); }
+.kw.orange { background: #FFF7ED; border-color: #FED7AA; color: var(--orange); }
+.kw.purple { background: #F5F3FF; border-color: #DDD6FE; color: var(--purple); }
+.kw.red { background: #FEF2F2; border-color: #FECACA; color: var(--red); }
+.kw.green { background: #F0FDF4; border-color: #BBF7D0; color: var(--green); }
 
-/* TABLE */
-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
-th {
-  background: #f0ece4; padding: 7px 10px;
+/* TOTAL KW */
+.total-kw-section { background: white; border-radius: 14px; padding: 20px; border: 1px solid var(--border); margin-top: 8px; }
+.total-kw-section h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+/* ── SUMMARY TAB ── */
+.acc-block { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 12px; box-shadow: 0 1px 5px rgba(30,58,95,0.05); }
+.acc-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; cursor: pointer; user-select: none;
+  transition: background 0.15s;
+}
+.acc-head:hover { background: #F8FAFF; }
+.acc-head .ico { font-size: 20px; flex-shrink: 0; }
+.acc-head-text h3 { font-size: 14px; font-weight: 700; }
+.acc-head-text p { font-size: 11.5px; color: var(--text2); margin-top: 1px; }
+.acc-arrow { margin-left: auto; color: var(--text2); font-size: 13px; transition: transform 0.25s; flex-shrink: 0; }
+.acc-arrow.open { transform: rotate(180deg); }
+.acc-body { display: none; padding: 0 18px 18px; border-top: 1px solid #F1F5F9; }
+.acc-body.open { display: block; }
+
+/* content inside acc-body */
+table.ct { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+table.ct th {
+  background: #F1F5F9; padding: 7px 11px;
   text-align: left; font-weight: 700;
   border: 1px solid var(--border);
   font-size: 12px; color: var(--navy);
 }
-td {
-  padding: 7px 10px;
+table.ct td {
+  padding: 7px 11px;
   border: 1px solid var(--border);
   vertical-align: top; font-size: 13px;
 }
-tr:nth-child(even) td { background: #faf9f6; }
-td strong { color: var(--blue); }
-td em { color: var(--teal); font-style: normal; font-weight: 600; }
+table.ct tr:nth-child(even) td { background: #F8FAFF; }
+table.ct td strong { color: var(--blue); }
+table.ct td em { color: var(--teal); font-style: normal; font-weight: 600; }
 
-/* TIP */
-.tip {
-  background: var(--tip-bg);
-  border-left: 4px solid var(--tip-border);
-  padding: 9px 13px; border-radius: 0 8px 8px 0;
-  margin: 9px 0; font-size: 13px; line-height: 1.65;
-}
-.tip strong { color: #9a7010; }
-
-/* FORMULA */
 .formula {
-  background: var(--navy); color: #90c0ff;
-  font-size: 15px; font-weight: 700;
-  padding: 11px 16px; border-radius: 8px;
-  text-align: center; margin: 11px 0;
+  background: var(--navy); color: #93C5FD;
+  font-size: 14.5px; font-weight: 700;
+  padding: 11px 18px; border-radius: 8px;
+  text-align: center; margin: 12px 0;
   font-family: 'Courier New', monospace;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
 }
-
-/* HIGHLIGHT BOX */
+.tip {
+  background: #FFFBEB;
+  border-left: 4px solid #F59E0B;
+  padding: 9px 13px; border-radius: 0 8px 8px 0;
+  margin: 8px 0; font-size: 13px; line-height: 1.65;
+}
+.tip strong { color: #92400E; }
 .hbox {
-  border: 2px solid var(--blue);
-  border-radius: 8px; padding: 12px 14px;
-  background: #f0f5fc; margin: 10px 0;
+  border: 2px solid var(--blue2); border-radius: 8px;
+  padding: 12px 14px; background: #EFF6FF; margin: 10px 0;
 }
 .hbox .ht { font-weight: 700; color: var(--blue); font-size: 13px; margin-bottom: 6px; }
-.hbox.green { border-color: var(--green); background: #f0faf4; }
+.hbox.green { border-color: var(--green); background: #F0FDF4; }
 .hbox.green .ht { color: var(--green); }
-.hbox.orange { border-color: var(--orange); background: #fdf5f0; }
+.hbox.orange { border-color: var(--orange); background: #FFF7ED; }
 .hbox.orange .ht { color: var(--orange); }
-.hbox.red { border-color: var(--red); background: #fdf0f0; }
+.hbox.red { border-color: var(--red); background: #FEF2F2; }
 .hbox.red .ht { color: var(--red); }
-.hbox.teal { border-color: var(--teal); background: #f0faf8; }
+.hbox.teal { border-color: var(--teal); background: #F0FDFA; }
 .hbox.teal .ht { color: var(--teal); }
-
-/* LIST */
-ul.pts { padding-left: 18px; margin: 8px 0; }
-ul.pts li { margin-bottom: 4px; font-size: 13px; color: var(--text2); line-height: 1.6; }
-ul.pts li strong { color: var(--text); }
-
-p.note { font-size: 13px; color: var(--text2); margin-bottom: 7px; line-height: 1.65; }
-
-/* 2 COLUMN GRID */
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 10px 0; }
 .gc {
-  background: #f8f5f0; border: 1px solid var(--border);
+  background: #F8FAFF; border: 1px solid #E2E8F0;
   border-radius: 8px; padding: 12px 13px;
 }
 .gc h4 { font-size: 13px; font-weight: 700; margin-bottom: 7px; }
@@ -203,59 +216,128 @@ p.note { font-size: 13px; color: var(--text2); margin-bottom: 7px; line-height: 
 .gc h4.green { color: var(--green); }
 .gc h4.red { color: var(--red); }
 .gc h4.purple { color: var(--purple); }
-
-/* KEYWORD PILLS */
-.kw-wrap { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
-.kw {
-  background: #eef4fc; border: 1px solid #b8d0f0;
-  color: var(--blue); padding: 3px 10px;
-  border-radius: 12px; font-size: 11.5px; font-weight: 600;
-}
-
-/* DIVIDER */
-.div { height: 1px; background: var(--border); margin: 13px 0; }
-
-/* SUBHEAD */
+ul.pts { padding-left: 18px; margin: 8px 0; }
+ul.pts li { margin-bottom: 4px; font-size: 13px; color: var(--text2); line-height: 1.6; }
+ul.pts li strong { color: var(--text); }
+p.note { font-size: 13px; color: var(--text2); margin-bottom: 7px; line-height: 1.65; }
 .sh {
   font-size: 14px; font-weight: 700; color: var(--navy);
   margin: 14px 0 8px; padding-bottom: 5px;
-  border-bottom: 2px solid #e0dcd4;
+  border-bottom: 2px solid #E2E8F0;
 }
-
-/* BADGE INLINE */
+.div { height: 1px; background: #E2E8F0; margin: 13px 0; }
 .bi {
   display: inline-block; padding: 1px 7px;
   border-radius: 8px; font-size: 11px; font-weight: 700; margin: 0 2px;
 }
-.bi-b { background: #dbeafe; color: #1e40af; }
-.bi-g { background: #dcfce7; color: #166534; }
-.bi-r { background: #fee2e2; color: #991b1b; }
-.bi-o { background: #ffedd5; color: #9a3412; }
+.bi-b { background: #DBEAFE; color: #1E40AF; }
+.bi-g { background: #DCFCE7; color: #166534; }
+.bi-r { background: #FEE2E2; color: #991B1B; }
+
+/* ── QUIZ TAB ── */
+.quiz-wrap { max-width: 700px; margin: 0 auto; }
+.progress-bar-outer {
+  background: #CBD5E1; border-radius: 99px; height: 8px; margin-bottom: 8px;
+}
+.progress-bar-inner {
+  background: linear-gradient(90deg, #2563EB, #0EA5E9);
+  height: 100%; border-radius: 99px; transition: width 0.4s ease;
+}
+.progress-label { font-size: 12.5px; color: var(--text2); margin-bottom: 18px; }
+.score-badge {
+  display: inline-block; background: #DBEAFE; color: #1E40AF;
+  font-size: 12px; font-weight: 700;
+  padding: 3px 12px; border-radius: 20px; margin-left: 8px;
+}
+.q-card {
+  background: white; border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 26px 24px 22px;
+  box-shadow: 0 2px 14px rgba(30,58,95,0.08);
+  animation: qfade 0.25s ease;
+}
+@keyframes qfade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.q-num { font-size: 12px; color: var(--text2); font-weight: 600; margin-bottom: 6px; }
+.q-cat {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 2px 9px; border-radius: 10px; margin-bottom: 12px;
+  background: #EFF6FF; color: var(--blue); border: 1px solid #BFDBFE;
+}
+.q-text { font-size: 15px; font-weight: 600; line-height: 1.6; margin-bottom: 20px; }
+.q-options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+.q-opt {
+  background: #F8FAFF; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 11px 16px;
+  cursor: pointer; font-size: 13.5px;
+  transition: all 0.15s; text-align: left;
+  line-height: 1.5;
+}
+.q-opt:hover:not(:disabled) { background: #EFF6FF; border-color: #93C5FD; }
+.q-opt.selected-correct { background: #F0FDF4; border-color: #4ADE80; color: #166534; font-weight: 600; }
+.q-opt.selected-wrong { background: #FEF2F2; border-color: #FCA5A5; color: #991B1B; font-weight: 600; }
+.q-opt.reveal-correct { background: #F0FDF4; border-color: #4ADE80; color: #166534; font-weight: 600; }
+.q-opt:disabled { cursor: default; }
+.q-feedback {
+  padding: 12px 16px; border-radius: 10px; font-size: 13px;
+  line-height: 1.65; margin-bottom: 16px; display: none;
+}
+.q-feedback.correct { background: #F0FDF4; border: 1px solid #86EFAC; color: #166534; }
+.q-feedback.wrong { background: #FEF2F2; border: 1px solid #FCA5A5; color: #991B1B; }
+.q-feedback.show { display: block; }
+.q-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.btn-next {
+  background: var(--navy); color: white;
+  border: none; border-radius: 10px;
+  padding: 10px 24px; font-size: 13.5px; font-weight: 700;
+  cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: background 0.15s;
+}
+.btn-next:hover { background: var(--blue); }
+.btn-next:disabled { background: #94A3B8; cursor: default; }
+
+/* result screen */
+.result-screen {
+  background: white; border-radius: 16px;
+  padding: 36px 28px; text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 14px rgba(30,58,95,0.08);
+}
+.result-screen .big-score { font-size: 56px; font-weight: 900; color: var(--navy); line-height: 1; }
+.result-screen .sub { font-size: 16px; color: var(--text2); margin: 8px 0 22px; }
+.btn-retry, .btn-retry-wrong {
+  border: none; border-radius: 10px;
+  padding: 11px 26px; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.15s; margin: 5px;
+}
+.btn-retry { background: var(--navy); color: white; }
+.btn-retry:hover { background: var(--blue); }
+.btn-retry-wrong { background: #FEF2F2; color: var(--red); border: 2px solid #FCA5A5; }
+.btn-retry-wrong:hover { background: #FEE2E2; }
+.wrong-count-badge {
+  display: inline-block; background: #FEE2E2; color: var(--red);
+  font-size: 13px; font-weight: 700;
+  padding: 5px 16px; border-radius: 20px; margin-top: 10px;
+}
 
 @media (max-width: 600px) {
   .g2, .g3 { grid-template-columns: 1fr; }
   .hero h1 { font-size: 21px; }
-  table { font-size: 12px; }
+  table.ct { font-size: 12px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .q-text { font-size: 14px; }
+  .tabbar button { padding: 0 12px; font-size: 12px; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="topnav">
+<!-- TAB BAR -->
+<nav class="tabbar">
   <span class="ch-badge">Ch.1</span>
-  <a href="#s1">힘의기본</a>
-  <a href="#s2">부하종류</a>
-  <a href="#s3">변형력-변형률</a>
-  <a href="#s4">점탄성·크리프</a>
-  <a href="#s5">내적·외적힘</a>
-  <a href="#s6">힘벡터</a>
-  <a href="#s7">지레</a>
-  <a href="#s8">근육작용용어</a>
-  <a href="#s9">등척성·동심·편심</a>
-  <a href="#s10">토크·지레작용</a>
-  <a href="#s11">생산적대항</a>
-  <a href="#keywords">핵심키워드</a>
+  <button class="active" onclick="switchTab('classify',this)">📋 분류/개요</button>
+  <button onclick="switchTab('summary',this)">📖 요약</button>
+  <button onclick="switchTab('quiz',this)">❓ 퀴즈</button>
 </nav>
 
 <!-- HERO -->
@@ -270,533 +352,659 @@ p.note { font-size: 13px; color: var(--text2); margin-bottom: 7px; line-height: 
   </div>
 </div>
 
+<!-- ═══════════════ CLASSIFY TAB ═══════════════ -->
+<div id="tab-classify" class="panel active">
+<div class="container">
+  <div class="toc-grid">
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #2563EB;">
+        <span class="ico">⚡</span>
+        <div><h3>① 힘(Force)의 기본 개념</h3><p>F=ma · 뉴턴 제2법칙 · 단위</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw">F=ma</span><span class="kw">1N=1kg×m/s²</span><span class="kw">1lb=4.448N</span>
+          <span class="kw">부하(load)</span><span class="kw">내재적장력</span><span class="kw">질량vs무게</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #0D9488;">
+        <span class="ico">🔧</span>
+        <div><h3>② 부하의 종류 6가지</h3><p>Tension · Compression · Bending · Shear · Torsion · Combined</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw teal">장력(Tension)</span><span class="kw teal">압박(Compression)</span>
+          <span class="kw teal">굽힘(Bending)</span><span class="kw teal">전단(Shear)</span>
+          <span class="kw teal">비틀림(Torsion)</span><span class="kw teal">결합된부하</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #EA580C;">
+        <span class="ico">📈</span>
+        <div><h3>③ 변형력-변형률 곡선</h3><p>Elastic vs Plastic · Stiffness · 에너지</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw orange">비선형(toe)영역</span><span class="kw orange">선형영역</span>
+          <span class="kw orange">Stiffness=Y/X</span><span class="kw orange">탄성영역</span>
+          <span class="kw orange">가소성영역</span><span class="kw orange">항복점</span>
+          <span class="kw orange">최종파열점</span><span class="kw orange">ACL=3~4%</span>
+          <span class="kw orange">힘줄=8~13%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #334155;">
+        <span class="ico">🌿</span>
+        <div><h3>④ 점탄성 & 크리프</h3><p>시간의존성 · 속도민감성 · 댐핑기전</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw">점탄성(Viscoelastic)</span><span class="kw">크리프(Creep)</span>
+          <span class="kw">속도↑=뻣뻣함↑</span><span class="kw">댐핑기전</span>
+          <span class="kw">탄성=에너지저장</span><span class="kw">플라이오메트릭</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #2563EB;">
+        <span class="ico">💪</span>
+        <div><h3>⑤ 내적·외적인 힘</h3><p>능동·수동 / 중력·외적 부하</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw">내적힘=근육·결합조직</span><span class="kw">외적힘=중력·부하</span>
+          <span class="kw">능동적힘(근육)</span><span class="kw">수동적힘(결합조직)</span>
+          <span class="kw">능동>수동</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #0D9488;">
+        <span class="ico">➡️</span>
+        <div><h3>⑥ 힘 벡터의 4가지 요소</h3><p>크기·방위·방향·작용점</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw teal">크기(magnitude)</span><span class="kw teal">공간적방위</span>
+          <span class="kw teal">방향(direction)</span><span class="kw teal">작용점</span>
+          <span class="kw teal">벡터=크기+방향</span><span class="kw teal">스칼라=크기만</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #DC2626;">
+        <span class="ico">⚖️</span>
+        <div><h3>⑦ 근육뼈대 지레</h3><p>3가지 유형 · 역학적 이득(MA)</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw red">제1형(드묾)</span><span class="kw red">제2형(매우드묾)</span>
+          <span class="kw red">제3형(가장흔함)</span><span class="kw red">MA=IMA/EMA</span>
+          <span class="kw red">MA&lt;1=대부분근육</span><span class="kw red">W×WD=F×FD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #16A34A;">
+        <span class="ico">🦾</span>
+        <div><h3>⑧ 근육작용 관련 용어</h3><p>작용근·대항근·협동근·짝힘</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw green">작용근(Agonist)</span><span class="kw green">대항근(Antagonist)</span>
+          <span class="kw green">협동근(Synergist)</span><span class="kw green">짝힘(Force-couple)</span>
+          <span class="kw green">모멘트팔</span><span class="kw green">돌림운동</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #7C3AED;">
+        <span class="ico">🔄</span>
+        <div><h3>⑨ 근육활성의 3가지 유형</h3><p>등척성 · 동심성 · 편심성</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw purple">IF=EF→등척성</span><span class="kw purple">IF&gt;EF→동심성</span>
+          <span class="kw purple">IF&lt;EF→편심성</span><span class="kw purple">수축=활성동의어</span>
+          <span class="kw purple">근육짧아짐(동심)</span><span class="kw purple">근육길어짐(편심)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #92400E;">
+        <span class="ico">🔩</span>
+        <div><h3>⑩ 토크 & 모멘트팔</h3><p>지레작용·임상 적용</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw orange">토크=힘×모멘트팔</span><span class="kw orange">지레작용</span>
+          <span class="kw orange">내적모멘트팔</span><span class="kw orange">관절안정성</span>
+          <span class="kw orange">도수치료적용</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc-card">
+      <div class="toc-card-head" style="background: #1E3A5F;">
+        <span class="ico">🌱</span>
+        <div><h3>⑪ 생산적 대항작용</h3><p>수동장력을 유용한 일로 전환</p></div>
+      </div>
+      <div class="toc-card-body">
+        <div class="kw-wrap">
+          <span class="kw">생산적대항작용</span><span class="kw">수동장력=에너지저장</span>
+          <span class="kw">넙다리곧은근예시</span><span class="kw">추진력보조</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end toc-grid -->
+
+  <div class="total-kw-section">
+    <h3>🔑 Chapter 1 핵심 키워드 전체</h3>
+    <div class="kw-wrap">
+      <span class="kw">F=ma</span><span class="kw">1N=1kg×1m/sec²</span><span class="kw">1lb=4.448N</span>
+      <span class="kw">부하(load)</span><span class="kw">내재적장력</span>
+      <span class="kw teal">Tension·Compression</span><span class="kw teal">Bending·Shear·Torsion</span><span class="kw teal">Combined loading</span>
+      <span class="kw orange">비선형(toe)영역</span><span class="kw orange">선형영역</span><span class="kw orange">Stiffness=Y/X</span>
+      <span class="kw orange">탄성영역=원상태복귀</span><span class="kw orange">가소성영역=돌아오지않음</span>
+      <span class="kw orange">항복점(Yield point)</span><span class="kw orange">최종파열점</span>
+      <span class="kw orange">탄성변형에너지=방출</span><span class="kw orange">ACL=3~4%신장</span><span class="kw orange">힘줄=8~13%파열</span>
+      <span class="kw">크리프(Creep)</span><span class="kw">점탄성(Viscoelastic)</span><span class="kw">속도↑=뻣뻣함↑</span><span class="kw">댐핑기전</span>
+      <span class="kw">내적힘=근육·결합조직</span><span class="kw">외적힘=중력·부하</span>
+      <span class="kw teal">벡터=크기+방향</span><span class="kw teal">스칼라=크기만</span><span class="kw teal">힘벡터4요소</span>
+      <span class="kw red">지레3형=가장흔함</span><span class="kw red">지레2형=가장드묾</span><span class="kw red">MA=IMA/EMA</span><span class="kw red">MA&lt;1=대부분근육</span>
+      <span class="kw green">작용근(Agonist)</span><span class="kw green">대항근(Antagonist)</span><span class="kw green">협동근(Synergist)</span><span class="kw green">짝힘(Force-couple)</span>
+      <span class="kw purple">IF=EF→등척성</span><span class="kw purple">IF&gt;EF→동심성</span><span class="kw purple">IF&lt;EF→편심성</span><span class="kw purple">수축=활성의동의어</span>
+      <span class="kw orange">토크=힘×모멘트팔</span><span class="kw orange">지레작용=모멘트팔길이</span>
+      <span class="kw">생산적대항작용</span><span class="kw">수동장력=에너지저장</span>
+    </div>
+  </div>
+
+</div>
+</div><!-- end classify -->
+
+<!-- ═══════════════ SUMMARY TAB ═══════════════ -->
+<div id="tab-summary" class="panel">
 <div class="container">
 
-<!-- ① 힘의 기본 개념 -->
-<div class="block" id="s1">
-  <div class="bhead blue">
-    <span class="ico">⚡</span>
-    <div><h2>힘(Force)의 기본 개념</h2><p>F = ma · 뉴턴의 제2법칙 · 단위</p></div>
-  </div>
-  <div class="bbody">
-    <div class="formula">F = ma &nbsp;|&nbsp; 1 N = 1 kg × 1 m/sec² &nbsp;|&nbsp; 1 lb = 4.448 N</div>
-    <ul class="pts">
-      <li>힘 = <strong>push(밀기)</strong> 또는 <strong>pull(당김)</strong> → 움직임을 만들거나, 정지시키거나, 수정</li>
-      <li>목적: 물체의 <strong>움직임 또는 안정성</strong>을 위한 궁극적인 추진력 제공</li>
-      <li>힘(F)의 양 = 밀기나 당김을 받는 <strong>질량(m) × 가속도(a)</strong></li>
-      <li>질량의 가속도가 제로일 때 → 힘은 제로</li>
-      <li>신체에 작용하는 힘 = 일반적으로 <strong>부하(load)</strong></li>
-    </ul>
-    <div class="div"></div>
-    <div class="g2">
-      <div class="gc">
-        <h4 class="blue">신체에 작용하는 힘 (부하)</h4>
-        <ul class="pts">
-          <li>신체를 움직이게 하거나 고정·안정</li>
-          <li>신체에 <strong>변형이나 손상을 줄 가능성</strong></li>
-          <li>건강한 조직 → 힘에 <strong>부분적 저항</strong> 가능</li>
-        </ul>
-      </div>
-      <div class="gc">
-        <h4 class="teal">내재적 장력 (Intrinsic Tension)</h4>
-        <ul class="pts">
-          <li>건강한 인대를 신장시키는 힘 → 길어진 조직 내에서 발생한 내재적 장력을 만나 저항</li>
-          <li>약화된 조직 → 부하에 적절히 저항 불가</li>
-        </ul>
-      </div>
+  <!-- S1 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">⚡</span>
+      <div class="acc-head-text"><h3>① 힘(Force)의 기본 개념</h3><p>F=ma · 뉴턴 제2법칙 · 단위</p></div>
+      <span class="acc-arrow">▼</span>
     </div>
-    <div class="tip"><strong>💡 질량 vs 무게:</strong> 킬로그램(kg) = 질량의 단위 (무게 단위 ≠) / 중력 하에서 1 kg 질량 = 약 9.8 N (2.2 lb)의 무게 / 에베레스트 정상 중력가속도 = 9.782 m/sec² (해수면 9.806 m/sec²보다 낮음)</div>
-  </div>
-</div>
-
-<!-- ② 부하의 종류 -->
-<div class="block" id="s2">
-  <div class="bhead teal">
-    <span class="ico">🔧</span>
-    <div><h2>부하의 종류 6가지 (그림 1.12)</h2><p>Tension · Compression · Bending · Shear · Torsion · Combined</p></div>
-  </div>
-  <div class="bbody">
-    <table>
-      <tr><th>종류</th><th>영문</th><th>설명</th><th>임상 예시</th></tr>
-      <tr><td><strong>무부하</strong></td><td>Unloaded</td><td>힘이 없는 상태</td><td>—</td></tr>
-      <tr><td><strong>장력</strong></td><td>Tension</td><td>당기는 힘 (조직 늘어남)</td><td>인대 신장</td></tr>
-      <tr><td><strong>압박</strong></td><td>Compression</td><td>누르는 힘 (짓눌림)</td><td>척추 압박</td></tr>
-      <tr><td><strong>굽힘</strong></td><td>Bending</td><td>구부러지는 힘</td><td>뼈 굽힘</td></tr>
-      <tr><td><strong>전단</strong></td><td>Shear</td><td>평행하게 어긋나는 힘</td><td>관절면 전단력</td></tr>
-      <tr><td><strong>비틀림</strong></td><td>Torsion</td><td>회전 방향으로 비트는 힘</td><td>나선형 골절</td></tr>
-      <tr><td><strong>결합된 부하</strong></td><td>Combined loading</td><td>위 여러 힘의 복합 작용</td><td>비틀림+압박</td></tr>
-    </table>
-    <div class="tip"><strong>💡 임상 예시:</strong> 골다공증(osteoporosis)으로 약화된 <strong>넙다리뼈목(femoral neck)</strong> 부위는 낙상 충격에 의한 비틀림·전단·굽힘에 의해 골절 위험↑</div>
-    <div class="tip"><strong>💡 결합된 부하:</strong> 비틀림과 압박이 결합된 형태의 부하도 흔히 발생 (그림 1.12)</div>
-  </div>
-</div>
-
-<!-- ③ 변형력-변형률 곡선 -->
-<div class="block" id="s3">
-  <div class="bhead orange">
-    <span class="ico">📈</span>
-    <div><h2>변형력-변형률 곡선 (그림 1.13)</h2><p>Elastic vs Plastic · Stiffness · 에너지 개념</p></div>
-  </div>
-  <div class="bbody">
-    <div class="g2">
-      <div class="gc">
-        <h4 class="orange">Y축: 변형력(Stress)</h4>
-        <p class="note">단위: N/mm²<br>조직에 가해지는 힘의 강도</p>
-      </div>
-      <div class="gc">
-        <h4 class="blue">X축: 변형률(Strain)</h4>
-        <p class="note">단위: %<br>실험 전 원래 길이에 대한 신장된 길이의 증가비율</p>
-      </div>
-    </div>
-
-    <table>
-      <tr><th>구간</th><th>이름</th><th>특징</th><th>임상 의미</th></tr>
-      <tr>
-        <td>초기 완만한 구간</td>
-        <td><strong>비선형(toe) 영역</strong><br>발꿀 영역</td>
-        <td>아교섬유 꼬불꼬불 → 팽팽해질 때까지 작은 장력 발생 / 조직 내 아교섬유가 처음에 물결·주름 모양</td>
-        <td>뚜렷한 장력 측정되기 전에 팽팽하게 당길 수 있는 지점까지</td>
-      </tr>
-      <tr>
-        <td>직선 구간</td>
-        <td><strong>선형(Linear) 영역</strong></td>
-        <td>변형력↑ = 변형률↑ 비례<br><strong>Y/X = Stiffness(뻣뻣함) = Young's 계수</strong></td>
-        <td>인대에 있어 변형률(X)에 대한 변형력(Y)의 비율은 그 물질의 뻣뻣함을 나타냄</td>
-      </tr>
-      <tr>
-        <td>비선형+선형 합쳐서</td>
-        <td><strong>탄성 영역 (Elastic region)</strong></td>
-        <td>힘 제거 시 <strong>원래 상태로 복귀 ✅</strong><br>생리학적 범위 내</td>
-        <td>앞십자인대(ACL): 일상활동 시 약 3~4% 신장 (탄성영역 내)</td>
-      </tr>
-      <tr>
-        <td>항복점(Yield point) 이후</td>
-        <td><strong>가소성 영역 (Plastic region)</strong></td>
-        <td>힘 제거해도 <strong>원래대로 돌아오지 않음 ❌</strong><br>미세 파열 시작</td>
-        <td>변형률이 증가되어도 변형력의 증가는 단지 미미한 정도</td>
-      </tr>
-      <tr>
-        <td>마지막 지점</td>
-        <td><strong>최종파열점 (Ultimate failure point)</strong></td>
-        <td>조직이 부분 또는 완전히 분리<br>장력 유지 능력 완전 상실</td>
-        <td>건강한 힘줄: 8~13% 이상 신장 시 파열</td>
-      </tr>
-    </table>
-
-    <div class="div"></div>
-    <div class="hbox">
-      <div class="ht">⚡ 에너지 개념 (탄성 vs 가소성 변형에너지)</div>
+    <div class="acc-body">
+      <div class="formula">F = ma &nbsp;|&nbsp; 1 N = 1 kg × 1 m/sec² &nbsp;|&nbsp; 1 lb = 4.448 N</div>
+      <ul class="pts">
+        <li>힘 = <strong>push(밀기)</strong> 또는 <strong>pull(당김)</strong> → 움직임을 만들거나, 정지시키거나, 수정</li>
+        <li>신체에 작용하는 힘 = 일반적으로 <strong>부하(load)</strong></li>
+        <li>질량의 가속도가 제로일 때 → 힘은 제로</li>
+      </ul>
       <div class="g2">
-        <div>
-          <p class="note"><strong>탄성변형에너지:</strong> 탄성영역 아래 면적 → 힘 제거 시 <strong>방출</strong> / 조직을 변형시키는 데 사용된 대부분의 에너지는 힘이 제거될 때 방출됨</p>
+        <div class="gc">
+          <h4 class="blue">신체에 작용하는 힘 (부하)</h4>
+          <ul class="pts">
+            <li>신체를 움직이게 하거나 고정·안정</li>
+            <li>신체에 <strong>변형이나 손상을 줄 가능성</strong></li>
+            <li>건강한 조직 → 힘에 <strong>부분적 저항</strong> 가능</li>
+          </ul>
         </div>
-        <div>
-          <p class="note"><strong>가소성변형에너지:</strong> 가소성영역 면적 → 힘 제거해도 <strong>원래 상태로 회복 불가</strong> / 변형을 제공하는 힘이 제거되어도 원래의 상태로 되돌아갈 수 없음</p>
+        <div class="gc">
+          <h4 class="teal">내재적 장력 (Intrinsic Tension)</h4>
+          <ul class="pts">
+            <li>인대를 신장시키는 힘 → 길어진 조직 내 내재적 장력으로 저항</li>
+            <li>약화된 조직 → 부하에 적절히 저항 불가</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip"><strong>💡 질량 vs 무게:</strong> 킬로그램(kg) = 질량의 단위 / 중력 하에서 1 kg 질량 = 약 9.8 N (2.2 lb)의 무게</div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">🔧</span>
+      <div class="acc-head-text"><h3>② 부하의 종류 6가지</h3><p>Tension · Compression · Bending · Shear · Torsion · Combined</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <table class="ct">
+        <tr><th>종류</th><th>영문</th><th>설명</th><th>임상 예시</th></tr>
+        <tr><td><strong>장력</strong></td><td>Tension</td><td>당기는 힘 (조직 늘어남)</td><td>인대 신장</td></tr>
+        <tr><td><strong>압박</strong></td><td>Compression</td><td>누르는 힘 (짓눌림)</td><td>척추 압박</td></tr>
+        <tr><td><strong>굽힘</strong></td><td>Bending</td><td>구부러지는 힘</td><td>뼈 굽힘</td></tr>
+        <tr><td><strong>전단</strong></td><td>Shear</td><td>평행하게 어긋나는 힘</td><td>관절면 전단력</td></tr>
+        <tr><td><strong>비틀림</strong></td><td>Torsion</td><td>회전 방향으로 비트는 힘</td><td>나선형 골절</td></tr>
+        <tr><td><strong>결합된 부하</strong></td><td>Combined loading</td><td>여러 힘의 복합 작용</td><td>비틀림+압박</td></tr>
+      </table>
+      <div class="tip"><strong>💡 임상:</strong> 골다공증으로 약화된 <strong>넙다리뼈목(femoral neck)</strong>은 낙상 충격에 의한 비틀림·전단·굽힘에 의해 골절 위험↑</div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">📈</span>
+      <div class="acc-head-text"><h3>③ 변형력-변형률 곡선</h3><p>Elastic vs Plastic · Stiffness · 에너지 개념</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="g2">
+        <div class="gc"><h4 class="orange">Y축: 변형력(Stress)</h4><p class="note">단위: N/mm² — 조직에 가해지는 힘의 강도</p></div>
+        <div class="gc"><h4 class="blue">X축: 변형률(Strain)</h4><p class="note">단위: % — 원래 길이 대비 신장된 길이의 증가비율</p></div>
+      </div>
+      <table class="ct">
+        <tr><th>구간</th><th>이름</th><th>특징</th><th>임상 의미</th></tr>
+        <tr><td>초기 완만</td><td><strong>비선형(toe) 영역</strong></td><td>아교섬유 꼬불꼬불 → 팽팽해질 때까지 작은 장력</td><td>뚜렷한 장력 전 팽팽한 지점</td></tr>
+        <tr><td>직선 구간</td><td><strong>선형(Linear) 영역</strong></td><td>변형력↑ = 변형률↑ 비례 / <strong>Y/X = Stiffness</strong></td><td>물질의 뻣뻣함 나타냄</td></tr>
+        <tr><td>비선형+선형</td><td><strong>탄성 영역</strong></td><td>힘 제거 시 <strong>원래 상태 복귀 ✅</strong></td><td>ACL: 일상활동 시 약 3~4% 신장</td></tr>
+        <tr><td>항복점 이후</td><td><strong>가소성 영역</strong></td><td>힘 제거해도 <strong>돌아오지 않음 ❌</strong></td><td>미세 파열 시작</td></tr>
+        <tr><td>마지막 지점</td><td><strong>최종파열점</strong></td><td>조직 부분/완전 분리</td><td>건강한 힘줄: 8~13% 이상 파열</td></tr>
+      </table>
+      <div class="hbox">
+        <div class="ht">⚡ 에너지 개념</div>
+        <div class="g2">
+          <div><p class="note"><strong>탄성변형에너지:</strong> 탄성영역 아래 면적 → 힘 제거 시 <strong>방출</strong></p></div>
+          <div><p class="note"><strong>가소성변형에너지:</strong> 가소성영역 면적 → 힘 제거해도 <strong>회복 불가</strong></p></div>
+        </div>
+      </div>
+      <div class="tip"><strong>💡 핵심 암기:</strong> Elastic = 원상태 복귀 / Plastic = 돌아오지 않음</div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">🌿</span>
+      <div class="acc-head-text"><h3>④ 점탄성(Viscoelasticity) & 크리프(Creep)</h3><p>시간의존성 · 속도민감성 · 댐핑기전</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <table class="ct">
+        <tr><th>개념</th><th>정의</th><th>예시</th></tr>
+        <tr><td><strong>크리프 (Creep)</strong></td><td>일정 부하 하에서 나타나는 물질의 <strong>점진적 변형률</strong></td><td>아침에 키가 저녁보다 큰 이유 → 낮 동안 척추 압박 누적</td></tr>
+        <tr><td><strong>속도-민감성</strong></td><td>부하 적용 속도 빠를수록 탄성범위 내 경사도 증가</td><td>뛸 때 관절연골이 더 뻣뻣해짐 → 뼈 보호 기능↑</td></tr>
+        <tr><td><strong>탄성(Elasticity)</strong></td><td>신장된 근육조직은 에너지 일시 저장 → 방출 시 힘 증대</td><td>플라이오메트릭운동의 중요한 요소</td></tr>
+        <tr><td><strong>제동기전 (Damping)</strong></td><td>탄성이 구조적 요소들을 보호하는 제동기전으로 작용</td><td>최대로 길어질 때 발생할 수 있는 근육 손상 방지</td></tr>
+      </table>
+      <div class="tip"><strong>💡 댐핑 기전:</strong> 저장된 에너지는 근육이 최대로 길어질 때 발생할 수 있는 손상을 방지하는 데 도움이 된다</div>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">💪</span>
+      <div class="acc-head-text"><h3>⑤ 내적인 힘(IF) vs 외적인 힘(EF)</h3><p>능동·수동 / 중력·외적 부하</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="g2">
+        <div class="gc">
+          <h4 class="blue">내적인 힘 (Internal Force)</h4>
+          <ul class="pts">
+            <li><strong>능동적</strong> = 자극된 <strong>근육</strong>에 의해 발생</li>
+            <li><strong>수동적</strong> = 신장된 관절주위 결합조직의 장력 (인대, 관절주머니, 근육속 결합조직)</li>
+            <li>능동적 힘 > 수동적 힘 (내적인 힘 중 <strong>가장 큼</strong>)</li>
+          </ul>
+        </div>
+        <div class="gc">
+          <h4 class="orange">외적인 힘 (External Force)</h4>
+          <ul class="pts">
+            <li>신체 <strong>외부</strong>에서 작용하는 힘</li>
+            <li>주로 <strong>중력(gravity)</strong> 또는 외적 부하</li>
+            <li>예: 가방, 자유무게, 치료사의 신체적 접촉</li>
+          </ul>
         </div>
       </div>
     </div>
-
-    <div class="tip"><strong>💡 핵심 암기:</strong> Elastic = 원상태 복귀 / Plastic = 돌아오지 않음</div>
-    <div class="tip"><strong>💡 임상 포인트:</strong> 교적 젊은 인대는 일단 변형을 제공하는 힘이 제거되면 원래의 길이(또는 형태)로 되돌아온다는 것에 주목하는 것은 중요하다</div>
   </div>
-</div>
 
-<!-- ④ 점탄성·크리프 -->
-<div class="block" id="s4">
-  <div class="bhead dark">
-    <span class="ico">🌿</span>
-    <div><h2>점탄성(Viscoelasticity) & 크리프(Creep)</h2><p>시간의존성 · 속도민감성 · 댐핑기전</p></div>
+  <!-- S6 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">➡️</span>
+      <div class="acc-head-text"><h3>⑥ 힘 벡터의 4가지 요소</h3><p>크기·공간적방위·방향·작용점</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <table class="ct">
+        <tr><th>#</th><th>요소</th><th>설명</th></tr>
+        <tr><td>①</td><td><strong>크기(magnitude)</strong></td><td>화살대의 <strong>길이</strong>로 나타냄</td></tr>
+        <tr><td>②</td><td><strong>공간적 방위(spatial orientation)</strong></td><td>화살대의 <strong>위치</strong></td></tr>
+        <tr><td>③</td><td><strong>방향(direction)</strong></td><td>화살촉이 향하는 쪽</td></tr>
+        <tr><td>④</td><td><strong>작용점(point of application)</strong></td><td>힘이 적용되는 위치</td></tr>
+      </table>
+      <div class="g2">
+        <div class="gc"><h4 class="blue">벡터(Vector)</h4><p class="note"><strong>크기 + 방향</strong> 모두 가진 물리량 (예: 힘, 속도, 가속도)</p></div>
+        <div class="gc"><h4 class="orange">스칼라(Scalar)</h4><p class="note"><strong>크기만</strong> 가진 물리량 (예: 질량, 속력, 온도)</p></div>
+      </div>
+    </div>
   </div>
-  <div class="bbody">
-    <p class="note">근육뼈대계통 내에 있는 대부분의 조직들은 적어도 어느 정도의 <strong>점탄성(viscoelastic)</strong>을 나타낸다. 점탄성 물질의 한 현상이 <strong>크리프(creep)</strong>이다.</p>
 
-    <table>
-      <tr><th>개념</th><th>정의</th><th>예시</th></tr>
-      <tr>
-        <td><strong>크리프 (Creep)</strong></td>
-        <td>일정 시간 동안 일정한 부하가 가해질 때 나타나는 물질의 <strong>점진적 변형률</strong></td>
-        <td>아침에 키가 저녁보다 큰 이유 → 낮 동안 척추에 압박 누적 → 체액 척추원반 밖으로 짜내짐</td>
-      </tr>
-      <tr>
-        <td><strong>속도-민감성</strong></td>
-        <td>장력이나 압박이 가해질 때, 부하의 적용 속도가 빠를수록 변형력-변형률 관계의 경사도는 탄성범위 내에서 증가</td>
-        <td>뛸 때 관절연골이 더 뻣뻣해짐 → 뼈 보호 기능↑ / 봉우리밑 공간 내 연골 뻣뻣해짐</td>
-      </tr>
-      <tr>
-        <td><strong>탄성(Elasticity)</strong></td>
-        <td>신장된 근육조직은 에너지의 일부를 일시적으로 저장 가능 → 저장된 에너지가 방출될 때 근육의 전반적인 힘은 증대될 수 있다</td>
-        <td>플라이오메트릭운동(plyometric exercise)의 중요한 요소</td>
-      </tr>
-      <tr>
-        <td><strong>제동기전 (Damping)</strong></td>
-        <td>탄성은 근육과 힘줄의 구조적 요소들을 보호하는 제동기전으로서 역할 수행</td>
-        <td>최대로 길어질 때 발생할 수 있는 근육 손상 방지</td>
-      </tr>
-    </table>
-    <div class="tip"><strong>💡 댐핑 기전:</strong> 비록 중간 정도 신장된 근육으로부터 저장된 에너지가 근육의 최대 힘과 비교했을 때 비교적 작기는 하지만, 저장된 에너지는 최대로 길어질 때 발생할 수 있는 근육의 손상을 방지하는 데 도움이 된다</div>
+  <!-- S7 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">⚖️</span>
+      <div class="acc-head-text"><h3>⑦ 근육뼈대 지레 (Lever System)</h3><p>3가지 유형 · 역학적 이득(MA)</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="formula">W × WD = F × FD &nbsp;&nbsp;|&nbsp;&nbsp; MA = IMA(내적모멘트팔) ÷ EMA(외적모멘트팔)</div>
+      <div class="sh">지레 3가지 유형 비교</div>
+      <table class="ct">
+        <tr><th>유형</th><th>돌림축 위치</th><th>MA</th><th>빈도</th><th>인체 예시</th></tr>
+        <tr><td><strong>제1형</strong></td><td>두 힘 <strong>사이</strong></td><td>= 1, &lt;1, &gt;1 (가변)</td><td>드묾</td><td>머리-목 폄근 (시상면 균형)</td></tr>
+        <tr><td><strong>제2형</strong></td><td>외적인 힘 끝</td><td>항상 <strong>&gt; 1</strong></td><td><strong>매우 드묾</strong></td><td>발가락 끝으로 서기 (장딴지근)</td></tr>
+        <tr><td><strong>제3형</strong></td><td>내적인 힘 끝</td><td>항상 <strong>&lt; 1</strong></td><td><strong>가장 흔함</strong></td><td>팔꿈치 굽힘근(두갈래근), 네갈래근</td></tr>
+      </table>
+      <div class="sh">역학적 이득(MA) 해석</div>
+      <table class="ct">
+        <tr><th>MA 값</th><th>의미</th><th>예시</th></tr>
+        <tr><td><strong>MA &gt; 1</strong></td><td>작은 근육 힘으로 큰 토크 생성 가능 (유리)</td><td>제2형 지레</td></tr>
+        <tr><td><strong>MA &lt; 1</strong></td><td>근육이 외적인 힘보다 더 큰 힘 생산 필요 (불리)</td><td>대부분 인체 근육</td></tr>
+        <tr><td><strong>MA = 1</strong></td><td>내적·외적 힘 균형</td><td>일부 제1형 지레</td></tr>
+      </table>
+      <div class="tip"><strong>💡 대부분의 인체 근육 = MA &lt; 1 (제3형):</strong> 두갈래근(biceps), 네갈래근(quadriceps), 가시위근(supraspinatus), 어깨세모근(deltoid)</div>
+    </div>
   </div>
-</div>
 
-<!-- ⑤ 내적·외적인 힘 -->
-<div class="block" id="s5">
-  <div class="bhead blue">
-    <span class="ico">💪</span>
-    <div><h2>내적인 힘(IF) vs 외적인 힘(EF)</h2><p>능동·수동 / 중력·외적 부하</p></div>
-  </div>
-  <div class="bbody">
-    <div class="g2">
-      <div class="gc">
-        <h4 class="blue">내적인 힘 (Internal Force)</h4>
+  <!-- S8 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">🦾</span>
+      <div class="acc-head-text"><h3>⑧ 근육작용 관련 용어</h3><p>작용근·대항근·협동근·짝힘</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <table class="ct">
+        <tr><th>용어</th><th>영문</th><th>정의</th><th>예시</th></tr>
+        <tr><td><strong>작용근</strong></td><td>Agonist</td><td>특정 움직임의 시작과 실행에 <strong>가장 직접적으로</strong> 관계되는 근육이나 근육무리</td><td>앞정강근 = 발등쪽굽힘 작용근</td></tr>
+        <tr><td><strong>대항근</strong></td><td>Antagonist</td><td>특정 작용근의 <strong>반대 작용</strong>을 갖는 근육이나 근육무리</td><td>장딴지근+가자미근 = 앞정강근의 대항근</td></tr>
+        <tr><td><strong>협동근</strong></td><td>Synergist</td><td>특정 움직임 실행 동안 서로 <strong>협력</strong>하는 근육들</td><td>자쪽+노쪽손목굽힘근 = 손목 굽힘 협동</td></tr>
+      </table>
+      <div class="hbox green">
+        <div class="ht">📌 짝힘 (Force-couple)</div>
+        <p class="note">둘 또는 그 이상의 근육들이 서로 다른 선형방향으로 동시에 힘을 발생시키지만, 결과로 발생하는 토크는 돌림운동과 같은 방향으로 작용할 때 형성된다</p>
         <ul class="pts">
-          <li>신체 <strong>내부</strong> 구조에서 생산</li>
-          <li><strong>능동적</strong> = 자극된 <strong>근육</strong>에 의해 발생</li>
-          <li><strong>수동적</strong> = 신장된 관절주위 결합조직의 장력<br>(인대, 관절주머니, 근육속 결합조직)</li>
-          <li>능동적 힘 > 수동적 힘<br>(내적인 힘 중 <strong>가장 큼</strong>)</li>
+          <li>예: 운전대를 양손으로 돌릴 때</li>
+          <li>예: <strong>엉덩관절 굽힘근(장요근) + 허리 폄근(척주세움근)</strong> → 골반의 <strong>앞기울임</strong> 유발</li>
         </ul>
       </div>
-      <div class="gc">
-        <h4 class="orange">외적인 힘 (External Force)</h4>
-        <ul class="pts">
-          <li>신체 <strong>외부</strong>에서 작용하는 힘</li>
-          <li>주로 <strong>중력(gravity)</strong> 또는 외적 부하</li>
-          <li>예: 가방, 자유무게(free weight), 치료사의 신체적 접촉</li>
-          <li>외적인 부하란 가방, "자유"무게(free weight), 또는 환자의 팔다리에 대해 치료사가 적용하는 신체적 접촉과 같은 것이 예이다</li>
-        </ul>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- ⑥ 힘 벡터 -->
-<div class="block" id="s6">
-  <div class="bhead teal">
-    <span class="ico">➡️</span>
-    <div><h2>힘 벡터의 4가지 요소 (그림 1.16)</h2><p>크기·공간적방위·방향·작용점</p></div>
-  </div>
-  <div class="bbody">
-    <table>
-      <tr><th>#</th><th>요소</th><th>설명</th></tr>
-      <tr><td>①</td><td><strong>크기(magnitude)</strong></td><td>화살대의 <strong>길이</strong>로 나타냄</td></tr>
-      <tr><td>②</td><td><strong>공간적 방위(spatial orientation)</strong></td><td>화살대의 <strong>위치</strong></td></tr>
-      <tr><td>③</td><td><strong>방향(direction)</strong></td><td>화살촉이 향하는 쪽</td></tr>
-      <tr><td>④</td><td><strong>작용점(point of application)</strong></td><td>힘이 적용되는 위치</td></tr>
-    </table>
-    <div class="div"></div>
-    <div class="g2">
-      <div class="gc">
-        <h4 class="blue">벡터(Vector)</h4>
-        <p class="note"><strong>크기 + 방향</strong> 모두 가진 물리량</p>
-        <p class="note">예: 힘, 속도, 가속도</p>
-      </div>
-      <div class="gc">
-        <h4 class="orange">스칼라(Scalar)</h4>
-        <p class="note"><strong>크기만</strong> 가진 물리량</p>
-        <p class="note">예: 질량, 속력, 온도</p>
-      </div>
+  <!-- S9 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">🔄</span>
+      <div class="acc-head-text"><h3>⑨ 근육활성의 3가지 유형</h3><p>등척성 · 동심성 · 편심성 (그림 1.19)</p></div>
+      <span class="acc-arrow">▼</span>
     </div>
-    <div class="tip"><strong>💡 생체역학적 분석:</strong> 벡터를 완전히 설명하기 위해서는 벡터의 크기, 공간적 방위, 방향, 그리고 작용점을 알고 있어야 한다</div>
-  </div>
-</div>
-
-<!-- ⑦ 지레 -->
-<div class="block" id="s7">
-  <div class="bhead red">
-    <span class="ico">⚖️</span>
-    <div><h2>근육뼈대 지레 (Lever System)</h2><p>3가지 유형 · 역학적 이득(MA)</p></div>
-  </div>
-  <div class="bbody">
-    <div class="formula">W × WD = F × FD &nbsp;&nbsp;|&nbsp;&nbsp; MA = IMA(내적모멘트팔) ÷ EMA(외적모멘트팔)</div>
-
-    <div class="sh">지레의 3가지 구성요소</div>
-    <div class="g3">
-      <div class="gc" style="text-align:center;">
-        <h4 class="blue" style="font-size:15px; margin-bottom:4px;">Arm</h4>
-        <p class="note">모멘트팔 (힘팔)</p>
-      </div>
-      <div class="gc" style="text-align:center;">
-        <h4 class="orange" style="font-size:15px; margin-bottom:4px;">Force</h4>
-        <p class="note">힘 (내적/외적)</p>
-      </div>
-      <div class="gc" style="text-align:center;">
-        <h4 class="teal" style="font-size:15px; margin-bottom:4px;">Fulcrum</h4>
-        <p class="note">받침점 = 관절</p>
-      </div>
+    <div class="acc-body">
+      <div class="formula">등척성: IF = EF &nbsp;&nbsp; 동심성: IF > EF &nbsp;&nbsp; 편심성: IF &lt; EF</div>
+      <table class="ct">
+        <tr><th>유형</th><th>영문</th><th>조건</th><th>근육 길이</th><th>예시</th></tr>
+        <tr><td><strong>등척성</strong></td><td>Isometric</td><td><span class="bi bi-b">IF = EF</span></td><td>변화 없음</td><td>자세 유지, 벽 밀기</td></tr>
+        <tr><td><strong>동심성</strong></td><td>Concentric</td><td><span class="bi bi-g">IF > EF</span></td><td>짧아짐</td><td>계단 올라가기, 덤벨 들어올리기</td></tr>
+        <tr><td><strong>편심성</strong></td><td>Eccentric</td><td><span class="bi bi-r">IF &lt; EF</span></td><td>길어짐</td><td>계단 내려가기, 덤벨 천천히 내리기</td></tr>
+      </table>
+      <div class="tip"><strong>💡 수축(contraction):</strong> 근육의 실제 길이 변화와 관계없이 <strong>활성(activation)</strong>과 동의어로 사용됨. 엄밀히는 <strong>동심성활성 동안에만</strong> 근육 수축이 일어남</div>
     </div>
-
-    <div class="sh">지레 3가지 유형 비교</div>
-    <table>
-      <tr><th>유형</th><th>돌림축 위치</th><th>MA</th><th>빈도</th><th>인체 예시</th></tr>
-      <tr>
-        <td><strong>제1형 지레</strong></td>
-        <td>두 힘 <strong>사이</strong></td>
-        <td>= 1, &lt;1, &gt;1<br>(가변)</td>
-        <td>드묾</td>
-        <td>머리-목 폄근 (시상면 균형)<br>시소가 전형적인 예</td>
-      </tr>
-      <tr>
-        <td><strong>제2형 지레</strong></td>
-        <td>외적인 힘 끝</td>
-        <td>항상 <strong>&gt; 1</strong></td>
-        <td><strong>매우 드묾</strong></td>
-        <td>발가락 끝으로 서기<br>(장딴지근-발바리발가락관절)</td>
-      </tr>
-      <tr>
-        <td><strong>제3형 지레</strong></td>
-        <td>내적인 힘 끝</td>
-        <td>항상 <strong>&lt; 1</strong></td>
-        <td><strong>가장 흔함</strong></td>
-        <td>팔꿈치 굽힘근(두갈래근)<br>무릎 네갈래근·어깨세모근</td>
-      </tr>
-    </table>
-
-    <div class="sh">역학적 이득(MA) 해석</div>
-    <table>
-      <tr><th>MA 값</th><th>의미</th><th>예시</th></tr>
-      <tr><td><strong>MA &gt; 1</strong></td><td>작은 근육 힘으로 큰 토크 생성 가능 (유리)</td><td>제2형 지레</td></tr>
-      <tr><td><strong>MA &lt; 1</strong></td><td>근육이 외적인 힘보다 더 큰 힘 생산 필요 (불리)</td><td>대부분 인체 근육</td></tr>
-      <tr><td><strong>MA = 1</strong></td><td>내적·외적 힘 균형</td><td>일부 제1형 지레</td></tr>
-    </table>
-    <div class="tip"><strong>💡 대부분의 인체 근육 = MA &lt; 1 (제3형):</strong> 두갈래근(biceps), 네갈래근(quadriceps), 가시위근(supraspinatus), 어깨세모근(deltoid)</div>
-    <div class="tip"><strong>💡 근육 모멘트팔:</strong> 근육의 힘선과 돌림축 사이의 수직거리 / 지레작용(leverage)은 특정 힘이 갖는 상대적인 모멘트팔의 길이를 말한다</div>
   </div>
-</div>
 
-<!-- ⑧ 근육작용 관련 용어 -->
-<div class="block" id="s8">
-  <div class="bhead green">
-    <span class="ico">🦾</span>
-    <div><h2>근육작용 관련 용어</h2><p>작용근·대항근·협동근·짝힘</p></div>
-  </div>
-  <div class="bbody">
-    <table>
-      <tr><th>용어</th><th>영문</th><th>정의</th><th>예시</th></tr>
-      <tr>
-        <td><strong>작용근</strong></td>
-        <td>Agonist</td>
-        <td>특정 움직임의 시작과 실행에 <strong>가장 직접적으로</strong> 관계되는 근육이나 근육무리</td>
-        <td>앞정강근(tibialis anterior) = 발등쪽굽힘 작용근</td>
-      </tr>
-      <tr>
-        <td><strong>대항근</strong></td>
-        <td>Antagonist</td>
-        <td>특정 작용근의 <strong>반대 작용</strong>을 갖는 근육이나 근육무리</td>
-        <td>장딴지근+가자미근 = 앞정강근에 대한 대항근</td>
-      </tr>
-      <tr>
-        <td><strong>협동근</strong></td>
-        <td>Synergist</td>
-        <td>특정 움직임이 실행되는 동안 서로 <strong>협력</strong>하는 근육들</td>
-        <td>자쪽손목굽힘근 + 노쪽손목굽힘근 = 손목 굽힘 협동</td>
-      </tr>
-    </table>
-    <div class="tip"><strong>💡 협동근의 추가 역할:</strong> 각 근육들은 자쪽치우침(ulnar deviation)과 노쪽치우침(radial deviation)의 작용도 가질 수 있기 때문에 손목의 굽힘을 위해서는 이러한 치우침들은 서로 견제되어 중화되어야 한다</div>
-
-    <div class="sh">근육의 짝힘 (Force-couple)</div>
-    <div class="hbox">
-      <div class="ht">📌 짝힘 정의</div>
-      <p class="note">둘 또는 그 이상의 근육들이 서로 다른 선형방향으로 동시에 힘을 발생시키고 있지만 그 결과로 발생하는 토크는 돌림운동과 같은 방향으로 작용할 때 형성된다</p>
+  <!-- S10 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">🔩</span>
+      <div class="acc-head-text"><h3>⑩ 토크 & 모멘트팔</h3><p>지레작용·근력·임상 적용</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="formula">토크(Torque) = 힘(F) × 모멘트팔(MA)</div>
       <ul class="pts">
-        <li>예: 자동차의 운전대를 양손으로 돌릴 때</li>
-        <li>예: <strong>엉덩관절 굽힘근(장요근) + 허리 폄근(척주세움근)</strong> → 골반의 <strong>앞기울임</strong> 유발 (그림 1.21)</li>
+        <li>내적인 모멘트팔 = 근육의 힘선과 돌림축 사이의 <strong>수직거리</strong></li>
+        <li><strong>지레작용(leverage)</strong> = 특정 힘이 갖는 상대적인 모멘트팔의 길이</li>
+        <li>근육 모멘트팔의 길이는 가동범위 내에서 항상 변함 → 지레작용도 변화</li>
       </ul>
-    </div>
-
-    <div class="sh">관절에서의 근육작용</div>
-    <p class="note">근육작용은 근육이 특정 돌림운동 방향 및 운동면에서 토크를 유발하는 것을 말한다. 근육이 모멘트팔을 가지고 있지 않거나 관계된 운동면에서 힘을 생산할 수 없다면 특정 작용은 불가능하다.</p>
-    <div class="tip"><strong>💡 뒤어깨세모근 예시:</strong> 이마면 = 모음 / 수평면 = 가쪽돌림 / 시상면 = 폄 → 3개 운동면에서 다양한 작용 가능</div>
-  </div>
-</div>
-
-<!-- ⑨ 등척성·동심성·편심성 -->
-<div class="block" id="s9">
-  <div class="bhead purple">
-    <span class="ico">🔄</span>
-    <div><h2>근육활성의 3가지 유형 (그림 1.19)</h2><p>등척성 · 동심성 · 편심성</p></div>
-  </div>
-  <div class="bbody">
-    <div class="formula">등척성: IF = EF &nbsp;&nbsp; 동심성: IF > EF &nbsp;&nbsp; 편심성: IF &lt; EF</div>
-    <table>
-      <tr><th>유형</th><th>영문</th><th>조건</th><th>근육 길이</th><th>예시</th></tr>
-      <tr>
-        <td><strong>등척성</strong></td>
-        <td>Isometric</td>
-        <td><span class="bi bi-b">IF = EF</span></td>
-        <td>변화 없음</td>
-        <td>자세 유지, 벽 밀기, 무게 들고 정지</td>
-      </tr>
-      <tr>
-        <td><strong>동심성</strong></td>
-        <td>Concentric</td>
-        <td><span class="bi bi-g">IF > EF</span></td>
-        <td>짧아짐</td>
-        <td>계단 올라가기, 덤벨 들어올리기</td>
-      </tr>
-      <tr>
-        <td><strong>편심성</strong></td>
-        <td>Eccentric</td>
-        <td><span class="bi bi-r">IF &lt; EF</span></td>
-        <td>길어짐</td>
-        <td>계단 내려가기, 덤벨 천천히 내리기</td>
-      </tr>
-    </table>
-
-    <div class="div"></div>
-    <div class="g2">
-      <div class="gc">
-        <h4 class="blue">등척성활성 (Isometric)</h4>
-        <ul class="pts">
-          <li>근육이 일정한 길이를 유지하면서 당기는 힘을 생산할 때 일어남</li>
-          <li>주어진 관절의 운동면 내에서 생산된 내적인 토크는 외적인 토크와 같다</li>
-          <li>근육의 짧아짐이나 관절에서의 돌림운동은 없다</li>
-          <li>등척성으로 생산된 힘은 관절들과 전신에 필요한 안정성을 제공</li>
-        </ul>
+      <div class="g2">
+        <div class="gc"><h4 class="blue">관절에서 먼 거리 적용</h4><p class="note">작은 도수접촉의 힘 → 작은 외적 토크 → 특정 근육무리에 대한 저항 제공</p></div>
+        <div class="gc"><h4 class="orange">관절에 가까운 거리 적용</h4><p class="note">큰 힘으로 같은 양의 외적 토크 만들 수 있다 (토크 = 힘 × 모멘트팔)</p></div>
       </div>
-      <div class="gc">
-        <h4 class="teal">동심성활성 (Concentric)</h4>
-        <ul class="pts">
-          <li>근육이 수축하면서(짧아지면서) 당기는 힘을 생산할 때 일어남</li>
-          <li>동심성활성 동안 관절에서의 내적인 토크는 반대되는 외적인 토크보다 크다</li>
-          <li>수축하는 근육이 활성된 근육의 당김 방향으로 관절을 돌림운동 시킬 때 명확하게 알 수 있다</li>
-        </ul>
-      </div>
+      <div class="tip"><strong>💡 모멘트팔 없는 근육의 힘:</strong> 토크나 돌림운동을 유발하지 못하지만, 관절의 <strong>안정성과 감각정보</strong>를 제공하므로 여전히 중요</div>
     </div>
-    <div class="gc" style="margin-top:10px;">
-      <h4 class="red">편심성활성 (Eccentric)</h4>
+  </div>
+
+  <!-- S11 -->
+  <div class="acc-block">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span class="ico">🌱</span>
+      <div class="acc-head-text"><h3>⑪ 생산적 대항작용 (Productive Antagonism)</h3><p>Special Focus 1.2 · 수동장력을 유용한 일로 전환</p></div>
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="hbox green">
+        <div class="ht">📌 생산적 대항작용 정의</div>
+        <p class="note">신장된 결합조직(근육 포함)에 의해 생산된 비교적 낮은 수준의 장력이 유용한 기능을 수행하는 현상</p>
+      </div>
+      <div class="sh">넙다리곧은근(rectus femoris) 예시</div>
       <ul class="pts">
-        <li>근육이 좀 더 우세한 다른 힘에 의해 길어지는 만큼 당기는 힘을 생산할 때 일어남</li>
-        <li>편심성이라는 말은 문자 그대로 "중심에서 멀어지다"를 의미</li>
-        <li>편심성활성 동안, 관절에 대한 외적인 토크는 내적인 토크보다 크다</li>
-        <li>예: 탁자 쪽으로 컵을 천천히 낮추는 것 → 아래팔과 컵에 작용하는 중력의 당김에 의해 유발</li>
-        <li>활성된 두갈래근(biceps)은 아래팔과 컵을 천천히 내려놓는 것을 조절하기 위해 서서히 길어진다</li>
+        <li>점프 시 상승 단계: 넙다리곧은근은 무릎관절을 폄시키기 위해 수축</li>
+        <li>이와 동시에 엉덩관절 폄 → 넙다리곧은근을 <strong>신장</strong>시킴</li>
+        <li>결과: 근육의 전반적인 짧아짐 최소화 → <strong>수동장력 보존</strong></li>
       </ul>
-    </div>
-    <div class="tip"><strong>💡 수축(contraction):</strong> 근육이 실제로 짧아지거나, 길어지거나, 또는 일정한 길이를 유지하거나에 관계없이 <strong>활성(activation)</strong>과 동의어로 흔히 사용됨 / 따라서 원칙적으로 근육의 수축은 <strong>동심성활성 동안에만</strong> 일어난다</div>
-  </div>
-</div>
-
-<!-- ⑩ 토크·모멘트팔 -->
-<div class="block" id="s10">
-  <div class="bhead brown">
-    <span class="ico">🔩</span>
-    <div><h2>토크 & 모멘트팔 (Torque & Moment Arm)</h2><p>지레작용·근력·임상 적용</p></div>
-  </div>
-  <div class="bbody">
-    <div class="formula">토크(Torque) = 힘(F) × 모멘트팔(MA)</div>
-
-    <div class="sh">모멘트팔 (Moment Arm)</div>
-    <ul class="pts">
-      <li>내적인 모멘트팔 = 근육의 힘선과 돌림축 사이의 수직거리</li>
-      <li><strong>지레작용(leverage)</strong>은 특정 힘이 갖는 상대적인 모멘트팔의 길이를 말한다</li>
-      <li>4장에서 좀 더 설명하겠지만, 근육 모멘트팔의 길이는 가동범위 내에 항상 변하기 때문에 지레작용도 변하게 된다</li>
-      <li>이것은 사람이 관절가동범위의 특정 지점에서 왜 더 강하게 되는지를 설명하는 데 일부 도움을 준다</li>
-    </ul>
-
-    <div class="sh">임상에서의 토크 적용</div>
-    <div class="g2">
-      <div class="gc">
-        <h4 class="blue">관절로부터 먼 거리에서 적용</h4>
-        <p class="note">작은 도수접촉의 힘 → 작은 외적인 토크 만들어 <strong>특정 근육무리에 대한 저항을 제공</strong></p>
-      </div>
-      <div class="gc">
-        <h4 class="orange">관절에 가까운 거리에서 적용</h4>
-        <p class="note">큰 도수접촉의 힘 → 환자에 대해 똑같은 양의 외적인 토크 만들 수 있다 / 토크는 힘 곱하기 모멘트팔이기 때문</p>
-      </div>
-    </div>
-    <div class="tip"><strong>💡 모멘트팔 없는 근육의 힘:</strong> 모멘트팔이 없는 근육에 의해 생산된 힘은 토크나 돌림운동을 유발하지 못한다. 그러나, 토크나 돌림운동을 유발하지 못한다 하더라도, 이러한 근육 힘은 대개 관절의 안정성과 감각정보를 재공하기 때문에 여전히 중요하다</div>
-  </div>
-</div>
-
-<!-- ⑪ 생산적 대항작용 -->
-<div class="block" id="s11">
-  <div class="bhead navy">
-    <span class="ico">🌱</span>
-    <div><h2>생산적 대항작용 (Productive Antagonism)</h2><p>Special Focus 1.2 · 수동장력을 유용한 일로 전환</p></div>
-  </div>
-  <div class="bbody">
-    <p class="note">신체 내의 길어진 또는 신장된 조직은 일반적으로 장력(즉, 신장에 대항하는 저항력)을 만들어 낸다. 병리적인 경우에 있어, 이러한 장력은 비정상적으로 커지게 되어 기능적 가동성을 방해하게 된다.</p>
-
-    <div class="hbox green">
-      <div class="ht">📌 생산적 대항작용 정의</div>
-      <p class="note">신장된 결합조직(근육 포함)에 의해 생산된 비교적 낮은 수준의 장력이 어떻게 유용한 기능을 수행하는지에 대한 몇 가지 사례</p>
-    </div>
-
-    <div class="sh">넙다리곧은근(rectus femoris) 예시</div>
-    <ul class="pts">
-      <li>점프를 할 때 매우 큰 힘을 발생시켜야 하는 뭇갈래근인 종아리근(gastrocnemius)을 고려해보자</li>
-      <li>종아리근은 비교적 큰 깃각을 가지고 있어 깃근육의 섬유에서 힘줄로 전달되는 힘은 감소되지만, 더 많은 근섬유를 가질 수 있어 더 큰 생리학적 단면적을 가짐</li>
-      <li>점프를 할 때 위로 상승하는 단계 동안 넙다리곧은근은 무릎관절을 폄시키기 위해 수축한다</li>
-      <li>이와 동시에, 폄을 하는 엉덩관절은 엉덩관절 굽힘 자세를 통과하며 활동하고 있는 넙다리곧은근을 신장시킨다</li>
-      <li>결과적으로, 넙다리곧은근의 전반적인 짧아짐은 최소화되고, 이런 상황은 근육 내의 유용한 수동장력을 보존하는 데 도움이 된다</li>
-    </ul>
-    <div class="tip"><strong>💡 수동장력의 유용성:</strong> 신장된 근육에서 발생한 수동장력은 발을 통해 지면으로의 힘을 전달하는 것을 보호하기 때문에, 걷기 시 추진(propulsion) 단계를 시작하는 데 도움이 된다</div>
-  </div>
-</div>
-
-<!-- 핵심 키워드 -->
-<div class="block" id="keywords">
-  <div class="bhead navy">
-    <span class="ico">🔑</span>
-    <div><h2>Chapter 1 핵심 키워드 총정리</h2></div>
-  </div>
-  <div class="bbody">
-    <div class="kw-wrap">
-      <span class="kw">F=ma</span>
-      <span class="kw">1N=1kg×1m/sec²</span>
-      <span class="kw">1lb=4.448N</span>
-      <span class="kw">부하(load)</span>
-      <span class="kw">내재적장력</span>
-      <span class="kw">Tension·Compression</span>
-      <span class="kw">Bending·Shear·Torsion</span>
-      <span class="kw">Combined loading</span>
-      <span class="kw">비선형(toe)영역</span>
-      <span class="kw">선형영역</span>
-      <span class="kw">Stiffness=Y/X</span>
-      <span class="kw">탄성영역=원상태복귀</span>
-      <span class="kw">가소성영역=돌아오지않음</span>
-      <span class="kw">항복점(Yield point)</span>
-      <span class="kw">최종파열점</span>
-      <span class="kw">탄성변형에너지=방출</span>
-      <span class="kw">ACL=3~4%신장</span>
-      <span class="kw">힘줄=8~13%파열</span>
-      <span class="kw">크리프(Creep)</span>
-      <span class="kw">점탄성(Viscoelastic)</span>
-      <span class="kw">속도↑=뻣뻣함↑</span>
-      <span class="kw">댐핑기전</span>
-      <span class="kw">내적힘=근육·결합조직</span>
-      <span class="kw">외적힘=중력·부하</span>
-      <span class="kw">벡터=크기+방향</span>
-      <span class="kw">스칼라=크기만</span>
-      <span class="kw">힘벡터4요소</span>
-      <span class="kw">지레3형=가장흔함</span>
-      <span class="kw">지레2형=가장드묾</span>
-      <span class="kw">MA=IMA/EMA</span>
-      <span class="kw">MA<1=대부분근육</span>
-      <span class="kw">작용근(Agonist)</span>
-      <span class="kw">대항근(Antagonist)</span>
-      <span class="kw">협동근(Synergist)</span>
-      <span class="kw">짝힘(Force-couple)</span>
-      <span class="kw">IF=EF→등척성</span>
-      <span class="kw">IF>EF→동심성</span>
-      <span class="kw">IF<EF→편심성</span>
-      <span class="kw">수축=활성의동의어</span>
-      <span class="kw">토크=힘×모멘트팔</span>
-      <span class="kw">지레작용=모멘트팔길이</span>
-      <span class="kw">생산적대항작용</span>
-      <span class="kw">수동장력=에너지저장</span>
+      <div class="tip"><strong>💡 수동장력의 유용성:</strong> 신장된 근육에서 발생한 수동장력은 걷기 시 <strong>추진(propulsion) 단계</strong>를 시작하는 데 도움이 된다</div>
     </div>
   </div>
-</div>
 
-</div><!-- end container -->
+</div>
+</div><!-- end summary -->
+
+<!-- ═══════════════ QUIZ TAB ═══════════════ -->
+<div id="tab-quiz" class="panel">
+<div class="container">
+<div class="quiz-wrap">
+  <div id="quiz-progress-bar" class="progress-bar-outer"><div class="progress-bar-inner" id="pbar" style="width:0%"></div></div>
+  <div class="progress-label" id="progress-label">문제 0 / 35<span class="score-badge" id="score-badge">점수: 0</span></div>
+  <div id="quiz-area"></div>
+</div>
+</div>
+</div><!-- end quiz -->
 
 <script>
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
+// ─── TAB SWITCH ───
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tabbar button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── ACCORDION ───
+function toggleAcc(head) {
+  const body = head.nextElementSibling;
+  const arrow = head.querySelector('.acc-arrow');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+
+// ─── QUIZ DATA (35 questions) ───
+const ALL_QUESTIONS = [
+  // ① 힘의 기본
+  { cat:'힘의 기본', q:'F=ma에서 a가 0일 때 힘(F)은 얼마인가?', opts:['0','ma','m','무한대'], ans:0, exp:'F=ma이므로, 가속도(a)가 0이면 F=0이다.' },
+  { cat:'힘의 기본', q:'1 lb는 몇 N인가?', opts:['4.448N','9.8N','1N','2.2N'], ans:0, exp:'1 lb = 4.448 N. 중력 하에서 1 kg 질량 = 약 9.8 N (2.2 lb).' },
+  { cat:'힘의 기본', q:'신체에 작용하는 힘을 일반적으로 부르는 용어는?', opts:['부하(load)','토크','벡터','모멘트팔'], ans:0, exp:'신체에 작용하는 힘은 일반적으로 부하(load)라고 한다.' },
+  // ② 부하의 종류
+  { cat:'부하의 종류', q:'평행하게 어긋나는 힘으로, 관절면에 잘 발생하는 부하는?', opts:['전단(Shear)','장력(Tension)','압박(Compression)','비틀림(Torsion)'], ans:0, exp:'전단(Shear)은 평행하게 어긋나는 힘이다. 관절면 전단력이 대표적 예시.' },
+  { cat:'부하의 종류', q:'나선형 골절과 가장 관련이 깊은 부하 종류는?', opts:['비틀림(Torsion)','굽힘(Bending)','압박(Compression)','전단(Shear)'], ans:0, exp:'비틀림(Torsion)은 회전 방향으로 비트는 힘으로 나선형 골절을 유발할 수 있다.' },
+  { cat:'부하의 종류', q:'골다공증으로 약화된 넙다리뼈목(femoral neck)에서 낙상 시 주로 발생하는 부하 유형은?', opts:['결합된 부하 (비틀림+전단+굽힘)','단순 장력','단순 압박','전단만'], ans:0, exp:'골다공증으로 약화된 넙다리뼈목은 낙상 충격에 의한 비틀림·전단·굽힘의 결합된 부하로 골절 위험이 높다.' },
+  // ③ 변형력-변형률
+  { cat:'변형력-변형률', q:'변형력-변형률 곡선에서 Stiffness(뻣뻣함)를 나타내는 수식은?', opts:['Y/X (변형력/변형률)','X/Y','F×MA','IMA/EMA'], ans:0, exp:'선형 영역에서 Stiffness = 변형력(Y) / 변형률(X) = Young\'s 계수.' },
+  { cat:'변형력-변형률', q:'탄성 영역(Elastic region)의 특징은?', opts:['힘 제거 시 원래 상태로 복귀','힘 제거해도 돌아오지 않음','조직이 파열됨','미세 파열이 시작됨'], ans:0, exp:'탄성 영역에서는 힘을 제거하면 원래 상태로 복귀한다. 생리학적 범위 내의 변형.' },
+  { cat:'변형력-변형률', q:'가소성 영역(Plastic region)에서의 특징으로 옳은 것은?', opts:['힘 제거해도 원래대로 돌아오지 않음','힘 제거 시 완전히 복귀','조직이 매우 탄력적임','Stiffness가 증가함'], ans:0, exp:'가소성 영역: 항복점 이후로, 힘을 제거해도 원래 상태로 돌아오지 않는다. 미세 파열이 시작된다.' },
+  { cat:'변형력-변형률', q:'건강한 앞십자인대(ACL)는 일상활동 시 약 몇 % 신장되는가?', opts:['3~4%','8~13%','15~20%','1%미만'], ans:0, exp:'ACL은 일상활동 시 약 3~4% 신장되며, 이는 탄성영역 내에 해당된다.' },
+  { cat:'변형력-변형률', q:'건강한 힘줄(tendon)은 몇 % 이상 신장 시 파열되는가?', opts:['8~13%','3~4%','15~20%','20~25%'], ans:0, exp:'건강한 힘줄은 8~13% 이상 신장 시 파열된다.' },
+  { cat:'변형력-변형률', q:'변형력-변형률 곡선에서 X축(변형률)이란?', opts:['원래 길이에 대한 신장된 길이의 증가 비율(%)','조직에 가해지는 힘의 강도(N/mm²)','근육의 최대 수축력','관절 가동범위'], ans:0, exp:'변형률(Strain, X축)은 실험 전 원래 길이에 대한 신장된 길이의 증가비율(%)이다.' },
+  // ④ 점탄성·크리프
+  { cat:'점탄성·크리프', q:'아침에 키가 저녁보다 큰 현상은 어떤 개념으로 설명되는가?', opts:['크리프(Creep)','탄성(Elasticity)','댐핑(Damping)','속도민감성'], ans:0, exp:'크리프: 일정 부하 하에서 점진적 변형률이 나타남. 낮 동안 척추에 압박이 누적되어 체액이 척추원반 밖으로 짜내지기 때문.' },
+  { cat:'점탄성·크리프', q:'부하 적용 속도가 빠를수록 탄성범위 내 변형력-변형률 곡선의 경사도는?', opts:['증가 (더 뻣뻣해짐)','감소 (더 유연해짐)','변화 없음','비선형이 됨'], ans:0, exp:'속도민감성: 빠른 부하 → 탄성범위 내 경사도 증가 = 더 뻣뻣해짐. 예) 뛸 때 관절연골이 뻣뻣해져 뼈 보호↑' },
+  { cat:'점탄성·크리프', q:'플라이오메트릭운동에서 중요한 점탄성 특성은?', opts:['탄성 - 에너지 일시 저장 후 방출','크리프 - 점진적 변형','댐핑 - 에너지 흡수','속도민감성만'], ans:0, exp:'신장된 근육조직은 에너지를 일시적으로 저장하고, 방출 시 근육의 전반적인 힘이 증대될 수 있다. 플라이오메트릭운동의 중요한 요소.' },
+  // ⑤ 내적·외적인 힘
+  { cat:'내적·외적힘', q:'내적인 힘 중 가장 큰 것은?', opts:['능동적 힘 (근육)','수동적 힘 (결합조직 장력)','중력','외적 부하'], ans:0, exp:'능동적 힘(자극된 근육에 의해 발생)이 수동적 힘(신장된 관절주위 결합조직의 장력)보다 크다.' },
+  { cat:'내적·외적힘', q:'수동적 내적인 힘(Passive Internal Force)의 주된 출처는?', opts:['신장된 관절주위 결합조직 (인대, 관절주머니)','자극된 근육','중력','치료사의 접촉'], ans:0, exp:'수동적 내적인 힘은 신장된 관절주위 결합조직(인대, 관절주머니, 근육속 결합조직)의 장력에 의해 발생한다.' },
+  { cat:'내적·외적힘', q:'외적인 힘(External Force)에 해당하지 않는 것은?', opts:['근육의 능동적 수축력','중력(gravity)','치료사의 도수접촉','자유무게(free weight)'], ans:0, exp:'근육의 능동적 수축력은 내적인 힘이다. 외적인 힘은 신체 외부에서 작용하는 힘(중력, 외적 부하 등)이다.' },
+  // ⑥ 힘 벡터
+  { cat:'힘 벡터', q:'힘 벡터를 완전히 설명하기 위해 필요한 요소 4가지는?', opts:['크기·공간적방위·방향·작용점','크기·속도·질량·방향','방향·속도·거리·시간','힘·토크·MA·모멘트팔'], ans:0, exp:'벡터를 완전히 설명하기 위해서는 크기(magnitude), 공간적 방위(spatial orientation), 방향(direction), 작용점(point of application)이 필요하다.' },
+  { cat:'힘 벡터', q:'크기와 방향을 모두 가진 물리량은?', opts:['벡터(Vector)','스칼라(Scalar)','토크','관절각도'], ans:0, exp:'벡터(Vector)는 크기와 방향을 모두 갖는다. 스칼라(Scalar)는 크기만 갖는다.' },
+  { cat:'힘 벡터', q:'다음 중 스칼라(Scalar)에 해당하는 것은?', opts:['질량','속도','힘','가속도'], ans:0, exp:'스칼라는 크기만 가진 물리량이다. 질량, 속력, 온도가 스칼라이며, 속도·힘·가속도는 벡터이다.' },
+  // ⑦ 지레
+  { cat:'지레', q:'인체에서 가장 흔한 지레 유형은?', opts:['제3형 지레','제1형 지레','제2형 지레','모두 동일'], ans:0, exp:'제3형 지레는 내적인 힘이 돌림축(관절)과 저항 사이에 있으며, MA < 1. 대부분의 인체 근육이 해당된다.' },
+  { cat:'지레', q:'제2형 지레에 대한 설명으로 옳은 것은?', opts:['역학적 이득(MA)이 항상 1보다 크다','역학적 이득이 항상 1보다 작다','인체에서 가장 흔하다','돌림축이 두 힘 사이에 있다'], ans:0, exp:'제2형 지레: 돌림축이 외적인 힘의 끝에 있으며, MA는 항상 > 1. 인체에서 매우 드물다. (예: 발가락 끝으로 서기)' },
+  { cat:'지레', q:'역학적 이득(MA) = IMA / EMA에서 MA < 1의 의미는?', opts:['근육이 외적인 힘보다 더 큰 힘 생산 필요','작은 힘으로 큰 토크 생성 가능','내적·외적 힘이 균형','관절이 안정적임'], ans:0, exp:'MA < 1 = 근육이 외적인 힘보다 더 큰 힘을 생산해야 한다. 대부분의 인체 근육이 이에 해당하여 효율은 낮지만 빠른 움직임과 큰 가동범위를 가능하게 한다.' },
+  { cat:'지레', q:'두갈래근(biceps), 네갈래근, 어깨세모근의 공통된 지레 유형은?', opts:['제3형 지레 (MA<1)','제1형 지레 (MA=가변)','제2형 지레 (MA>1)','지레 없음'], ans:0, exp:'두갈래근, 네갈래근, 어깨세모근 등 대부분의 인체 근육은 제3형 지레로 MA < 1이다.' },
+  // ⑧ 근육작용
+  { cat:'근육작용용어', q:'작용근(Agonist)의 정의는?', opts:['특정 움직임의 시작과 실행에 가장 직접적으로 관계되는 근육','특정 작용근의 반대 작용을 갖는 근육','서로 협력하는 근육들','서로 다른 방향으로 힘을 내어 돌림운동을 만드는 근육쌍'], ans:0, exp:'작용근(Agonist): 특정 움직임의 시작과 실행에 가장 직접적으로 관계되는 근육이나 근육무리.' },
+  { cat:'근육작용용어', q:'협동근(Synergist)의 역할로 옳은 것은?', opts:['특정 움직임 실행 동안 서로 협력함','작용근과 반대 방향으로 수축함','모멘트팔이 없어 토크를 유발하지 못함','짝힘(Force-couple)을 형성함'], ans:0, exp:'협동근(Synergist)은 특정 움직임 실행 동안 서로 협력하는 근육들이다. 자쪽손목굽힘근+노쪽손목굽힘근의 손목 굽힘이 예시.' },
+  { cat:'근육작용용어', q:'짝힘(Force-couple)이 형성되는 조건은?', opts:['서로 다른 선형방향으로 힘을 내지만 결과 토크가 같은 돌림방향','같은 방향으로 힘을 내는 두 근육','한 근육이 수축하고 다른 근육이 이완할 때','모멘트팔이 같은 두 근육'], ans:0, exp:'짝힘(Force-couple): 둘 이상의 근육이 서로 다른 선형방향으로 동시에 힘을 발생시키지만, 결과 토크는 같은 돌림운동 방향으로 작용할 때 형성된다.' },
+  // ⑨ 근육활성 유형
+  { cat:'근육활성유형', q:'편심성 활성(Eccentric)에서 내적인 힘과 외적인 힘의 관계는?', opts:['IF < EF','IF > EF','IF = EF','IF = 0'], ans:0, exp:'편심성 활성: IF < EF. 더 우세한 외적인 힘에 의해 근육이 길어지면서 힘을 생산한다.' },
+  { cat:'근육활성유형', q:'등척성 활성(Isometric)에서 나타나는 현상은?', opts:['근육 길이 변화 없이 힘을 생산','근육이 짧아지면서 힘을 생산','근육이 길어지면서 힘을 생산','관절이 돌림운동을 함'], ans:0, exp:'등척성 활성: IF = EF. 근육이 일정한 길이를 유지하면서 힘을 생산. 관절 돌림운동 없음.' },
+  { cat:'근육활성유형', q:'"수축(contraction)"이 엄밀하게는 어느 활성 동안에만 일어나는가?', opts:['동심성활성 (Concentric)','등척성활성 (Isometric)','편심성활성 (Eccentric)','모든 활성'], ans:0, exp:'수축(contraction)은 엄밀히 근육이 짧아지는 것을 의미하므로, 원칙적으로 동심성활성 동안에만 일어난다. 임상적으로는 활성(activation)의 동의어로 넓게 사용된다.' },
+  { cat:'근육활성유형', q:'계단을 내려갈 때 무릎 네갈래근의 활성 유형은?', opts:['편심성활성','동심성활성','등척성활성','활성 없음'], ans:0, exp:'계단 내려가기는 중력에 의해 무릎이 굽혀지는 동안 네갈래근이 이를 조절하여 길어지므로, IF < EF인 편심성활성이다.' },
+  // ⑩ 토크
+  { cat:'토크·모멘트팔', q:'모멘트팔(Moment Arm)의 정의는?', opts:['근육의 힘선과 돌림축 사이의 수직거리','근육의 생리학적 단면적','근육의 길이','관절 가동범위'], ans:0, exp:'내적인 모멘트팔 = 근육의 힘선과 돌림축 사이의 수직거리.' },
+  { cat:'토크·모멘트팔', q:'모멘트팔이 없는 근육에 대한 설명으로 옳은 것은?', opts:['토크를 유발하지 못하지만 관절 안정성과 감각정보를 제공','움직임을 가장 효율적으로 만든다','관절에 가장 큰 토크를 만든다','임상적으로 중요하지 않다'], ans:0, exp:'모멘트팔이 없는 근육은 토크나 돌림운동을 유발하지 못하지만, 관절의 안정성과 감각정보를 제공하므로 여전히 중요하다.' },
+  // ⑪ 생산적 대항작용
+  { cat:'생산적대항작용', q:'생산적 대항작용(Productive Antagonism)이란?', opts:['신장된 조직의 수동장력이 유용한 기능을 수행하는 것','작용근이 대항근보다 강하게 수축하는 것','짝힘이 형성되는 것','편심성활성과 동심성활성이 동시에 일어나는 것'], ans:0, exp:'생산적 대항작용: 신장된 결합조직(근육 포함)에 의해 생산된 비교적 낮은 수준의 수동장력이 유용한 기능을 수행하는 현상.' },
+  { cat:'생산적대항작용', q:'넙다리곧은근(rectus femoris)의 생산적 대항작용에서 수동장력이 보존되는 이유는?', opts:['동심성 수축과 동시에 신장이 일어나 전반적인 짧아짐이 최소화되기 때문','엉덩관절과 무릎관절이 동시에 굽혀지기 때문','힘줄의 탄성이 증가하기 때문','근육이 완전히 이완되기 때문'], ans:0, exp:'점프 시 무릎 폄(동심성 수축)과 동시에 엉덩관절이 폄됨으로써 넙다리곧은근이 신장된다. 전반적인 짧아짐이 최소화되어 수동장력이 보존된다.' },
+];
+
+// ─── QUIZ ENGINE ───
+let pool = [], current = 0, score = 0, answered = false, wrongList = [];
+let mode = 'all'; // 'all' or 'wrong'
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz(questions) {
+  pool = shuffle(questions);
+  current = 0; score = 0; answered = false; wrongList = [];
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const total = pool.length;
+  const pct = Math.round((current / total) * 100);
+  document.getElementById('pbar').style.width = pct + '%';
+  document.getElementById('progress-label').innerHTML =
+    `문제 ${current + 1} / ${total}<span class="score-badge" id="score-badge">점수: ${score}</span>`;
+
+  if (current >= total) { renderResult(); return; }
+
+  const q = pool[current];
+  const shuffledOpts = shuffle(q.opts.map((t, i) => ({ t, isAns: i === q.ans })));
+  answered = false;
+
+  const html = `
+    <div class="q-card">
+      <div class="q-num">Q${current + 1}</div>
+      <div class="q-cat">${q.cat}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options" id="opts">
+        ${shuffledOpts.map((o, i) =>
+          `<button class="q-opt" onclick="selectOpt(this, ${o.isAns})">${String.fromCharCode(9312 + i)} ${o.t}</button>`
+        ).join('')}
+      </div>
+      <div class="q-feedback" id="feedback"></div>
+      <div class="q-actions">
+        <button class="btn-next" id="btn-next" onclick="nextQ()" disabled>다음 ▶</button>
+      </div>
+    </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+}
+
+function selectOpt(btn, isCorrect) {
+  if (answered) return;
+  answered = true;
+  const q = pool[current];
+  const allBtns = document.querySelectorAll('.q-opt');
+  allBtns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedback');
+  if (isCorrect) {
+    btn.classList.add('selected-correct');
+    score++;
+    fb.className = 'q-feedback correct show';
+    fb.innerHTML = '✅ 정답! &nbsp; ' + q.exp;
+  } else {
+    btn.classList.add('selected-wrong');
+    wrongList.push(q);
+    // reveal correct
+    allBtns.forEach(b => {
+      if (b.textContent.trim().substring(2) === q.opts[q.ans]) b.classList.add('reveal-correct');
+    });
+    fb.className = 'q-feedback wrong show';
+    fb.innerHTML = '❌ 오답 &nbsp; ' + q.exp;
+  }
+  document.getElementById('btn-next').disabled = false;
+  document.getElementById('score-badge').textContent = '점수: ' + score;
+}
+
+function nextQ() {
+  current++;
+  renderQuestion();
+}
+
+function renderResult() {
+  const total = pool.length;
+  document.getElementById('pbar').style.width = '100%';
+  document.getElementById('progress-label').innerHTML =
+    `완료! <span class="score-badge">최종 점수: ${score} / ${total}</span>`;
+
+  const pct = Math.round((score / total) * 100);
+  let msg = pct === 100 ? '🏆 완벽한 점수!' : pct >= 80 ? '🎉 훌륭해요!' : pct >= 60 ? '👍 잘 하고 있어요!' : '📚 더 공부해봐요!';
+
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="result-screen">
+      <div class="big-score">${score}<span style="font-size:28px;color:#64748B">/${total}</span></div>
+      <div class="sub">${msg} (${pct}%)</div>
+      ${wrongList.length > 0 ? `<div class="wrong-count-badge">틀린 문제: ${wrongList.length}개</div>` : ''}
+      <br>
+      <button class="btn-retry" onclick="startQuiz(ALL_QUESTIONS)">🔄 전체 다시 풀기</button>
+      ${wrongList.length > 0 ? `<button class="btn-retry-wrong" onclick="retryWrong()">❌ 틀린 문제만 다시 풀기</button>` : ''}
+    </div>`;
+}
+
+function retryWrong() {
+  const wl = [...wrongList];
+  startQuiz(wl);
+}
+
+// init
+startQuiz(ALL_QUESTIONS);
 </script>
 </body>
 </html>
