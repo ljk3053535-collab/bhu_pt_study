@@ -3,1182 +3,548 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 7 손목 (Wrist) — 중간고사 노트</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Chapter 7 손목 (Wrist) — 코르셋 노트</title>
 <style>
-  :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --surface2: #21262d;
-    --border: #30363d;
-    --accent1: #58a6ff;
-    --accent2: #f78166;
-    --accent3: #56d364;
-    --accent4: #e3b341;
-    --accent5: #bc8cff;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --text-dim: #484f58;
-  }
+:root {
+  --bg: #EEF4FF;
+  --surface: #FFFFFF;
+  --surface2: #F0F5FF;
+  --border: #C8D8F8;
+  --accent: #1E3A5F;
+  --accent2: #2E5DA8;
+  --accent3: #4A90D9;
+  --red: #C0392B;
+  --green: #1A7A4A;
+  --yellow: #B07D00;
+  --purple: #6B3FA0;
+  --text: #1A2A3A;
+  --muted: #5A7090;
+  --light: #8AAAC8;
+  --tab-active: #1E3A5F;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:14px;line-height:1.7;}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#1E3A5F 0%,#2E5DA8 60%,#4A90D9 100%);
+  padding:36px 28px 28px;color:#fff;position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);
+  border-radius:50%;
+}
+.hdr-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.7;margin-bottom:6px;}
+header h1{font-size:clamp(24px,5vw,42px);font-weight:900;letter-spacing:-1px;margin-bottom:10px;}
+.hdr-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.hdr-tag{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:3px 12px;font-size:11px;}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
-    line-height: 1.7;
-  }
+/* NAV */
+nav{background:#fff;border-bottom:2px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:100;overflow-x:auto;}
+nav::-webkit-scrollbar{height:3px;}
+nav::-webkit-scrollbar-thumb{background:var(--border);}
+.nav-inner{display:flex;max-width:1000px;margin:0 auto;}
+.nb{background:none;border:none;cursor:pointer;font-family:inherit;font-size:12px;padding:13px 14px;white-space:nowrap;color:var(--muted);border-bottom:3px solid transparent;transition:.2s;font-weight:500;}
+.nb:hover{color:var(--accent2);}
+.nb.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
 
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 48px 32px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -80px;
-    width: 320px; height: 320px;
-    background: radial-gradient(circle, rgba(88,166,255,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: -60px;
-    width: 240px; height: 240px;
-    background: radial-gradient(circle, rgba(247,129,102,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-  .chap-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--accent1);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  h1 {
-    font-size: clamp(28px, 5vw, 52px);
-    font-weight: 900;
-    line-height: 1.1;
-    background: linear-gradient(135deg, var(--text) 0%, var(--accent1) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
-  .header-sub {
-    color: var(--text-muted);
-    font-size: 13px;
-    display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px;
-  }
-  .tag {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3px 12px;
-    font-size: 11px;
-    font-family: 'Space Mono', monospace;
-    color: var(--text-muted);
-  }
+/* MAIN */
+main{max-width:1000px;margin:0 auto;padding:24px 20px 48px;}
+section{display:none;animation:fi .25s ease;}
+section.on{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-  /* ── NAV ── */
-  nav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    position: sticky; top: 0; z-index: 100;
-    overflow-x: auto;
-  }
-  nav::-webkit-scrollbar { height: 3px; }
-  nav::-webkit-scrollbar-thumb { background: var(--border); }
-  .nav-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: flex; gap: 0;
-  }
-  .nav-btn {
-    background: none; border: none; cursor: pointer;
-    color: var(--text-muted);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    padding: 14px 16px;
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-  }
-  .nav-btn:hover { color: var(--text); border-bottom-color: var(--border); }
-  .nav-btn.active { color: var(--accent1); border-bottom-color: var(--accent1); }
+/* SEC TITLE */
+.stitle{font-size:19px;font-weight:800;color:var(--accent);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;}
+.sicon{width:30px;height:30px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
 
-  /* ── MAIN ── */
-  main { max-width: 1100px; margin: 0 auto; padding: 32px; }
+/* CARD */
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(30,58,95,.06);}
+.ctitle{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.ctitle::before{content:'';display:block;width:3px;height:13px;background:var(--accent);border-radius:2px;}
 
-  section {
-    display: none;
-    animation: fadeIn 0.3s ease;
-  }
-  section.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+/* TABLE */
+.tw{overflow-x:auto;margin:8px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:var(--surface2);color:var(--muted);font-weight:600;padding:7px 10px;text-align:left;border-bottom:2px solid var(--border);font-size:11px;letter-spacing:.3px;}
+td{padding:8px 10px;border-bottom:1px solid #E8EEF8;vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#F8FAFF;}
 
-  /* ── SECTION TITLE ── */
-  .sec-title {
-    font-size: 22px; font-weight: 700;
-    color: var(--text);
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .sec-icon {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
+/* ALERT */
+.al{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px;display:flex;gap:9px;align-items:flex-start;}
+.al-i{font-size:14px;flex-shrink:0;margin-top:1px;}
+.al.blue{background:#EBF2FF;border:1px solid #B8D0F8;}
+.al.red{background:#FFF0EE;border:1px solid #F5C5C0;}
+.al.green{background:#EDFAF2;border:1px solid #B0DFCA;}
+.al.yellow{background:#FFFAEB;border:1px solid #F5E0A0;}
+.al.purple{background:#F5EEFF;border:1px solid #D5B8F8;}
 
-  /* ── CARD ── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-bottom: 20px;
-  }
-  .card-title {
-    font-size: 14px; font-weight: 700;
-    color: var(--accent1);
-    margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .card-title::before {
-    content: ''; display: block;
-    width: 3px; height: 14px;
-    background: var(--accent1);
-    border-radius: 2px;
-  }
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:680px){.g2,.g3{grid-template-columns:1fr;}}
 
-  /* ── TABLE ── */
-  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
-  table {
-    width: 100%; border-collapse: collapse;
-    font-size: 13px;
-  }
-  th {
-    background: var(--surface2);
-    color: var(--text-muted);
-    font-weight: 500;
-    padding: 8px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    font-size: 11px;
-    letter-spacing: 0.5px;
-  }
-  td {
-    padding: 9px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
+/* MINI CARD */
+.mc{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+.mct{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
 
-  /* ── HIGHLIGHT ── */
-  .hl-blue { color: var(--accent1); font-weight: 700; }
-  .hl-red { color: var(--accent2); font-weight: 700; }
-  .hl-green { color: var(--accent3); font-weight: 700; }
-  .hl-yellow { color: var(--accent4); font-weight: 700; }
-  .hl-purple { color: var(--accent5); font-weight: 700; }
+/* HIGHLIGHTS */
+.hb{color:var(--accent2);font-weight:700;}
+.hr{color:var(--red);font-weight:700;}
+.hg{color:var(--green);font-weight:700;}
+.hy{color:var(--yellow);font-weight:700;}
+.hp{color:var(--purple);font-weight:700;}
 
-  /* ── ALERT BOXES ── */
-  .alert {
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin: 12px 0;
-    font-size: 13px;
-    display: flex; gap: 10px; align-items: flex-start;
-  }
-  .alert-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-  .alert.blue { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.25); }
-  .alert.red { background: rgba(247,129,102,0.08); border: 1px solid rgba(247,129,102,0.25); }
-  .alert.green { background: rgba(86,211,100,0.08); border: 1px solid rgba(86,211,100,0.25); }
-  .alert.yellow { background: rgba(227,179,65,0.08); border: 1px solid rgba(227,179,65,0.25); }
+/* BADGE */
+.bdg{display:inline-block;border-radius:4px;padding:1px 6px;font-size:11px;margin-left:3px;}
+.bdg.blue{background:#D8EAFF;color:var(--accent2);}
+.bdg.red{background:#FFE8E5;color:var(--red);}
+.bdg.green{background:#D8F5E8;color:var(--green);}
+.bdg.yellow{background:#FFF3CC;color:var(--yellow);}
 
-  /* ── GRID ── */
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  @media (max-width: 700px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+/* ROM BAR */
+.rom-row{display:flex;align-items:center;gap:10px;margin:6px 0;}
+.rom-lbl{width:130px;font-size:13px;flex-shrink:0;}
+.rom-bw{flex:1;background:#D8E8F8;border-radius:4px;height:7px;overflow:hidden;}
+.rom-b{height:100%;border-radius:4px;}
+.rom-v{width:55px;text-align:right;font-size:12px;color:var(--muted);flex-shrink:0;}
 
-  /* ── MINI CARD ── */
-  .mini-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
-  }
-  .mini-card-title {
-    font-size: 12px; font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-  }
+/* FLOW */
+.flow{background:var(--surface2);border-radius:8px;padding:14px 16px;margin:10px 0;font-size:12px;line-height:2.1;border:1px solid var(--border);}
+.fl-s{color:var(--accent);font-weight:600;}
+.fl-a{color:var(--accent3);font-size:13px;}
 
-  /* ── BADGE ── */
-  .badge {
-    display: inline-block;
-    border-radius: 4px;
-    padding: 1px 7px;
-    font-size: 11px;
-    font-family: 'Space Mono', monospace;
-    margin-left: 4px;
-  }
-  .badge.blue { background: rgba(88,166,255,0.15); color: var(--accent1); }
-  .badge.red { background: rgba(247,129,102,0.15); color: var(--accent2); }
-  .badge.green { background: rgba(86,211,100,0.15); color: var(--accent3); }
-  .badge.yellow { background: rgba(227,179,65,0.15); color: var(--accent4); }
+/* DOT LIST */
+ul.dl{list-style:none;padding:0;}
+ul.dl li{padding:3px 0 3px 14px;position:relative;font-size:13px;}
+ul.dl li::before{content:'·';position:absolute;left:0;color:var(--accent3);font-size:17px;line-height:1.2;}
 
-  /* ── FLOW BOX ── */
-  .flow {
-    background: var(--surface2);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin: 12px 0;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    line-height: 2;
-    color: var(--text-muted);
-  }
-  .flow .step { color: var(--text); }
-  .flow .arrow { color: var(--accent2); }
+/* COMPARTMENT GRID */
+.cgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:10px 0;}
+@media(max-width:600px){.cgrid{grid-template-columns:repeat(3,1fr);}}
+.ci{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 6px;text-align:center;}
+.cn{font-size:16px;font-weight:900;color:var(--accent);display:block;margin-bottom:3px;}
+.cd{font-size:11px;color:var(--muted);line-height:1.4;}
+.ci.sp{border-color:var(--red);}
+.ci.sp .cd{color:var(--red);}
 
-  /* ── COMPARTMENT GRID ── */
-  .comp-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
-    margin: 12px 0;
-  }
-  @media (max-width: 600px) { .comp-grid { grid-template-columns: repeat(3, 1fr); } }
-  .comp-item {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 8px;
-    text-align: center;
-  }
-  .comp-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 18px; font-weight: 700;
-    color: var(--accent4);
-    display: block; margin-bottom: 4px;
-  }
-  .comp-name {
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-  .comp-item.special { border-color: var(--accent2); }
-  .comp-item.special .comp-name { color: var(--accent2); }
+/* EXAM BOX */
+.exam{background:linear-gradient(135deg,#EBF2FF,#F5EEFF);border:1px solid #B8D0F8;border-radius:10px;padding:14px 18px;margin-top:18px;}
+.exam-t{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.exam-list{list-style:none;display:flex;flex-wrap:wrap;gap:7px;}
+.exam-list li{background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text);}
 
-  /* ── EXAM POINTS ── */
-  .exam-box {
-    background: linear-gradient(135deg, rgba(88,166,255,0.05), rgba(188,140,255,0.05));
-    border: 1px solid rgba(88,166,255,0.3);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-top: 20px;
-  }
-  .exam-box-title {
-    font-size: 11px;
-    font-family: 'Space Mono', monospace;
-    color: var(--accent1);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .exam-list {
-    list-style: none;
-    display: flex; flex-wrap: wrap; gap: 8px;
-  }
-  .exam-list li {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 12px;
-    color: var(--text);
-  }
+/* BIG NUM GRID */
+.bng{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
+@media(max-width:500px){.bng{grid-template-columns:repeat(2,1fr);}}
+.bn-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+.bn-num{font-size:28px;font-weight:900;line-height:1;}
+.bn-lbl{font-size:11px;color:var(--muted);margin-top:4px;}
 
-  /* ── ROM VISUAL ── */
-  .rom-row {
-    display: flex; align-items: center; gap: 12px;
-    margin: 8px 0;
-  }
-  .rom-label { width: 140px; font-size: 13px; flex-shrink: 0; }
-  .rom-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
-  .rom-bar { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
-  .rom-val {
-    width: 60px; text-align: right;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px; color: var(--text-muted);
-    flex-shrink: 0;
-  }
+/* PROGRESS */
+.prog-wrap{background:var(--surface2);border-radius:8px;padding:14px 16px;margin-bottom:18px;border:1px solid var(--border);}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.prog-title{font-size:13px;font-weight:700;color:var(--accent);}
+.prog-score{font-size:13px;font-weight:700;color:var(--accent2);}
+.prog-bar-bg{background:#D8E8F8;border-radius:6px;height:10px;overflow:hidden;}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent3));border-radius:6px;transition:width .5s ease;}
+.prog-info{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted);}
 
-  ul.dot-list {
-    list-style: none; padding: 0;
-  }
-  ul.dot-list li {
-    padding: 4px 0 4px 16px;
-    position: relative;
-    font-size: 13px;
-    color: var(--text);
-  }
-  ul.dot-list li::before {
-    content: '·';
-    position: absolute; left: 0;
-    color: var(--accent1);
-    font-size: 18px; line-height: 1.2;
-  }
+/* QUIZ */
+.q-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;box-shadow:0 1px 4px rgba(30,58,95,.06);}
+.q-num{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-bottom:8px;}
+.q-text{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:14px;line-height:1.5;}
+.q-opts{display:flex;flex-direction:column;gap:8px;}
+.q-opt{background:var(--surface2);border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:13px;text-align:left;transition:.2s;color:var(--text);}
+.q-opt:hover{border-color:var(--accent2);background:#EBF2FF;}
+.q-opt.correct{background:#EDFAF2;border-color:var(--green);color:var(--green);}
+.q-opt.wrong{background:#FFF0EE;border-color:var(--red);color:var(--red);}
+.q-opt:disabled{cursor:default;}
+.q-explain{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none;}
+.q-explain.show{display:block;}
+.q-explain.correct-ex{background:#EDFAF2;border:1px solid #B0DFCA;color:var(--green);}
+.q-explain.wrong-ex{background:#FFF0EE;border:1px solid #F5C5C0;color:var(--red);}
 
-  p.note {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-    line-height: 1.6;
-  }
+/* QUIZ CONTROLS */
+.qc-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-size:13px;font-family:inherit;font-weight:600;transition:.2s;}
+.btn:hover{background:var(--accent2);}
+.btn.outline{background:#fff;color:var(--accent);border:2px solid var(--accent);}
+.btn.outline:hover{background:var(--surface2);}
+.btn.red{background:var(--red);}
+
+/* SUMMARY ACCORDION */
+.acc-item{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(30,58,95,.05);}
+.acc-hd{padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--accent);font-size:14px;user-select:none;}
+.acc-hd:hover{background:#F8FAFF;}
+.acc-arrow{font-size:12px;transition:.2s;color:var(--muted);}
+.acc-item.open .acc-arrow{transform:rotate(180deg);}
+.acc-body{display:none;padding:0 18px 16px;}
+.acc-item.open .acc-body{display:block;}
+
+/* HIDDEN QUIZ STATE */
+#quiz-complete{text-align:center;padding:32px;display:none;}
+#quiz-complete.show{display:block;}
+.result-big{font-size:56px;font-weight:900;color:var(--accent);line-height:1;}
+.result-sub{font-size:14px;color:var(--muted);margin-top:6px;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="chap-label">Chapter 7 · Kinesiology</div>
-    <h1>손목 Wrist</h1>
-    <div class="header-sub">
-      <span class="tag">골학</span>
-      <span class="tag">관절학</span>
-      <span class="tag">운동형상학</span>
-      <span class="tag">불안정성</span>
-      <span class="tag">근육 기능</span>
-      <span class="tag">중간고사 노트</span>
-    </div>
+  <div class="hdr-label">Neumann Kinesiology · Chapter 7</div>
+  <h1>손목 Wrist</h1>
+  <div class="hdr-tags">
+    <span class="hdr-tag">골학</span>
+    <span class="hdr-tag">관절구조·인대</span>
+    <span class="hdr-tag">운동형상학</span>
+    <span class="hdr-tag">불안정성</span>
+    <span class="hdr-tag">근육기능</span>
+    <span class="hdr-tag">시험 핵심</span>
   </div>
 </header>
 
 <nav>
   <div class="nav-inner">
-    <button class="nav-btn active" onclick="show('sec1',this)">① 골학</button>
-    <button class="nav-btn" onclick="show('sec2',this)">② 관절구조·인대</button>
-    <button class="nav-btn" onclick="show('sec3',this)">③ 운동형상학</button>
-    <button class="nav-btn" onclick="show('sec4',this)">④ 불안정성</button>
-    <button class="nav-btn" onclick="show('sec5',this)">⑤ 근육 기능</button>
-    <button class="nav-btn" onclick="show('sec6',this)">⑥ 시험 요약</button>
+    <button class="nb on" onclick="show('s1',this)">📋 분류/개요</button>
+    <button class="nb" onclick="show('s2',this)">📖 요약</button>
+    <button class="nb" onclick="show('s3',this)">❓ 퀴즈</button>
   </div>
 </nav>
 
 <main>
 
-<!-- ═══════════════════════════════════════════ SEC 1 골학 -->
-<section id="sec1" class="active">
-  <div class="sec-title">
-    <div class="sec-icon" style="background:rgba(88,166,255,0.15);">🦴</div>
-    골학 (Osteology)
-  </div>
+<!-- ═══════════ SEC 1: 분류/개요 ═══════════ -->
+<section id="s1" class="on">
+  <div class="stitle"><div class="sicon">📋</div> 분류 / 개요</div>
 
-  <!-- 먼쪽 아래팔 -->
+  <!-- 챕터 목차 -->
   <div class="card">
-    <div class="card-title">먼쪽 아래팔 골학적 특징</div>
-    <div class="tbl-wrap">
+    <div class="ctitle">챕터 구성 목차</div>
+    <div class="tw">
       <table>
-        <tr><th>구조</th><th>특징</th><th>임상 의의</th></tr>
-        <tr>
-          <td class="hl-blue">노뼈 등쪽결절<br><small>(Lister's tubercle)</small></td>
-          <td>짧은노쪽손목폄근 힘줄 + 긴엄지폄근 힘줄 분리</td>
-          <td>촉지 가능한 랜드마크</td>
-        </tr>
-        <tr>
-          <td>노뼈 붓돌기</td>
-          <td>가쪽면에서 먼쪽으로 뻗음</td>
-          <td>자쪽치우침 시 충돌 제한</td>
-        </tr>
-        <tr>
-          <td>자뼈 붓돌기</td>
-          <td>노뼈보다 날카로움, 뒤-안쪽 모서리</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td class="hl-yellow">노뼈 먼쪽 관절면</td>
-          <td><span class="badge yellow">자쪽기울임 25°</span> + <span class="badge yellow">바닥쪽기울임 10°</span></td>
-          <td>자쪽 &gt; 노쪽 ROM, 굽힘 &gt; 폄</td>
-        </tr>
-      </table>
-    </div>
-    <div class="alert blue">
-      <span class="alert-icon">💡</span>
-      <div>자쪽기울임 25° → 자쪽치우침이 노쪽치우침보다 ROM 더 큼 / 바닥쪽기울임 10° → 굽힘 &gt; 폄</div>
-    </div>
-  </div>
-
-  <!-- 손목뼈 8개 -->
-  <div class="card">
-    <div class="card-title">손목뼈 8개 (Carpal Bones)</div>
-    <div class="grid2">
-      <div>
-        <div class="mini-card">
-          <div class="mini-card-title">몸쪽줄 (Proximal row)</div>
-          <div class="tbl-wrap">
-            <table>
-              <tr><th>뼈</th><th>핵심 특징</th></tr>
-              <tr>
-                <td class="hl-red">손배뼈<br><small>Scaphoid</small></td>
-                <td>가장 자주 골절 / 무혈관괴사 위험 / 해부학적 코담배갑 압통</td>
-              </tr>
-              <tr>
-                <td class="hl-blue">반달뼈<br><small>Lunate</small></td>
-                <td>손목뼈 중 가장 불안정 / 인대부착 결여</td>
-              </tr>
-              <tr>
-                <td>세모뼈<br><small>Triquetrum</small></td>
-                <td>자쪽 대부분 / 3번째로 잘 골절</td>
-              </tr>
-              <tr>
-                <td>콩알뼈<br><small>Pisiform</small></td>
-                <td>종자뼈 특성 / FCU 힘줄 안에 위치</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="mini-card">
-          <div class="mini-card-title">먼쪽줄 (Distal row)</div>
-          <div class="tbl-wrap">
-            <table>
-              <tr><th>뼈</th><th>핵심 특징</th></tr>
-              <tr>
-                <td>큰마름뼈<br><small>Trapezium</small></td>
-                <td>비대칭형 / 첫째손허리관절 (엄지 광범위 가동)</td>
-              </tr>
-              <tr>
-                <td>작은마름뼈<br><small>Trapezoid</small></td>
-                <td>큰마름뼈·손배뼈 사이 단단히 고정</td>
-              </tr>
-              <tr>
-                <td class="hl-green">알머리뼈<br><small>Capitate</small></td>
-                <td>손목뼈 중 가장 큼 / 모든 손목운동 <strong>돌림축</strong></td>
-              </tr>
-              <tr>
-                <td>갈고리뼈<br><small>Hamate</small></td>
-                <td>갈고리 돌기 → 가로손목인대 부착</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 손목굴 -->
-  <div class="card">
-    <div class="card-title">손목굴 (Carpal Tunnel)</div>
-    <div class="grid2">
-      <div>
-        <p style="font-size:13px; margin-bottom:10px;">가로손목인대가 걸쳐지는 <span class="hl-blue">4개의 뼈 돌출점</span></p>
-        <div class="tbl-wrap">
-          <table>
-            <tr><th>방향</th><th>뼈</th></tr>
-            <tr><td>자쪽</td><td class="hl-yellow">콩알뼈 + 갈고리뼈갈고리</td></tr>
-            <tr><td>노쪽</td><td class="hl-yellow">손배뼈결절 + 큰마름뼈결절</td></tr>
-          </table>
-        </div>
-      </div>
-      <div>
-        <div class="mini-card">
-          <div class="mini-card-title">통과 구조</div>
-          <ul class="dot-list">
-            <li>정중신경</li>
-            <li>외재성 손가락 굽힘근 힘줄들</li>
-          </ul>
-          <p class="note">인대 기능: "활시위(bowstringing)" 방지, 굽힘 시 힘줄 고정</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 손배뼈 & 반달뼈 임상 -->
-  <div class="card">
-    <div class="card-title" style="color:var(--accent2);">⭐ 손배뼈 & 반달뼈 임상 요점</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>항목</th><th>손배뼈</th><th>반달뼈</th></tr>
-        <tr><td>골절 빈도</td><td class="hl-red">손목뼈 중 1위</td><td>—</td></tr>
-        <tr><td>골절 기전</td><td>손목 폄 + 노쪽치우침 상태 낙상</td><td>—</td></tr>
-        <tr><td>취약 이유</td><td>힘 전달경로에 직접 위치</td><td>인대부착 결여</td></tr>
-        <tr><td>합병증</td><td class="hl-red">몸쪽극 무혈관괴사</td><td>탈구</td></tr>
-        <tr><td>압통 위치</td><td>해부학적 코담배갑 / 손배뼈결절</td><td>—</td></tr>
-        <tr><td>치료</td><td>몸쪽극: 수술 / 먼쪽극: 6~8주 고정</td><td>—</td></tr>
-      </table>
-    </div>
-    <div class="alert red">
-      <span class="alert-icon">⚠️</span>
-      <div><strong>킨뵉병(Kienböck's disease)</strong>: 반달뼈 무혈관괴사. 원인 불명, 압박식 드릴 노동자에 흔함. 진행 시 반달뼈 적출 또는 몸쪽줄 손목뼈자름술.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ SEC 2 관절·인대 -->
-<section id="sec2">
-  <div class="sec-title">
-    <div class="sec-icon" style="background:rgba(247,129,102,0.15);">🔗</div>
-    관절구조 · 인대
-  </div>
-
-  <!-- 관절구조 -->
-  <div class="card">
-    <div class="card-title">손목의 주요 관절</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>관절</th><th>구성</th><th>특징</th></tr>
-        <tr>
-          <td class="hl-blue">노손목관절<br><small>Radiocarpal</small></td>
-          <td>노뼈 + 손배뼈·반달뼈</td>
-          <td>몸쪽: 오목 / 먼쪽: 볼록. 접촉면 최대 = 부분 폄 + 약간 자쪽치우침</td>
-        </tr>
-        <tr>
-          <td class="hl-green">손목뼈중간관절<br><small>Midcarpal</small></td>
-          <td>몸쪽줄 ↔ 먼쪽줄</td>
-          <td>안쪽구획(ball-and-socket 유사) + 가쪽구획</td>
-        </tr>
-      </table>
-    </div>
-    <div class="alert blue">
-      <span class="alert-icon">💡</span>
-      <div>손목뼈중간관절 영화방사선촬영 분석은 <strong>안쪽구획</strong> 중심. 안쪽구획 = 알머리뼈머리(볼록) ↔ 손배·반달·세모뼈(오목) → 절구관절과 유사</div>
-    </div>
-  </div>
-
-  <!-- 인대 분류 -->
-  <div class="card">
-    <div class="card-title">인대 분류: 외재성 vs 내재성</div>
-    <div class="grid2">
-      <div class="mini-card">
-        <div class="mini-card-title" style="color:var(--accent1);">외재성 인대</div>
-        <p class="note" style="margin-bottom:8px;">노뼈/자뼈 → 손목뼈 내 부착</p>
-        <ul class="dot-list">
-          <li>등쪽노손목인대 <span class="badge blue">감각신경지배 최다</span></li>
-          <li>바닥쪽노손목인대 (3개)</li>
-          <li>TFCC 구성 인대들</li>
-        </ul>
-      </div>
-      <div class="mini-card">
-        <div class="mini-card-title" style="color:var(--accent3);">내재성 인대</div>
-        <p class="note" style="margin-bottom:8px;">손목뼈 안에서 몸쪽↔먼쪽 부착</p>
-        <ul class="dot-list">
-          <li>짧은 인대들 (먼쪽줄 견고 결합)</li>
-          <li><strong>손배반달인대</strong> <span class="badge red">가장 임상적 중요</span></li>
-          <li>반달세모인대</li>
-          <li>역V자 인대들 (이중V 시스템)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- 바닥쪽노손목인대 3대 인대 -->
-  <div class="card">
-    <div class="card-title" style="color:var(--accent4);">⭐ 바닥쪽노손목인대 3대 인대</div>
-    <div class="grid3">
-      <div class="mini-card" style="border-color:var(--accent4);">
-        <div class="mini-card-title">① 노손배알머리인대</div>
-        <p style="font-size:12px; color:var(--text-muted);">Radioscaphocapitate</p>
-      </div>
-      <div class="mini-card" style="border-color:var(--accent4);">
-        <div class="mini-card-title">② 긴노반달인대</div>
-        <p style="font-size:12px; color:var(--text-muted);">Long radiolunate</p>
-      </div>
-      <div class="mini-card" style="border-color:var(--accent4);">
-        <div class="mini-card-title">③ 짧은노반달인대</div>
-        <p style="font-size:12px; color:var(--text-muted);">Short radiolunate</p>
-      </div>
-    </div>
-    <div class="alert yellow">
-      <span class="alert-icon">💡</span>
-      <div>완전 손목 폄 시 팽팽해짐 → 노뼈-손목뼈 등쪽 충돌 제한</div>
-    </div>
-  </div>
-
-  <!-- TFCC -->
-  <div class="card" style="border-color:rgba(188,140,255,0.4);">
-    <div class="card-title" style="color:var(--accent5);">⭐⭐ TFCC (세모섬유연골복합체)</div>
-    <div class="grid2">
-      <div>
-        <div class="tbl-wrap">
-          <table>
-            <tr><th>항목</th><th>내용</th></tr>
-            <tr><td>위치</td><td>자손목공간(Ulnocarpal space)</td></tr>
-            <tr><td>핵심 구조</td><td class="hl-purple">세모섬유연골(TFC) = 관절원반</td></tr>
-            <tr><td>TFC 중심</td><td class="hl-red">80% 혈관 없음 → 치유 어려움</td></tr>
-          </table>
-        </div>
-      </div>
-      <div>
-        <div class="mini-card" style="border-color:rgba(188,140,255,0.3);">
-          <div class="mini-card-title" style="color:var(--accent5);">TFCC 4대 기능</div>
-          <ul class="dot-list">
-            <li>먼쪽노자관절의 <strong>일차적 안정자</strong></li>
-            <li>손목의 <strong>자쪽면 강화</strong></li>
-            <li>노손목관절 오목함에 기여</li>
-            <li>압박력 <strong>약 20%</strong> 전달</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 이중 V 시스템 -->
-  <div class="card">
-    <div class="card-title">이중 V 시스템 (Double-V System)</div>
-    <div class="grid2">
-      <div class="mini-card">
-        <div class="mini-card-title">먼쪽 역V자</div>
-        <ul class="dot-list">
-          <li>가쪽분지 → 손배뼈 부착</li>
-          <li>안쪽분지 → 세모뼈 부착</li>
-          <li>= 바닥쪽손목뼈사이인대</li>
-        </ul>
-      </div>
-      <div class="mini-card">
-        <div class="mini-card-title">몸쪽 역V자</div>
-        <ul class="dot-list">
-          <li>바닥쪽자손목인대</li>
-          <li>바닥쪽노손목인대 (반달뼈 부착부)</li>
-        </ul>
-      </div>
-    </div>
-    <div class="alert green">
-      <span class="alert-icon">💡</span>
-      <div>중립위에서도 약간의 장력 유지 → 자쪽/노쪽치우침 끝범위 결정 + 손목뼈 동적 안정</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ SEC 3 운동형상학 -->
-<section id="sec3">
-  <div class="sec-title">
-    <div class="sec-icon" style="background:rgba(86,211,100,0.15);">⚙️</div>
-    운동형상학 (Kinematics)
-  </div>
-
-  <!-- ROM -->
-  <div class="card">
-    <div class="card-title">뼈운동형상학 — ROM</div>
-    <div class="grid2">
-      <div>
-        <p style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--text-muted);">굽힘 · 폄</p>
-        <div class="rom-row">
-          <span class="rom-label">굽힘 (Flexion)</span>
-          <div class="rom-bar-wrap"><div class="rom-bar" style="width:85%; background:var(--accent1);"></div></div>
-          <span class="rom-val">70~85°</span>
-        </div>
-        <div class="rom-row">
-          <span class="rom-label">폄 (Extension)</span>
-          <div class="rom-bar-wrap"><div class="rom-bar" style="width:75%; background:var(--accent3);"></div></div>
-          <span class="rom-val">60~75°</span>
-        </div>
-        <div class="alert blue" style="margin-top:10px;">
-          <span class="alert-icon">📌</span>
-          <div>굽힘 > 폄 약 <strong>10~15°</strong></div>
-        </div>
-      </div>
-      <div>
-        <p style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--text-muted);">자쪽치우침 · 노쪽치우침</p>
-        <div class="rom-row">
-          <span class="rom-label">자쪽치우침</span>
-          <div class="rom-bar-wrap"><div class="rom-bar" style="width:80%; background:var(--accent2);"></div></div>
-          <span class="rom-val">35~40°</span>
-        </div>
-        <div class="rom-row">
-          <span class="rom-label">노쪽치우침</span>
-          <div class="rom-bar-wrap"><div class="rom-bar" style="width:40%; background:var(--accent4);"></div></div>
-          <span class="rom-val">15~20°</span>
-        </div>
-        <div class="alert yellow" style="margin-top:10px;">
-          <span class="alert-icon">📌</span>
-          <div>자쪽 ≈ 노쪽의 <strong>2배</strong> (노뼈 자쪽기울임 25° 때문)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADL -->
-  <div class="card">
-    <div class="card-title">ADL 기능적 범위 (Ryu 연구)</div>
-    <div class="grid2">
-      <div class="grid2" style="gap:8px;">
-        <div class="mini-card" style="text-align:center;">
-          <div style="font-size:28px; font-weight:900; color:var(--accent1); font-family:'Space Mono',monospace;">40°</div>
-          <div style="font-size:12px; color:var(--text-muted);">굽힘</div>
-        </div>
-        <div class="mini-card" style="text-align:center;">
-          <div style="font-size:28px; font-weight:900; color:var(--accent3); font-family:'Space Mono',monospace;">40°</div>
-          <div style="font-size:12px; color:var(--text-muted);">폄</div>
-        </div>
-        <div class="mini-card" style="text-align:center;">
-          <div style="font-size:28px; font-weight:900; color:var(--accent4); font-family:'Space Mono',monospace;">10°</div>
-          <div style="font-size:12px; color:var(--text-muted);">노쪽치우침</div>
-        </div>
-        <div class="mini-card" style="text-align:center;">
-          <div style="font-size:28px; font-weight:900; color:var(--accent2); font-family:'Space Mono',monospace;">30°</div>
-          <div style="font-size:12px; color:var(--text-muted);">자쪽치우침</div>
-        </div>
-      </div>
-      <div class="mini-card" style="display:flex; flex-direction:column; justify-content:center;">
-        <div class="mini-card-title">최대 가동범위의</div>
-        <div style="font-size:36px; font-weight:900; color:var(--accent5); font-family:'Space Mono',monospace;">50~80%</div>
-        <p class="note">일상생활 활동에 필요한 범위</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 관절운동형상학 -->
-  <div class="card">
-    <div class="card-title">⭐⭐ 관절운동형상학 — 이중관절시스템</div>
-    <div class="alert blue" style="margin-bottom:14px;">
-      <span class="alert-icon">🔑</span>
-      <div>손목 = <strong>노손목관절 + 손목뼈중간관절 동시 운동</strong> (이중관절시스템)</div>
-    </div>
-    <div class="grid2">
-      <div class="mini-card" style="border-color:var(--accent3);">
-        <div class="mini-card-title" style="color:var(--accent3);">손목 폄 (Extension)</div>
-        <div class="flow">
-          <div class="step">노손목관절</div>
-          <div class="arrow">↓</div>
-          <div>반달뼈 볼록면 → 노뼈에 대해</div>
-          <div class="hl-green" style="font-size:12px;">등쪽 구르기 + 바닥쪽 미끄러짐</div>
-          <div class="arrow" style="margin-top:8px;">↓</div>
-          <div class="step">손목뼈중간관절</div>
-          <div class="arrow">↓</div>
-          <div>알머리뼈 → 반달뼈에 대해</div>
-          <div class="hl-green" style="font-size:12px;">등쪽 구르기 + 바닥쪽 미끄러짐</div>
-        </div>
-      </div>
-      <div class="mini-card" style="border-color:var(--accent1);">
-        <div class="mini-card-title" style="color:var(--accent1);">손목 굽힘 (Flexion)</div>
-        <div class="flow">
-          <div class="step">노손목관절</div>
-          <div class="arrow">↓</div>
-          <div>반달뼈 볼록면 → 노뼈에 대해</div>
-          <div class="hl-blue" style="font-size:12px;">바닥쪽 구르기 + 등쪽 미끄러짐</div>
-          <div class="arrow" style="margin-top:8px;">↓</div>
-          <div class="step">손목뼈중간관절</div>
-          <div class="arrow">↓</div>
-          <div>알머리뼈 → 반달뼈에 대해</div>
-          <div class="hl-blue" style="font-size:12px;">바닥쪽 구르기 + 등쪽 미끄러짐</div>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:16px;">
-      <div class="card-title" style="font-size:13px;">자쪽/노쪽치우침 관절운동형상학</div>
-      <div class="tbl-wrap">
-        <table>
-          <tr><th>방향</th><th>노손목관절</th><th>손목뼈중간관절</th><th>특이사항</th></tr>
-          <tr>
-            <td class="hl-red">자쪽치우침</td>
-            <td>손배·반달·세모뼈 → 자쪽 구르기 + <strong>노쪽 미끄러짐</strong></td>
-            <td>알머리뼈 자쪽 구르기 + 약간 노쪽 미끄러짐</td>
-            <td>두 관절 동등 기여</td>
-          </tr>
-          <tr>
-            <td class="hl-yellow">노쪽치우침</td>
-            <td>기여 적음</td>
-            <td>주 기여</td>
-            <td class="hl-yellow"><strong>85%가 손목뼈중간관절</strong></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- 자연스러운 동작경로 -->
-  <div class="card" style="border-color:rgba(188,140,255,0.3);">
-    <div class="card-title" style="color:var(--accent5);">자연스러운 손목 동작경로 — 다트 던지기</div>
-    <div class="grid2">
-      <div>
-        <div class="tbl-wrap">
-          <table>
-            <tr><th>동작</th><th>자연 결합</th></tr>
-            <tr><td>폄</td><td class="hl-green">+ 노쪽치우침</td></tr>
-            <tr><td>굽힘</td><td class="hl-red">+ 자쪽치우침</td></tr>
-          </table>
-        </div>
-      </div>
-      <div class="mini-card" style="border-color:rgba(188,140,255,0.3);">
-        <div class="mini-card-title" style="color:var(--accent5);">다트 던지기 = 최적 경로</div>
-        <ul class="dot-list">
-          <li>가장 적은 수동저항</li>
-          <li>손배반달인대 스트레스 최소</li>
-          <li>약 25~50° 사선 경로</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ SEC 4 불안정성 -->
-<section id="sec4">
-  <div class="sec-title">
-    <div class="sec-icon" style="background:rgba(247,129,102,0.15);">⚠️</div>
-    손목의 불안정성
-  </div>
-
-  <!-- DISI vs VISI -->
-  <div class="card">
-    <div class="card-title">돌림성 붕괴: DISI vs VISI ⭐⭐</div>
-    <div class="grid2">
-      <div class="mini-card" style="border-color:var(--accent2);">
-        <div class="mini-card-title" style="color:var(--accent2);">DISI</div>
-        <p style="font-size:13px; font-weight:700; margin-bottom:6px;">등쪽삽입분절불안정성</p>
-        <p style="font-size:12px; color:var(--text-muted);">Dorsal Intercalated Segment Instability</p>
-        <div style="margin-top:10px; padding:8px; background:var(--bg); border-radius:6px; text-align:center;">
-          <div style="font-size:12px; color:var(--text-muted);">반달뼈 먼쪽 관절면</div>
-          <div style="font-size:20px; margin:4px 0;">⬆️</div>
-          <div style="font-size:13px; color:var(--accent2); font-weight:700;">등쪽</div>
-        </div>
-      </div>
-      <div class="mini-card" style="border-color:var(--accent1);">
-        <div class="mini-card-title" style="color:var(--accent1);">VISI</div>
-        <p style="font-size:13px; font-weight:700; margin-bottom:6px;">바닥쪽삽입분절불안정성</p>
-        <p style="font-size:12px; color:var(--text-muted);">Volar Intercalated Segment Instability</p>
-        <div style="margin-top:10px; padding:8px; background:var(--bg); border-radius:6px; text-align:center;">
-          <div style="font-size:12px; color:var(--text-muted);">반달뼈 먼쪽 관절면</div>
-          <div style="font-size:20px; margin:4px 0;">⬇️</div>
-          <div style="font-size:13px; color:var(--accent1); font-weight:700;">바닥쪽</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DISI 발생 기전 -->
-  <div class="card">
-    <div class="card-title">DISI 발생 기전</div>
-    <div class="flow">
-      <div class="step">1. 손이 과신장된 상태로 낙상</div>
-      <div class="arrow">↓</div>
-      <div class="step">2. 손배뼈 "허리" 골절 + 손배반달인대 찢어짐</div>
-      <div class="arrow">↓</div>
-      <div class="step">3. 손배-반달뼈 역학적 연결 붕괴</div>
-      <div class="arrow">↓</div>
-      <div class="step">4. 알머리뼈가 몸쪽으로 이동 → 틈 더 벌어짐</div>
-      <div class="arrow">↓</div>
-      <div class="step">5. 반달뼈 탈구/아탈구 → 먼쪽 관절면이 등쪽 향함</div>
-    </div>
-    <div class="alert red">
-      <span class="alert-icon">📏</span>
-      <div><strong>방사선 기준</strong>: 손배반달 틈 <strong>3~5 mm 이상</strong> = 손배반달 분리 의심</div>
-    </div>
-  </div>
-
-  <!-- 손목뼈 자쪽이동 -->
-  <div class="card">
-    <div class="card-title">손목뼈의 자쪽이동 (Ulnar Translation)</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>항목</th><th>내용</th></tr>
-        <tr><td>원인</td><td>노뼈 먼쪽 관절면의 <span class="hl-yellow">자쪽기울임 25°</span></td></tr>
-        <tr><td>자쪽이동 힘</td><td>압박력의 <span class="hl-red">42%</span>가 자쪽 병진운동으로 작용</td></tr>
-        <tr><td>저항</td><td>등쪽·바닥쪽 노손목인대에서 발생하는 수동장력</td></tr>
-        <tr><td>질환</td><td>류마티스관절염 → 인대 약화 → 자쪽이동 심화 → 지그재그 변형</td></tr>
+        <tr><th>섹션</th><th>주제</th><th>핵심 키워드</th></tr>
+        <tr><td class="hb">① 골학</td><td>먼쪽 아래팔 · 손목뼈 8개 · 손목굴</td><td>25°/10° 기울임, 손배뼈, 반달뼈, 킨뵉병</td></tr>
+        <tr><td class="hb">② 관절·인대</td><td>노손목관절 · 손목뼈중간관절 · TFCC · 이중V</td><td>TFCC 4기능, 손배반달인대, 바닥쪽노손목인대 3개</td></tr>
+        <tr><td class="hb">③ 운동형상학</td><td>ROM · ADL · 관절운동형상학 · 다트 던지기</td><td>굽힘>폄 10~15°, 자쪽≈노쪽2배, 85% 손목뼈중간관절</td></tr>
+        <tr><td class="hb">④ 불안정성</td><td>DISI/VISI · 자쪽이동 · 이중V 조절</td><td>3~5mm 틈, 42% 자쪽이동 힘, DISI 발생기전</td></tr>
+        <tr><td class="hb">⑤ 근육기능</td><td>신경지배 · 6구획 · 토크 · 잡기 기전</td><td>ECRB=테니스엘보, 1구획=드퀘르벵, 굽힘>노>자>폄</td></tr>
       </table>
     </div>
   </div>
 
-  <!-- 이중 V -->
+  <!-- 핵심 수치 카드 -->
   <div class="card">
-    <div class="card-title">이중 V 시스템과 치우침 조절</div>
-    <div class="grid2">
-      <div class="mini-card">
-        <div class="mini-card-title">자쪽치우침 시</div>
-        <ul class="dot-list">
-          <li>바닥쪽손목뼈사이인대 <strong>가쪽분지</strong> 신장</li>
-          <li>바닥쪽자손목인대 섬유 신장</li>
-          <li>→ 자쪽치우침 제동</li>
-        </ul>
-      </div>
-      <div class="mini-card">
-        <div class="mini-card-title">노쪽치우침 시</div>
-        <ul class="dot-list">
-          <li>긴노반달인대 등 섬유 신장</li>
-          <li>→ 노쪽치우침 제동</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ SEC 5 근육 -->
-<section id="sec5">
-  <div class="sec-title">
-    <div class="sec-icon" style="background:rgba(86,211,100,0.15);">💪</div>
-    근육과 관절의 상호작용
-  </div>
-
-  <!-- 신경지배 -->
-  <div class="card">
-    <div class="card-title">신경지배</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>신경</th><th>지배 근육</th><th>척수신경뿌리</th></tr>
-        <tr>
-          <td class="hl-green">노신경</td>
-          <td>손목 등쪽면 지나는 <strong>모든 폄근육</strong></td>
-          <td>C⁶·C⁷</td>
-        </tr>
-        <tr>
-          <td class="hl-blue">정중신경</td>
-          <td>노쪽손목굽힘근, 긴손바닥근</td>
-          <td>C⁶·C⁷·C⁸</td>
-        </tr>
-        <tr>
-          <td class="hl-yellow">자신경</td>
-          <td>자쪽손목굽힘근</td>
-          <td>C⁸·T¹</td>
-        </tr>
-      </table>
-    </div>
-    <div class="alert blue">
-      <span class="alert-icon">📌</span>
-      <div>노손목관절·손목뼈중간관절 감각 = C⁶·C⁷ (정중·노신경) / 손목뼈중간관절 = C⁸ (자신경 깊은가지)</div>
+    <div class="ctitle">⭐ 반드시 외울 핵심 수치</div>
+    <div class="bng">
+      <div class="bn-card"><div class="bn-num" style="color:var(--yellow);">25°</div><div class="bn-lbl">노뼈 자쪽기울임</div></div>
+      <div class="bn-card"><div class="bn-num" style="color:var(--yellow);">10°</div><div class="bn-lbl">노뼈 바닥쪽기울임</div></div>
+      <div class="bn-card"><div class="bn-num" style="color:var(--red);">42%</div><div class="bn-lbl">자쪽이동 힘</div></div>
+      <div class="bn-card"><div class="bn-num" style="color:var(--purple);">20%</div><div class="bn-lbl">TFCC 압박력 전달</div></div>
+      <div class="bn-card"><div class="bn-num" style="color:var(--green);">85%</div><div class="bn-lbl">노쪽치우침 → 손목뼈중간관절</div></div>
+      <div class="bn-card"><div class="bn-num" style="color:var(--accent2);">3~5mm</div><div class="bn-lbl">손배반달 분리 기준</div></div>
     </div>
   </div>
 
-  <!-- 폄근육 6구획 -->
-  <div class="card">
-    <div class="card-title">폄근육지띠 6개 섬유뼈구획 ⭐</div>
-    <div class="comp-grid">
-      <div class="comp-item special">
-        <span class="comp-num">I</span>
-        <div class="comp-name">긴엄지벌림근<br>+ 짧은엄지폄근<br><strong style="color:var(--accent2);">드 퀘르벵!</strong></div>
-      </div>
-      <div class="comp-item">
-        <span class="comp-num">II</span>
-        <div class="comp-name">긴·짧은<br>노쪽손목폄근<br>(ECRL/ECRB)</div>
-      </div>
-      <div class="comp-item">
-        <span class="comp-num">III</span>
-        <div class="comp-name">긴엄지폄근<br>(EPL)</div>
-      </div>
-      <div class="comp-item">
-        <span class="comp-num">IV</span>
-        <div class="comp-name">손가락폄근<br>+ 집게폄근</div>
-      </div>
-      <div class="comp-item">
-        <span class="comp-num">V</span>
-        <div class="comp-name">새끼폄근<br>(EDM)</div>
-      </div>
-      <div class="comp-item">
-        <span class="comp-num">VI</span>
-        <div class="comp-name">자쪽손목폄근<br>(ECU)</div>
-      </div>
-    </div>
-    <div class="alert red">
-      <span class="alert-icon">⚠️</span>
-      <div><strong>드 퀘르벵 힘줄윤활막염</strong>: 1구획. 반복적 아래팔 뒤침/엎침, 빨래 짜기 유발. 보존치료(부목, 코르티손, 이온동영법) → 실패 시 수술적 해리.</div>
-    </div>
-    <div class="alert yellow">
-      <span class="alert-icon">⚠️</span>
-      <div><strong>테니스 엘보 (가쪽위관절용기통증)</strong>: <strong>짧은노쪽손목폄근(ECRB)</strong>. 반복·강력 잡기로 몸쪽 부착부 스트레스. 현재: 퇴행성 변화 위주.</div>
-    </div>
-  </div>
-
-  <!-- 최대 토크 표 -->
-  <div class="card">
-    <div class="card-title">⭐ 최대 등척성 토크 (표 7.1)</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>근육 무리</th><th>평균 최대 토크</th><th>최대 토크 위치</th></tr>
-        <tr>
-          <td class="hl-blue">굽힘근육</td>
-          <td><span style="font-family:'Space Mono',monospace; font-size:16px; color:var(--accent1);">12.2 Nm</span> <span class="badge blue">최대</span></td>
-          <td>40° 굽힘</td>
-        </tr>
-        <tr>
-          <td class="hl-green">폄근육</td>
-          <td><span style="font-family:'Space Mono',monospace; font-size:16px; color:var(--accent3);">7.1 Nm</span></td>
-          <td>30° 굽힘 ~ 70° 폄</td>
-        </tr>
-        <tr>
-          <td>노쪽치우침근육</td>
-          <td><span style="font-family:'Space Mono',monospace; font-size:16px; color:var(--accent4);">11.0 Nm</span></td>
-          <td>0° 중립</td>
-        </tr>
-        <tr>
-          <td>자쪽치우침근육</td>
-          <td><span style="font-family:'Space Mono',monospace; font-size:16px; color:var(--accent5);">9.5 Nm</span></td>
-          <td>0° 중립</td>
-        </tr>
-      </table>
-    </div>
-    <div class="alert blue">
-      <span class="alert-icon">📊</span>
-      <div>크기 순서: <strong>굽힘 &gt; 노쪽치우침 &gt; 자쪽치우침 &gt; 폄</strong></div>
-    </div>
-  </div>
-
-  <!-- 굽힘·폄근육 목록 -->
-  <div class="grid2">
+  <!-- 뼈 분류 -->
+  <div class="g2">
     <div class="card">
-      <div class="card-title" style="color:var(--accent3);">손목 폄근육</div>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">일차적 (손목에만 작용)</p>
-      <div class="tbl-wrap">
-        <table>
-          <tr><th>근육</th><th>영어</th><th>먼쪽 부착</th></tr>
-          <tr><td>긴노쪽손목폄근</td><td>ECRL</td><td>2번째 손허리뼈 등쪽</td></tr>
-          <tr><td class="hl-red">짧은노쪽손목폄근</td><td>ECRB</td><td>3번째 손허리뼈 등쪽</td></tr>
-          <tr><td>자쪽손목폄근</td><td>ECU</td><td>5번째 손허리뼈 등쪽</td></tr>
-        </table>
+      <div class="ctitle">손목뼈 8개 분류</div>
+      <div class="mc" style="margin-bottom:10px;">
+        <div class="mct">몸쪽줄 (Proximal row)</div>
+        <ul class="dl">
+          <li><span class="hr">손배뼈(Scaphoid)</span> — 가장 잘 골절, 무혈관괴사</li>
+          <li><span class="hb">반달뼈(Lunate)</span> — 가장 불안정, 인대부착 결여</li>
+          <li>세모뼈(Triquetrum) — 3번째 골절 빈도</li>
+          <li>콩알뼈(Pisiform) — 종자뼈, FCU 힘줄 내</li>
+        </ul>
+      </div>
+      <div class="mc">
+        <div class="mct">먼쪽줄 (Distal row)</div>
+        <ul class="dl">
+          <li>큰마름뼈(Trapezium) — 엄지 CMC관절</li>
+          <li>작은마름뼈(Trapezoid) — 견고 고정</li>
+          <li><span class="hg">알머리뼈(Capitate)</span> — 가장 큼, 모든 운동 돌림축</li>
+          <li>갈고리뼈(Hamate) — 갈고리 돌기, 가로손목인대</li>
+        </ul>
       </div>
     </div>
     <div class="card">
-      <div class="card-title" style="color:var(--accent1);">손목 굽힘근육</div>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">일차적 (손목에만 작용)</p>
-      <div class="tbl-wrap">
+      <div class="ctitle">근육 신경지배</div>
+      <div class="tw">
         <table>
-          <tr><th>근육</th><th>영어</th><th>특징</th></tr>
-          <tr><td>노쪽손목굽힘근</td><td>FCR</td><td>손목굴 통과 안 함</td></tr>
-          <tr><td>자쪽손목굽힘근</td><td>FCU</td><td>콩알뼈 → 갈고리뼈</td></tr>
-          <tr><td class="hl-yellow">긴손바닥근</td><td>PL</td><td>인구 15% 결여 / 힘줄이식 공여체</td></tr>
+          <tr><th>신경</th><th>지배근육</th><th>뿌리</th></tr>
+          <tr><td class="hg">노신경</td><td>손목 <strong>모든 폄근육</strong></td><td>C6·C7</td></tr>
+          <tr><td class="hb">정중신경</td><td>FCR, 긴손바닥근</td><td>C6·C7·C8</td></tr>
+          <tr><td class="hy">자신경</td><td>FCU</td><td>C8·T1</td></tr>
         </table>
       </div>
+      <div class="al blue" style="margin-top:10px;">
+        <span class="al-i">📌</span>
+        <div>최대 등척성 토크 순서: <strong>굽힘(12.2Nm) > 노쪽(11.0Nm) > 자쪽(9.5Nm) > 폄(7.1Nm)</strong></div>
+      </div>
     </div>
   </div>
 
-  <!-- 치우침근육 -->
+  <!-- 임상 연결 -->
   <div class="card">
-    <div class="card-title">노쪽·자쪽 치우침근육과 기능적 활동</div>
-    <div class="grid2">
-      <div class="mini-card">
-        <div class="mini-card-title" style="color:var(--accent4);">노쪽치우침근육</div>
-        <ul class="dot-list">
-          <li>긴·짧은노쪽손목폄근</li>
-          <li>긴·짧은엄지폄근</li>
-          <li>노쪽손목굽힘근</li>
-          <li>긴엄지벌림근</li>
-        </ul>
-        <div class="alert yellow" style="margin-top:10px;">
-          <span class="alert-icon">🔨</span>
-          <div>망치 들어올리기 준비 = <strong>노쪽치우침</strong></div>
-        </div>
-      </div>
-      <div class="mini-card">
-        <div class="mini-card-title" style="color:var(--accent2);">자쪽치우침근육</div>
-        <ul class="dot-list">
-          <li class="hl-red">자쪽손목폄근 (ECU)</li>
-          <li class="hl-red">자쪽손목굽힘근 (FCU)</li>
-          <li>깊은·얕은손가락굽힘근</li>
-          <li>손가락폄근</li>
-        </ul>
-        <div class="alert red" style="margin-top:10px;">
-          <span class="alert-icon">🔨</span>
-          <div>망치로 못 내려치기 = <strong>자쪽치우침</strong> (ECU + FCU 핵심)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 잡기와 폄근육 -->
-  <div class="card">
-    <div class="card-title">잡기 시 폄근육 역할</div>
-    <div class="flow">
-      <div class="step">외재성 손가락굽힘근 수축 → 손목 굽힘 토크 발생</div>
-      <div class="arrow">↓ 이를 상쇄</div>
-      <div class="step">손목 폄근육이 손목 위치 유지</div>
-      <div class="arrow">↓ 최적 잡기 자세</div>
-      <div class="step">폄 30~35° + 자쪽치우침 5~15° → 최대 악력 발휘</div>
-    </div>
-    <div class="alert red">
-      <span class="alert-icon">⚠️</span>
-      <div><strong>노신경 손상</strong> → 손목 폄근육 마비 → 잡기 힘 약 4.5 kg → 손목 10~20° 폄 부목 착용 시 <strong>3배 증가</strong></div>
-    </div>
-    <div class="alert green">
-      <span class="alert-icon">💡</span>
-      <div><strong>류마티스관절염</strong>: ECU 약화 → FCU 우세 → 손목 굽힘+자쪽치우침 → 효율적 잡기 불가</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ SEC 6 시험 요약 -->
-<section id="sec6">
-  <div class="sec-title">
-    <div class="sec-icon" style="background:rgba(188,140,255,0.15);">📝</div>
-    시험 핵심 요약
-  </div>
-
-  <div class="card" style="border-color:rgba(188,140,255,0.4);">
-    <div class="card-title" style="color:var(--accent5);">반드시 외워야 할 숫자들</div>
-    <div class="grid3">
-      <div class="mini-card" style="text-align:center; border-color:var(--accent4);">
-        <div style="font-size:32px; font-weight:900; color:var(--accent4); font-family:'Space Mono',monospace;">25°</div>
-        <div style="font-size:12px; color:var(--text-muted);">노뼈 자쪽기울임</div>
-      </div>
-      <div class="mini-card" style="text-align:center; border-color:var(--accent4);">
-        <div style="font-size:32px; font-weight:900; color:var(--accent4); font-family:'Space Mono',monospace;">10°</div>
-        <div style="font-size:12px; color:var(--text-muted);">노뼈 바닥쪽기울임</div>
-      </div>
-      <div class="mini-card" style="text-align:center; border-color:var(--accent2);">
-        <div style="font-size:32px; font-weight:900; color:var(--accent2); font-family:'Space Mono',monospace;">42%</div>
-        <div style="font-size:12px; color:var(--text-muted);">자쪽이동 힘</div>
-      </div>
-      <div class="mini-card" style="text-align:center; border-color:var(--accent5);">
-        <div style="font-size:32px; font-weight:900; color:var(--accent5); font-family:'Space Mono',monospace;">20%</div>
-        <div style="font-size:12px; color:var(--text-muted);">TFCC 압박력 전달</div>
-      </div>
-      <div class="mini-card" style="text-align:center; border-color:var(--accent3);">
-        <div style="font-size:32px; font-weight:900; color:var(--accent3); font-family:'Space Mono',monospace;">85%</div>
-        <div style="font-size:12px; color:var(--text-muted);">노쪽치우침 → 손목뼈중간관절</div>
-      </div>
-      <div class="mini-card" style="text-align:center; border-color:var(--accent1);">
-        <div style="font-size:32px; font-weight:900; color:var(--accent1); font-family:'Space Mono',monospace;">3~5mm</div>
-        <div style="font-size:12px; color:var(--text-muted);">손배반달 분리 기준</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">관절운동형상학 핵심 법칙</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>동작</th><th>구르기</th><th>미끄러짐</th></tr>
-        <tr><td class="hl-green">폄</td><td>등쪽으로</td><td>바닥쪽으로</td></tr>
-        <tr><td class="hl-blue">굽힘</td><td>바닥쪽으로</td><td>등쪽으로</td></tr>
-        <tr><td class="hl-red">자쪽치우침</td><td>자쪽으로</td><td>노쪽으로</td></tr>
-        <tr><td class="hl-yellow">노쪽치우침</td><td>노쪽으로</td><td>자쪽으로</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">핵심 임상 연결</div>
-    <div class="tbl-wrap">
+    <div class="ctitle">핵심 임상 연결</div>
+    <div class="tw">
       <table>
         <tr><th>질환/상황</th><th>관련 구조</th><th>핵심 포인트</th></tr>
-        <tr><td class="hl-red">킨뵉병</td><td>반달뼈</td><td>무혈관괴사, 압박식 드릴 노동자</td></tr>
-        <tr><td class="hl-red">드 퀘르벵</td><td>1구획 (APL+EPB)</td><td>힘줄윤활막염, 코르티손 주사</td></tr>
-        <tr><td class="hl-yellow">테니스 엘보</td><td>ECRB 몸쪽 부착부</td><td>퇴행성 변화, 반복 잡기</td></tr>
-        <tr><td class="hl-blue">DISI</td><td>손배반달인대</td><td>등쪽 낙상 → 반달뼈 등쪽 이탈</td></tr>
-        <tr><td class="hl-purple">노신경 손상</td><td>손목 폄근육 전체</td><td>잡기 힘 4.5 kg → 부목으로 3배 회복</td></tr>
-        <tr><td class="hl-red">류마티스관절염</td><td>ECU, TFCC</td><td>ECU 약화 → 자쪽이동 + FCU 우세</td></tr>
+        <tr><td class="hr">킨뵉병</td><td>반달뼈</td><td>무혈관괴사, 압박식 드릴 노동자</td></tr>
+        <tr><td class="hr">드 퀘르벵</td><td>1구획 (APL+EPB)</td><td>힘줄윤활막염, 코르티손 주사</td></tr>
+        <tr><td class="hy">테니스 엘보</td><td>ECRB 몸쪽 부착부</td><td>퇴행성 변화, 반복 잡기</td></tr>
+        <tr><td class="hb">DISI</td><td>손배반달인대</td><td>등쪽 낙상 → 반달뼈 등쪽 이탈</td></tr>
+        <tr><td class="hp">노신경 손상</td><td>손목 폄근육 전체</td><td>잡기 힘 4.5kg → 부목으로 3배 회복</td></tr>
+        <tr><td class="hr">류마티스관절염</td><td>ECU, TFCC</td><td>ECU 약화 → 자쪽이동 + FCU 우세</td></tr>
       </table>
     </div>
   </div>
+</section>
 
-  <div class="exam-box">
-    <div class="exam-box-title">★ 최종 시험 체크리스트</div>
+<!-- ═══════════ SEC 2: 요약 ═══════════ -->
+<section id="s2">
+  <div class="stitle"><div class="sicon">📖</div> 내용 요약</div>
+
+  <div class="acc-item open">
+    <div class="acc-hd" onclick="toggleAcc(this)">
+      🦴 01. 골학 (Osteology)
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="card" style="margin-top:0;">
+        <div class="ctitle">먼쪽 아래팔 골학</div>
+        <div class="tw">
+          <table>
+            <tr><th>구조</th><th>특징</th><th>임상 의의</th></tr>
+            <tr><td class="hb">노뼈 등쪽결절<br><small>(Lister's tubercle)</small></td><td>ECRB·EPL 힘줄 분리</td><td>촉지 랜드마크</td></tr>
+            <tr><td class="hy">노뼈 먼쪽 관절면</td><td><span class="bdg yellow">자쪽기울임 25°</span> + <span class="bdg yellow">바닥쪽기울임 10°</span></td><td>자쪽>노쪽 ROM, 굽힘>폄</td></tr>
+          </table>
+        </div>
+        <div class="al red">
+          <span class="al-i">⚠️</span>
+          <div><strong>킨뵉병</strong>: 반달뼈 무혈관괴사. 압박식 드릴 노동자에 흔함. 진행 시 반달뼈 적출 또는 몸쪽줄 손목뼈자름술.</div>
+        </div>
+        <div class="al blue">
+          <span class="al-i">💡</span>
+          <div>손목굴 경계: 자쪽(콩알뼈+갈고리뼈갈고리) + 노쪽(손배뼈결절+큰마름뼈결절). 통과: 정중신경 + 외재성 굽힘근 힘줄</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-hd" onclick="toggleAcc(this)">
+      🔗 02. 관절구조 · 인대
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="card" style="margin-top:0;">
+        <div class="ctitle">주요 관절</div>
+        <div class="tw">
+          <table>
+            <tr><th>관절</th><th>구성</th><th>특징</th></tr>
+            <tr><td class="hb">노손목관절</td><td>노뼈 + 손배·반달뼈</td><td>몸쪽 오목, 먼쪽 볼록. 최대접촉 = 부분 폄+약간 자쪽치우침</td></tr>
+            <tr><td class="hg">손목뼈중간관절</td><td>몸쪽줄 ↔ 먼쪽줄</td><td>안쪽구획(ball-and-socket유사) + 가쪽구획</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle" style="color:var(--purple);">⭐⭐ TFCC (세모섬유연골복합체)</div>
+        <div class="g2">
+          <div class="mc">
+            <div class="mct">TFCC 4대 기능</div>
+            <ul class="dl">
+              <li>먼쪽노자관절의 <strong>일차적 안정자</strong></li>
+              <li>손목의 <strong>자쪽면 강화</strong></li>
+              <li>노손목관절 오목함에 기여</li>
+              <li>압박력 <strong>약 20%</strong> 전달</li>
+            </ul>
+          </div>
+          <div class="mc">
+            <div class="mct">TFC 구조</div>
+            <ul class="dl">
+              <li>위치: 자손목공간</li>
+              <li>핵심: 세모섬유연골(관절원반)</li>
+              <li class="hr">TFC 중심 80% = 혈관 없음 → 치유 어려움</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle">⭐ 바닥쪽노손목인대 3대 인대</div>
+        <div class="g3">
+          <div class="mc"><div class="mct">① 노손배알머리인대</div><div style="font-size:11px;color:var(--muted);">Radioscaphocapitate</div></div>
+          <div class="mc"><div class="mct">② 긴노반달인대</div><div style="font-size:11px;color:var(--muted);">Long radiolunate</div></div>
+          <div class="mc"><div class="mct">③ 짧은노반달인대</div><div style="font-size:11px;color:var(--muted);">Short radiolunate</div></div>
+        </div>
+        <div class="al yellow"><span class="al-i">💡</span><div>완전 손목 폄 시 팽팽해짐 → 등쪽 충돌 제한</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-hd" onclick="toggleAcc(this)">
+      ⚙️ 03. 운동형상학 (Kinematics)
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="card" style="margin-top:0;">
+        <div class="ctitle">ROM 및 ADL</div>
+        <div class="g2">
+          <div>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">굽힘 · 폄</p>
+            <div class="rom-row"><span class="rom-lbl">굽힘 (Flexion)</span><div class="rom-bw"><div class="rom-b" style="width:85%;background:var(--accent2);"></div></div><span class="rom-v">70~85°</span></div>
+            <div class="rom-row"><span class="rom-lbl">폄 (Extension)</span><div class="rom-bw"><div class="rom-b" style="width:70%;background:var(--green);"></div></div><span class="rom-v">60~75°</span></div>
+            <div class="al blue" style="margin-top:8px;"><span class="al-i">📌</span><div>굽힘 > 폄 약 <strong>10~15°</strong></div></div>
+          </div>
+          <div>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">자쪽·노쪽치우침</p>
+            <div class="rom-row"><span class="rom-lbl">자쪽치우침</span><div class="rom-bw"><div class="rom-b" style="width:80%;background:var(--red);"></div></div><span class="rom-v">35~40°</span></div>
+            <div class="rom-row"><span class="rom-lbl">노쪽치우침</span><div class="rom-bw"><div class="rom-b" style="width:38%;background:var(--yellow);"></div></div><span class="rom-v">15~20°</span></div>
+            <div class="al yellow" style="margin-top:8px;"><span class="al-i">📌</span><div>자쪽 ≈ 노쪽의 <strong>2배</strong> (노뼈 자쪽기울임 25° 원인)</div></div>
+          </div>
+        </div>
+        <div class="al green" style="margin-top:10px;"><span class="al-i">🏃</span><div>ADL 기능적 범위 (Ryu): 굽힘 40° / 폄 40° / 노쪽 10° / 자쪽 30° = 최대 ROM의 50~80%</div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">⭐⭐ 관절운동형상학 — 구르기·미끄러짐</div>
+        <div class="tw">
+          <table>
+            <tr><th>동작</th><th>구르기 방향</th><th>미끄러짐 방향</th></tr>
+            <tr><td class="hg">폄</td><td>등쪽으로</td><td>바닥쪽으로</td></tr>
+            <tr><td class="hb">굽힘</td><td>바닥쪽으로</td><td>등쪽으로</td></tr>
+            <tr><td class="hr">자쪽치우침</td><td>자쪽으로</td><td>노쪽으로</td></tr>
+            <tr><td class="hy">노쪽치우침</td><td>노쪽으로</td><td>자쪽으로</td></tr>
+          </table>
+        </div>
+        <div class="al yellow"><span class="al-i">⭐</span><div><strong>노쪽치우침의 85%</strong>는 손목뼈중간관절에서 발생 (노손목관절 기여 적음)</div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">자연스러운 경로 — 다트 던지기</div>
+        <div class="g2">
+          <div class="mc">
+            <div class="mct">자연 결합 동작</div>
+            <ul class="dl">
+              <li>폄 + <span class="hg">노쪽치우침</span></li>
+              <li>굽힘 + <span class="hr">자쪽치우침</span></li>
+            </ul>
+          </div>
+          <div class="mc">
+            <div class="mct">다트 던지기 = 최적 경로</div>
+            <ul class="dl">
+              <li>가장 적은 수동저항</li>
+              <li>손배반달인대 스트레스 최소</li>
+              <li>약 25~50° 사선 경로</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-hd" onclick="toggleAcc(this)">
+      ⚠️ 04. 손목의 불안정성
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="card" style="margin-top:0;">
+        <div class="ctitle">⭐⭐ DISI vs VISI</div>
+        <div class="g2">
+          <div class="mc" style="border-color:var(--red);">
+            <div class="mct" style="color:var(--red);">DISI (등쪽삽입분절불안정성)</div>
+            <p style="font-size:13px;">반달뼈 먼쪽 관절면 → <span class="hr"><strong>등쪽</strong></span>으로 이탈</p>
+            <p style="font-size:12px;color:var(--muted);margin-top:4px;">손배반달인대 손상 → 가장 흔함</p>
+          </div>
+          <div class="mc" style="border-color:var(--accent2);">
+            <div class="mct" style="color:var(--accent2);">VISI (바닥쪽삽입분절불안정성)</div>
+            <p style="font-size:13px;">반달뼈 먼쪽 관절면 → <span class="hb"><strong>바닥쪽</strong></span>으로 이탈</p>
+            <p style="font-size:12px;color:var(--muted);margin-top:4px;">반달세모인대 손상 관련</p>
+          </div>
+        </div>
+        <div class="al red"><span class="al-i">📏</span><div>방사선 기준: 손배반달 틈 <strong>3~5mm 이상</strong> = 손배반달 분리 의심</div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">DISI 발생 기전</div>
+        <div class="flow">
+          <div class="fl-s">1. 손이 과신장된 상태로 낙상</div>
+          <div class="fl-a">↓</div>
+          <div class="fl-s">2. 손배뼈 골절 + 손배반달인대 파열</div>
+          <div class="fl-a">↓</div>
+          <div class="fl-s">3. 손배-반달뼈 역학적 연결 붕괴</div>
+          <div class="fl-a">↓</div>
+          <div class="fl-s">4. 알머리뼈 몸쪽 이동 → 틈 더 벌어짐</div>
+          <div class="fl-a">↓</div>
+          <div class="fl-s">5. 반달뼈 탈구 → 먼쪽 관절면이 등쪽 향함</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle">손목뼈 자쪽이동</div>
+        <div class="tw">
+          <table>
+            <tr><th>항목</th><th>내용</th></tr>
+            <tr><td>원인</td><td>노뼈 먼쪽 관절면 <span class="hy">자쪽기울임 25°</span></td></tr>
+            <tr><td>이동 힘</td><td>압박력의 <span class="hr">42%</span>가 자쪽 병진운동으로 작용</td></tr>
+            <tr><td>저항</td><td>등쪽·바닥쪽 노손목인대의 수동장력</td></tr>
+            <tr><td>질환</td><td>류마티스관절염 → 인대 약화 → 자쪽이동 심화 → 지그재그 변형</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-hd" onclick="toggleAcc(this)">
+      💪 05. 근육과 관절의 상호작용
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="card" style="margin-top:0;">
+        <div class="ctitle">⭐ 폄근육지띠 6개 섬유뼈구획</div>
+        <div class="cgrid">
+          <div class="ci sp"><span class="cn">I</span><div class="cd">긴엄지벌림근+짧은엄지폄근<br><strong>드 퀘르벵!</strong></div></div>
+          <div class="ci"><span class="cn">II</span><div class="cd">긴·짧은 노쪽손목폄근<br>(ECRL/ECRB)</div></div>
+          <div class="ci"><span class="cn">III</span><div class="cd">긴엄지폄근<br>(EPL)</div></div>
+          <div class="ci"><span class="cn">IV</span><div class="cd">손가락폄근+집게폄근</div></div>
+          <div class="ci"><span class="cn">V</span><div class="cd">새끼폄근<br>(EDM)</div></div>
+          <div class="ci"><span class="cn">VI</span><div class="cd">자쪽손목폄근<br>(ECU)</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle">최대 등척성 토크 (표 7.1)</div>
+        <div class="tw">
+          <table>
+            <tr><th>근육 무리</th><th>평균 최대 토크</th><th>최대 토크 위치</th></tr>
+            <tr><td class="hb">굽힘근육</td><td><strong style="color:var(--accent2);">12.2 Nm</strong> <span class="bdg blue">최대</span></td><td>40° 굽힘</td></tr>
+            <tr><td>폄근육</td><td><strong style="color:var(--green);">7.1 Nm</strong></td><td>30° 굽힘 ~ 70° 폄</td></tr>
+            <tr><td>노쪽치우침근육</td><td><strong style="color:var(--yellow);">11.0 Nm</strong></td><td>0° 중립</td></tr>
+            <tr><td>자쪽치우침근육</td><td><strong style="color:var(--purple);">9.5 Nm</strong></td><td>0° 중립</td></tr>
+          </table>
+        </div>
+        <div class="al blue"><span class="al-i">📊</span><div>크기 순서: <strong>굽힘 > 노쪽치우침 > 자쪽치우침 > 폄</strong></div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">잡기 시 폄근육 역할</div>
+        <div class="flow">
+          <div class="fl-s">외재성 손가락굽힘근 수축 → 손목 굽힘 토크 발생</div>
+          <div class="fl-a">↓ 상쇄</div>
+          <div class="fl-s">손목 폄근육이 손목 위치 유지</div>
+          <div class="fl-a">↓ 최적 잡기 자세</div>
+          <div class="fl-s">폄 30~35° + 자쪽치우침 5~15° → 최대 악력 발휘</div>
+        </div>
+        <div class="al red"><span class="al-i">⚠️</span><div><strong>노신경 손상</strong> → 폄근육 마비 → 잡기 힘 약 4.5kg → 손목 10~20° 폄 부목 착용 시 <strong>3배 증가</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시험 체크리스트 -->
+  <div class="exam">
+    <div class="exam-t">★ 최종 시험 체크리스트</div>
     <ul class="exam-list">
       <li>손목뼈 8개 몸쪽/먼쪽줄</li>
       <li>노뼈 25°·10° 기울임</li>
@@ -1188,7 +554,7 @@
       <li>굽힘 > 폄 10~15°</li>
       <li>자쪽 ≈ 노쪽 2배</li>
       <li>ADL: 40/40/10/30°</li>
-      <li>펌=등쪽구르기+바닥쪽미끄러짐</li>
+      <li>폄=등쪽구르기+바닥쪽미끄러짐</li>
       <li>노쪽치우침 85% = 손목뼈중간관절</li>
       <li>다트 던지기 = 자연 경로</li>
       <li>DISI vs VISI 반달뼈 방향</li>
@@ -1203,16 +569,400 @@
   </div>
 </section>
 
+<!-- ═══════════ SEC 3: 퀴즈 ═══════════ -->
+<section id="s3">
+  <div class="stitle"><div class="sicon">❓</div> 퀴즈</div>
+
+  <div class="prog-wrap">
+    <div class="prog-top">
+      <div class="prog-title" id="prog-label">퀴즈 진행률</div>
+      <div class="prog-score" id="prog-score">0 / 0</div>
+    </div>
+    <div class="prog-bar-bg"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+    <div class="prog-info">
+      <span id="prog-left">0문제 남음</span>
+      <span id="prog-correct">정답: 0개</span>
+    </div>
+  </div>
+
+  <div class="qc-btns">
+    <button class="btn" onclick="startQuiz('all')">🔀 전체 문제 풀기</button>
+    <button class="btn outline" onclick="startQuiz('wrong')" id="btn-wrong" style="display:none">⚡ 틀린 문제만 재풀기</button>
+    <button class="btn outline" onclick="resetQuiz()">↺ 초기화</button>
+  </div>
+
+  <div id="quiz-area"></div>
+
+  <div id="quiz-complete">
+    <div class="result-big" id="result-num">-/-</div>
+    <div class="result-sub" id="result-msg"></div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn" onclick="startQuiz('all')">🔀 다시 풀기</button>
+      <button class="btn outline" id="btn-retry-wrong" onclick="startQuiz('wrong')" style="display:none">⚡ 틀린 문제 재풀기</button>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <script>
-  function show(id, btn) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+function show(id, btn) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleAcc(hd) {
+  const item = hd.parentElement;
+  item.classList.toggle('open');
+}
+
+// ── QUIZ DATA (35 questions) ──
+const ALL_Q = [
+  {
+    q: "노뼈 먼쪽 관절면의 자쪽기울임 각도는?",
+    opts: ["10°","15°","25°","30°"],
+    ans: 2,
+    ex: "노뼈 자쪽기울임 25°. 이 때문에 자쪽치우침 ROM이 노쪽치우침보다 크다."
+  },
+  {
+    q: "노뼈 먼쪽 관절면의 바닥쪽기울임 각도는?",
+    opts: ["5°","10°","15°","20°"],
+    ans: 1,
+    ex: "노뼈 바닥쪽기울임 10°. 이 때문에 굽힘 ROM이 폄보다 크다."
+  },
+  {
+    q: "손목뼈 중 가장 자주 골절되는 것은?",
+    opts: ["반달뼈","세모뼈","손배뼈","알머리뼈"],
+    ans: 2,
+    ex: "손배뼈(Scaphoid)가 손목뼈 중 가장 자주 골절된다. 몸쪽극은 무혈관괴사 위험이 있다."
+  },
+  {
+    q: "손목뼈 중 가장 불안정한 것은? (인대부착 결여)",
+    opts: ["손배뼈","반달뼈","세모뼈","콩알뼈"],
+    ans: 1,
+    ex: "반달뼈(Lunate)는 인대부착이 결여되어 손목뼈 중 가장 불안정하다."
+  },
+  {
+    q: "손목뼈 중 모든 손목운동의 돌림축인 뼈는?",
+    opts: ["손배뼈","큰마름뼈","알머리뼈","갈고리뼈"],
+    ans: 2,
+    ex: "알머리뼈(Capitate)는 손목뼈 중 가장 크며, 모든 손목운동의 돌림축이다."
+  },
+  {
+    q: "콩알뼈(Pisiform)의 특성으로 옳은 것은?",
+    opts: ["손목뼈 중 가장 큼","FCR 힘줄 내에 위치","종자뼈 특성","모든 운동의 돌림축"],
+    ans: 2,
+    ex: "콩알뼈는 종자뼈 특성을 가지며 FCU(자쪽손목굽힘근) 힘줄 안에 위치한다."
+  },
+  {
+    q: "손목굴(Carpal Tunnel)을 통과하는 신경은?",
+    opts: ["노신경","자신경","정중신경","근피신경"],
+    ans: 2,
+    ex: "손목굴을 통과하는 것은 정중신경과 외재성 손가락 굽힘근 힘줄들이다."
+  },
+  {
+    q: "TFCC(세모섬유연골복합체)의 기능이 아닌 것은?",
+    opts: ["먼쪽노자관절 일차적 안정자","손목 자쪽면 강화","압박력 약 20% 전달","손목뼈 골절 예방"],
+    ans: 3,
+    ex: "TFCC 4대 기능: ①먼쪽노자관절 안정자 ②자쪽면 강화 ③노손목관절 오목함 기여 ④압박력 20% 전달."
+  },
+  {
+    q: "TFC(세모섬유연골) 중심부의 혈관 분포는?",
+    opts: ["100% 혈관 풍부","80% 혈관 없음","50% 혈관 없음","전혀 없음"],
+    ans: 1,
+    ex: "TFC 중심부의 약 80%는 혈관이 없어 손상 시 치유가 어렵다."
+  },
+  {
+    q: "바닥쪽노손목인대 3대 인대에 포함되지 않는 것은?",
+    opts: ["노손배알머리인대","긴노반달인대","짧은노반달인대","등쪽노손목인대"],
+    ans: 3,
+    ex: "바닥쪽노손목인대 3개: ①노손배알머리인대 ②긴노반달인대 ③짧은노반달인대. 등쪽노손목인대는 별도."
+  },
+  {
+    q: "손목 굽힘 ROM과 폄 ROM의 관계는?",
+    opts: ["폄 > 굽힘 약 10~15°","굽힘 > 폄 약 10~15°","굽힘 = 폄","폄 > 굽힘 약 25°"],
+    ans: 1,
+    ex: "굽힘(70~85°) > 폄(60~75°), 약 10~15° 차이. 노뼈 바닥쪽기울임 10° 때문이다."
+  },
+  {
+    q: "자쪽치우침과 노쪽치우침 ROM의 관계는?",
+    opts: ["노쪽치우침 > 자쪽치우침","자쪽치우침 ≈ 노쪽치우침의 2배","자쪽치우침 = 노쪽치우침","노쪽치우침 ≈ 자쪽치우침의 2배"],
+    ans: 1,
+    ex: "자쪽치우침(35~40°) ≈ 노쪽치우침(15~20°)의 2배. 노뼈 자쪽기울임 25° 때문이다."
+  },
+  {
+    q: "손목 폄 시 관절운동형상학으로 옳은 것은?",
+    opts: ["바닥쪽 구르기 + 등쪽 미끄러짐","등쪽 구르기 + 등쪽 미끄러짐","등쪽 구르기 + 바닥쪽 미끄러짐","바닥쪽 구르기 + 바닥쪽 미끄러짐"],
+    ans: 2,
+    ex: "폄: 등쪽 구르기 + 바닥쪽 미끄러짐. 굽힘: 바닥쪽 구르기 + 등쪽 미끄러짐."
+  },
+  {
+    q: "노쪽치우침 ROM의 몇 %가 손목뼈중간관절에서 발생하는가?",
+    opts: ["50%","65%","75%","85%"],
+    ans: 3,
+    ex: "노쪽치우침의 약 85%가 손목뼈중간관절에서 발생하며, 노손목관절의 기여는 적다."
+  },
+  {
+    q: "ADL(일상생활활동)에 필요한 손목 굽힘 범위는?",
+    opts: ["20°","30°","40°","60°"],
+    ans: 2,
+    ex: "ADL 기능적 범위(Ryu): 굽힘 40° / 폄 40° / 노쪽 10° / 자쪽 30°."
+  },
+  {
+    q: "DISI에서 반달뼈 먼쪽 관절면의 이탈 방향은?",
+    opts: ["바닥쪽","노쪽","자쪽","등쪽"],
+    ans: 3,
+    ex: "DISI(등쪽삽입분절불안정성): 반달뼈 먼쪽 관절면이 등쪽으로 이탈. VISI는 바닥쪽 이탈."
+  },
+  {
+    q: "방사선에서 손배반달 분리로 의심하는 틈 기준은?",
+    opts: ["1~2mm","2~3mm","3~5mm","5~7mm"],
+    ans: 2,
+    ex: "손배반달 틈이 3~5mm 이상이면 손배반달 분리를 의심한다."
+  },
+  {
+    q: "손목뼈에 작용하는 자쪽이동 힘은 압박력의 몇 %인가?",
+    opts: ["20%","30%","42%","55%"],
+    ans: 2,
+    ex: "노뼈 자쪽기울임 25° 때문에 압박력의 약 42%가 자쪽 병진운동으로 작용한다."
+  },
+  {
+    q: "드 퀘르벵(de Quervain) 힘줄윤활막염이 발생하는 구획은?",
+    opts: ["2구획","3구획","1구획","4구획"],
+    ans: 2,
+    ex: "드 퀘르벵은 1구획(긴엄지벌림근+짧은엄지폄근)의 힘줄윤활막염이다."
+  },
+  {
+    q: "테니스 엘보(가쪽위관절융기통증)의 주요 관련 근육은?",
+    opts: ["긴노쪽손목폄근(ECRL)","짧은노쪽손목폄근(ECRB)","자쪽손목폄근(ECU)","손가락폄근(ED)"],
+    ans: 1,
+    ex: "테니스 엘보의 주 관련 근육은 ECRB(짧은노쪽손목폄근)이다. 반복·강력 잡기로 몸쪽 부착부에 스트레스."
+  },
+  {
+    q: "킨뵉병(Kienböck's disease)은 어느 뼈의 무혈관괴사인가?",
+    opts: ["손배뼈","반달뼈","세모뼈","알머리뼈"],
+    ans: 1,
+    ex: "킨뵉병은 반달뼈의 무혈관괴사이며 압박식 드릴 노동자에게 흔하다."
+  },
+  {
+    q: "손목의 모든 폄근육을 지배하는 신경은?",
+    opts: ["정중신경","자신경","노신경","근피신경"],
+    ans: 2,
+    ex: "손목 등쪽면을 지나는 모든 폄근육은 노신경(C6·C7)이 지배한다."
+  },
+  {
+    q: "자쪽손목굽힘근(FCU)을 지배하는 신경은?",
+    opts: ["정중신경","자신경","노신경","겨드랑신경"],
+    ans: 1,
+    ex: "자쪽손목굽힘근(FCU)은 자신경(C8·T1)이 지배한다."
+  },
+  {
+    q: "최대 등척성 굽힘 토크가 최대가 되는 손목 위치는?",
+    opts: ["20° 굽힘","40° 굽힘","60° 굽힘","중립"],
+    ans: 1,
+    ex: "손목 굽힘 토크는 약 40° 굽힘 위치에서 최대(12.2Nm)."
+  },
+  {
+    q: "등척성 토크의 크기 순서로 옳은 것은?",
+    opts: ["폄>굽힘>노쪽>자쪽","굽힘>노쪽>자쪽>폄","노쪽>굽힘>자쪽>폄","굽힘>자쪽>노쪽>폄"],
+    ans: 1,
+    ex: "굽힘(12.2Nm) > 노쪽치우침(11.0Nm) > 자쪽치우침(9.5Nm) > 폄(7.1Nm)."
+  },
+  {
+    q: "최대 악력이 발휘되는 손목 자세는?",
+    opts: ["굽힘 30~35° + 노쪽치우침","폄 30~35° + 자쪽치우침 5~15°","중립","굽힘 20° + 자쪽치우침 10°"],
+    ans: 1,
+    ex: "최대 악력: 손목 폄 30~35° + 자쪽치우침 5~15°. 손목 폄근육이 위치를 유지하며 외재성 굽힘근을 돕는다."
+  },
+  {
+    q: "노신경 손상 시 잡기 힘은 약 얼마인가?",
+    opts: ["1.5kg","3kg","4.5kg","6kg"],
+    ans: 2,
+    ex: "노신경 손상 → 손목 폄근육 마비 → 잡기 힘 약 4.5kg. 손목 10~20° 폄 부목 시 3배 증가."
+  },
+  {
+    q: "긴손바닥근(PL)의 특징으로 옳은 것은?",
+    opts: ["인구 15% 결여, 힘줄이식 공여체","손목굴을 통과한다","FCU와 협력근","최대 굽힘 토크 발생"],
+    ans: 0,
+    ex: "긴손바닥근(PL)은 인구 약 15%에서 결여되며, 힘줄이식 공여체로 사용된다."
+  },
+  {
+    q: "순수한 자쪽치우침을 일으키는 근육 쌍은?",
+    opts: ["FCR + ECRL","ECU + FCU","FCR + ECU","FCU + ECRL"],
+    ans: 1,
+    ex: "ECU(자쪽손목폄근) + FCU(자쪽손목굽힘근) = 순수 자쪽치우침. 굽힘/폄 성분이 상쇄된다."
+  },
+  {
+    q: "자연스러운 손목 동작경로에서 '다트 던지기'의 구성은?",
+    opts: ["굽힘+노쪽치우침 → 폄+자쪽치우침","폄+노쪽치우침 → 굽힘+자쪽치우침","굽힘+자쪽치우침 → 폄+노쪽치우침","폄+자쪽치우침 → 굽힘+노쪽치우침"],
+    ans: 1,
+    ex: "자연 경로: 폄+노쪽치우침 ↔ 굽힘+자쪽치우침. 수동저항 최소, 손배반달인대 스트레스 최소."
+  },
+  {
+    q: "류마티스관절염에서 손목 변형의 주 원인은?",
+    opts: ["FCR 약화","ECRL 약화","ECU 약화","EPL 약화"],
+    ans: 2,
+    ex: "류마티스관절염 → ECU 약화 → FCU 우세 → 손목 굽힘+자쪽치우침 → 지그재그 변형."
+  },
+  {
+    q: "등쪽노손목인대의 특징은?",
+    opts: ["TFCC의 핵심 구조","감각신경지배가 가장 많음","바닥쪽에 위치","내재성 인대"],
+    ans: 1,
+    ex: "등쪽노손목인대는 외재성 인대 중 감각신경지배가 가장 많다."
+  },
+  {
+    q: "노손목관절의 최대 접촉 위치는?",
+    opts: ["완전 굽힘","완전 폄","부분 폄 + 약간 자쪽치우침","중립"],
+    ans: 2,
+    ex: "노손목관절 접촉면이 최대가 되는 위치는 '부분 폄 + 약간 자쪽치우침'이다."
+  },
+  {
+    q: "이중 V 시스템에서 자쪽치우침 시 주로 신장되는 구조는?",
+    opts: ["바닥쪽손목뼈사이인대 가쪽분지","긴노반달인대","짧은노반달인대","등쪽노손목인대"],
+    ans: 0,
+    ex: "자쪽치우침 시: 이중V 먼쪽 역V자의 가쪽분지(바닥쪽손목뼈사이인대)가 신장되어 제동."
+  },
+  {
+    q: "DISI 발생의 가장 흔한 원인 인대 손상은?",
+    opts: ["TFCC 손상","반달세모인대 손상","손배반달인대 손상","등쪽노손목인대 손상"],
+    ans: 2,
+    ex: "DISI는 손배반달인대 손상이 가장 흔한 원인. 등쪽 손목 폄 낙상으로 발생."
   }
+];
+
+let currentQ = [];
+let answers = {};
+let wrongIds = [];
+let mode = '';
+
+function startQuiz(type) {
+  document.getElementById('quiz-complete').classList.remove('show');
+  answers = {};
+  mode = type;
+
+  if (type === 'all') {
+    currentQ = shuffle([...ALL_Q.map((q,i) => ({...q, id:i}))]);
+  } else {
+    if (wrongIds.length === 0) {
+      alert('틀린 문제가 없습니다! 🎉');
+      return;
+    }
+    currentQ = shuffle(wrongIds.map(i => ({...ALL_Q[i], id:i})));
+  }
+
+  wrongIds = [];
+  renderQuiz();
+  updateProgress();
+  document.getElementById('btn-wrong').style.display = 'none';
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+  currentQ.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.id = 'qcard-' + idx;
+    div.innerHTML = `
+      <div class="q-num">Q${idx+1} / ${currentQ.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-opts">
+        ${q.opts.map((o,i) => `
+          <button class="q-opt" onclick="answer(${idx},${i})" id="opt-${idx}-${i}">
+            <span style="color:var(--muted);margin-right:8px;">${['①','②','③','④'][i]}</span>${o}
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-explain" id="ex-${idx}"></div>
+    `;
+    area.appendChild(div);
+  });
+}
+
+function answer(qIdx, optIdx) {
+  if (answers[qIdx] !== undefined) return;
+  answers[qIdx] = optIdx;
+  const q = currentQ[qIdx];
+  const correct = q.ans;
+  const ex = document.getElementById('ex-' + qIdx);
+
+  for (let i = 0; i < q.opts.length; i++) {
+    const btn = document.getElementById(`opt-${qIdx}-${i}`);
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    if (i === optIdx && optIdx !== correct) btn.classList.add('wrong');
+  }
+
+  ex.classList.add('show');
+  if (optIdx === correct) {
+    ex.classList.add('correct-ex');
+    ex.innerHTML = '✅ ' + q.ex;
+  } else {
+    ex.classList.add('wrong-ex');
+    ex.innerHTML = '❌ 오답! 정답: ' + q.opts[correct] + '<br>' + q.ex;
+    if (!wrongIds.includes(q.id)) wrongIds.push(q.id);
+  }
+
+  updateProgress();
+
+  if (Object.keys(answers).length === currentQ.length) {
+    setTimeout(showComplete, 600);
+  }
+}
+
+function updateProgress() {
+  const total = currentQ.length;
+  const done = Object.keys(answers).length;
+  const correct = Object.values(answers).filter((v,i) => v === currentQ[i]?.ans).length;
+
+  document.getElementById('prog-score').textContent = `${done} / ${total}`;
+  document.getElementById('prog-bar').style.width = total > 0 ? (done/total*100)+'%' : '0%';
+  document.getElementById('prog-left').textContent = `${total - done}문제 남음`;
+  document.getElementById('prog-correct').textContent = `정답: ${correct}개`;
+}
+
+function showComplete() {
+  const total = currentQ.length;
+  const correct = Object.values(answers).filter((v,i) => v === currentQ[i]?.ans).length;
+  const pct = Math.round(correct/total*100);
+
+  document.getElementById('result-num').textContent = `${correct}/${total}`;
+  let msg = pct >= 90 ? '🏆 완벽합니다!' : pct >= 70 ? '👍 잘 했어요!' : pct >= 50 ? '📚 조금 더 복습하세요' : '💪 다시 도전!';
+  document.getElementById('result-msg').textContent = `${pct}점 · ${msg}`;
+
+  document.getElementById('quiz-complete').classList.add('show');
+
+  if (wrongIds.length > 0) {
+    document.getElementById('btn-wrong').style.display = '';
+    document.getElementById('btn-retry-wrong').style.display = '';
+  } else {
+    document.getElementById('btn-retry-wrong').style.display = 'none';
+  }
+}
+
+function resetQuiz() {
+  currentQ = [];
+  answers = {};
+  wrongIds = [];
+  document.getElementById('quiz-area').innerHTML = '';
+  document.getElementById('quiz-complete').classList.remove('show');
+  document.getElementById('btn-wrong').style.display = 'none';
+  document.getElementById('prog-score').textContent = '0 / 0';
+  document.getElementById('prog-bar').style.width = '0%';
+  document.getElementById('prog-left').textContent = '0문제 남음';
+  document.getElementById('prog-correct').textContent = '정답: 0개';
+}
 </script>
 </body>
 </html>
