@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인체운동학 특강 — 물리치료 국가시험</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #EEF4FF;
+    --bg2: #E4EDFF;
+    --card: #FFFFFF;
+    --primary: #1E3A5F;
+    --accent: #2563EB;
+    --accent2: #3B82F6;
+    --accent3: #60A5FA;
+    --soft: #DBEAFE;
+    --border: #C7D9F8;
+    --text: #1E293B;
+    --muted: #64748B;
+    --green: #059669;
+    --red: #DC2626;
+    --orange: #D97706;
+    --purple: #7C3AED;
+    --teal: #0891B2;
+    --shadow: 0 2px 12px rgba(30,58,95,0.08);
+    --shadow-lg: 0 8px 32px rgba(30,58,95,0.12);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, #2563EB 100%);
+    color: white;
+    padding: 20px 24px 16px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.3);
+  }
+  .header-top { display:flex; align-items:center; justify-content:space-between; }
+  .header h1 { font-size:18px; font-weight:900; letter-spacing:-0.5px; }
+  .header .sub { font-size:11px; opacity:0.75; margin-top:2px; }
+  .badge { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; }
+
+  /* TABS */
+  .tab-bar {
+    display:flex; gap:4px; margin-top:14px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+  .tab-btn {
+    background: none; border:none; color:rgba(255,255,255,0.65);
+    padding: 8px 16px; font-size:13px; font-weight:600; cursor:pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 8px 8px 0 0; transition: all 0.2s;
+    position: relative;
+  }
+  .tab-btn:hover { color:white; background:rgba(255,255,255,0.1); }
+  .tab-btn.active {
+    color:white; background:rgba(255,255,255,0.18);
+    border-bottom: 2px solid white;
+  }
+
+  /* CONTENT */
+  .content { max-width:900px; margin:0 auto; padding:20px 16px 60px; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* CARDS */
+  .card {
+    background: var(--card); border-radius:14px;
+    box-shadow: var(--shadow); padding:18px;
+    margin-bottom:14px; border: 1px solid var(--border);
+  }
+  .card-title {
+    font-size:15px; font-weight:800; color:var(--primary);
+    margin-bottom:12px; display:flex; align-items:center; gap:8px;
+    padding-bottom:10px; border-bottom:2px solid var(--soft);
+  }
+  .card-title .icon { font-size:18px; }
+
+  /* SECTION HEADER */
+  .sec-header {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    color: white; border-radius:10px; padding:12px 16px;
+    margin-bottom:14px; margin-top:20px;
+    font-size:14px; font-weight:800; letter-spacing:-0.3px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sec-header:first-child { margin-top:0; }
+
+  /* TOC (개요탭) */
+  .toc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:600px){ .toc-grid { grid-template-columns:1fr; } }
+
+  .toc-item {
+    background: var(--bg2); border-radius:10px; padding:12px 14px;
+    border: 1px solid var(--border); cursor:pointer;
+    transition: all 0.2s;
+  }
+  .toc-item:hover { border-color:var(--accent); background:var(--soft); transform:translateY(-1px); }
+  .toc-item .num { font-size:10px; font-weight:700; color:var(--accent); margin-bottom:3px; letter-spacing:0.5px; }
+  .toc-item .title { font-size:13px; font-weight:700; color:var(--primary); margin-bottom:4px; }
+  .toc-item .keywords { font-size:11px; color:var(--muted); line-height:1.5; }
+  .kw { display:inline-block; background:var(--soft); color:var(--accent); border-radius:4px; padding:1px 6px; margin:1px; font-size:10px; font-weight:600; }
+
+  /* ACCORDION (요약탭) */
+  .acc-item { margin-bottom:8px; }
+  .acc-header {
+    background: var(--bg2); border:1px solid var(--border);
+    border-radius:10px; padding:12px 16px;
+    cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+    font-weight:700; font-size:13px; color:var(--primary);
+    transition: all 0.2s; user-select:none;
+  }
+  .acc-header:hover { background:var(--soft); border-color:var(--accent); }
+  .acc-header.open { background:var(--soft); border-color:var(--accent); border-radius:10px 10px 0 0; }
+  .acc-arrow { transition:transform 0.25s; font-size:12px; color:var(--accent); flex-shrink:0; }
+  .acc-header.open .acc-arrow { transform:rotate(180deg); }
+  .acc-body {
+    background:white; border:1px solid var(--accent); border-top:none;
+    border-radius:0 0 10px 10px; padding:16px;
+    display:none;
+  }
+  .acc-body.open { display:block; }
+
+  /* TABLE */
+  .data-table { width:100%; border-collapse:collapse; font-size:12px; margin:8px 0; }
+  .data-table th {
+    background: var(--primary); color:white; padding:7px 10px;
+    font-weight:700; text-align:left; font-size:11px;
+  }
+  .data-table th:first-child { border-radius:6px 0 0 0; }
+  .data-table th:last-child { border-radius:0 6px 0 0; }
+  .data-table td { padding:7px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .data-table tr:last-child td { border-bottom:none; }
+  .data-table tr:nth-child(even) td { background:#F8FAFF; }
+  .data-table tr:hover td { background:var(--soft); }
+
+  /* HIGHLIGHT BOXES */
+  .box { border-radius:8px; padding:10px 14px; margin:8px 0; font-size:12px; }
+  .box-blue { background:var(--soft); border-left:3px solid var(--accent); }
+  .box-green { background:#ECFDF5; border-left:3px solid var(--green); }
+  .box-red { background:#FEF2F2; border-left:3px solid var(--red); }
+  .box-orange { background:#FFFBEB; border-left:3px solid var(--orange); }
+  .box-purple { background:#F5F3FF; border-left:3px solid var(--purple); }
+  .box-teal { background:#ECFEFF; border-left:3px solid var(--teal); }
+
+  .box strong { font-weight:700; }
+  .hl-blue { color:var(--accent); font-weight:700; }
+  .hl-red { color:var(--red); font-weight:700; }
+  .hl-green { color:var(--green); font-weight:700; }
+  .hl-orange { color:var(--orange); font-weight:700; }
+  .hl-purple { color:var(--purple); font-weight:700; }
+
+  /* QUIZ */
+  .quiz-wrap { }
+  .progress-bar-wrap { background:var(--border); border-radius:20px; height:10px; margin-bottom:6px; overflow:hidden; }
+  .progress-bar { background:linear-gradient(90deg,var(--accent),#60A5FA); height:100%; border-radius:20px; transition:width 0.5s ease; }
+  .progress-label { font-size:11px; color:var(--muted); text-align:right; margin-bottom:14px; }
+
+  .q-card {
+    background:white; border-radius:16px; padding:22px;
+    box-shadow: var(--shadow-lg); border:2px solid var(--border);
+    min-height:200px; transition:border-color 0.3s;
+  }
+  .q-card.correct { border-color:var(--green); }
+  .q-card.wrong { border-color:var(--red); }
+
+  .q-meta { font-size:11px; color:var(--muted); margin-bottom:8px; font-weight:600; letter-spacing:0.3px; }
+  .q-text { font-size:15px; font-weight:700; color:var(--primary); margin-bottom:18px; line-height:1.6; }
+  .q-choices { display:flex; flex-direction:column; gap:8px; }
+  .q-choice {
+    background:var(--bg2); border:2px solid var(--border); border-radius:10px;
+    padding:11px 16px; cursor:pointer; font-size:13px; font-weight:500;
+    text-align:left; transition:all 0.2s; font-family:'Noto Sans KR',sans-serif;
+    color:var(--text);
+  }
+  .q-choice:hover:not(:disabled) { border-color:var(--accent); background:var(--soft); }
+  .q-choice.selected-correct { background:#ECFDF5; border-color:var(--green); color:var(--green); font-weight:700; }
+  .q-choice.selected-wrong { background:#FEF2F2; border-color:var(--red); color:var(--red); font-weight:700; }
+  .q-choice.show-correct { background:#ECFDF5; border-color:var(--green); }
+  .q-choice:disabled { cursor:default; }
+
+  .q-explanation {
+    margin-top:14px; padding:12px 14px; border-radius:8px;
+    background:var(--soft); border-left:3px solid var(--accent);
+    font-size:12px; line-height:1.7; display:none;
+  }
+  .q-explanation.show { display:block; }
+
+  .q-nav { display:flex; gap:10px; margin-top:16px; justify-content:center; flex-wrap:wrap; }
+  .btn {
+    padding:10px 22px; border-radius:10px; border:none; cursor:pointer;
+    font-size:13px; font-weight:700; font-family:'Noto Sans KR',sans-serif;
+    transition:all 0.2s;
+  }
+  .btn-primary { background:var(--accent); color:white; }
+  .btn-primary:hover { background:var(--primary); }
+  .btn-secondary { background:var(--bg2); color:var(--primary); border:2px solid var(--border); }
+  .btn-secondary:hover { border-color:var(--accent); }
+  .btn-green { background:var(--green); color:white; }
+  .btn-orange { background:var(--orange); color:white; }
+
+  .score-board {
+    text-align:center; padding:30px; background:white;
+    border-radius:16px; box-shadow:var(--shadow-lg);
+  }
+  .score-big { font-size:56px; font-weight:900; color:var(--primary); line-height:1; }
+  .score-label { font-size:14px; color:var(--muted); margin-top:6px; margin-bottom:20px; }
+
+  /* UTILS */
+  ul { padding-left:18px; }
+  li { margin-bottom:4px; font-size:12px; }
+  p { font-size:12px; margin-bottom:6px; }
+  h4 { font-size:13px; font-weight:700; color:var(--primary); margin:10px 0 6px; }
+  h5 { font-size:12px; font-weight:700; color:var(--accent); margin:8px 0 4px; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:500px){ .two-col { grid-template-columns:1fr; } }
+  .three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  @media(max-width:600px){ .three-col { grid-template-columns:1fr; } }
+
+  .chip { display:inline-block; background:var(--primary); color:white; border-radius:4px; padding:2px 8px; font-size:10px; font-weight:700; margin:2px; }
+  .chip-blue { background:var(--accent); }
+  .chip-green { background:var(--green); }
+  .chip-red { background:var(--red); }
+  .chip-orange { background:var(--orange); }
+  .chip-purple { background:var(--purple); }
+
+  .mini-badge { display:inline-block; background:var(--soft); color:var(--accent); border:1px solid var(--border); border-radius:20px; padding:2px 8px; font-size:10px; font-weight:700; }
+
+  .wrong-list-wrap { background:var(--bg2); border-radius:10px; padding:12px; margin-top:12px; }
+  .wrong-list-wrap h4 { color:var(--red); margin-top:0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>인체운동학 특강</h1>
+      <div class="sub">물리치료 국가시험 완전정복 · 전현 @physiotherapist_jh</div>
+    </div>
+    <span class="badge">2025</span>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('overview')">📋 개요</button>
+    <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════════════════════════════════════════ 개요 탭 -->
+<div id="tab-overview" class="tab-panel active">
+
+  <div class="sec-header">🗂 전체 목차</div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔬</span>인체운동학의 개요</div>
+    <div class="toc-grid">
+      <div class="toc-item">
+        <div class="num">I. 운동형상학</div>
+        <div class="title">뼈·관절운동형상학</div>
+        <div class="keywords">
+          <span class="kw">운동면</span><span class="kw">돌림축</span><span class="kw">자유도</span>
+          <span class="kw">운동사슬</span><span class="kw">오목-볼록법칙</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">II. 운동역학</div>
+        <div class="title">힘·토크·벡터·지레</div>
+        <div class="keywords">
+          <span class="kw">내적/외적힘</span><span class="kw">당김선</span><span class="kw">토크=힘×모멘트팔</span>
+          <span class="kw">제1-3형지레</span><span class="kw">역학적이득</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">II-5. 근육 활성</div>
+        <div class="title">등척성·등속성·등장성</div>
+        <div class="keywords">
+          <span class="kw">동심성</span><span class="kw">편심성</span><span class="kw">선자세→앉기</span>
+          <span class="kw">작용근/대항근</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">III. 뼈대근육</div>
+        <div class="title">구조와 기능</div>
+        <div class="keywords">
+          <span class="kw">깃근육vs방추근육</span><span class="kw">길이-장력곡선</span>
+          <span class="kw">능동/수동불충분</span><span class="kw">힘-속도곡선</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🦴</span>인체 부위별 특성</div>
+    <div class="toc-grid">
+      <div class="toc-item">
+        <div class="num">I. 어깨복합체</div>
+        <div class="title">어깨관절 운동학/역학/약증</div>
+        <div class="keywords">
+          <span class="kw">어깨위팔리듬</span><span class="kw">짝힘</span><span class="kw">돌림근띠</span>
+          <span class="kw">impingement</span><span class="kw">날개어깨뼈</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">II. 팔꿉·아래팔</div>
+        <div class="title">팔꿉관절 운동학/역학/약증</div>
+        <div class="keywords">
+          <span class="kw">위팔두갈래근</span><span class="kw">위팔근</span><span class="kw">운반각</span>
+          <span class="kw">당겨진팔꿈치</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">III. 손목·손</div>
+        <div class="title">손목관절 운동학/역학/약증</div>
+        <div class="keywords">
+          <span class="kw">CMC안장관절</span><span class="kw">힘줄고정작용</span>
+          <span class="kw">갈퀴손</span><span class="kw">원숭이손</span><span class="kw">손목처짐</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">IV. 몸통 뼈대</div>
+        <div class="title">척추 운동학/역학</div>
+        <div class="keywords">
+          <span class="kw">속질핵이동</span><span class="kw">척추사이구멍</span>
+          <span class="kw">엉치수평각</span><span class="kw">윗몸일으키기</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">V. 호흡</div>
+        <div class="title">호흡 종류·근육</div>
+        <div class="keywords">
+          <span class="kw">들숨/날숨</span><span class="kw">가로막</span><span class="kw">강제날숨근육</span>
+          <span class="kw">가슴속용적</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">VI. 골반·엉덩관절</div>
+        <div class="title">골반/엉덩관절 운동학/역학/약증</div>
+        <div class="keywords">
+          <span class="kw">앞끄덕임</span><span class="kw">트렌델렌버그</span>
+          <span class="kw">긴모음근</span><span class="kw">엉덩허리근</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">VII. 무릎관절</div>
+        <div class="title">무릎 운동학/역학/약증</div>
+        <div class="keywords">
+          <span class="kw">나사집돌림</span><span class="kw">PFPS</span><span class="kw">젖힌무릎</span>
+          <span class="kw">충돌무릎</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="num">VIII. 발목·발</div>
+        <div class="title">발목 운동학/약증</div>
+        <div class="keywords">
+          <span class="kw">편평발</span><span class="kw">오목발</span><span class="kw">hallux valgus</span>
+          <span class="kw">긴종아리근</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-header">🔑 핵심 키워드 정리</div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span>운동형상학 핵심</div>
+    <div class="three-col">
+      <div class="box box-blue">
+        <strong>3개 운동면</strong><br>
+        시상면: 굽힘-폄<br>
+        이마면: 벌림-모음<br>
+        가로면: 돌림
+      </div>
+      <div class="box box-blue">
+        <strong>3개 돌림축</strong><br>
+        ML축: 굽힘-폄<br>
+        AP축: 벌림-모음<br>
+        수직축: 돌림
+      </div>
+      <div class="box box-blue">
+        <strong>자유도</strong><br>
+        1: 경첩·중쇠관절<br>
+        2: 타원·안장관절<br>
+        3: 절구관절
+      </div>
+    </div>
+    <div class="box box-orange" style="margin-top:8px;">
+      <strong>오목-볼록 법칙</strong>: 오목고정-볼록움직임 → 구르기↔미끄러짐 <span class="hl-red">반대방향</span> | 볼록고정-오목움직임 → <span class="hl-green">같은방향</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span>지레 핵심 비교</div>
+    <table class="data-table">
+      <thead><tr><th>형태</th><th>배열</th><th>각속도</th><th>MA</th><th>인체 예시</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip chip-blue">제1형</span></td><td>내적-축-외적</td><td>보통</td><td>=1</td><td>머리무게 지탱 목 폄근</td></tr>
+        <tr><td><span class="chip chip-green">제2형</span></td><td>축-외적-<strong>내적</strong></td><td>느림</td><td>&gt;1</td><td>까치발 발바닥쪽굽힘</td></tr>
+        <tr><td><span class="chip chip-red">제3형</span></td><td>축-내적-<strong>외적</strong></td><td>빠름</td><td>&lt;1</td><td>아령 들 때 위팔두갈래근</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">💪</span>능동불충분 vs 수동불충분</div>
+    <div class="two-col">
+      <div class="box box-red">
+        <strong class="hl-red">능동불충분 (작용근)</strong><br>
+        근육이 짧아진 상태에서 더 짧아짐<br>
+        교차결합 과도중첩 → 힘효율↓
+      </div>
+      <div class="box box-orange">
+        <strong class="hl-orange">수동불충분 (대항근)</strong><br>
+        근육이 길어진 상태에서 더 길어짐<br>
+        수동저항 발생 (정상범위=유익)
+      </div>
+    </div>
+    <table class="data-table" style="margin-top:8px;">
+      <thead><tr><th>근육</th><th>능동불충분</th><th>수동불충분</th></tr></thead>
+      <tbody>
+        <tr><td>위팔두갈래근</td><td>어깨굽힘+팔꿉굽힘+뒤침</td><td>어깨폄+팔꿉폄+엎침</td></tr>
+        <tr><td>뒤넙다리근</td><td>무릎굽힘+엉덩폄</td><td>무릎폄+엉덩굽힘</td></tr>
+        <tr><td>넙다리곧은근</td><td>무릎폄+엉덩굽힘</td><td>무릎굽힘+엉덩폄</td></tr>
+        <tr><td>장딴지근</td><td>무릎굽힘+발바닥쪽굽힘</td><td>무릎폄+발등쪽굽힘</td></tr>
+        <tr><td>넓은등근</td><td>어깨폄+몸통폄</td><td>어깨굽힘+몸통굽힘</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🫁</span>호흡 근육 핵심</div>
+    <div class="three-col">
+      <div class="box box-blue">
+        <strong>들숨근육</strong><br>
+        가로막 (주)<br>
+        바깥갈비사이근<br>
+        목갈비근
+      </div>
+      <div class="box box-green">
+        <strong>강제들숨</strong><br>
+        위뒤톱니근<br>
+        아래뒤톱니근 (날숨보조)
+      </div>
+      <div class="box box-red">
+        <strong>강제날숨</strong><br>
+        배곧은근<br>
+        배바깥·속빗근<br>
+        배가로근<br>
+        속갈비사이근
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🦵</span>주요 약증 정리</div>
+    <table class="data-table">
+      <thead><tr><th>약증</th><th>원인 신경/근육</th><th>특징</th></tr></thead>
+      <tbody>
+        <tr><td>날개어깨뼈</td><td>긴가슴신경 손상</td><td>앞톱니근 약화, 어깨뼈 안쪽모서리 뜸</td></tr>
+        <tr><td>갈퀴손</td><td>자신경 손상</td><td>4,5번 MCP 과다폄 + IP굽힘</td></tr>
+        <tr><td>손목처짐</td><td>노신경 손상</td><td>손목·손가락폄근 마비</td></tr>
+        <tr><td>원숭이손</td><td>정중신경 손상</td><td>엄지두덩 마비·위축</td></tr>
+        <tr><td>트렌델렌버그</td><td>엉덩벌림근 약화</td><td>손상측 한다리서기 시 반대쪽 골반 떨어짐</td></tr>
+        <tr><td>PFPS</td><td>안쪽넓은근 약화</td><td>무릎뼈 가쪽치우침, VMO 강화</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ 요약 탭 -->
+<div id="tab-summary" class="tab-panel">
+
+  <!-- I. 운동형상학 -->
+  <div class="sec-header">🔬 인체운동학의 개요</div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      I-1. 뼈운동형상학 · 관절운동형상학
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>운동면 & 돌림축</h4>
+      <table class="data-table">
+        <thead><tr><th>운동면</th><th>신체분할</th><th>움직임</th><th>돌림축</th></tr></thead>
+        <tbody>
+          <tr><td>시상면</td><td>좌-우</td><td>굽힘-폄</td><td>ML축(이마축)</td></tr>
+          <tr><td>이마면</td><td>앞-뒤</td><td>벌림-모음</td><td>AP축(시상축)</td></tr>
+          <tr><td>가로면</td><td>위-아래</td><td>돌림</td><td>수직(세로)축</td></tr>
+        </tbody>
+      </table>
+      <h4>자유도</h4>
+      <div class="three-col">
+        <div class="box box-blue"><strong>자유도 1</strong><br>경첩관절: 팔꿉, 손발가락사이<br>중쇠관절: 몸쪽노자, 고리중쇠</div>
+        <div class="box box-blue"><strong>자유도 2</strong><br>타원관절: 손목, 무릎, MCP<br>안장관절: 엄지 CMC</div>
+        <div class="box box-blue"><strong>자유도 3</strong><br>절구관절: 어깨, 엉덩관절</div>
+      </div>
+      <h4>운동사슬</h4>
+      <div class="two-col">
+        <div class="box box-green"><strong>열린사슬</strong>: 몸쪽 고정 → 먼쪽 돌림<br>무릎굽힘: 넙다리뼈 고정, 정강뼈 움직임</div>
+        <div class="box box-orange"><strong>닫힌사슬</strong>: 먼쪽 고정 → 몸쪽 돌림<br>무릎굽힘: 정강뼈 고정, 넙다리뼈 움직임</div>
+      </div>
+      <h4>3가지 기본 움직임</h4>
+      <ul>
+        <li><strong>구르기</strong>: 한 관절면의 <span class="hl-blue">여러점</span> ↔ 다른 관절면의 <span class="hl-blue">여러점</span></li>
+        <li><strong>미끄러짐</strong>: 한 관절면의 <span class="hl-blue">한점</span> ↔ 다른 관절면의 <span class="hl-blue">여러점</span></li>
+        <li><strong>스핀</strong>: 한 관절면의 <span class="hl-blue">한점</span> ↔ 다른 관절면의 <span class="hl-blue">한점</span></li>
+      </ul>
+      <div class="box box-orange" style="margin-top:8px;">
+        <strong>오목-볼록 법칙</strong><br>
+        • 오목고정-볼록움직임: 구르기 ↔ 미끄러짐 <span class="hl-red">반대방향</span><br>
+        • 볼록고정-오목움직임: 구르기 ↔ 미끄러짐 <span class="hl-green">같은방향</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      II. 운동역학 — 힘·토크·벡터
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>힘의 종류</h4>
+      <div class="two-col">
+        <div class="box box-blue"><strong>내적인 힘</strong><br>능동적: 근육 수축<br>수동적: 인대·관절주머니 신장 장력</div>
+        <div class="box box-blue"><strong>외적인 힘</strong><br>중력, 가방, 덤벨, 치료사 저항 등</div>
+      </div>
+      <h4>당김선 (line of force)</h4>
+      <table class="data-table">
+        <thead><tr><th>돌림축</th><th>당김선 위치</th><th>발생 토크</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="2">ML축(이마축)</td><td>축 앞쪽</td><td>굽힘 토크</td></tr>
+          <tr><td>축 뒤쪽</td><td>폄 토크</td></tr>
+          <tr><td rowspan="2">AP축(시상축)</td><td>축 가쪽</td><td>벌림 토크</td></tr>
+          <tr><td>축 안쪽</td><td>모음 토크</td></tr>
+          <tr><td rowspan="2">수직축</td><td>축 앞쪽</td><td>안쪽돌림 토크</td></tr>
+          <tr><td>축 뒤쪽</td><td>가쪽돌림 토크</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-purple" style="margin-top:8px;">
+        <strong>토크 = 힘(force) × 모멘트팔(moment arm)</strong><br>
+        모멘트팔: 관절 돌림축 ~ 힘 작용점까지의 <span class="hl-purple">수직거리</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      II-4. 인체의 지레
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <table class="data-table">
+        <thead><tr><th></th><th>제1형</th><th>제2형</th><th>제3형</th></tr></thead>
+        <tbody>
+          <tr><td><strong>배열</strong></td><td>내-축-외</td><td>축-외-내</td><td>축-내-외</td></tr>
+          <tr><td><strong>각속도</strong></td><td>보통</td><td>느림</td><td>빠름</td></tr>
+          <tr><td><strong>MA</strong></td><td>=1</td><td>&gt;1 (힘 적게)</td><td>&lt;1 (힘 많이)</td></tr>
+          <tr><td><strong>IMA vs EMA</strong></td><td>-</td><td>IMA &gt; EMA</td><td>EMA &gt; IMA</td></tr>
+          <tr><td><strong>예시</strong></td><td>목 폄근</td><td>까치발</td><td>아령 위팔두갈래근</td></tr>
+          <tr><td><strong>특징</strong></td><td>짝힘과 유사</td><td>힘효율 좋음</td><td>인체에서 가장 흔함</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      II-5~6. 근육 활성·작용
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="three-col">
+        <div class="box box-blue"><strong>등척성</strong><br>길이변화 없음, 관절움직임 없음<br>기준점</div>
+        <div class="box box-blue"><strong>등속성</strong><br>전 ROM 일정한 속도<br>최대장력 발생</div>
+        <div class="box box-blue"><strong>등장성</strong><br>동심성·편심성</div>
+      </div>
+      <div class="two-col" style="margin-top:8px;">
+        <div class="box box-green">
+          <strong class="hl-green">동심성</strong><br>
+          짧아지면서 수축, 움직임 <span class="hl-green">가속</span><br>
+          내적 토크 &gt; 외적 토크
+        </div>
+        <div class="box box-orange">
+          <strong class="hl-orange">편심성</strong><br>
+          길어지면서 수축, 움직임 <span class="hl-orange">감속</span><br>
+          외적 토크 &gt; 내적 토크
+        </div>
+      </div>
+      <h4>선자세↔앉은자세 근육활성</h4>
+      <table class="data-table">
+        <thead><tr><th>동작</th><th>수축형태</th><th>작용근육</th></tr></thead>
+        <tbody>
+          <tr><td>선→앉기</td><td><span class="hl-orange">편심성</span></td><td>큰볼기근, 넙다리네갈래근, 종아리세갈래근</td></tr>
+          <tr><td>앉→서기</td><td><span class="hl-green">동심성</span></td><td>큰볼기근, 넙다리네갈래근, 종아리세갈래근</td></tr>
+        </tbody>
+      </table>
+      <h4>근육 작용 분류</h4>
+      <div class="two-col">
+        <div>
+          <div class="box box-blue"><strong>짝힘</strong>: 힘 방향 다르지만 돌림방향 같음<br>예) 어깨뼈 위쪽돌림: 앞톱니근+위·아래등세모근</div>
+        </div>
+        <div>
+          <div class="box box-blue"><strong>협동근</strong>: 작용근 보조<br><strong>고정근</strong>: 이는곳 안정화<br><strong>동시수축</strong>: 관절 안정화</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      II-7. 스트레스-스트레인 곡선
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <table class="data-table">
+        <thead><tr><th>영역</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>①탄성 영역</td><td>스트레스↑→스트레인↑, 제거 시 <span class="hl-green">원래 길이로 복귀</span></td></tr>
+          <tr><td>③항복점</td><td>탄성과 가소성의 <span class="hl-orange">경계</span></td></tr>
+          <tr><td>②가소성 영역</td><td>스트레스↑해도 스트레인 변화 거의 없음, 제거 시 <span class="hl-red">복귀 불가</span></td></tr>
+          <tr><td>④병목 영역</td><td>상당한 약증, 지속 시 <span class="hl-red">조직 찢어짐</span></td></tr>
+          <tr><td>⑤최종파열점</td><td>부분/완전 분리, <span class="hl-red">장력 유지 능력 상실</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      III. 뼈대근육 — 깃근육·길이-장력·힘-속도 곡선
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>깃근육 vs 방추근육</h4>
+      <table class="data-table">
+        <thead><tr><th></th><th>방추근육(parallel)</th><th>깃근육(pennate)</th></tr></thead>
+        <tbody>
+          <tr><td>단면적</td><td>작음</td><td>큼</td></tr>
+          <tr><td>힘 생산</td><td>작음</td><td>큼</td></tr>
+          <tr><td>수축 길이</td><td>긺</td><td>짧음</td></tr>
+          <tr><td>힘줄 전달</td><td>그대로 전달</td><td>전달력 적음</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-orange" style="margin-top:8px;">
+        <strong>깃각 증가</strong> → 단면적 증가 → 모멘트팔↑ | 깃각 = 0° → 방추근육
+      </div>
+      <h4>길이-장력곡선</h4>
+      <ul>
+        <li><strong>안정길이</strong>: 액틴-미오신 최대 교차결합 → 최대 힘 발생</li>
+        <li>너무 짧음 → 액틴 <span class="hl-red">중첩</span> → 장력↓</li>
+        <li>너무 긺 → 교차결합 <span class="hl-red">형성 안됨</span> → 장력↓</li>
+        <li><strong>임계길이</strong> 초과 시 수동장력 발생 (고무줄 반응)</li>
+      </ul>
+      <h4>힘-속도 곡선</h4>
+      <table class="data-table">
+        <thead><tr><th></th><th>동심성</th><th>편심성</th><th>등척성</th></tr></thead>
+        <tbody>
+          <tr><td>속도↑ 시</td><td><span class="hl-red">장력↓</span></td><td><span class="hl-green">장력↑</span></td><td>기준점</td></tr>
+          <tr><td>이유</td><td>교차결합 재부착 수↓</td><td>교차연결 재부착 빠름+수동장력</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 부위별 -->
+  <div class="sec-header">🦴 인체 부위별 특성</div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      I. 어깨복합체
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>주요 근육 작용</h4>
+      <table class="data-table">
+        <thead><tr><th>근육</th><th>주 작용</th><th>핵심 특징</th></tr></thead>
+        <tbody>
+          <tr><td>앞톱니근</td><td>어깨뼈 내밈·위쪽돌림</td><td>긴가슴신경 손상 → <span class="hl-red">날개어깨뼈</span></td></tr>
+          <tr><td>가시위근</td><td>어깨관절 벌림</td><td>초기 15° 벌림, 돌림근띠 열상 호발</td></tr>
+          <tr><td>가시아래근</td><td>어깨관절 가쪽돌림</td><td>벌림 시 위팔뼈머리 하강</td></tr>
+          <tr><td>넓은등근</td><td>폄·모음·안쪽돌림</td><td>목발보행, 휠체어에 중요</td></tr>
+          <tr><td>뒤어깨세모근</td><td>폄·벌림·가쪽돌림</td><td>위팔두갈래근 능동불충분 억제</td></tr>
+        </tbody>
+      </table>
+      <h4>어깨위팔리듬 (180도 벌림)</h4>
+      <div class="box box-purple">
+        SC관절: 빗장뼈 25° 올림 · 20° 뒤당김 · 25° 뒤쪽돌림<br>
+        AC관절: 어깨뼈 <strong>35°</strong> 위쪽돌림<br>
+        ST관절: <strong>60°</strong> 위쪽돌림 (SC 25° + AC 35°)<br>
+        GH관절: 위팔뼈 <strong>120°</strong> 벌림 · 가쪽돌림
+      </div>
+      <h4>토크 최대값</h4>
+      <div class="two-col">
+        <div class="box box-blue">어깨관절 <strong>90°</strong> 굽힘 = 외적 토크 최대</div>
+        <div class="box box-blue">팔꿉관절 <strong>90°</strong> 굽힘 = 내적 토크 최대</div>
+      </div>
+      <h4>부딪힘증후군 (impingement)</h4>
+      <div class="box box-red">
+        정상: 볼록 위팔뼈머리 → 위쪽 구르기 + <span class="hl-green">아래쪽 미끄러짐</span><br>
+        비정상: 아래쪽 미끄러짐 없이 위쪽 구르기만 → 봉우리밑공간 충돌 → 가시위근힘줄염/윤활주머니염
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      II. 팔꿉관절과 아래팔
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>팔꿉굽힘 근육 비교</h4>
+      <table class="data-table">
+        <thead><tr><th>근육</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>위팔두갈래근</td><td>노뼈 부착, <span class="hl-blue">뒤침 상태</span>에서 강함, 90° 굽힘 시 뒤침 효율 최대</td></tr>
+          <tr><td>위팔근</td><td>자뼈 부착, 순수 팔꿉굽힘근, <span class="hl-blue">엎침 자세</span>에서 검사</td></tr>
+          <tr><td>위팔노근</td><td>한 뼈 먼쪽↔다른 뼈 먼쪽 연결하는 유일한 근육, <span class="hl-blue">중립 상태</span>에서 작용</td></tr>
+        </tbody>
+      </table>
+      <h4>운반각 (carrying angle)</h4>
+      <div class="box box-blue">정상: 남자 5°, 여자 10~15° | 밖굽이(valgus): 각도 증가 | 안굽이(varus): 각도 감소, 발생빈도 높음</div>
+      <h4>아래팔 뒤침</h4>
+      <div class="box box-orange">팔꿉 90° 굽힘 시 위팔두갈래근이 뒤침근(supinator)보다 <strong>4배</strong> 효율 | 완전 뒤침 시 노뼈와 자뼈 평행</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      III. 손목관절과 손
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>CMC관절 (엄지손목손허리관절)</h4>
+      <div class="box box-purple">
+        종류: <strong>안장관절</strong> (자유도 2)<br>
+        이마면: 굽힘-폄 | 시상면: 벌림-모음<br>
+        맞섬 운동: ①엄지 벌림 → ②엄지 굽힘+안쪽돌림
+      </div>
+      <h4>힘줄고정작용 (tenodesis)</h4>
+      <div class="two-col">
+        <div class="box box-green">손목 <strong>폄</strong> → 손가락 수동 <strong>굽힘</strong></div>
+        <div class="box box-orange">손목 <strong>굽힘</strong> → 손가락 수동 <strong>폄</strong></div>
+      </div>
+      <h4>신경 손상별 약증</h4>
+      <table class="data-table">
+        <thead><tr><th>손상 신경</th><th>약증</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>자신경</td><td>갈퀴손</td><td>4,5번 MCP 과다폄 + IP 굽힘</td></tr>
+          <tr><td>노신경</td><td>손목처짐</td><td>손목·손가락폄근 마비</td></tr>
+          <tr><td>정중신경</td><td>원숭이손</td><td>엄지두덩 마비·위축</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      IV. 몸통 뼈대 — 척추
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>속질핵 이동</h4>
+      <div class="three-col">
+        <div class="box box-blue"><strong>앞쪽 이동</strong><br>골반 앞기울임<br>등허리 폄<br>엎드려: 엉덩·무릎 폄</div>
+        <div class="box box-orange"><strong>뒤쪽 이동</strong><br>골반 뒤기울임<br>등허리 굽힘<br>바로누워: 엉덩·무릎 굽힘</div>
+        <div class="box box-purple"><strong>가쪽 이동</strong><br>선자세에서<br>등허리 가쪽굽힘</div>
+      </div>
+      <h4>척추사이구멍 직경 변화</h4>
+      <table class="data-table">
+        <thead><tr><th>움직임</th><th>직경 변화</th></tr></thead>
+        <tbody>
+          <tr><td>굽힘</td><td>양쪽 <span class="hl-green">증가</span></td></tr>
+          <tr><td>폄</td><td>양쪽 <span class="hl-red">감소</span></td></tr>
+          <tr><td>가쪽굽힘</td><td>반대쪽 <span class="hl-green">증가</span></td></tr>
+          <tr><td>돌림</td><td>반대쪽 <span class="hl-green">증가</span></td></tr>
+        </tbody>
+      </table>
+      <h4>엉치수평각</h4>
+      <div class="two-col">
+        <div class="box box-red"><strong>증가</strong>: 허리뼈 앞굽음↑, 골반 앞기울임</div>
+        <div class="box box-blue"><strong>감소</strong>: 허리뼈 뒤굽음, 골반 뒤기울임</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      V. 호흡
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>들숨 메커니즘</h4>
+      <div class="box box-blue">
+        가로막·바깥갈비사이근 수축 → 가슴안 용적↑ → 가슴막사이공간 압력↓ → 허파 팽창(음압) → 허파꽈리 압력↓ → 공기 유입
+      </div>
+      <h4>가슴속 용적 변화</h4>
+      <table class="data-table">
+        <thead><tr><th></th><th>수직변화</th><th>AP·ML 변화</th><th>특이사항</th></tr></thead>
+        <tbody>
+          <tr><td>들숨</td><td>직경 증가 (가로막↓)</td><td>갈비뼈 올림</td><td>강제들숨: 등뼈 폄</td></tr>
+          <tr><td>안정날숨</td><td>직경 감소 (가로막↑)</td><td>갈비뼈 내림</td><td>수동적 (근육활동 불필요)</td></tr>
+          <tr><td>강제날숨</td><td>-</td><td>-</td><td>등뼈 굽힘, 배근육 활성</td></tr>
+        </tbody>
+      </table>
+      <h4>호흡 근육 총정리</h4>
+      <table class="data-table">
+        <thead><tr><th>분류</th><th>근육</th></tr></thead>
+        <tbody>
+          <tr><td>들숨</td><td>가로막(주), 바깥갈비사이근, 목갈비근</td></tr>
+          <tr><td>강제들숨</td><td>위뒤톱니근</td></tr>
+          <tr><td>강제날숨</td><td>배곧은근, 배바깥·속빗근, 배가로근, 속갈비사이근, 가슴가로근</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      VI. 골반과 엉덩관절
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>엉치엉덩관절 운동형상학</h4>
+      <div class="two-col">
+        <div class="box box-green">
+          <strong>앞끄덕임 (nutation)</strong><br>
+          엉덩뼈에 대한 엉치뼈 앞기울임<br>
+          <span class="hl-green">안정성↑</span>, 엉치결절·가시인대 신장
+        </div>
+        <div class="box box-orange">
+          <strong>뒤끄덕임 (counternutation)</strong><br>
+          엉덩뼈에 대한 엉치뼈 뒤기울임
+        </div>
+      </div>
+      <h4>골반 짝힘</h4>
+      <table class="data-table">
+        <thead><tr><th>움직임</th><th>수축</th><th>이완</th></tr></thead>
+        <tbody>
+          <tr><td>앞기울임</td><td>엉덩허리근, 넙다리빗근, 척주세움근</td><td>배곧은근, 배바깥빗근, 큰볼기근, 뒤넙다리근</td></tr>
+          <tr><td>뒤기울임</td><td>배곧은근, 배바깥빗근, 큰볼기근, 뒤넙다리근</td><td>엉덩허리근, 넙다리빗근, 척주세움근</td></tr>
+        </tbody>
+      </table>
+      <h4>트렌델렌버그 vs 중간볼기근 파행</h4>
+      <table class="data-table">
+        <thead><tr><th>징후</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>트렌델렌버그 징후</td><td>손상쪽 한다리서기 시 <span class="hl-red">반대쪽 골반 떨어짐</span></td></tr>
+          <tr><td>중간볼기근 파행</td><td>손상쪽 한다리서기 시 <span class="hl-orange">반대쪽 골반 올림</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      VII. 무릎관절
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>나사집 돌림 (screw-home motion)</h4>
+      <div class="box box-purple">
+        무릎 완전 폄 시 약 <strong>10°</strong> 가쪽돌림 필요 → 넙다리네갈래근 수축<br>
+        열린사슬: 넙다리뼈 고정 - 정강뼈 <span class="hl-purple">가쪽돌림</span><br>
+        닫힌사슬: 정강뼈 고정 - 넙다리뼈 <span class="hl-purple">안쪽돌림</span>
+      </div>
+      <h4>내적 토크 최대값</h4>
+      <div class="two-col">
+        <div class="box box-blue">넙다리네갈래근 최대토크: 무릎관절 <strong>45~70°</strong> 굽힘</div>
+        <div class="box box-blue">뒤넙다리근 최대토크: 무릎관절 <strong>20°</strong> 굽힘</div>
+      </div>
+      <h4>PFPS (무릎넙다리통증증후군)</h4>
+      <div class="box box-red">
+        무릎뼈 가쪽치우침 → 과도한 스트레스<br>
+        치료: <span class="hl-red">안쪽넓은근(VMO) 강화</span>
+      </div>
+      <h4>젖힌무릎 (genu recurvatum)</h4>
+      <div class="box box-orange">
+        중립에서 10° 초과 과다폄 | 원인: 엉덩굽힘근·넙다리네갈래근 약화<br>
+        해결: 발꿈치 뒤를 높여 정강뼈 수직화
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      VIII. 발목관절과 발
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <h4>주요 근육 특징</h4>
+      <table class="data-table">
+        <thead><tr><th>근육</th><th>작용</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>앞정강근</td><td>발등쪽굽힘·안쪽번짐</td><td>편심성 수축으로 발바닥쪽굽힘 속도 조절</td></tr>
+          <tr><td>긴종아리근</td><td>가쪽번짐·발바닥쪽굽힘 보조</td><td>가쪽복사를 도르래로 사용, 첫째발목발허리관절 안정성</td></tr>
+          <tr><td>장딴지근</td><td>무릎굽힘·발바닥쪽굽힘</td><td>이관절근육, 수동불충분: 무릎폄+발등쪽굽힘</td></tr>
+          <tr><td>가자미근</td><td>발바닥쪽굽힘</td><td>단관절, 무릎굽힘 상태에서 단독 수축</td></tr>
+        </tbody>
+      </table>
+      <h4>장딴지근 vs 가자미근 신장</h4>
+      <div class="two-col">
+        <div class="box box-blue"><strong>장딴지근 신장</strong>: 무릎 <span class="hl-blue">폄</span> + 발등쪽굽힘</div>
+        <div class="box box-green"><strong>가자미근 신장</strong>: 무릎 <span class="hl-green">굽힘</span> + 발등쪽굽힘</div>
+      </div>
+      <h4>발 약증</h4>
+      <table class="data-table">
+        <thead><tr><th>약증</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>편평발(pes planus)</td><td>안쪽세로활 낮아짐, 목말밑관절 과도 엎침, 강직성·유연성</td></tr>
+          <tr><td>오목발(pes cavus)</td><td>안쪽세로발활 비정상적 높음, 발뒤부 과도 안쪽번짐</td></tr>
+          <tr><td>엄지가쪽휨(hallux valgus)</td><td>첫째발허리뼈 과도 모음, 엄지벌림근·모음근 불균형</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ 퀴즈 탭 -->
+<div id="tab-quiz" class="tab-panel">
+  <div id="quiz-container"></div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// ─── TAB ───
+function switchTab(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(name==='quiz' && !quizStarted) initQuiz();
+}
+
+// ─── ACCORDION ───
+function toggleAcc(header){
+  const isOpen = header.classList.contains('open');
+  // close all
+  document.querySelectorAll('.acc-header').forEach(h=>h.classList.remove('open'));
+  document.querySelectorAll('.acc-body').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){
+    header.classList.add('open');
+    header.nextElementSibling.classList.add('open');
+  }
+}
+
+// ─── QUIZ DATA (35문항) ───
+const allQuestions = [
+  {
+    cat: "운동형상학",
+    q: "시상면(sagittal plane) 내에서 일어나는 움직임의 돌림축으로 옳은 것은?",
+    choices: ["앞-뒤쪽 돌림축 (AP axis)", "안-가쪽 돌림축 (ML axis)", "수직 돌림축", "수평축"],
+    answer: 1,
+    exp: "시상면 내 움직임(굽힘-폄)의 축은 안-가쪽 돌림축(ML axis, 이마축)이다. AP축은 이마면 움직임(벌림-모음)을 제공한다."
+  },
+  {
+    cat: "운동형상학",
+    q: "오목면에 대한 볼록면의 움직임에서 구르기와 미끄러짐의 방향 관계는?",
+    choices: ["같은 방향", "반대 방향", "수직 방향", "무관계"],
+    answer: 1,
+    exp: "오목 고정 - 볼록 움직임일 때 구르기와 미끄러짐은 서로 반대 방향이다. 반면 볼록 고정 - 오목 움직임은 같은 방향이다."
+  },
+  {
+    cat: "운동형상학",
+    q: "자유도가 3인 관절로만 묶인 것은?",
+    choices: ["팔꿉관절, 엉덩관절", "어깨관절, 엉덩관절", "손목관절, 어깨관절", "엄지CMC관절, 무릎관절"],
+    answer: 1,
+    exp: "자유도 3은 절구관절로, 어깨관절과 엉덩관절이 해당된다. 손목·무릎은 자유도 2, 팔꿉·발목은 자유도 1이다."
+  },
+  {
+    cat: "운동역학",
+    q: "안-가쪽 돌림축(이마축)을 기준으로 축 뒤쪽을 지나는 당김선이 발생시키는 토크는?",
+    choices: ["굽힘 토크", "폄 토크", "벌림 토크", "안쪽돌림 토크"],
+    answer: 1,
+    exp: "이마축(ML축)을 기준으로 앞쪽 당김선 = 굽힘 토크, 뒤쪽 당김선 = 폄 토크 발생."
+  },
+  {
+    cat: "운동역학",
+    q: "토크의 정의로 옳은 것은?",
+    choices: ["힘 × 속도", "힘 × 모멘트팔", "힘 × 거리", "질량 × 가속도"],
+    answer: 1,
+    exp: "토크 = 힘(force) × 모멘트팔(moment arm). 모멘트팔은 돌림축에서 힘이 작용하는 곳까지의 수직거리이다."
+  },
+  {
+    cat: "운동역학",
+    q: "제3형 지레의 특징으로 옳은 것은?",
+    choices: ["내적모멘트팔 > 외적모멘트팔", "기계적이득 > 1", "인체에서 가장 흔함", "각속도가 느림"],
+    answer: 2,
+    exp: "제3형 지레(축-내적-외적)는 외적모멘트팔 > 내적모멘트팔이므로 MA < 1로 힘효율이 나쁘지만 인체에서 가장 흔하고 각속도가 빠르다."
+  },
+  {
+    cat: "근육 활성",
+    q: "선자세에서 앉은자세로 이동할 때 무릎관절에서 나타나는 근육 수축 유형은?",
+    choices: ["동심성(concentric)", "편심성(eccentric)", "등척성(isometric)", "등속성(isokinetic)"],
+    answer: 1,
+    exp: "선→앉기 시 무릎 폄근(넙다리네갈래근)은 편심성(길어지면서) 수축으로 하강 속도를 조절한다. 외적 토크 > 내적 토크."
+  },
+  {
+    cat: "근육 활성",
+    q: "동심성 수축에서 수축 속도가 증가할 때 나타나는 현상은?",
+    choices: ["장력 증가", "장력 감소", "장력 불변", "관절 불안정"],
+    answer: 1,
+    exp: "동심성 수축에서 짧아지는 속도 증가 → 교차결합 재부착 수 감소 → 장력 감소. 반면 편심성 수축은 속도 증가 시 장력 증가."
+  },
+  {
+    cat: "뼈대근육",
+    q: "깃근육(pennate muscle)이 방추근육(parallel muscle)에 비해 우세한 특성은?",
+    choices: ["수축 길이가 더 김", "힘줄로 전달되는 힘이 더 많음", "단면적이 더 크고 힘 생산이 큼", "모멘트팔이 더 짧음"],
+    answer: 2,
+    exp: "깃근육은 공간절약형 전략으로 큰 단면적 → 큰 힘 생산. 단, 수축 길이는 짧고 힘줄로 전달되는 힘은 적다."
+  },
+  {
+    cat: "뼈대근육",
+    q: "능동 길이-장력곡선에서 가장 큰 힘을 발생시킬 수 있는 길이는?",
+    choices: ["근육이 최대한 짧아진 길이", "안정길이(resting length)", "임계길이(critical length)", "수동불충분이 발생하는 길이"],
+    answer: 1,
+    exp: "안정길이에서 액틴-미오신 최대 교차결합이 가능하므로 가장 큰 능동장력 발생."
+  },
+  {
+    cat: "어깨복합체",
+    q: "긴가슴신경(long thoracic nerve) 손상 시 발생하는 약증은?",
+    choices: ["부딪힘증후군", "날개어깨뼈(winging scapula)", "등세모근 약화", "돌림근띠 열상"],
+    answer: 1,
+    exp: "긴가슴신경 손상 → 앞톱니근 약화 → 날개어깨뼈(안쪽모서리 뜸). 앞톱니근 위쪽돌림 힘 소실 → 어깨세모근이 역작용."
+  },
+  {
+    cat: "어깨복합체",
+    q: "어깨위팔리듬에서 180도 벌림 시 오목위팔관절(GH)의 기여 범위는?",
+    choices: ["60도", "90도", "120도", "150도"],
+    answer: 2,
+    exp: "180° 벌림 = GH관절 120° + ST관절 60° (SC관절 25° + AC관절 35°)."
+  },
+  {
+    cat: "어깨복합체",
+    q: "어깨뼈 위쪽돌림에 기여하는 짝힘(force couple) 근육 조합으로 옳은 것은?",
+    choices: ["큰가슴근 + 작은원근", "위등세모근 + 앞톱니근", "큰마름근 + 위등세모근", "가시아래근 + 어깨밑근"],
+    answer: 1,
+    exp: "어깨뼈 위쪽돌림 짝힘: 위등세모근(어깨뼈 올림 방향) + 앞톱니근(어깨뼈 내밈 방향)."
+  },
+  {
+    cat: "어깨복합체",
+    q: "부딪힘증후군(impingement syndrome)에서 비정상적인 움직임은?",
+    choices: ["위팔뼈머리가 아래쪽으로 미끄러짐만 일어남", "아래쪽 미끄러짐 없이 위쪽 구르기만 일어남", "위팔뼈머리가 뒤쪽으로 구름", "위팔뼈머리가 앞쪽으로 탈구"],
+    answer: 1,
+    exp: "정상: 위쪽 구르기 + 아래쪽 미끄러짐. 비정상: 아래쪽 미끄러짐 없이 위쪽 구르기만 → 봉우리밑공간 충돌."
+  },
+  {
+    cat: "팔꿉관절",
+    q: "위팔근(brachialis)의 특징으로 옳은 것은?",
+    choices: ["노뼈에 부착되어 뒤침에 영향을 받음", "자뼈에 부착되어 엎침-뒤침에 영향을 받지 않는 순수 팔꿉굽힘근", "아래팔 중립 위치에서 최대 수축", "근육검사 시 뒤침 자세에서 실시"],
+    answer: 1,
+    exp: "위팔근은 자뼈 부착 → 엎침-뒤침 영향 없는 순수 팔꿉굽힘근. 근육검사는 엎침 자세에서 실시(위팔두갈래근 영향 제거)."
+  },
+  {
+    cat: "팔꿉관절",
+    q: "아래팔 뒤침(supination) 시 팔꿉관절 90도 굽힘 상태에서 가장 효율적으로 작용하는 근육은?",
+    choices: ["위팔근", "위팔두갈래근", "위팔노근", "뒤침근"],
+    answer: 1,
+    exp: "팔꿉 90° 굽힘 시 위팔두갈래근의 뒤침 효율이 뒤침근(supinator)에 비해 4배. 이때 힘줄이 노뼈와 거의 90°를 이름."
+  },
+  {
+    cat: "손목·손",
+    q: "엄지손목손허리관절(CMC)의 관절 종류와 자유도는?",
+    choices: ["경첩관절, 자유도 1", "타원관절, 자유도 2", "안장관절, 자유도 2", "절구관절, 자유도 3"],
+    answer: 2,
+    exp: "CMC관절은 안장관절(saddle joint), 자유도 2. 이마면: 굽힘-폄, 시상면: 벌림-모음."
+  },
+  {
+    cat: "손목·손",
+    q: "힘줄고정작용(tenodesis)에서 능동적 손목 폄 시 나타나는 현상은?",
+    choices: ["손가락 능동 굽힘", "손가락 수동 굽힘", "손가락 수동 폄", "손가락 능동 폄"],
+    answer: 1,
+    exp: "힘줄고정작용: 능동 손목 폄 → 수동 손가락 굽힘 | 능동 손목 굽힘 → 수동 손가락 폄."
+  },
+  {
+    cat: "손목·손",
+    q: "노신경(radial nerve) 손상 시 나타나는 약증은?",
+    choices: ["갈퀴손(claw hand)", "원숭이손(ape hand)", "손목처짐(wrist drop)", "듀피트렌 구축"],
+    answer: 2,
+    exp: "노신경 손상 → 손목폄근·손가락폄근 마비 → 손목처짐(wrist drop). 갈퀴손=자신경, 원숭이손=정중신경."
+  },
+  {
+    cat: "척추",
+    q: "척추 굽힘(flexion) 시 척추사이구멍 직경의 변화는?",
+    choices: ["양쪽 감소", "양쪽 증가", "굽힘 방향쪽 증가, 반대쪽 감소", "변화 없음"],
+    answer: 1,
+    exp: "척추 굽힘 → 양쪽 척추사이구멍 직경 증가. 폄 → 감소. 가쪽굽힘·돌림 → 반대쪽 증가."
+  },
+  {
+    cat: "척추",
+    q: "앉은자세에서 골반 앞기울임 시 속질핵(nucleus pulposus)의 이동 방향은?",
+    choices: ["뒤쪽", "앞쪽", "가쪽", "변화 없음"],
+    answer: 1,
+    exp: "앉은자세에서 골반 앞기울임 → 속질핵 앞쪽 이동. 골반 뒤기울임 → 속질핵 뒤쪽 이동."
+  },
+  {
+    cat: "호흡",
+    q: "안정날숨(resting expiration)에서 가슴속 용적이 감소하는 주된 기전은?",
+    choices: ["배근육의 능동 수축", "속갈비사이근 수축", "들숨근육 이완 시 탄성반동", "가로막의 능동 수축"],
+    answer: 2,
+    exp: "안정날숨은 근육활동에 의존하지 않는 수동적 과정. 들숨 근육 이완 시 신장된 결합조직의 탄성반동으로 가슴속 용적 감소."
+  },
+  {
+    cat: "호흡",
+    q: "강제날숨근육(forced expiration muscle)에 해당하지 않는 것은?",
+    choices: ["배곧은근", "배바깥빗근", "바깥갈비사이근", "속갈비사이근"],
+    answer: 2,
+    exp: "바깥갈비사이근은 들숨근육이다. 강제날숨근육: 배곧은근, 배바깥·속빗근, 배가로근, 속갈비사이근, 가슴가로근."
+  },
+  {
+    cat: "골반·엉덩관절",
+    q: "앞끄덕임(nutation)에 대한 설명으로 옳은 것은?",
+    choices: ["엉덩뼈에 대한 엉치뼈의 뒤기울임", "엉덩뼈에 대한 엉치뼈의 앞기울임으로 안정성 증가", "뒤끄덕임과 동의어", "엉치가시인대를 이완시킴"],
+    answer: 1,
+    exp: "앞끄덕임 = 엉덩뼈에 대한 엉치뼈 앞기울임. 안정성↑. 엉치결절인대·가시인대가 신장되어 장력 증가 → 안정성 기여."
+  },
+  {
+    cat: "골반·엉덩관절",
+    q: "트렌델렌버그 징후(Trendelenburg sign)의 특징으로 옳은 것은?",
+    choices: ["손상쪽으로 한다리 서기 시 같은쪽 골반이 올라감", "손상쪽으로 한다리 서기 시 반대쪽 골반이 떨어짐", "손상쪽으로 한다리 서기 시 몸통이 반대쪽으로 굽힘", "손상쪽 발목이 가쪽번짐됨"],
+    answer: 1,
+    exp: "트렌델렌버그 징후: 엉덩관절 벌림근 손상쪽으로 한다리 서기 시 반대쪽 골반이 떨어짐. 몸통은 선 다리쪽으로 굽힘."
+  },
+  {
+    cat: "골반·엉덩관절",
+    q: "골반 앞기울임 시 수축하는 근육으로 묶인 것은?",
+    choices: ["배곧은근, 큰볼기근", "엉덩허리근, 넙다리빗근, 척주세움근", "뒤넙다리근, 배바깥빗근", "큰볼기근, 배속빗근"],
+    answer: 1,
+    exp: "골반 앞기울임 수축: 엉덩허리근, 넙다리빗근, 척주세움근. 이완: 배곧은근, 배바깥빗근, 큰볼기근, 뒤넙다리근."
+  },
+  {
+    cat: "무릎관절",
+    q: "무릎의 나사집 돌림(screw-home motion)에서 열린사슬운동 시 정강뼈의 움직임 방향은?",
+    choices: ["안쪽돌림", "가쪽돌림", "굽힘", "폄"],
+    answer: 1,
+    exp: "나사집 돌림: 열린사슬 = 넙다리뼈 고정 + 정강뼈 가쪽돌림. 닫힌사슬 = 정강뼈 고정 + 넙다리뼈 안쪽돌림."
+  },
+  {
+    cat: "무릎관절",
+    q: "무릎넙다리통증증후군(PFPS)에서 무릎뼈 가쪽치우침이 생겼을 때 강화해야 하는 근육은?",
+    choices: ["가쪽넓은근", "안쪽넓은근(VMO)", "넙다리빗근", "두덩정강근"],
+    answer: 1,
+    exp: "PFPS에서 무릎뼈 가쪽치우침 → 안쪽넓은근(VMO) 강화로 내쪽방향의 힘을 증가시켜 균형 회복."
+  },
+  {
+    cat: "무릎관절",
+    q: "넙다리네갈래근에 대한 내적 토크가 최대로 발생하는 무릎 각도는?",
+    choices: ["무릎관절 90도 굽힘", "무릎관절 45~70도 굽힘", "무릎관절 20도 굽힘", "무릎관절 0도 완전 폄"],
+    answer: 1,
+    exp: "넙다리네갈래근 최대 내적 토크: 무릎 45~70° 굽힘. 최대 내적 모멘트팔(지레 작용)은 20~60° 굽힘."
+  },
+  {
+    cat: "발목·발",
+    q: "장딴지근(gastrocnemius) 단독 신장을 위한 올바른 자세는?",
+    choices: ["무릎 폄 + 발등쪽굽힘", "무릎 굽힘 + 발등쪽굽힘", "무릎 폄 + 발바닥쪽굽힘", "무릎 굽힘 + 발바닥쪽굽힘"],
+    answer: 0,
+    exp: "장딴지근(이관절근육)은 무릎 폄 + 발등쪽굽힘 시 신장. 가자미근은 무릎 굽힘 + 발등쪽굽힘으로 단독 신장."
+  },
+  {
+    cat: "발목·발",
+    q: "발가락 끝으로 서 있을 때 발활을 지지하는 기능적 걸이(sling)를 형성하는 근육 조합은?",
+    choices: ["앞정강근 + 셋째종아리근", "긴종아리근 + 뒤정강근", "장딴지근 + 가자미근", "긴발가락굽힘근 + 짧은종아리근"],
+    answer: 1,
+    exp: "발가락 끝으로 서기: 긴종아리근(발바닥쪽굽힘-가쪽들림) + 뒤정강근(발바닥쪽굽힘-안쪽들림)이 가로활과 안쪽세로활을 지지하는 걸이 형성."
+  },
+  {
+    cat: "발목·발",
+    q: "편평발(pes planus) 유연성 유형의 특징으로 옳은 것은?",
+    choices: ["체중지지가 되지 않아도 발활이 낮음", "발목뼈 융합 등 선천적 문제로 발생", "체중지지 시 발활이 낮아지며 근력운동·보조기로 치료", "목말밑관절의 과도한 뒤침과 연관"],
+    answer: 2,
+    exp: "유연성 편평발: 체중지지 시 활이 낮아짐. 결합조직 느슨함·근육 약화가 원인. 근력운동·보조기로 치료 가능. 강직성 편평발은 체중지지 없어도 낮음."
+  },
+  {
+    cat: "능동/수동불충분",
+    q: "뒤넙다리근(hamstring)의 수동불충분이 발생하는 움직임은?",
+    choices: ["무릎관절 굽힘 + 엉덩관절 폄", "무릎관절 폄 + 엉덩관절 굽힘", "무릎관절 굽힘 + 엉덩관절 굽힘", "무릎관절 폄 + 엉덩관절 폄"],
+    answer: 1,
+    exp: "뒤넙다리근 수동불충분: 무릎관절 폄 + 엉덩관절 굽힘(근육이 최대 신장). 능동불충분: 무릎굽힘 + 엉덩폄(최대 단축)."
+  },
+  {
+    cat: "어깨복합체",
+    q: "팔꿉관절 90도 굽힘 각도의 역학적 특징으로 옳은 것은?",
+    choices: ["어깨관절 외적 토크가 최대", "팔꿉관절 내적 토크가 최대", "위팔두갈래근 길이-장력 관계 최악", "위팔세갈래근 활성 최대"],
+    answer: 1,
+    exp: "팔꿉관절 90° 굽힘 = 팔꿉관절 내적 토크 최대 + 힘팔 가장 길어짐 + 좋은 길이-장력 관계. 어깨관절 90° 굽힘에서 외적 토크 최대."
+  },
+  {
+    cat: "스트레스-스트레인",
+    q: "스트레스-스트레인 곡선에서 항복점(yield point)의 의미는?",
+    choices: ["조직이 완전히 파열되는 지점", "탄성영역과 가소성영역의 경계", "수동장력이 시작되는 지점", "최대 힘이 발생하는 지점"],
+    answer: 1,
+    exp: "항복점 = 탄성영역과 가소성영역의 경계. 항복점 이후로는 스트레스 제거 시 조직이 원래 상태로 돌아갈 수 없음."
+  }
+];
+
+// ─── QUIZ ENGINE ───
+let quizStarted = false;
+let questions = [];
+let currentIndex = 0;
+let score = 0;
+let wrongList = [];
+let answered = false;
+let reviewMode = false;
+
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
+
+function initQuiz(){
+  quizStarted = true;
+  questions = shuffle(allQuestions);
+  currentIndex = 0; score = 0; wrongList = []; reviewMode = false;
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const container = document.getElementById('quiz-container');
+  if(currentIndex >= questions.length){
+    showScore(container); return;
+  }
+  const q = questions[currentIndex];
+  answered = false;
+  const pct = Math.round((currentIndex/questions.length)*100);
+
+  container.innerHTML = `
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+    <div class="progress-label">${currentIndex}/${questions.length} 완료 · 점수 ${score}점</div>
+    <div class="q-card" id="qcard">
+      <div class="q-meta">📂 ${q.cat} · Q${currentIndex+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-choices">
+        ${q.choices.map((c,i)=>`
+          <button class="q-choice" id="ch${i}" onclick="selectAnswer(${i})">${i+1}. ${c}</button>
+        `).join('')}
+      </div>
+      <div class="q-explanation" id="exp">💡 ${q.exp}</div>
+    </div>
+    <div class="q-nav">
+      <button class="btn btn-secondary" onclick="skipQ()">건너뛰기</button>
+    </div>
+  `;
+}
+
+function selectAnswer(chosen){
+  if(answered) return;
+  answered = true;
+  const q = questions[currentIndex];
+  const card = document.getElementById('qcard');
+  document.querySelectorAll('.q-choice').forEach(b=>b.disabled=true);
+
+  if(chosen === q.answer){
+    document.getElementById('ch'+chosen).classList.add('selected-correct');
+    card.classList.add('correct');
+    score++;
+  } else {
+    document.getElementById('ch'+chosen).classList.add('selected-wrong');
+    document.getElementById('ch'+q.answer).classList.add('show-correct');
+    card.classList.add('wrong');
+    wrongList.push({...q, userAnswer: chosen});
+  }
+  document.getElementById('exp').classList.add('show');
+
+  const nav = document.querySelector('.q-nav');
+  nav.innerHTML = `<button class="btn btn-primary" onclick="nextQ()">다음 문제 →</button>`;
+}
+
+function skipQ(){
+  wrongList.push({...questions[currentIndex], userAnswer: -1});
+  currentIndex++;
+  renderQuiz();
+}
+
+function nextQ(){
+  currentIndex++;
+  renderQuiz();
+}
+
+function showScore(container){
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+  let grade = pct>=90?'🏆 최우수':pct>=70?'✅ 우수':pct>=50?'📚 보통':'💪 재도전';
+  container.innerHTML = `
+    <div class="score-board">
+      <div class="score-big">${score}<span style="font-size:24px;color:#64748B;">/${total}</span></div>
+      <div class="score-label">${grade} · 정답률 ${pct}%</div>
+      ${wrongList.length>0?`
+        <div class="wrong-list-wrap">
+          <h4>❌ 틀린 문제 (${wrongList.length}개)</h4>
+          ${wrongList.map((w,i)=>`<p style="margin:4px 0;font-size:12px;text-align:left;">
+            ${i+1}. ${w.q.substring(0,40)}...
+          </p>`).join('')}
+        </div>
+      `:'<div class="box box-green" style="margin:12px 0;">🎉 모두 정답!</div>'}
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;">
+        <button class="btn btn-primary" onclick="initQuiz()">🔄 전체 다시풀기</button>
+        ${wrongList.length>0?`<button class="btn btn-orange" onclick="reviewWrong()">❌ 틀린문제 다시풀기</button>`:''}
+      </div>
+    </div>
+  `;
+}
+
+function reviewWrong(){
+  if(wrongList.length===0) return;
+  questions = shuffle(wrongList);
+  currentIndex=0; score=0; wrongList=[]; reviewMode=true;
+  renderQuiz();
+}
+</script>
+</body>
+</html>
