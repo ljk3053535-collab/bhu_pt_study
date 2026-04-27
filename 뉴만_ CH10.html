@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 10 | 몸통뼈대: 근육과 관절의 상호작용</title>
+<style>
+:root {
+  --bg: #EEF4FF;
+  --bg2: #E0ECFF;
+  --card: #ffffff;
+  --primary: #1E3A5F;
+  --accent: #2563EB;
+  --accent2: #3B82F6;
+  --accent3: #60A5FA;
+  --light: #DBEAFE;
+  --green: #059669;
+  --red: #DC2626;
+  --orange: #D97706;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #BFDBFE;
+  --highlight: #FEF3C7;
+  --clinical: #ECFDF5;
+  --clinical-border: #6EE7B7;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, #2563EB 100%);
+  color: white;
+  padding: 20px 24px 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(30,58,95,0.3);
+}
+.header .chap-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.header h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; }
+.header p { font-size: 0.82rem; opacity: 0.8; }
+
+/* TABS */
+.tab-bar {
+  display: flex;
+  background: white;
+  border-bottom: 2px solid var(--border);
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.tab-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 13px 8px;
+  border: none;
+  background: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--light);
+}
+
+/* CONTENT */
+.tab-content { display: none; padding: 20px 16px 80px; max-width: 900px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+/* ===== TAB 1: 개요 ===== */
+.section-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 24px 0 12px;
+  padding-left: 10px;
+  border-left: 4px solid var(--accent);
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.toc-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.toc-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.1); }
+.toc-card .num { font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+.toc-card .title { font-size: 0.82rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+.toc-card .keywords { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+.keyword-tag {
+  display: inline-block;
+  background: var(--light);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin: 1px;
+}
+
+/* ===== TAB 2: 요약 ===== */
+/* 소단원 목차 바로가기 */
+.summary-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.summary-toc a {
+  background: var(--light);
+  color: var(--accent);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: all 0.18s;
+}
+.summary-toc a:hover { background: var(--accent); color: white; }
+
+.section-card {
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.section-card-header {
+  background: linear-gradient(90deg, var(--primary), #2563EB);
+  color: white;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.section-card-header .arrow { transition: transform 0.2s; font-size: 0.8rem; }
+.section-card-header.open .arrow { transform: rotate(180deg); }
+.section-card-body { padding: 16px; display: none; }
+.section-card-body.open { display: block; }
+
+.subsection { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px dashed var(--border); }
+.subsection:last-child { border-bottom: none; margin-bottom: 0; }
+.subsection h3 {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  background: var(--bg2);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+.subsection p { font-size: 0.82rem; line-height: 1.75; color: var(--text); margin-bottom: 10px; }
+.subsection b { color: var(--primary); }
+
+/* 핵심 수치 표 */
+.key-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin: 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.key-table th {
+  background: var(--primary);
+  color: white;
+  padding: 7px 10px;
+  text-align: left;
+  font-weight: 700;
+}
+.key-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  background: white;
+}
+.key-table tr:nth-child(even) td { background: var(--bg); }
+
+/* 임상 포인트 */
+.clinical-box {
+  background: var(--clinical);
+  border: 1px solid var(--clinical-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+.clinical-box .clinical-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--green);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* 하이라이트 박스 */
+.highlight-box {
+  background: var(--highlight);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+/* 근육 구조 박스 */
+.muscle-box {
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 10px 0;
+}
+.muscle-box .muscle-title { font-size: 0.78rem; font-weight: 800; color: #0369A1; margin-bottom: 8px; }
+.muscle-list { list-style: none; }
+.muscle-list li {
+  font-size: 0.78rem;
+  padding: 4px 0;
+  border-bottom: 1px solid #E0F2FE;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.muscle-list li:last-child { border-bottom: none; }
+.muscle-list li::before { content: "▸"; color: var(--accent2); flex-shrink: 0; margin-top: 1px; }
+
+/* ===== TAB 3: 퀴즈 ===== */
+.quiz-header {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.progress-bar-bg {
+  background: var(--bg2);
+  border-radius: 999px;
+  height: 8px;
+  margin: 8px 0 6px;
+}
+.progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  transition: width 0.4s ease;
+}
+.progress-text { font-size: 0.75rem; color: var(--muted); text-align: right; }
+.score-badge {
+  display: inline-flex;
+  gap: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.score-badge .correct { color: var(--green); }
+.score-badge .wrong { color: var(--red); }
+
+.quiz-card {
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 18px 16px;
+  margin-bottom: 14px;
+}
+.quiz-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.quiz-q {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.choices { display: flex; flex-direction: column; gap: 8px; }
+.choice-btn {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s;
+  line-height: 1.5;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--light); }
+.choice-btn.correct { background: #D1FAE5; border-color: var(--green); color: #065F46; }
+.choice-btn.wrong { background: #FEE2E2; border-color: var(--red); color: #7F1D1D; }
+.choice-btn.reveal-correct { background: #D1FAE5; border-color: var(--green); color: #065F46; }
+
+.explanation {
+  margin-top: 12px;
+  background: var(--highlight);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  display: none;
+}
+.explanation.show { display: block; }
+
+.quiz-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-primary:hover { background: var(--primary); }
+.btn-secondary {
+  background: white;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-secondary:hover { background: var(--light); }
+.btn-orange {
+  background: #F97316;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quiz-result {
+  background: var(--card);
+  border-radius: 14px;
+  border: 2px solid var(--accent);
+  padding: 24px;
+  text-align: center;
+  display: none;
+}
+.quiz-result h2 { font-size: 1.3rem; color: var(--primary); margin-bottom: 8px; }
+.quiz-result .big-score { font-size: 2.5rem; font-weight: 900; color: var(--accent); }
+
+.no-wrong { text-align: center; padding: 20px; color: var(--green); font-weight: 700; font-size: 0.9rem; }
+
+@media (max-width: 480px) {
+  .toc-grid { grid-template-columns: 1fr; }
+  .header h1 { font-size: 1.15rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="chap-badge">CHAPTER 10</div>
+  <h1>몸통뼈대: 근육과 관절의 상호작용</h1>
+  <p>Axial Skeleton: Muscle and Joint Interactions</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ===================== TAB 1: 개요 ===================== -->
+<div id="tab-overview" class="tab-content active">
+  <div class="section-title">📌 주요 토픽 목차</div>
+  <div class="toc-grid">
+    <div class="toc-card">
+      <div class="num">01</div>
+      <div class="title">신경지배</div>
+      <div class="keywords">
+        <span class="keyword-tag">척수신경뿌리</span>
+        <span class="keyword-tag">앞가지</span>
+        <span class="keyword-tag">뒤가지</span>
+        <span class="keyword-tag">신경얼기</span>
+        <span class="keyword-tag">뒤돌이수막신경</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">02</div>
+      <div class="title">내적 토크 생산</div>
+      <div class="keywords">
+        <span class="keyword-tag">운동면</span>
+        <span class="keyword-tag">힘선 방향</span>
+        <span class="keyword-tag">모멘트팔</span>
+        <span class="keyword-tag">한쪽/양쪽 활성화</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">03</div>
+      <div class="title">뒤쪽 몸통 근육 (등쪽)</div>
+      <div class="keywords">
+        <span class="keyword-tag">척주세움근육무리</span>
+        <span class="keyword-tag">가로돌기가시근육무리</span>
+        <span class="keyword-tag">짧은분절근육무리</span>
+        <span class="keyword-tag">뭇갈래근</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">04</div>
+      <div class="title">앞·가쪽 몸통 근육</div>
+      <div class="keywords">
+        <span class="keyword-tag">배곧은근</span>
+        <span class="keyword-tag">배바깥빗근</span>
+        <span class="keyword-tag">배속빗근</span>
+        <span class="keyword-tag">배가로근</span>
+        <span class="keyword-tag">백선</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">05</div>
+      <div class="title">부가적인 근육</div>
+      <div class="keywords">
+        <span class="keyword-tag">엉덩허리근</span>
+        <span class="keyword-tag">큰허리근</span>
+        <span class="keyword-tag">엉덩근</span>
+        <span class="keyword-tag">허리네모근</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">06</div>
+      <div class="title">몸통 안정성</div>
+      <div class="keywords">
+        <span class="keyword-tag">내재성 안정자</span>
+        <span class="keyword-tag">외재성 안정자</span>
+        <span class="keyword-tag">중심안정화</span>
+        <span class="keyword-tag">표 10.4</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">07</div>
+      <div class="title">머리목 영역 근육</div>
+      <div class="keywords">
+        <span class="keyword-tag">목빗근</span>
+        <span class="keyword-tag">목갈비근</span>
+        <span class="keyword-tag">널판근</span>
+        <span class="keyword-tag">뒤통수밑근육들</span>
+        <span class="keyword-tag">목긴근</span>
+      </div>
+    </div>
+    <div class="toc-card">
+      <div class="num">08</div>
+      <div class="title">들어올리기 생체역학</div>
+      <div class="keywords">
+        <span class="keyword-tag">L2/L5-S1 압박력</span>
+        <span class="keyword-tag">발살바조작</span>
+        <span class="keyword-tag">구부리기 vs 쪼그리기</span>
+        <span class="keyword-tag">NIOSH</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">📊 핵심 표 요약</div>
+  <div class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      표 10.1 — 몸통뼈대 근육의 해부학적 구성 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <table class="key-table">
+        <tr><th>해부학적 영역</th><th>묶음</th><th>대표 근육</th></tr>
+        <tr><td>몸통 (뒤쪽)</td><td>얕은층</td><td>등세모근, 넓은등근, 마름근, 어깨올림근, 앞톱니근</td></tr>
+        <tr><td>몸통 (뒤쪽)</td><td>중간층</td><td>위뒤톱니근, 아래뒤톱니근</td></tr>
+        <tr><td>몸통 (뒤쪽)</td><td>깊은층</td><td>척주세움근육무리, 가로돌기가시근육무리, 짧은분절근육무리</td></tr>
+        <tr><td>몸통 (앞·가쪽)</td><td>"배"근육</td><td>배곧은근, 배바깥빗근, 배속빗근, 배가로근</td></tr>
+        <tr><td>몸통 (부가적)</td><td>—</td><td>엉덩허리근(엉덩근+큰허리근), 허리네모근</td></tr>
+        <tr><td>머리목 (앞·가쪽)</td><td>—</td><td>목빗근, 목갈비근, 목긴근, 머리긴근, 앞머리곧은근</td></tr>
+        <tr><td>머리목 (뒤쪽)</td><td>얕은층</td><td>목널판근, 머리널판근</td></tr>
+        <tr><td>머리목 (뒤쪽)</td><td>깊은층</td><td>큰뒤머리곧은근, 작은뒤머리곧은근, 위머리빗근, 아래머리빗근</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      표 10.4 — 몸통 근육의 작용 요약 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <table class="key-table">
+        <tr><th>근육</th><th>굽힘</th><th>폄</th><th>가쪽굽힘</th><th>축돌림</th></tr>
+        <tr><td>등세모근</td><td>–</td><td>XX</td><td>XX</td><td>XX(CL)</td></tr>
+        <tr><td>등가장근</td><td>–</td><td>XXX</td><td>XX</td><td>–</td></tr>
+        <tr><td>뭇갈래근</td><td>–</td><td>XXX</td><td>X</td><td>XX(CL)</td></tr>
+        <tr><td>돌림근</td><td>–</td><td>XX</td><td>X</td><td>XX(CL)</td></tr>
+        <tr><td>배곧은근</td><td>XXX</td><td>–</td><td>XX</td><td>–</td></tr>
+        <tr><td>배바깥빗근</td><td>XXX</td><td>–</td><td>XXX</td><td>XXX(CL)</td></tr>
+        <tr><td>배속빗근</td><td>XXX</td><td>–</td><td>XXX</td><td>XXX(IL)</td></tr>
+        <tr><td>배가로근†</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+        <tr><td>큰허리근</td><td>X</td><td>X</td><td>XX</td><td>–</td></tr>
+        <tr><td>허리네모근</td><td>–</td><td>XX</td><td>XX</td><td>–</td></tr>
+      </table>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:6px;">CL: 반대쪽 돌림, IL: 같은쪽 돌림 / †배가로근은 배복압 증가 및 등허리근막 장력 증가에 주로 작용</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 2: 요약 ===================== -->
+<div id="tab-summary" class="tab-content">
+
+  <!-- 소단원 목차 바로가기 -->
+  <div class="summary-toc">
+    <a href="#s1">신경지배</a>
+    <a href="#s2">내적 토크 생산</a>
+    <a href="#s3">뒤쪽 몸통 근육</a>
+    <a href="#s4">앞·가쪽 몸통 근육</a>
+    <a href="#s5">부가적 근육</a>
+    <a href="#s6">몸통 안정성</a>
+    <a href="#s7">윗몸일으키기</a>
+    <a href="#s8">머리목 근육</a>
+    <a href="#s9">머리목 안정화</a>
+    <a href="#s10">들어올리기 생체역학</a>
+    <a href="#s11">임상 연관성</a>
+  </div>
+
+  <!-- S1 신경지배 -->
+  <div id="s1" class="section-card">
+    <div class="section-card-header open" onclick="toggleCard(this)">
+      🧠 신경지배 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body open">
+      <div class="subsection">
+        <h3>앞가지의 신경지배 — 신경얼기</h3>
+        <p>척수에서 나온 <b>앞가지(ventral ramus)</b>는 신경얼기(plexus)를 형성하거나 개별적으로 명명된 신경으로 이어진다. 주요 신경얼기로는 <b>목신경얼기(C₁–C₄)</b>, <b>팔신경얼기(C₅–T₁)</b>, <b>허리신경얼기(T₁₂–L₄)</b>, <b>엉치신경얼기(L₄–S₄)</b>가 있다.</p>
+        <p>가슴 영역의 <b>갈비사이신경(T₁–T₁₂)</b>은 앞가지가 직접 형성하며, <b>T¹</b>은 첫째갈비사이신경과 팔신경얼기의 일부를 형성한다. <b>T¹²</b>는 마지막 갈비사이신경(갈비밑신경)을 형성한다.</p>
+        <table class="key-table">
+          <tr><th>신경얼기</th><th>분절</th><th>지배 주요 구조</th></tr>
+          <tr><td>목신경얼기</td><td>C₁–C₄</td><td>목 근육, 피부, 가로막(C₃–C₅)</td></tr>
+          <tr><td>팔신경얼기</td><td>C₅–T₁</td><td>팔다리 근육 대부분</td></tr>
+          <tr><td>허리신경얼기</td><td>T₁₂–L₄</td><td>앞·안쪽 다리 근육</td></tr>
+          <tr><td>엉치신경얼기</td><td>L₄–S₄</td><td>뒤쪽 다리 근육(엉덩신경 포함)</td></tr>
+          <tr><td>꼬리신경얼기</td><td>S₅–Co</td><td>샅 부위</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트</div>
+          <b>갈비사이신경(T₁–T₁₂)</b>은 각 갈비사이신경이 공간을 공유하므로, 갈비사이 근육들은 분절적 신경지배를 받는다. <b>뒤돌이수막신경</b>은 각 앞가지에서 분지하여 척추뼈몸사이관절, 인대, 수막에 감각과 교감신경 섬유를 공급 — 척주 통증의 주요 경로.
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>뒤가지의 신경지배</h3>
+        <p><b>뒤가지(dorsal ramus)</b>는 모든 척수신경뿌리에서 분지하며, 뒤쪽 몸통의 근육과 피부를 분절적으로 지배한다. <b>C₁, C₂ 뒤가지</b>를 제외한 나머지는 앞가지보다 비교적 짧다.</p>
+        <p>특수한 뒤가지: <b>C₂의 뒤가지("뒤통수밑신경")</b>는 주로 뒤통수밑근육들을 지배하는 운동신경이며, <b>큰뒤통수신경(C₂)</b>은 뒤통수·두정 영역의 감각을 담당한다.</p>
+        <div class="highlight-box">
+          ⚡ <b>핵심:</b> C₁의 뒤가지 = "뒤통수밑신경". C₂의 큰뒤통수신경 = 두정 감각. 뒤쪽 몸통 깊은층 근육들은 뒤가지에 의해 분절적 신경지배 → 척추세움근육무리 전체가 여러 뒤가지에 의해 신경지배.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 내적 토크 생산 -->
+  <div id="s2" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      ⚙️ 내적 토크 생산 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>내적 토크의 원리</h3>
+        <p>몸통뼈대 내 근육에 의한 <b>내적인 토크(internal torque)</b>는 <b>(1) 주어진 운동면에 평행하게 발생하는 근육의 힘</b> × <b>(2) 근육이 이용하는 내적인 모멘트팔의 길이</b>로 결정된다.</p>
+        <p>근육 힘선의 공간적 방향에 따라 <b>토크의 효율성</b>이 결정된다. 예: 배바깥빗근(힘선 수직에서 약 30°) → 힘의 약 86%가 수직 성분(가쪽굽힘/굽힘 토크), 약 50%가 수평 성분(축돌림 토크).</p>
+        <table class="key-table">
+          <tr><th>운동면</th><th>토크 종류</th><th>대표 근육</th></tr>
+          <tr><td>시상면</td><td>굽힘/폄 토크</td><td>배곧은근(굽힘), 등가장근(폄)</td></tr>
+          <tr><td>이마면</td><td>가쪽굽힘 토크</td><td>허리네모근, 엉덩갈비근</td></tr>
+          <tr><td>수평면</td><td>축돌림 토크</td><td>배바깥빗근(CL), 배속빗근(IL)</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트</div>
+          <b>한쪽활성화(unilateral activation)</b>는 가쪽굽힘 + 반대쪽 돌림(CL) 또는 같은쪽 돌림(IL) 토크를 생산. <b>양쪽활성화(bilateral activation)</b>는 가쪽굽힘 성분이 서로 상쇄 → 순수 굽힘/폄 토크만 남는다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 뒤쪽 몸통 근육 -->
+  <div id="s3" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🏋️ 뒤쪽 몸통 근육 ("등쪽" 근육) <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>척주세움근육무리 (Erector Spinae)</h3>
+        <p>가시돌기에서 대략 한 손 넓이 이내, 척주 양쪽에서 주행하는 <b>넓지만 구분이 잘 안 되는 근육무리</b>. 등허리막 뒤층의 깊쪽(9장 참조) 및 뒤쪽 몸통의 중간층·얕은층 깊은 쪽에서 기원한다.</p>
+        <table class="key-table">
+          <tr><th>구성</th><th>세부 근육</th><th>특징</th></tr>
+          <tr><td>가시근(Spinalis)</td><td>등가시근, 목가시근, 머리가시근</td><td>가시돌기 사이 주행; 목가시근은 흔히 머리반가시근과 융합</td></tr>
+          <tr><td>가장긴근(Longissimus)</td><td>등가장긴근, 목가장긴근, 머리가장긴근</td><td>가장 크고 발달됨; 온힘줄에서 나와 머리쪽으로 부채형</td></tr>
+          <tr><td>엉덩갈비근(Iliocostalis)</td><td>허리엉덩갈비근, 등엉덩갈비근, 목엉덩갈비근</td><td>가장 가쪽; 갈비뼈 각도로 부착 → 가쪽굽힘에 가장 효율적</td></tr>
+        </table>
+        <div class="highlight-box">
+          ⚡ 척주세움근육무리의 <b>공통 온힘줄(common tendon)</b>: 엉치뼈 척추결절, 아래쪽 엉덩뼈의 가시돌기들과 가시칸인대, 엉치결절인대, 엉치엉덩관절에 부착 → 매우 넓은 지레작용 기반 제공
+        </div>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트</div>
+          척주세움근육은 골반을 <b>앞기울임</b> 시킬 수 있어 허리뼈 앞굽음을 증가시킬 수 있다. 골반이 잘 고정되면, 허리·등 부위의 <b>가쪽에 위치한 엉덩갈비근</b>이 가쪽굽힘에 가장 효율적인 근육이 된다.
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>가로돌기가시근육무리 (Transversospinal Group)</h3>
+        <p>가시돌기에서 더 깊은 곳에 위치. <b>반가시근(Semispinalis)</b>, <b>뭇갈래근(Multifidus)</b>, <b>돌림근(Rotatores)</b>으로 구성.</p>
+        <table class="key-table">
+          <tr><th>근육</th><th>뻗침 범위</th><th>주요 특징</th></tr>
+          <tr><td>반가시근</td><td>6~8개 이음부</td><td>등반가시근: T6–T10에서 C4까지; 목반가시근이 가장 큼; 목뼈의 뒤쪽면 가로지름 → 목 전체 가쪽굽힘 능력 우수</td></tr>
+          <tr><td>뭇갈래근</td><td>2~4개 이음부</td><td>가장 두껍고 잘 발달; 허리 영역에서 가장 발달 (L5 가시돌기와 가로돌기 사이 공간 채움); 척추 분절 안정화에 매우 중요</td></tr>
+          <tr><td>돌림근</td><td>1~2개 이음부</td><td>짧은돌림근(1개), 긴돌림근(2개); 등 영역에서 가장 발달; 근방추 밀도가 높아 감각수용체로서 역할</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 뭇갈래근</div>
+          허리 뭇갈래근은 <b>허리 통증 환자에서 가장 먼저 위축</b>되는 근육. 지속적 수축을 잘 하지 못하며, 8주간의 훈련으로 위축을 개선할 수 있다. <b>L4 수준에서 전체 척추 몸통 근육의 1/3</b>을 차지하는 단면적을 가짐 → 허리 분절 안정화의 핵심.
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>짧은분절근육무리 (Short Segmental Group)</h3>
+        <p><b>가시사이근(Interspinalis)</b>과 <b>가로돌기사이근(Intertransversarius)</b>으로 구성. 한 쌍의 가시사이근들이 양쪽에 위치하며, 서로 인접한 가시돌기 사이에 섞여 있다. 비교적 <b>지레작용이 좋고</b>, 최적의 근섬유 방향을 갖고 있으나 <b>비교적 작은 크기와 낮은 힘</b>으로 인해 토크 생산 능력은 작다.</p>
+        <div class="highlight-box">
+          ⚡ 짧은분절근육무리의 가장 중요한 기능: <b>근방추(muscle spindle) 밀도가 비교적 높아</b> → 미세한 운동조절에 이상적이며, 특히 목 영역에서 <b>감각수용체</b>로서 신경계통에 풍부한 정보를 전달하는 역할.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 앞·가쪽 몸통 근육 -->
+  <div id="s4" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      💪 앞·가쪽 몸통 근육 ("배" 근육) <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>배곧은근집과 백선의 형성</h3>
+        <p>배바깥빗근, 배속빗근, 배가로근의 결합조직집이 앞배곧은근집과 뒤배곧은근집을 형성하고, 이들이 수직으로 배열된 백선을 형성한다. <b>백선(Linea alba)</b>은 두덩결합과 두덩뼈능선 그리고 칼돌기 사이에서 세로로 이어진다. <b>배속빗근이 가장 큰 생리학적 단면적</b>을 가지며, 가장 큰 굽힘 토크 생산 잠재력을 가진다.</p>
+        <table class="key-table">
+          <tr><th>근육</th><th>가쪽 부착부위</th><th>중간선 부착부위</th><th>주요 작용</th></tr>
+          <tr><td>배바깥빗근</td><td>넷째~열두째갈비뼈 가쪽면</td><td>엉덩뼈능선, 백선, 대쪽 배곧은근집</td><td>양쪽: 굽힘+골반뒤기울임 / 한쪽: 가쪽굽힘+반대쪽 돌림</td></tr>
+          <tr><td>배속빗근</td><td>엉덩뼈능선, 살고랑인대, 등허리근막</td><td>아홉~열두째갈비뼈, 백선, 반대쪽 배곧은근집</td><td>양쪽: 굽힘+등허리근막 장력 증가 / 한쪽: 가쪽굽힘+같은쪽 돌림</td></tr>
+          <tr><td>배가로근</td><td>엉덩뼈능선, 등허리근막, 여섯~열두째갈비뼈연골</td><td>백선과 반대쪽 배곧은근집</td><td>배복압 증가, 배안 일박, 등허리근막 장력 증가</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 배가로근 (코르셋 근육)</div>
+          배가로근은 가장 깊은 층으로 주로 가로방향에서 작용하여 <b>배압(intra-abdominal pressure) 증가</b>와 <b>등허리근막 장력 증가</b>를 통해 허리골반 영역의 안정화에 기여. 허리 통증 환자에서 선행 활성화가 지연됨(feedforward 손상). "draw-in" 기법으로 선택적 활성화 훈련 가능.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 부가적 근육 -->
+  <div id="s5" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🦴 부가적 근육: 엉덩허리근 & 허리네모근 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>엉덩허리근 (Iliopsoas)</h3>
+        <p><b>엉덩근(Iliacus)</b>과 <b>큰허리근(Psoas major)</b>으로 구성되어 있으며, 넙다리신경(대퇴신경, femoral nerve)의 지배를 받는다.</p>
+        <div class="muscle-box">
+          <div class="muscle-title">엉덩허리근 작용</div>
+          <ul class="muscle-list">
+            <li><b>엉덩근:</b> 골반에 대한 넙다리뼈의 우세한 엉덩관절 굽힘근 (고정된 골반에서)</li>
+            <li><b>큰허리근:</b> 골반에 대한 넙다리뼈 + 넙다리뼈에 대한 골반의 우세한 엉덩관절 굽힘근; 허리뼈 영역의 가쪽굽힘근</li>
+            <li>큰허리근의 굽힘 모멘트팔은 L5-S1에서 약 2 cm → 비교적 짧음</li>
+            <li>허리뼈 앞굽음을 간접적으로 증가시킬 수 있음 (골반 앞기울임 통해)</li>
+          </ul>
+        </div>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 큰허리근</div>
+          L1 신경학적 수준 이하 하반신마비에서 "엉덩이 올림근(hip hiker)" 역할. <b>L5-S1 이음부를 가로지를 때 굽힘 모멘트팔이 거의 0에 가까워짐</b> → 허리뼈 앞굽음 증가 시 큰허리근의 굽힘 능력 감소, 오히려 <b>허리뼈 압박력 생성근</b>으로 전환.
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>허리네모근 (Quadratus Lumborum)</h3>
+        <p>뒤 배벽의 근육으로 엉덩뼈능선에서 열두째갈비뼈에 몸쪽 부착부위를 갖고, L1–L4 가로돌기의 끝지점과 열두째갈비뼈에 몸통 부착부위를 갖는다. T¹²–L³ 척수신경의 앞가지로부터 신경지배.</p>
+        <table class="key-table">
+          <tr><th>양쪽 작용</th><th>한쪽 작용</th></tr>
+          <tr><td>허리뼈 영역의 폄<br>허리엉치이음부를 포함한 허리뼈의 수직 안정화</td><td>허리뼈 영역의 가쪽굽힘<br>한쪽 골반의 올림("엉덩이 올림근")</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트</div>
+          L¹ 신경학적 수준이나 그 이하에서 하반신마비를 가진 사람이 목발을 사용하거나 긴기간 동안의 흔들기(swing phase) 동안 발이 지면에 걸리지 않도록 다리를 들어 올릴 수 있는 것은 허리네모근에 의한 골반 한쪽 올림(들기)에 의해서다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 몸통 안정성 -->
+  <div id="s6" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🛡️ 몸통 안정성 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>내재성 근육 안정자 (Intrinsic Muscular Stabilizers)</h3>
+        <p>척추 영역 내에 일차적으로 부착되는 비교적 길이가 짧고, 깊은 쪽에 위치하며, 그리고 고도로 분절화된 근육들.</p>
+        <div class="muscle-box">
+          <div class="muscle-title">내재성 근육 안정자 구성</div>
+          <ul class="muscle-list">
+            <li>가로돌기가시근육무리 (반가시근, 뭇갈래근, 돌림근)</li>
+            <li>짧은분절근육무리 (가시사이근, 가로돌기사이근)</li>
+          </ul>
+        </div>
+        <p>비교적 높은 <b>근방추(muscle spindles) 밀도</b> → 미세-조율(fine-tuning) 능력 강화. 비교적 적은 수의 척추뼈사이이음부들 사이에 정밀한 정렬과 뻣뻣함을 동시에 조절 → 척추를 안정화.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>외재성 근육 안정자 (Extrinsic Muscular Stabilizers)</h3>
+        <p>머리뼈, 골반, 갈비뼈, 그리고 다리와 같이 척주의 영역 밖에 있는 구조들에 부분적으로 또는 전체적으로 부착되는 비교적 긴 근육들.</p>
+        <div class="muscle-box">
+          <div class="muscle-title">주요 외재성 안정자</div>
+          <ul class="muscle-list">
+            <li>배근육 (배바깥빗근, 배속빗근, 배가로근, 배곧은근)</li>
+            <li>척주세움근육</li>
+            <li>허리네모근</li>
+            <li>큰허리근</li>
+            <li>허리엉치 영역과 다리를 연결하는 엉덩관절 근육 (큰볼기근, 뒤넙다리근)</li>
+          </ul>
+        </div>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — "중심안정화"</div>
+          근육에 근거한 몸통 안정성 = <b>"중심(core) 안정성"</b>. 이는 예측하기 어렵고 변화하는 환경적 상황에 대해 발생하며, 몸통뼈대 내 개별 척추분절들도 안정화시킬 수 있다. 이상적으로, 근육에 의한 안정된 "중심"은 원하는 상태를 제공하고, 척추뼈사이이음부들 사이의 과도하고 스트레스를 줄이는 미세운동들을 제한한다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 윗몸일으키기 -->
+  <div id="s7" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🏃 표준 윗몸일으키기 역학 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>2단계 움직임 분석</h3>
+        <p>완전한 윗몸일으키기는 2개의 단계로 나뉜다: <b>① 몸통 굽힘 단계</b> (약 0~70~90°) → <b>② 엉덩관절 굽힘 단계</b>.</p>
+        <table class="key-table">
+          <tr><th>단계</th><th>주요 근육</th><th>고정 지점</th></tr>
+          <tr><td>① 몸통 굽힘</td><td>배근육(특히 배곧은근), 넓은등근, 큰가슴근</td><td>골반이 비교적 고정</td></tr>
+          <tr><td>② 엉덩관절 굽힘</td><td>엉덩근, 넙다리곧은근, 엉덩근, 넙다리빗근</td><td>무릎이 고정되어 있을 때 골반·몸통을 앞으로 당김</td></tr>
+        </table>
+        <div class="highlight-box">
+          ⚡ 배근육이 약화된 사람: 엉덩관절 굽힘근이 우세한 수축을 시작 → <b>허리뼈의 앞굽음을 과도하게 유발</b>하고 "초기(early)" 엉덩관절 굽힘이 나타남.
+        </div>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 컬업(Curl-up) vs 완전 윗몸일으키기</div>
+          <b>컬-업 운동</b>은 배곧은근 강화에 인기 있지만, 배속빗근과 배가로근에 대한 요구가 <b>완전 윗몸일으키기보다 비교적 더 크다</b>. 완전 윗몸일으키기는 허리뼈에 더 큰 압박력을 만들어 낼 수 있다. 허리 병력이 있는 사람들에게 적합한 운동 고려 필요.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8 머리목 근육 -->
+  <div id="s8" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🦴 머리목 영역 근육 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>앞·가쪽 머리목 영역의 근육</h3>
+        <table class="key-table">
+          <tr><th>근육</th><th>주요 부착</th><th>주요 작용</th></tr>
+          <tr><td>목빗근(SCM)</td><td>복장뼈+빗장뼈 → 꼭지돌기+위목덜미선</td><td>한쪽: 가쪽굽힘+반대쪽 돌림 / 양쪽: 굽힘(목이 안정화시)+폄(목이 굽힘 위치시)</td></tr>
+          <tr><td>앞목갈비근(C₃–C₆)</td><td>가로돌기 앞결절 → 첫째갈비뼈</td><td>한쪽: 목 가쪽굽힘(가장 큰 모멘트팔) / 양쪽: 목 굽힘; 들숨시 첫갈비뼈 올림</td></tr>
+          <tr><td>중간목갈비근(C₃–C₇)</td><td>가로돌기 뒤결절 → 첫째갈비뼈</td><td>앞목갈비근과 유사; 척수신경 통과 통로 형성</td></tr>
+          <tr><td>뒤목갈비근(C₅–C₇)</td><td>뒤쪽 가로돌기 → 둘째갈비뼈</td><td>목 가쪽굽힘 보조; 들숨시 둘째갈비뼈 올림</td></tr>
+          <tr><td>목긴근(C₂–C₇+T₁–T₃)</td><td>앞쪽 척추뼈에 복잡한 부착</td><td>목 굽힘과 수직 안정화의 일차적 역할</td></tr>
+          <tr><td>머리긴근(C₁–C₆)</td><td>목뼈 가로돌기 앞결절 → 뒤통수뼈 기저부</td><td>위쪽 목 영역 굽힘+안정화; 동적인 앞세로인대와 유사한 기능</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 목갈비근</div>
+          목갈비근 비대, 연축, 또는 과도한 뻣뻣함은 팔신경얼기나 빗장아래혈관을 압박할 수 있으며, 팔에서의 운동이나 팔저림을 유발할 수 있다 (흉곽출구증후군 유사 증상 가능).
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>뒤쪽 머리목 영역의 근육</h3>
+        <div class="muscle-box">
+          <div class="muscle-title">널판근 (Splenius) — 붕대 모양</div>
+          <ul class="muscle-list">
+            <li><b>목널판근(Splenius cervicis):</b> 가시사이인대와 T₃–T₆ 가시돌기 → C₁–C₃ 가로돌기; 한쪽 수축 시 목 가쪽굽힘+같은쪽 돌림(가장 강한 축돌림근)</li>
+            <li><b>머리널판근(Splenius capitis):</b> 목뼈 이래쪽 가시돌기 → 꼭지돌기+위목덜미선의 가쪽 1/2; 양쪽 수축 시 목 전체 폄 유발</li>
+          </ul>
+        </div>
+        <div class="muscle-box">
+          <div class="muscle-title">뒤통수밑근육들 (Suboccipital Muscles) — 4쌍의 소근육</div>
+          <ul class="muscle-list">
+            <li><b>앞머리곧은근:</b> 고리뼈(C₁) → 뒤통수뼈; 굽힘</li>
+            <li><b>가쪽머리곧은근:</b> 고리뼈 가로돌기 → 뒤통수뼈; 가쪽굽힘</li>
+            <li><b>큰뒤머리곧은근:</b> 중쇠뼈(C₂) 가시돌기 → 뒤통수뼈; 폄+같은쪽 돌림</li>
+            <li><b>작은뒤머리곧은근:</b> 고리뼈 뒤결절 → 뒤통수뼈; 폄; 고리뒤통수 관절의 유일한 수준에서의 척추 앞면 부착 근육</li>
+            <li><b>위머리빗근:</b> 고리뼈 가로돌기 → 뒤통수뼈; 폄+가쪽굽힘</li>
+            <li><b>아래머리빗근:</b> 중쇠뼈 가시돌기 → 고리뼈 가로돌기; 머리 같은쪽 돌림 (XXX, 고리중쇠관절 돌림의 핵심 근육)</li>
+          </ul>
+        </div>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 뒤통수밑근육들</div>
+          뒤통수밑근육들은 높은 <b>근방추 밀도</b>로 머리 위치와 움직임 속도에 대한 신경 정보를 신경계통에 풍부하게 전달. 이 근육들의 <b>유발점(trigger point)</b>이 활성화되면 두통·두정 영역의 통증을 유발할 수 있다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9 머리목 안정화 -->
+  <div id="s9" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🔧 머리목 영역의 안정화 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>머리목 영역의 정렬 유지</h3>
+        <p>머리와 목을 가로지르는 대부분의 근육들은 두꺼운 목의 뭇갈래근과 같이 비교적 짧고 분절화된 근육들에 의해 지원된다. 강하게 활성될 때, 이 근육들은 목에 있는 장기와 혈관, 척추원반, 돌기관절, 그리고 신경조직들을 보호하는 역할을 한다.</p>
+        <div class="highlight-box">
+          ⚡ <b>버팀줄로서 작용하는 4개의 근육</b> (그림 10.30): 어깨올림근, 머리반가시근, 큰뒤머리곧은근, 그리고 목빗근 — 이상적인 앞-뒤 정렬을 유지시키기 위해 버팀줄로서 작용.
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>만성 머리앞쪽자세 (Forward Head Posture)와 근육 불균형</h3>
+        <p>만성적인 <b>머리앞쪽자세(forward head posture)</b>는 뒤쪽 목빗근과 목갈비근 같은 근육들을 쉽게 활성화되는 경향이 있으며 상대적으로 탈활성화(deactivation)가 쉽지 않게 되는 <b>근육 불균형</b>을 초래할 수 있다.</p>
+        <table class="key-table">
+          <tr><th>과활성화/단축 근육</th><th>약화/신장된 근육</th></tr>
+          <tr><td>뒤쪽 목빗근(suboccipital)<br>목갈비근<br>목빗근</td><td>깊은 앞쪽 굽힘근(목긴근, 머리긴근)<br>뒤통수밑근육들(약화)</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트</div>
+          만성적인 머리앞쪽자세를 치료하는 데 있어 중요한 것은 적절한 머리목 자세를 회복하는 것이며, 이러한 치료로는 <b>올바른 자세인식, 선택적인 근육 활동, 인간공학적인 작업환경</b>, 그리고 특정 도수치료 기법이 포함된다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S10 들어올리기 생체역학 -->
+  <div id="s10" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      📐 들어올리기 생체역학 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>L2 척추뼈에 가해지는 힘 추정 (예제)</h3>
+        <p>시상면에서 부하를 들어 올리는 동안 <b>L2 척추뼈에 가해지는 압박성 반작용력(RF)</b>을 추정하기 위해 2단계 과정을 거친다.</p>
+        <table class="key-table">
+          <tr><th>변수</th><th>값</th></tr>
+          <tr><td>내적인 모멘트팔(D₁)</td><td>5 cm</td></tr>
+          <tr><td>전체 체중</td><td>약 800 N (약 180 lb)</td></tr>
+          <tr><td>L2 이상의 체중(BW) = 전체의 65%</td><td>약 520 N</td></tr>
+          <tr><td>BW의 외적인 모멘트팔(D₂)</td><td>13 cm</td></tr>
+          <tr><td>외적인 부하(EL) = 전체의 25%</td><td>약 200 N (약 45 lb)</td></tr>
+          <tr><td>EL의 외적인 모멘트팔(D₃)</td><td>29 cm</td></tr>
+        </table>
+        <div class="highlight-box">
+          <b>단계 1:</b> MF × 0.05m = (520×0.13) + (200×0.29) = 67.6+58 = 125.6 Nm → <b>MF = 2512 N (약 565 lb)</b><br>
+          <b>단계 2:</b> RF = MF + BW + EL = 2512 + 520 + 200 = <b>3232 N (726 lb)</b> ← L2에 가해지는 압박력
+        </div>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트 — 허리 손상 예방</div>
+          <b>NIOSH</b>는 L5-S1 이음부에서의 압박력 안전 한계를 <b>3400 N (764 lb)</b>로 제시. 체중의 25% (약 45 lb)인 외적인 부하를 들어 올리는 동안 L2에서 발생되는 압박력은 이미 <b>4500 N</b>으로 NIOSH 한계를 초과. 들어올리기 속도를 감소시키고, 외적인 모멘트팔 길이를 감소시키고, 내적인 모멘트팔 길이를 증가시키는 것이 중요.
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>구부리고 들어올리기 vs 쪼그려 앉아 들어올리기</h3>
+        <table class="key-table">
+          <tr><th>비교 항목</th><th>구부리고 들어올리기(Stoop)</th><th>쪼그려 앉아 들어올리기(Squat)</th></tr>
+          <tr><td>허리 폄 토크</td><td>더 큰 허리 폄 토크 요구</td><td>허리 폄 토크 감소</td></tr>
+          <tr><td>무릎 부하</td><td>무릎 부하 감소</td><td>무릎(경골넙다리관절, 무릎넙다리관절) 부하 증가</td></tr>
+          <tr><td>효율성</td><td>더 낮은 전체 일(work)</td><td>더 높은 전체 일(work) — 체질량의 더 많은 부분이 이동</td></tr>
+          <tr><td>자연스러움</td><td>부하 특성에 따라 더 자연스럽게 선택되기도 함</td><td>인간공학적으로 자주 권장되나 항상 더 안전하지는 않음</td></tr>
+        </table>
+        <div class="clinical-box">
+          <div class="clinical-title">🏥 임상 포인트</div>
+          쪼그려 앉아 들어올리기가 항상 허리에 더 안전하다는 확실한 임상적 증거는 거의 없다. 무릎 통증이나 관절염이 있는 사람은 구부리고 들기가 더 적합할 수 있다. <b>들어올리기 속도 감소</b>와 <b>적절한 허리뼈 중립위치 유지</b>가 가장 중요한 안전 요소.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S11 임상 연관성 -->
+  <div id="s11" class="section-card">
+    <div class="section-card-header" onclick="toggleCard(this)">
+      🏥 임상 연관성 요약 <span class="arrow">▼</span>
+    </div>
+    <div class="section-card-body">
+      <div class="subsection">
+        <h3>허리골반 안정화를 위한 치료적 운동 핵심</h3>
+        <div class="clinical-box">
+          <div class="clinical-title">📋 임상 연관성 10.2 요약</div>
+          <b>① 내재성 안정자 선택적 활성화:</b> 허리 뭇갈래근, 배가로근, 그리고 배속빗근을 우선적으로 활성화. "draw-in" 또는 "복부 당기기" 기법 활용.<br><br>
+          <b>② 협응된 저항운동:</b> 여러 몸통 근육들을 동시에 자극하는 저항운동. "교각(bridge)" 운동은 척주세움근육, 큰볼기근, 뒤넙다리근의 EMG 수준을 각각 최대 수의적 등척성 수축(MVIC)의 약 35~50%로 증가.<br><br>
+          <b>③ 플랭크(plank) 운동:</b> 배가로근, 배곧은근, 배바깥빗근에서 각각 MVIC의 약 30%, 35%, 60%의 활성화.<br><br>
+          <b>④ 전신 자세조절:</b> "중심인지(core awareness)"를 임상적으로 강조.
+        </div>
+      </div>
+      <div class="subsection">
+        <h3>기운목과 잠자리 위치</h3>
+        <p><b>기운목(torticollis)</b>은 일반적으로 목빗근의 단성적인 한쪽 짧아짐의 병적 상황을 말한다. <b>쌍둥이임신(연루) 또는 자궁내 위치</b>, 난산, 엉덩이분만(breech delivery) 등이 위험 인자.</p>
+        <p><b>"등대 잠자기(back-to-sleep)"</b> 캠페인으로 SIDS 발생이 1992~1996년 66% 감소하였지만, 이차적인 <b>자세성 쌍둥이머리증(positional plagiocephaly)</b> 발생이 증가. 2011년 "Safe-to-Sleep"으로 업데이트 — 엎드린 놀기(tummy time) 권장.
+        </p>
+      </div>
+      <div class="subsection">
+        <h3>연부조직 채찍질손상 (Whiplash)</h3>
+        <p>목 뒤다굽음(hyperflexion)과 연관된 채찍질손상보다 <b>목 뒤굽음(hyperextension)과 연관된 더 큰 연부조직 손상</b>이 발생. 자동차 충돌 시 뒤굽음 단계에서 중간과 아래쪽 앞세로인대(anterior longitudinal ligament)가 특히 손상되기 쉽다. <b>날개인대(alar ligament)</b>는 목이 가쪽으로 돌림될 때 특히 손상 위험.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== TAB 3: 퀴즈 ===================== -->
+<div id="tab-quiz" class="tab-content">
+  <div class="quiz-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:0.82rem;font-weight:700;color:var(--primary);">Chapter 10 핵심 퀴즈</span>
+      <span class="score-badge">
+        <span class="correct" id="score-correct">✅ 0</span>
+        <span class="wrong" id="score-wrong">❌ 0</span>
+      </span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="progress-text" id="progress-text">0 / 15 문제</div>
+  </div>
+
+  <div id="quiz-container"></div>
+  <div id="quiz-result" class="quiz-result">
+    <h2>🎉 퀴즈 완료!</h2>
+    <div class="big-score" id="result-score"></div>
+    <div style="font-size:0.85rem;color:var(--muted);margin:10px 0;" id="result-detail"></div>
+    <div class="quiz-actions" style="justify-content:center;margin-top:16px;">
+      <button class="btn-primary" onclick="restartQuiz()">🔄 처음부터 다시</button>
+      <button class="btn-orange" id="retry-wrong-btn" onclick="retryWrong()" style="display:none;">❌ 틀린 문제만 다시</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== CARD TOGGLE =====
+function toggleCard(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ===== QUIZ DATA =====
+const allQuestions = [
+  {
+    q: "척수신경뿌리에서 앞가지(ventral ramus)의 주요 기능은?",
+    choices: ["뒤쪽 몸통과 목 근육을 운동 지배", "앞-가쪽 몸통과 목, 팔다리 관절, 그리고 피부를 지배하는 신경들을 형성", "수막과 척추뼈몸사이관절에만 감각을 공급", "오직 교감신경계통에만 섬유를 제공"],
+    answer: 1,
+    exp: "앞가지는 일차적으로 앞-가쪽 몸통과 목, 팔다리의 관절, 그리고 피부를 지배하는 신경들을 형성한다. 뒤쪽을 지배하는 것은 뒤가지이다."
+  },
+  {
+    q: "C₁의 뒤가지는 다음 중 어떤 신경으로 알려져 있는가?",
+    choices: ["큰뒤통수신경", "뒤통수밑신경", "갈비사이신경", "뒤돌이수막신경"],
+    answer: 1,
+    exp: "C₁의 뒤가지는 '뒤통수밑신경(suboccipital nerve)'으로 불리며, 주로 뒤통수밑근육들을 지배하는 운동신경이다. C₂의 큰뒤통수신경과 구별해야 한다."
+  },
+  {
+    q: "척주세움근육무리(erector spinae)에서 가장 가쪽에 위치하며, 가쪽굽힘에 가장 효율적인 근육은?",
+    choices: ["가시근(Spinalis)", "가장긴근(Longissimus)", "엉덩갈비근(Iliocostalis)", "뭇갈래근(Multifidus)"],
+    answer: 2,
+    exp: "엉덩갈비근은 척주세움근육무리 중 가장 가쪽에 위치하며, 갈비뼈 각도로 부착하기 때문에 가쪽굽힘을 위한 가장 효율적인 지레작용을 갖는다."
+  },
+  {
+    q: "뭇갈래근(Multifidus)에 관한 설명으로 옳은 것은?",
+    choices: ["6~8개의 척추뼈사이이음부를 가로지른다", "허리 영역에서 가장 잘 발달되어 있으며, L4 수준에서 전체 허리 척추 몸통 근육의 약 1/3을 차지한다", "단 하나의 뒤가지에 의해서만 신경지배 받는다", "주로 목 영역에서 기능한다"],
+    answer: 1,
+    exp: "뭇갈래근은 허리 영역에서 가장 잘 발달되어 있으며, L4 수준에서 척추 전체 몸통 근육의 약 1/3을 차지한다. 2~4개의 척추뼈사이이음부를 가로지른다."
+  },
+  {
+    q: "배가로근(transversus abdominis)의 주된 기능적 역할로 가장 적절한 것은?",
+    choices: ["강력한 몸통 굽힘 토크 생산", "배복압 증가와 등허리근막 장력 증가를 통한 허리골반 안정화", "가쪽굽힘과 반대쪽 돌림의 주동근", "들숨 시 갈비뼈를 올림"],
+    answer: 1,
+    exp: "배가로근은 '코르셋 근육'으로도 알려져 있으며, 주로 가로방향 섬유 배열로 배복압 증가와 등허리근막 장력 증가를 통해 허리골반 안정화에 기여한다."
+  },
+  {
+    q: "큰허리근(Psoas major)이 L5-S1 이음부에서 역할이 변화하는 이유는?",
+    choices: ["L5-S1에서 큰허리근의 단면적이 증가하기 때문", "L5-S1에서 굽힘 모멘트팔이 거의 0에 가까워져 허리뼈 압박력을 생성하는 근육으로 전환되기 때문", "L5-S1에서 큰허리근이 사라지기 때문", "큰허리근이 L5-S1에서 척주세움근육으로 변환되기 때문"],
+    answer: 1,
+    exp: "큰허리근은 L5-S1 이음부를 가로지를 때 굽힘 모멘트팔이 거의 0에 가까워진다. 허리뼈 앞굽음이 증가하면 실제로 허리 척추뼈에 대한 압박력을 발생시키는 방향으로 전환된다."
+  },
+  {
+    q: "배바깥빗근(obliquus externus abdominis)의 힘선이 수직으로부터 약 30도 방향일 때, 근육 최대 힘의 몇 %가 수직의 힘 성분(가쪽굽힘/굽힘 토크)에 기여하는가?",
+    choices: ["약 50%", "약 60%", "약 86%", "약 100%"],
+    answer: 2,
+    exp: "힘선이 수직에서 30°방향일 때, cos(30°) ≈ 0.866 → 약 86%가 수직 힘 성분(가쪽굽힘/굽힘 토크)에 기여하며, sin(30°) ≈ 0.5 → 약 50%가 수평 성분(축돌림 토크)에 기여한다."
+  },
+  {
+    q: "완전한 윗몸일으키기(full sit-up)에서 두 번째 단계인 엉덩관절 굽힘 단계에서 가장 중요하게 활성화되는 근육은?",
+    choices: ["배곧은근", "배바깥빗근", "넙다리곧은근과 엉덩근", "넓은등근"],
+    answer: 2,
+    exp: "윗몸일으키기의 엉덩관절 굽힘 단계에서는 엉덩근(iliacus)과 넙다리곧은근(rectus femoris)이 활성화되어 고정된 다리뼈에 대해 골반과 몸통을 앞으로 당긴다."
+  },
+  {
+    q: "목빗근(sternocleidomastoid)이 한쪽으로 수축할 때의 주요 작용은?",
+    choices: ["같은쪽 가쪽굽힘+같은쪽 돌림", "같은쪽 가쪽굽힘+반대쪽 돌림", "반대쪽 가쪽굽힘+반대쪽 돌림", "양쪽 목 굽힘만 유발"],
+    answer: 1,
+    exp: "목빗근이 한쪽으로 수축하면 머리 영역의 우세한 가쪽굽힘근이 된다. 한쪽 목빗근은 머리뼈 특히 관자뼈의 꼭지돌기와 위목덜미선의 가쪽 절반 사이를 가로지르는 사선으로 주행하기 때문에 같은쪽 가쪽굽힘+반대쪽 돌림 토크를 생산한다."
+  },
+  {
+    q: "뒤통수밑근육들 중 고리중쇠관절(atlantoaxial joint)에서 머리 같은쪽 돌림에 가장 중요한 역할을 하는 근육은?",
+    choices: ["큰뒤머리곧은근", "작은뒤머리곧은근", "아래머리빗근", "위머리빗근"],
+    answer: 2,
+    exp: "아래머리빗근은 중쇠뼈(C₂) 가시돌기에서 고리뼈(C₁) 가로돌기로 주행하며, 고리중쇠관절에서 머리 같은쪽 돌림에 XXX(최대) 등급으로 기여하는 가장 중요한 근육이다."
+  },
+  {
+    q: "NIOSH가 제시한 L5-S1 이음부에서의 압박력 안전 한계는?",
+    choices: ["2000 N (450 lb)", "3400 N (764 lb)", "5000 N (1125 lb)", "6400 N (1439 lb)"],
+    answer: 1,
+    exp: "NIOSH(미국국립산업안전보건연구원)는 L5-S1 이음부에서의 압박력 안전 한계를 3400 N (764 lb)으로 제시하고 있다. 6400 N은 허리의 최대 부하-전달 능력을 추정한 수치이다."
+  },
+  {
+    q: "몸통의 내재성 근육 안정자(intrinsic muscular stabilizers)에 해당하는 것은?",
+    choices: ["배바깥빗근과 배속빗근", "가로돌기가시근육무리와 짧은분절근육무리", "큰허리근과 허리네모근", "등세모근과 넓은등근"],
+    answer: 1,
+    exp: "내재성 근육 안정자는 척추 영역 내에 일차적으로 부착되며 비교적 짧은 분절화된 근육들로, 가로돌기가시근육무리(반가시근, 뭇갈래근, 돌림근)와 짧은분절근육무리(가시사이근, 가로돌기사이근)가 포함된다."
+  },
+  {
+    q: "들어올리기 동안 허리 폄 근육에 요구되는 힘의 양을 줄이기 위한 방법으로 옳지 않은 것은?",
+    choices: ["들어 올리는 속도를 감소시킨다", "외적인 부하의 크기를 감소시킨다", "외적인 모멘트팔의 길이를 증가시킨다", "내적인 모멘트팔의 길이를 증가시킨다"],
+    answer: 2,
+    exp: "외적인 모멘트팔의 길이를 '감소'시키는 것이 힘의 양을 줄이는 방법이다. 외적인 모멘트팔을 증가시키면 더 큰 토크가 요구되어 오히려 허리 폄 근육에 더 큰 힘이 필요하게 된다."
+  },
+  {
+    q: "발살바조작(Valsalva maneuver)은 들어올리기 중 어떤 역할을 하는가?",
+    choices: ["척추원반에 직접적인 압박을 증가시킨다", "배복압을 증가시켜 허리뼈에 대한 약간의 폄 토크를 만들고 허리 근육에 대한 요구를 일부 감소시킨다", "척주세움근육의 수축을 완전히 대체한다", "들어올리기 중 호흡을 완전히 차단하여 척추를 보호한다"],
+    answer: 1,
+    exp: "발살바조작은 성문을 닫은 상태에서 강하게 배근육을 수축하여 배복압을 증가시킨다. 이는 허리 척추사이이음부의 안정성을 증가시키며, 허리뼈에 대한 약간의 폄 토크를 만들어 허리 근육의 힘 요구량을 일부 감소시킨다."
+  },
+  {
+    q: "만성 허리 통증 환자에서 가장 특징적으로 위축이 관찰되는 근육은?",
+    choices: ["배곧은근(rectus abdominis)", "허리 뭇갈래근(lumbar multifidus)", "큰허리근(psoas major)", "허리엉덩갈비근(iliocostalis lumborum)"],
+    answer: 1,
+    exp: "허리 뭇갈래근은 만성 허리 통증 환자에서 가장 특징적으로 위축이 관찰된다. 이 근육의 비교적 큰 크기와 유리한 모멘트팔 길이, 그리고 거의 수직에 가까운 근섬유 방향으로 허리 영역의 폄 토크 발생에 이상적이며, 분절 허리 안정성에 중요하다."
+  }
+];
+
+// ===== QUIZ STATE =====
+let state = {
+  questions: [],
+  current: 0,
+  answered: [],
+  correct: 0,
+  wrong: 0,
+  wrongList: [],
+  mode: 'all' // 'all' or 'retry'
+};
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initQuiz(questions) {
+  state.questions = shuffle(questions);
+  state.current = 0;
+  state.answered = new Array(state.questions.length).fill(null);
+  state.correct = 0;
+  state.wrong = 0;
+  state.wrongList = [];
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('score-correct').textContent = '✅ 0';
+  document.getElementById('score-wrong').textContent = '❌ 0';
+  renderQuestion(0);
+  updateProgress();
+}
+
+function restartQuiz() {
+  state.mode = 'all';
+  initQuiz(allQuestions);
+}
+
+function retryWrong() {
+  if (state.wrongList.length === 0) return;
+  state.mode = 'retry';
+  initQuiz(state.wrongList);
+}
+
+function renderQuestion(idx) {
+  const container = document.getElementById('quiz-container');
+  if (idx >= state.questions.length) {
+    showResult();
+    return;
+  }
+  const q = state.questions[idx];
+  const shuffledChoices = q.choices.map((c, i) => ({ text: c, origIdx: i }));
+  
+  container.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-num">문제 ${idx + 1} / ${state.questions.length}</div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="choices" id="choices">
+        ${shuffledChoices.map((c, i) => `
+          <button class="choice-btn" onclick="selectAnswer(${i}, ${c.origIdx}, ${q.answer})" id="choice-${i}">
+            ${String.fromCharCode(65+i)}. ${c.text}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="explanation">
+        💡 <b>해설:</b> ${q.exp}
+      </div>
+      <div class="quiz-actions" id="quiz-actions" style="display:none;">
+        <button class="btn-primary" onclick="nextQuestion()">다음 문제 →</button>
+      </div>
+    </div>
+  `;
+}
+
+function selectAnswer(clickedIdx, origIdx, correctOrigIdx) {
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  
+  const isCorrect = origIdx === correctOrigIdx;
+  
+  // Find which button has the correct answer
+  btns.forEach((btn, i) => {
+    const btnOrigIdx = parseInt(btn.getAttribute('onclick').match(/selectAnswer\(\d+, (\d+)/)[1]);
+    if (btnOrigIdx === correctOrigIdx) {
+      btn.classList.add('reveal-correct');
+    }
+  });
+  
+  if (isCorrect) {
+    btns[clickedIdx].classList.add('correct');
+    state.correct++;
+    document.getElementById('score-correct').textContent = '✅ ' + state.correct;
+  } else {
+    btns[clickedIdx].classList.add('wrong');
+    state.wrong++;
+    document.getElementById('score-wrong').textContent = '❌ ' + state.wrong;
+    state.wrongList.push(state.questions[state.current]);
+  }
+  
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('quiz-actions').style.display = 'flex';
+  updateProgress();
+}
+
+function nextQuestion() {
+  state.current++;
+  if (state.current >= state.questions.length) {
+    showResult();
+  } else {
+    renderQuestion(state.current);
+    updateProgress();
+  }
+}
+
+function updateProgress() {
+  const total = state.questions.length;
+  const done = state.current;
+  const pct = total > 0 ? (done / total) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${done} / ${total} 문제`;
+}
+
+function showResult() {
+  document.getElementById('quiz-container').innerHTML = '';
+  document.getElementById('progress-bar').style.width = '100%';
+  document.getElementById('progress-text').textContent = `${state.questions.length} / ${state.questions.length} 문제`;
+  
+  const total = state.questions.length;
+  const pct = Math.round((state.correct / total) * 100);
+  let grade = pct >= 90 ? '🏆 완벽!' : pct >= 70 ? '👍 잘했어요!' : pct >= 50 ? '📚 더 복습 필요' : '💪 다시 도전!';
+  
+  document.getElementById('result-score').textContent = `${state.correct} / ${total}`;
+  document.getElementById('result-detail').innerHTML = `정답률 ${pct}% &nbsp;|&nbsp; ${grade}`;
+  
+  const retryBtn = document.getElementById('retry-wrong-btn');
+  if (state.wrongList.length > 0) {
+    retryBtn.style.display = 'inline-block';
+    retryBtn.textContent = `❌ 틀린 문제 ${state.wrongList.length}개 다시풀기`;
+  } else {
+    retryBtn.style.display = 'none';
+  }
+  
+  document.getElementById('quiz-result').style.display = 'block';
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  initQuiz(allQuestions);
+  // open first section card in summary
+  document.querySelectorAll('.section-card-header.open').forEach(h => {
+    h.nextElementSibling.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
