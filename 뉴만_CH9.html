@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 9 | 몸통뼈대: 골학 및 관절학</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --card: #FFFFFF;
+    --primary: #1E3A5F;
+    --accent: #2E6DB4;
+    --accent2: #4A90D9;
+    --accent3: #E8F0FE;
+    --highlight: #FF6B35;
+    --success: #27AE60;
+    --danger: #E74C3C;
+    --warning: #F39C12;
+    --text: #1a2a3a;
+    --text2: #4a5a6a;
+    --border: #C8D8F0;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10);
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; min-height: 100vh; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, #2E6DB4 100%);
+    color: white; padding: 20px 24px 0; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.3);
+  }
+  .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .chapter-badge { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 4px 12px; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  .header h1 { font-size: 18px; font-weight: 700; }
+  .header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  .tabs { display: flex; gap: 4px; }
+  .tab-btn {
+    padding: 10px 20px; border: none; background: transparent; color: rgba(255,255,255,0.7);
+    cursor: pointer; font-size: 14px; font-weight: 600; border-radius: 10px 10px 0 0;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .tab-btn.active { background: var(--bg); color: var(--primary); }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.15); color: white; }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* ── TAB 1: 분류/개요 ── */
+  .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .topic-card {
+    background: var(--card); border-radius: var(--radius); padding: 16px;
+    box-shadow: var(--shadow); border-left: 4px solid var(--accent);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .topic-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,58,95,0.15); }
+  .topic-card h3 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .topic-card ul { list-style: none; }
+  .topic-card ul li { font-size: 13px; color: var(--text2); padding: 3px 0; border-bottom: 1px dashed var(--border); }
+  .topic-card ul li:last-child { border-bottom: none; }
+  .kw-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .kw { background: var(--accent3); color: var(--accent); padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .section-title { font-size: 18px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); }
+
+  /* ── TAB 2: 요약 ── */
+  .toc-nav { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .toc-nav h3 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+  .toc-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .toc-btn { background: var(--accent3); color: var(--accent); border: none; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .toc-btn:hover { background: var(--accent); color: white; }
+
+  .summary-section { background: var(--card); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .summary-section h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .summary-section h3 .icon { font-size: 18px; }
+  .summary-text { font-size: 13px; line-height: 1.8; color: var(--text2); margin-bottom: 12px; }
+  .summary-text b { color: var(--text); }
+  .key-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px; }
+  .key-table th { background: var(--primary); color: white; padding: 8px 10px; text-align: left; }
+  .key-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  .key-table tr:nth-child(even) td { background: var(--accent3); }
+  .clinical-box { background: linear-gradient(135deg, #FFF3E0, #FFF8F0); border-left: 4px solid var(--highlight); border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
+  .clinical-box .label { font-size: 11px; font-weight: 700; color: var(--highlight); letter-spacing: 1px; margin-bottom: 4px; }
+  .clinical-box p { font-size: 12px; color: #5a3a1a; line-height: 1.6; }
+  .range-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+  .range-table th { background: var(--accent); color: white; padding: 7px 10px; }
+  .range-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: center; }
+  .range-table tr:nth-child(even) td { background: #F0F5FF; }
+
+  /* collapsible */
+  .collapsible-btn {
+    width: 100%; background: none; border: none; text-align: left; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .collapsible-btn .arrow { transition: transform 0.3s; font-size: 16px; color: var(--accent); }
+  .collapsible-btn.open .arrow { transform: rotate(180deg); }
+  .collapsible-body { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+  .collapsible-body.open { max-height: 3000px; }
+
+  /* ── TAB 3: 퀴즈 ── */
+  .quiz-header { background: var(--card); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between; flex-wrap: gap; gap: 12px; }
+  .quiz-score { font-size: 22px; font-weight: 800; color: var(--primary); }
+  .quiz-score span { font-size: 13px; font-weight: 400; color: var(--text2); }
+  .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-top: 4px; width: 200px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 4px; transition: width 0.4s; }
+  .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--primary); }
+  .btn-warning { background: var(--warning); color: white; }
+  .btn-warning:hover { background: #e67e22; }
+  .btn-success { background: var(--success); color: white; }
+
+  .quiz-card { background: var(--card); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .quiz-meta { font-size: 11px; color: var(--text2); margin-bottom: 8px; display: flex; gap: 8px; }
+  .quiz-meta .cat { background: var(--accent3); color: var(--accent); padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .quiz-q { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.6; margin-bottom: 16px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    background: var(--bg); border: 2px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; text-align: left; cursor: pointer; font-size: 13px;
+    color: var(--text); transition: all 0.2s; display: flex; align-items: center; gap: 10px;
+  }
+  .option-btn .opt-label { background: var(--border); color: var(--text2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .option-btn:hover:not(:disabled) { border-color: var(--accent2); background: var(--accent3); }
+  .option-btn.correct { border-color: var(--success); background: #E8F8EE; }
+  .option-btn.correct .opt-label { background: var(--success); color: white; }
+  .option-btn.wrong { border-color: var(--danger); background: #FDEAEA; }
+  .option-btn.wrong .opt-label { background: var(--danger); color: white; }
+  .option-btn:disabled { cursor: default; }
+  .quiz-feedback { margin-top: 12px; padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.6; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: #E8F8EE; color: #1a5c30; border-left: 3px solid var(--success); }
+  .quiz-feedback.wrong { background: #FDEAEA; color: #7a1a1a; border-left: 3px solid var(--danger); }
+  .quiz-nav { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .quiz-complete { text-align: center; padding: 32px; }
+  .quiz-complete .score-big { font-size: 48px; font-weight: 900; color: var(--primary); }
+  .quiz-complete .score-msg { font-size: 16px; color: var(--text2); margin: 8px 0 20px; }
+
+  @media (max-width: 600px) {
+    .tab-btn { padding: 8px 12px; font-size: 12px; }
+    .tab-content { padding: 16px; }
+    .overview-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="chapter-badge">CHAPTER 9</div>
+    <div>
+      <h1>몸통뼈대: 골학 및 관절학</h1>
+      <p>Axial Skeleton: Osteology and Arthrology</p>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('overview')">📋 분류/개요</button>
+    <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+    <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+  </div>
+</div>
+
+<!-- ══════════════ TAB 1: 개요 ══════════════ -->
+<div id="tab-overview" class="tab-content active">
+
+  <div class="section-title">📋 챕터 주요 토픽</div>
+  <div class="overview-grid">
+
+    <div class="topic-card" style="border-color:#2E6DB4">
+      <h3><span class="icon">🦴</span> 골학 — 몸통뼈대 구성</h3>
+      <ul>
+        <li>머리뼈 (관자뼈, 뒤통수뼈)</li>
+        <li>척추뼈 (C1~C7, T1~T12, L1~L5)</li>
+        <li>엉치뼈 · 꼬리뼈</li>
+        <li>갈비뼈 (12쌍) · 복장뼈</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">치아돌기</span><span class="kw">갈로리돌기</span><span class="kw">고리뼈</span><span class="kw">중쇠뼈</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#27AE60">
+      <h3><span class="icon">📐</span> 전체로서의 척주</h3>
+      <ul>
+        <li>정상적인 만곡 (목뼈앞굽음·등뼈뒤굽음·허리뼈앞굽음)</li>
+        <li>신체를 통과하는 중력선</li>
+        <li>척주의 인대지지 (5종 인대)</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">척주앞굽음</span><span class="kw">척주뒤굽음</span><span class="kw">중력선</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#9B59B6">
+      <h3><span class="icon">🔗</span> 전형적인 척추사이이음부</h3>
+      <ul>
+        <li>돌기관절 (apophyseal joint)</li>
+        <li>척추뼈몸통사이관절 (척추원반)</li>
+        <li>가로돌기·가시돌기 — 인대 부착점</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">속질핵</span><span class="kw">섬유태</span><span class="kw">척추끝판</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#E67E22">
+      <h3><span class="icon">🧠</span> 머리목 영역</h3>
+      <ul>
+        <li>고리뒤통수관절 (굽힘·폄)</li>
+        <li>고리중쇠관절복합체 (축돌림 50~60%)</li>
+        <li>목뼈속 관절 C2~C7</li>
+        <li>내밀기·뒤당김 운동형상학</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">덮개막</span><span class="kw">날개인대</span><span class="kw">앞끄덕임</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#16A085">
+      <h3><span class="icon">🫁</span> 등뼈 영역</h3>
+      <ul>
+        <li>갈비몸통관절·갈비가로돌기관절</li>
+        <li>굽힘·폄: 30~40° / 15~20°</li>
+        <li>축돌림: 25~35° (가장 큰 축돌림)</li>
+        <li>가쪽굽힘: 25~30°</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">갈비반관절면</span><span class="kw">등허리이음부</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#C0392B">
+      <h3><span class="icon">⬇️</span> 허리뼈 영역</h3>
+      <ul>
+        <li>굽힘: 40~60° / 폄: 15~25°</li>
+        <li>축돌림: 5~7° (매우 제한)</li>
+        <li>L5-S1 이음부 전단력</li>
+        <li>허리골반리듬, 골반기울임</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">속질핵탈출</span><span class="kw">앞척추전방전위증</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#8E44AD">
+      <h3><span class="icon">🦴</span> 엉치엉덩관절</h3>
+      <ul>
+        <li>골반고리의 쐐기돌 역할</li>
+        <li>앞끄덕임(nutation) / 뒤끄덕임(counternutation)</li>
+        <li>뼈사이인대 — 가장 강한 인대</li>
+        <li>등허리근막: 기능적 안정화</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">앞끄덕임</span><span class="kw">잠금기전</span>
+      </div>
+    </div>
+
+    <div class="topic-card" style="border-color:#2980B9">
+      <h3><span class="icon">📊</span> 척추짝지음 & 운동형상학</h3>
+      <ul>
+        <li>가쪽굽힘+축돌림의 자연스러운 짝지음</li>
+        <li>중립지대(neutral zone) 개념</li>
+        <li>척추불안정성 임상적 의미</li>
+      </ul>
+      <div class="kw-grid">
+        <span class="kw">척추짝지음</span><span class="kw">중립지대</span><span class="kw">불안정성</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">🔑 핵심 키워드 모음</div>
+  <div class="topic-card" style="border-color:var(--accent)">
+    <div class="kw-grid">
+      <span class="kw">고리뼈(C1)</span><span class="kw">중쇠뼈(C2)</span><span class="kw">치아돌기</span>
+      <span class="kw">갈로리돌기</span><span class="kw">돌기관절</span><span class="kw">척추원반</span>
+      <span class="kw">속질핵</span><span class="kw">섬유태</span><span class="kw">척추끝판</span>
+      <span class="kw">황색인대</span><span class="kw">앞세로인대</span><span class="kw">뒤세로인대</span>
+      <span class="kw">가시사이인대</span><span class="kw">가시끝인대</span><span class="kw">목밑인대</span>
+      <span class="kw">고리뒤통수관절</span><span class="kw">고리중쇠관절</span><span class="kw">날개인대</span>
+      <span class="kw">덮개막</span><span class="kw">뼈사이인대</span><span class="kw">엉치엉덩관절</span>
+      <span class="kw">앞끄덕임</span><span class="kw">뒤끄덕임</span><span class="kw">등허리근막</span>
+      <span class="kw">허리골반리듬</span><span class="kw">척추짝지음</span><span class="kw">중립지대</span>
+      <span class="kw">속질핵탈출증</span><span class="kw">앞척추전방전위증</span><span class="kw">척추불안정성</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 2: 요약 ══════════════ -->
+<div id="tab-summary" class="tab-content">
+
+  <div class="toc-nav">
+    <h3>📌 소단원 바로가기</h3>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="scrollToId('s1')">🦴 골학</button>
+      <button class="toc-btn" onclick="scrollToId('s2')">📐 전체척주</button>
+      <button class="toc-btn" onclick="scrollToId('s3')">🔗 관절학 총론</button>
+      <button class="toc-btn" onclick="scrollToId('s4')">🧠 머리목 영역</button>
+      <button class="toc-btn" onclick="scrollToId('s5')">🫁 등뼈 영역</button>
+      <button class="toc-btn" onclick="scrollToId('s6')">⬇️ 허리뼈 영역</button>
+      <button class="toc-btn" onclick="scrollToId('s7')">🦴 엉치엉덩관절</button>
+      <button class="toc-btn" onclick="scrollToId('s8')">📊 운동형상학 요약</button>
+    </div>
+  </div>
+
+  <!-- S1 골학 -->
+  <div class="summary-section" id="s1">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">🦴</span> 골학 — 몸통뼈대 구성요소</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <div class="summary-text">
+        <b>머리뼈:</b> <b>관자뼈</b>에는 꼭지돌기(근육 부착), <b>뒤통수뼈</b>에는 바깥뒤통수뼈융기·큰구멍(foramen magnum)·뒤통수뼈관절융기가 있음.<br><br>
+        <b>척추뼈</b>는 총 33개 분절 — 목뼈 7개, 등뼈 12개, 허리뼈 5개, 엉치뼈 5개(융합), 꼬리뼈 4개(융합). 각 척추뼈는 <b>척추뼈몸통, 고리뿌리, 고리판, 가시돌기, 가로돌기, 위·아래관절돌기</b>로 구성.
+      </div>
+      <table class="key-table">
+        <tr><th>영역</th><th>특징적 구조</th><th>임상 특징</th></tr>
+        <tr><td><b>고리뼈(C1)</b></td><td>척추뼈몸통 없음, 앞·뒤고리, 2개의 가쪽덩이</td><td>가장 큰 가로돌기</td></tr>
+        <tr><td><b>중쇠뼈(C2)</b></td><td>치아돌기(dens) 돌출, 한 쌍의 위관절돌기</td><td>고리뼈와 관절 형성</td></tr>
+        <tr><td><b>C3-C6</b></td><td>갈로리돌기, 앞결절, 갈로리척추관절</td><td>전형적인 목뼈</td></tr>
+        <tr><td><b>C7(돌출척추)</b></td><td>크고 돌출된 가시돌기, 여분 목갈비뼈 가능</td><td>임상 촉지 기준점</td></tr>
+        <tr><td><b>T2-T9</b></td><td>갈비반관절면, 가로돌기 갈비관절면</td><td>전형적인 등뼈</td></tr>
+        <tr><td><b>L1-L5</b></td><td>크고 넓은 몸통, 꼭지돌기 있음</td><td>L5가 가장 큼</td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p><b>갈로리척추관절(joint of Luschka)</b>: C2~C6에 존재, 비대해지면 척추사이구멍을 좁혀 <b>신경근병증(radiculopathy)</b> 유발. 퇴행된 척추원반에 의해 더 두드러짐.</p>
+      </div>
+      <div class="summary-text">
+        <b>갈비뼈(12쌍):</b> 머리·목·몸통으로 구성. 등뼈와 갈비몸통관절(2개)+갈비가로돌기관절 형성. 1~7번: 참갈비, 8~10번: 거짓갈비, 11~12번: 뜬갈비(free floating rib).<br><br>
+        <b>복장뼈:</b> 복장뼈자루, 복장뼈몸통, 칼돌기로 구성. 자루몸통관절(manubriosternal joint)·갈비관절 형성. 자루의 <b>복장패임(jugular notch)</b>이 임상 기준점.
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 전체척주 -->
+  <div class="summary-section" id="s2">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">📐</span> 전체로서의 척주 — 만곡·중력선·인대</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <div class="summary-text">
+        <b>정상만곡:</b> 시상면에서 목뼈·허리뼈는 <b>앞굽음(lordosis)</b>, 등뼈·엉치꼬리뼈는 <b>뒤굽음(kyphosis)</b>. 이 교대 만곡은 직립 시 충격흡수·안정성 제공.<br><br>
+        <b>신체 중력선</b>은 관자뼈 꼭지돌기 앞쪽 → 둘째엉치등뼈 → 엉덩관절 바로 뒤쪽 → 무릎 앞쪽 → 발목 앞쪽을 지나감.
+      </div>
+      <table class="key-table">
+        <tr><th>인대</th><th>위치</th><th>기능</th></tr>
+        <tr><td><b>황색인대</b></td><td>고리판 앞면~아래 고리판 뒷면</td><td>굽힘 제한, 탄성 높음(80%)</td></tr>
+        <tr><td><b>가시끝인대</b></td><td>C7~엉치까지 가시돌기 끝</td><td>굽힘 제한</td></tr>
+        <tr><td><b>앞세로인대</b></td><td>뒤통수~엉치뼈 전체 앞면</td><td>폄·척추전방전위 제한</td></tr>
+        <tr><td><b>뒤세로인대</b></td><td>C2~엉치뼈 전체 뒷면</td><td>굽힘 제한, 척추원반 뒷면 보강</td></tr>
+        <tr><td><b>목밑인대</b></td><td>C7~뒤통수뼈(목 영역)</td><td>목 수동지지, 이중층 구조</td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p>황색인대 비후 또는 관절돌기 골극 형성 → <b>척추관 협착(spinal stenosis)</b>. 비정상적 만곡 시 체강 용적 변화 (예: 과도한 등뼈뒤굽음 → 흡기 폐 팽창 공간 감소).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 관절학 총론 -->
+  <div class="summary-section" id="s3">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">🔗</span> 관절학 총론 — 척추사이이음부·척추원반</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <div class="summary-text">
+        <b>전형적인 척추사이이음부</b>는 3가지 기능적 요소: <b>(1) 가로돌기·가시돌기</b> (인대·근육 지렛대), <b>(2) 돌기관절</b> (운동방향 안내), <b>(3) 척추뼈몸통사이관절</b> (하중 전달·충격흡수).<br><br>
+        <b>돌기관절</b>은 평면관절, 관절연골과 관절주머니인대로 구성. 관절면 방향이 척추 운동 방향을 결정함.
+      </div>
+      <div class="summary-text">
+        <b>척추원반 구조:</b><br>
+        • <b>속질핵(nucleus pulposus)</b>: 중앙, 약 70~90% 물, 압력 분산 역할<br>
+        • <b>섬유태(annulus fibrosus)</b>: 동심원 15~20층 아교섬유, 회전·전단력에 저항<br>
+        • <b>척추끝판(vertebral endplate)</b>: 척추뼈몸통 위·아래면, 영양공급 통로
+      </div>
+      <table class="key-table">
+        <tr><th>운동</th><th>속질핵 이동</th><th>섬유태 변화</th></tr>
+        <tr><td>굽힘</td><td>뒤쪽으로 이동</td><td>뒤쪽 섬유 신장됨</td></tr>
+        <tr><td>폄</td><td>앞쪽으로 이동</td><td>앞쪽 섬유 신장됨</td></tr>
+        <tr><td>압박</td><td>방사형으로 팽창</td><td>모든 방향 신장</td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p><b>속질핵탈출증(HNP)</b>: 과도·반복적인 굽힘+축돌림 → 섬유태 결손 → 속질핵이 뒤쪽·뒤가쪽으로 탈출 → 신경근 압박. 허리뼈에서 가장 흔함 (L4-L5, L5-S1). <b>좌골신경통(sciatica)</b> 유발.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 머리목 -->
+  <div class="summary-section" id="s4">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">🧠</span> 머리목 영역 운동형상학</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <table class="range-table">
+        <tr><th>관절/영역</th><th>굽힘(°)</th><th>폄(°)</th><th>축돌림(°)</th><th>가쪽굽힘(°)</th></tr>
+        <tr><td>고리뒤통수관절</td><td>5</td><td>10</td><td>거의 없음</td><td>~5</td></tr>
+        <tr><td>고리중쇠관절복합체</td><td>5</td><td>10</td><td><b>35~40</b></td><td>거의 없음</td></tr>
+        <tr><td>목뼈속(C2-C7)</td><td>35~40</td><td>55~60</td><td>30~35</td><td>30~35</td></tr>
+        <tr><td><b>머리목 전체</b></td><td><b>45~50</b></td><td><b>75~80</b></td><td><b>65~75</b></td><td><b>35~40</b></td></tr>
+      </table>
+      <div class="summary-text" style="margin-top:12px">
+        <b>고리뒤통수관절:</b> 머리의 독립적 굽힘·폄 담당. 볼록한 뒤통수뼈관절융기가 오목한 고리뼈 위관절면에서 구름(roll)+미끄러짐(slide) 동시 발생.<br><br>
+        <b>고리중쇠관절복합체:</b> 전체 목 축돌림의 <b>50~60%</b>가 이 관절에서 발생. 수직으로 돌출된 <b>치아돌기</b>가 축(pivot) 역할. 날개인대(alar ligament)가 과도한 돌림 제한.<br><br>
+        <b>C2-C7 목뼈속:</b> 관절면이 이마면과 수평면 사이 약 45° 경사 → 3방향 운동 가능. 가쪽굽힘 시 같은쪽 돌림(ipsilateral coupling) 발생.
+      </div>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p><b>내밀기(protraction)</b> 자세: 아래쪽 목뼈 굽힘+위쪽 목뼈 과폄 → 관절주머니인대·뒤쪽 연부조직 스트레스 증가, 편두통·목통증 유발 가능. 뒤당김(retraction)이 치료적으로 사용됨.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 등뼈 -->
+  <div class="summary-section" id="s5">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">🫁</span> 등뼈 영역 운동형상학</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <table class="range-table">
+        <tr><th>운동</th><th>시상면(°)</th><th>수평면(°)</th><th>이마면(°)</th></tr>
+        <tr><td>굽힘</td><td>30~40</td><td>—</td><td>—</td></tr>
+        <tr><td>폄</td><td>15~20</td><td>—</td><td>—</td></tr>
+        <tr><td>축돌림</td><td>—</td><td><b>25~35</b></td><td>—</td></tr>
+        <tr><td>가쪽굽힘</td><td>—</td><td>—</td><td>25~30</td></tr>
+      </table>
+      <div class="summary-text" style="margin-top:12px">
+        <b>등뼈의 특성:</b> 갈비뼈에 의한 안정화 → 척주 중 <b>가장 안정된 부분</b>. 관절면이 주로 이마면 방향 → 가쪽굽힘에 유리하고 굽힘·폄은 제한.<br><br>
+        <b>갈비몸통관절·갈비가로돌기관절</b>: 부채꼴인대+관절주머니인대로 안정화. 호흡 시 갈비뼈 운동의 기계적 기반 (들숨 시 갈비뼈 올라감).<br><br>
+        <b>등허리이음부(T12-L1):</b> 이마면 관절면 → 시상면 관절면으로 급격한 방향 전환 → 임상적으로 손상 취약 지점. 축돌림 시 외상성 반분리(half fracture) 위험.
+      </div>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p>등허리이음부의 갑작스러운 관절면 방향 변화 → 과도한 굽힘+축돌림 시 척추 골절 위험. 가쪽굽힘 방향과 같은쪽 돌림(ipsilateral coupling)이 일반적.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 허리뼈 -->
+  <div class="summary-section" id="s6">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">⬇️</span> 허리뼈 영역 운동형상학</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <table class="range-table">
+        <tr><th>운동</th><th>시상면(°)</th><th>수평면(°)</th><th>이마면(°)</th></tr>
+        <tr><td>굽힘</td><td><b>40~55</b></td><td>—</td><td>—</td></tr>
+        <tr><td>폄</td><td>15~25</td><td>—</td><td>—</td></tr>
+        <tr><td>전체</td><td>60~80</td><td>—</td><td>—</td></tr>
+        <tr><td>축돌림</td><td>—</td><td><b>5~7</b></td><td>—</td></tr>
+        <tr><td>가쪽굽힘</td><td>—</td><td>—</td><td>20</td></tr>
+      </table>
+      <div class="summary-text" style="margin-top:12px">
+        <b>허리골반리듬(lumbopelvic rhythm):</b> 몸통 완전 굽힘 시 허리뼈 굽힘+엉덩관절 굽힘이 함께 발생. 처음 25%는 허리 굽힘 > 엉덩관절, 마지막 25%는 엉덩관절 굽힘 증가.<br><br>
+        <b>L5-S1 이음부:</b> 엉치수평각(~40°)에 의해 앞 전단력 발생 = BW × sin(40°) ≈ 0.64 BW. 이를 저항하는 구조: 척추원반, 돌기관절, 앞세로인대, 엉덩허리인대.<br><br>
+        <b>앉은 자세 영향:</b> 구부정한 앉기(slumped sitting) → 허리 앞굽음 감소 → 척추원반 앞쪽 압박 증가 → 속질핵 뒤쪽 이동 → 탈출 위험 증가.
+      </div>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p><b>앞척추전방전위증(anterior spondylolisthesis)</b>: L4-L5 또는 L5-S1에서 가장 흔함. 관절사이부분(pars articularis) 양성 골절 또는 관절돌기 변성과 연관. 말총(cauda equina) 압박 위험.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 엉치엉덩관절 -->
+  <div class="summary-section" id="s7">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">🦴</span> 엉치엉덩관절</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <div class="summary-text">
+        <b>기능:</b> (1) 골반고리(pelvic ring) 내 스트레스 경감 기전, (2) 몸통↔다리 사이 부하 전달.<br><br>
+        <b>관절 구조:</b> 엉치뼈의 귓바퀴면과 엉덩뼈의 귓바퀴면 사이 형성. 성인기에 부동관절로 변화. 관절면에 거친 융기들 → 마찰 증가 → 안정성 증가.
+      </div>
+      <table class="key-table">
+        <tr><th>인대</th><th>위치</th><th>기능</th></tr>
+        <tr><td><b>뼈사이인대</b></td><td>관절 뒤위쪽 간격 채움</td><td><b>가장 강한 인대</b>, 앞끄덕임 토크에 저항</td></tr>
+        <tr><td>앞엉치엉덩인대</td><td>관절 앞면</td><td>관절 강화</td></tr>
+        <tr><td>엉덩허리인대</td><td>L4-L5 가로돌기~엉치뼈</td><td>L5-S1 안정성</td></tr>
+        <tr><td>영치결절인대</td><td>위뒤엉덩뼈가시→궁둥뼈결절</td><td>뒤끄덕임 제한</td></tr>
+        <tr><td>엉치가시인대</td><td>엉치뼈·꼬리뼈→궁둥뼈가시</td><td>안정화</td></tr>
+      </table>
+      <div class="summary-text">
+        <b>앞끄덕임(nutation):</b> 엉치뼈 앞쪽 기울임 + 엉덩뼈 뒤쪽 기울임 → 골반출구 좁아짐, 관절면 잠금(locking) 효과 → 관절 안정성 최대.<br><br>
+        <b>뒤끄덕임(counternutation):</b> 반대 방향 → 골반출구 넓어짐, 관절 불안정. 임신·분만 시 증가.
+      </div>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트</div>
+        <p><b>통증성 엉치엉덩관절 기능이상</b>: 허리통증 환자의 약 25%에서 원인. 강직척추염(ankylosing spondylitis)과 연관. 평가는 골반 고리 비대칭, 자세 변화, 관절 자극 검사 활용.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8 운동형상학 요약 -->
+  <div class="summary-section" id="s8">
+    <button class="collapsible-btn open" onclick="toggleCollapse(this)">
+      <h3><span class="icon">📊</span> 척추 운동형상학 전체 요약</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-body open">
+      <table class="range-table">
+        <tr><th>영역</th><th>굽힘+폄(°)</th><th>축돌림-한쪽(°)</th><th>가쪽굽힘-한쪽(°)</th></tr>
+        <tr><td>목뼈(Occ-C1)</td><td>15</td><td>거의 없음</td><td>5</td></tr>
+        <tr><td>C1-C2</td><td>15</td><td><b>35~40</b></td><td>거의 없음</td></tr>
+        <tr><td>C2-C7(각 분절)</td><td>5~17</td><td>5~8</td><td>4~6</td></tr>
+        <tr><td>T1-T6(각 분절)</td><td>4~6</td><td>5~8</td><td>6</td></tr>
+        <tr><td>T7-T12(각 분절)</td><td>6~12</td><td>3~5</td><td>6~8</td></tr>
+        <tr><td>L1-L5(각 분절)</td><td>12~17</td><td>1~2</td><td>3~6</td></tr>
+        <tr><td>L5-S1</td><td>17~24</td><td>1~2</td><td>3</td></tr>
+      </table>
+      <div class="summary-text" style="margin-top:12px">
+        <b>척추짝지음(spinal coupling):</b> 가쪽굽힘과 축돌림이 자연스럽게 함께 일어나는 운동. 목뼈·허리뼈에서 가쪽굽힘+같은쪽 돌림, 등뼈에서도 유사한 경향.<br><br>
+        <b>중립지대(neutral zone):</b> 주변 조직의 최소 저항으로 가능한 척추 운동의 양. 불안정성 증가 시 중립지대 증가 → 척추불안정성의 지표.
+      </div>
+      <div class="clinical-box">
+        <div class="label">🔴 임상 포인트 — 4가지 영역 특성</div>
+        <p>
+          ① <b>목뼈</b>: 가장 큰 가동성, 모든 운동에서 고리중쇠관절이 가장 큰 기여<br>
+          ② <b>등뼈</b>: 가쪽굽힘이 가장 자유롭게, 갈비뼈가 안정화 제공<br>
+          ③ <b>등허리뼈</b>: 위→아래로 갈수록 굽힘·폄은 허용, 축돌림은 제한<br>
+          ④ <b>허리뼈</b>: 엉덩관절 굽힘·폄과 협력하여 몸통의 시상면 운동 담당
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 3: 퀴즈 ══════════════ -->
+<div id="tab-quiz" class="tab-content">
+
+  <div class="quiz-header">
+    <div>
+      <div class="quiz-score"><span id="scoreText">0 / 0</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div style="font-size:12px; color:var(--text2); margin-top:4px;" id="progressText">문제를 시작하세요</div>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="startQuiz()">🔀 새로 시작</button>
+      <button class="btn btn-warning" id="retryBtn" onclick="retryWrong()" style="display:none">❌ 틀린 문제 재풀기</button>
+    </div>
+  </div>
+
+  <div id="quizArea"></div>
+
+</div>
+
+<script>
+// ── 탭 전환 ──
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── 접이식 ──
+function toggleCollapse(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── 목차 스크롤 ──
+function scrollToId(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── 퀴즈 데이터 (15문제) ──
+const allQuestions = [
+  {
+    cat: "골학", q: "고리뼈(C1)의 가장 두드러진 특징은?",
+    opts: ["치아돌기(dens)가 있다","척추뼈몸통이 없다","갈비관절면이 있다","가장 작은 가로돌기를 가진다"],
+    ans: 1, exp: "고리뼈(C1)는 척추뼈몸통이 없으며, 앞고리와 뒤고리, 2개의 큰 가쪽덩이로 구성됩니다. 치아돌기는 중쇠뼈(C2)의 특징입니다."
+  },
+  {
+    cat: "골학", q: "C7을 '돌출척추(Vertebra Prominens)'라 부르는 이유는?",
+    opts: ["치아돌기가 돌출되어 있기 때문","크고 돌출된 가시돌기 때문","여분갈비뼈를 반드시 갖고 있기 때문","척추뼈몸통이 가장 크기 때문"],
+    ans: 1, exp: "C7은 목뼈 중 가장 크고 쉽게 촉지할 수 있는 가시돌기를 가지고 있어 '돌출척추'라 불립니다. 임상적으로 중요한 촉지 기준점입니다."
+  },
+  {
+    cat: "관절학", q: "척추원반(intervertebral disc)에서 압박력 분산을 주로 담당하는 구조는?",
+    opts: ["섬유태(annulus fibrosus)","속질핵(nucleus pulposus)","척추끝판(vertebral endplate)","고리판(lamina)"],
+    ans: 1, exp: "속질핵은 압박력을 정수압으로 전달하여 모든 방향으로 균등하게 분산시킵니다. 섬유태는 주로 회전·전단력에 저항합니다."
+  },
+  {
+    cat: "관절학", q: "황색인대(ligamentum flavum)의 특성으로 옳은 것은?",
+    opts: ["아교질 비율이 높아 딱딱하다","탄성조직 약 80%+아교질 20%로 구성된다","가시돌기 사이에 위치한다","앞세로인대의 일부이다"],
+    ans: 1, exp: "황색인대는 탄성조직 약 80%와 아교질 20%로 구성되어 척주 인대 중 가장 탄성이 높습니다. 완전 굽힘 시 약 35% 길이 변형까지 견딜 수 있습니다."
+  },
+  {
+    cat: "머리목", q: "전체 목 축돌림의 약 몇 %가 고리중쇠관절복합체에서 발생하는가?",
+    opts: ["20~30%","35~45%","50~60%","70~80%"],
+    ans: 2, exp: "고리중쇠관절복합체(atlanto-axial joint complex)에서 전체 머리목 축돌림의 약 50~60%가 발생합니다. 치아돌기가 수직 회전축(pivot) 역할을 합니다."
+  },
+  {
+    cat: "머리목", q: "고리뒤통수관절(atlanto-occipital joint)의 주된 운동은?",
+    opts: ["축돌림(rotation)","굽힘과 폄(flexion/extension)","가쪽굽힘(lateral flexion)","내밀기와 뒤당김"],
+    ans: 1, exp: "고리뒤통수관절은 주로 머리의 독립적인 굽힘과 폄을 담당합니다. 각 방향으로 약 5°의 굽힘, 10°의 폄, 전체 약 15°의 운동이 가능합니다."
+  },
+  {
+    cat: "머리목", q: "날개인대(alar ligament)의 기능은?",
+    opts: ["머리와 목의 굽힘 제한","치아돌기에 대한 고리뼈의 과도한 돌림 제한","척추동맥 보호","고리뼈와 뒤통수뼈 연결"],
+    ans: 1, exp: "날개인대는 약 1 cm 길이의 강한 인대로, 치아돌기 뒤면에서 뒤통수뼈관절융기까지 주행하며 고리뼈의 과도한 돌림을 제한합니다."
+  },
+  {
+    cat: "등뼈", q: "등뼈 영역에서 가장 허용된 운동면은?",
+    opts: ["시상면(굽힘·폄)","수평면(축돌림)","이마면(가쪽굽힘)","모두 동등하다"],
+    ans: 1, exp: "등뼈 관절면은 주로 이마면 방향이기 때문에 축돌림(25~35°)이 척주 중 가장 큰 영역입니다. 굽힘·폄은 갈비뼈에 의해 제한됩니다."
+  },
+  {
+    cat: "허리뼈", q: "L5-S1 이음부에서 발생하는 앞 전단력의 크기는 체중(BW)의 약 몇 %인가?",
+    opts: ["약 20%","약 40%","약 64%","약 90%"],
+    ans: 2, exp: "엉치수평각이 약 40°일 때, 앞 전단력 = BW × sin(40°) ≈ 0.64 BW (약 64%)입니다. 허리뼈 앞굽음이 증가할수록 이 전단력은 더 커집니다."
+  },
+  {
+    cat: "허리뼈", q: "허리골반리듬(lumbopelvic rhythm)에 대한 설명으로 옳은 것은?",
+    opts: [
+      "허리뼈만의 굽힘으로 몸통 전굴이 완성된다",
+      "몸통 굽힘 초기(25%)에 엉덩관절 굽힘이 더 크다",
+      "허리뼈 굽힘과 엉덩관절 굽힘이 함께 발생하며 몸통 굽힘이 이루어진다",
+      "항상 허리뼈 굽힘과 엉덩관절 굽힘이 동시에 같은 크기로 발생한다"
+    ],
+    ans: 2, exp: "허리골반리듬은 몸통 굽힘 시 허리뼈 굽힘+엉덩관절 굽힘이 순차적으로 발생합니다. 초기에는 허리뼈 굽힘이 더 크게 일어나고, 이후 엉덩관절 굽힘이 증가합니다."
+  },
+  {
+    cat: "엉치엉덩관절", q: "엉치엉덩관절에서 가장 강한 인대는?",
+    opts: ["앞엉치엉덩인대","엉덩허리인대","뼈사이인대(interosseous ligament)","엉치결절인대"],
+    ans: 2, exp: "뼈사이인대(interosseous ligament)는 엉치엉덩관절 뒤위쪽의 간격을 채우며, 인체에서 가장 강한 인대 중 하나입니다. 앞끄덕임 토크에 강하게 저항합니다."
+  },
+  {
+    cat: "엉치엉덩관절", q: "앞끄덕임(nutation)이 엉치엉덩관절에 미치는 영향은?",
+    opts: [
+      "골반출구를 넓혀 분만에 유리하다",
+      "관절을 불안정한 위치로 만든다",
+      "관절면을 잠금(locking)시켜 안정성을 높인다",
+      "뒤끄덕임과 동일한 효과를 낸다"
+    ],
+    ans: 2, exp: "앞끄덕임은 관절면 사이의 압박력과 전단력을 증가시켜 관절의 잠금기전(locking mechanism)을 발생시킵니다. 이를 통해 엉치엉덩관절의 안정성이 최대가 됩니다."
+  },
+  {
+    cat: "임상", q: "척추원반 탈출증(HNP)이 가장 흔하게 발생하는 부위는?",
+    opts: ["C4-C5","T6-T7","L4-L5와 L5-S1","엉치뼈 영역"],
+    ans: 2, exp: "속질핵탈출증은 허리뼈에서 가장 흔하며, 특히 L4-L5와 L5-S1에서 가장 많이 발생합니다. 이 부위는 가장 큰 기계적 부하를 받는 위치이기 때문입니다."
+  },
+  {
+    cat: "임상", q: "구부정한 앉기(slumped sitting) 자세가 척추에 미치는 주된 영향은?",
+    opts: [
+      "허리뼈 앞굽음 증가로 인한 돌기관절 부하 증가",
+      "허리뼈 앞굽음 감소로 인한 척추원반 앞쪽 압박 증가",
+      "등뼈 뒤굽음 감소로 인한 갈비뼈 압박",
+      "목뼈 앞굽음 증가로 인한 날개인대 긴장"
+    ],
+    ans: 1, exp: "구부정한 앉기 자세에서는 허리뼈 앞굽음이 감소하여 척추원반의 앞쪽이 더 압박되고, 속질핵이 뒤쪽으로 이동하게 됩니다. 이는 탈출증 위험을 증가시킵니다."
+  },
+  {
+    cat: "운동형상학", q: "척추짝지음(spinal coupling)에서 목뼈와 허리뼈의 일반적인 양상은?",
+    opts: [
+      "가쪽굽힘+반대쪽 돌림",
+      "가쪽굽힘+같은쪽 돌림",
+      "굽힘+가쪽굽힘",
+      "폄+반대쪽 돌림"
+    ],
+    ans: 1, exp: "목뼈와 허리뼈에서 가쪽굽힘과 같은쪽 돌림의 짝지음(ipsilateral coupling)이 일반적으로 나타납니다. 이는 관절면의 기하학적 특성과 자연스러운 척추만곡에 의해 발생합니다."
+  }
+];
+
+let currentQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let answered = [];
+let wrongList = [];
+
+function startQuiz() {
+  currentQuestions = shuffle([...allQuestions]);
+  currentIdx = 0; score = 0; answered = []; wrongList = [];
+  document.getElementById('retryBtn').style.display = 'none';
+  updateProgress();
+  renderQuestion();
+}
+
+function retryWrong() {
+  if (wrongList.length === 0) return;
+  currentQuestions = shuffle([...wrongList]);
+  currentIdx = 0; score = 0; answered = [];
+  wrongList = [];
+  document.getElementById('retryBtn').style.display = 'none';
+  updateProgress();
+  renderQuestion();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function updateProgress() {
+  const total = currentQuestions.length;
+  const done = currentIdx;
+  document.getElementById('scoreText').textContent = score + ' / ' + done;
+  document.getElementById('progressFill').style.width = (total ? (done / total * 100) : 0) + '%';
+  document.getElementById('progressText').textContent = total ? (done + ' / ' + total + ' 완료') : '문제를 시작하세요';
+}
+
+function renderQuestion() {
+  const area = document.getElementById('quizArea');
+  if (currentIdx >= currentQuestions.length) {
+    showComplete(); return;
+  }
+  const q = currentQuestions[currentIdx];
+  const isAnswered = answered[currentIdx] !== undefined;
+  const chosen = answered[currentIdx];
+
+  area.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-meta">
+        <span class="cat">${q.cat}</span>
+        <span>문제 ${currentIdx + 1} / ${currentQuestions.length}</span>
+      </div>
+      <div class="quiz-q">${currentIdx + 1}. ${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((opt, i) => {
+          let cls = '';
+          if (isAnswered) {
+            if (i === q.ans) cls = 'correct';
+            else if (i === chosen && chosen !== q.ans) cls = 'wrong';
+          }
+          return `<button class="option-btn ${cls}" onclick="selectAnswer(${i})" ${isAnswered ? 'disabled' : ''}>
+            <span class="opt-label">${['①','②','③','④'][i]}</span>${opt}
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="quiz-feedback ${isAnswered ? ('show ' + (chosen === q.ans ? 'correct' : 'wrong')) : ''}" id="feedback">
+        ${isAnswered ? (chosen === q.ans ? '✅ 정답입니다! ' : '❌ 오답입니다. ') + q.exp : ''}
+      </div>
+      <div class="quiz-nav">
+        ${currentIdx > 0 ? '<button class="btn btn-primary" onclick="goTo(' + (currentIdx - 1) + ')">◀ 이전</button>' : ''}
+        ${isAnswered ? (currentIdx < currentQuestions.length - 1
+          ? '<button class="btn btn-primary" onclick="goTo(' + (currentIdx + 1) + ')">다음 ▶</button>'
+          : '<button class="btn btn-success" onclick="showComplete()">결과 보기 🎉</button>') : ''}
+      </div>
+    </div>`;
+}
+
+function selectAnswer(idx) {
+  const q = currentQuestions[currentIdx];
+  answered[currentIdx] = idx;
+  if (idx === q.ans) score++;
+  else wrongList.push(q);
+  updateProgress();
+  renderQuestion();
+}
+
+function goTo(idx) {
+  currentIdx = idx;
+  renderQuestion();
+}
+
+function showComplete() {
+  const total = currentQuestions.length;
+  const pct = Math.round(score / total * 100);
+  let msg = pct >= 90 ? '🏆 완벽합니다!' : pct >= 70 ? '👍 잘 했어요!' : pct >= 50 ? '📚 더 복습해요!' : '💪 다시 도전해보세요!';
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-card quiz-complete">
+      <div class="score-big">${score} / ${total}</div>
+      <div style="font-size:32px">${pct}%</div>
+      <div class="score-msg">${msg}</div>
+      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="startQuiz()">🔀 다시 풀기</button>
+        ${wrongList.length > 0 ? '<button class="btn btn-warning" onclick="retryWrong()">❌ 틀린 ' + wrongList.length + '문제 재풀기</button>' : ''}
+      </div>
+    </div>`;
+  if (wrongList.length > 0) document.getElementById('retryBtn').style.display = 'block';
+}
+
+// 초기 퀴즈 안내 렌더
+document.getElementById('quizArea').innerHTML = `
+  <div class="quiz-card" style="text-align:center; padding:32px;">
+    <div style="font-size:40px; margin-bottom:12px;">❓</div>
+    <div style="font-size:16px; font-weight:700; color:var(--primary); margin-bottom:8px;">Chapter 9 퀴즈</div>
+    <div style="font-size:13px; color:var(--text2); margin-bottom:20px;">총 15문제 · 랜덤 출제 · 틀린 문제 재풀기 지원</div>
+    <button class="btn btn-primary" onclick="startQuiz()">🚀 시작하기</button>
+  </div>`;
+</script>
+</body>
+</html>
