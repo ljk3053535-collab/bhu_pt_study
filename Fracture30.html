@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정형외과 골절 퀴즈 (1~30)</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --card: #FFFFFF;
+    --primary: #1E3A5F;
+    --accent: #2563EB;
+    --accent2: #3B82F6;
+    --correct: #16A34A;
+    --wrong: #DC2626;
+    --warn: #D97706;
+    --border: #BFDBFE;
+    --text: #1E293B;
+    --muted: #64748B;
+    --light: #F0F6FF;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; color: var(--text); min-height: 100vh; }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1E3A5F 0%, #2563EB 100%);
+    color: white; padding: 20px 24px 16px;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.25);
+  }
+  header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.3px; }
+  header p { font-size: 0.8rem; opacity: 0.8; margin-top: 3px; }
+
+  /* ── Tabs ── */
+  .tab-bar {
+    display: flex; background: white;
+    border-bottom: 2px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(30,58,95,0.08);
+  }
+  .tab-btn {
+    flex: 1; padding: 13px 8px; border: none; background: none;
+    font-size: 0.88rem; font-weight: 600; color: var(--muted);
+    cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: #EEF4FF; }
+  .tab-btn:hover:not(.active) { background: var(--light); color: var(--primary); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 18px 16px; max-width: 860px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── 분류 탭 ── */
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cat-card {
+    background: white; border-radius: 12px; padding: 16px;
+    border-left: 4px solid var(--accent); box-shadow: var(--shadow);
+  }
+  .cat-card h3 { font-size: 0.9rem; color: var(--primary); margin-bottom: 8px; }
+  .cat-card ul { list-style: none; }
+  .cat-card ul li { font-size: 0.8rem; color: var(--muted); padding: 3px 0; border-bottom: 1px dashed #E2E8F0; }
+  .cat-card ul li:last-child { border: none; }
+  .keyword-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .kw { background: var(--light); color: var(--accent); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); }
+
+  /* ── 요약 탭 ── */
+  .summary-section { margin-bottom: 14px; }
+  .summary-section summary {
+    background: white; border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-weight: 700; color: var(--primary); font-size: 0.92rem;
+    border-left: 4px solid var(--accent2); box-shadow: var(--shadow);
+    list-style: none; display: flex; justify-content: space-between; align-items: center;
+  }
+  .summary-section summary::after { content: '▼'; font-size: 0.7rem; color: var(--accent2); }
+  details[open] summary::after { content: '▲'; }
+  .summary-section .content {
+    background: white; border-radius: 0 0 10px 10px;
+    padding: 14px 16px; margin-top: -4px;
+    border: 1px solid var(--border); border-top: none;
+    font-size: 0.83rem; line-height: 1.7;
+  }
+  .summary-section .content table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .summary-section .content th { background: var(--light); color: var(--primary); padding: 7px; border: 1px solid var(--border); font-weight: 700; }
+  .summary-section .content td { padding: 7px; border: 1px solid #E2E8F0; vertical-align: top; }
+  .tag { display: inline-block; background: #DBEAFE; color: #1D4ED8; font-size: 0.73rem; padding: 2px 8px; border-radius: 10px; margin: 2px; }
+  .tag.r { background: #FEE2E2; color: #B91C1C; }
+  .tag.g { background: #DCFCE7; color: #15803D; }
+  .tag.y { background: #FEF3C7; color: #B45309; }
+
+  /* ── 퀴즈 탭 ── */
+  #quiz-start { text-align: center; padding: 30px 16px; }
+  #quiz-start .big-btn {
+    background: linear-gradient(135deg, #1E3A5F, #2563EB);
+    color: white; border: none; border-radius: 12px;
+    padding: 15px 40px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+    transition: transform 0.15s;
+  }
+  #quiz-start .big-btn:hover { transform: translateY(-2px); }
+  #quiz-start p { color: var(--muted); font-size: 0.85rem; margin-bottom: 18px; }
+
+  /* Progress */
+  .progress-wrap { margin-bottom: 16px; }
+  .progress-info { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 5px; }
+  .progress-bar { height: 8px; background: #DBEAFE; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #2563EB, #60A5FA); border-radius: 99px; transition: width 0.4s ease; }
+
+  /* Question card */
+  .q-card {
+    background: white; border-radius: 14px; padding: 20px;
+    box-shadow: var(--shadow); margin-bottom: 14px;
+  }
+  .q-num { font-size: 0.75rem; color: var(--accent2); font-weight: 700; margin-bottom: 6px; }
+  .q-text { font-size: 0.92rem; line-height: 1.65; color: var(--primary); font-weight: 600; margin-bottom: 14px; }
+  .opt-list { list-style: none; }
+  .opt-list li {
+    background: var(--light); border: 1.5px solid var(--border);
+    border-radius: 9px; padding: 11px 14px; margin-bottom: 8px;
+    cursor: pointer; font-size: 0.87rem; transition: all 0.15s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .opt-list li:hover:not(.disabled) { border-color: var(--accent2); background: #DBEAFE; }
+  .opt-list li.correct { background: #DCFCE7; border-color: var(--correct); color: #14532D; }
+  .opt-list li.wrong { background: #FEE2E2; border-color: var(--wrong); color: #7F1D1D; }
+  .opt-list li.disabled { cursor: default; }
+  .opt-num { font-weight: 700; min-width: 20px; }
+
+  .explain-box {
+    background: #F0FDF4; border: 1px solid #BBF7D0;
+    border-radius: 9px; padding: 12px 14px; margin-top: 12px;
+    font-size: 0.83rem; line-height: 1.6; color: #14532D; display: none;
+  }
+  .explain-box.show { display: block; }
+  .explain-box.wrong-exp { background: #FFF7ED; border-color: #FED7AA; color: #78350F; }
+
+  .next-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 10px;
+    background: var(--accent); color: white; font-size: 0.9rem;
+    font-weight: 700; cursor: pointer; margin-top: 4px;
+    transition: background 0.2s; display: none;
+  }
+  .next-btn:hover { background: var(--primary); }
+  .next-btn.show { display: block; }
+
+  /* Score card */
+  #score-card {
+    display: none; background: white; border-radius: 16px;
+    padding: 28px 20px; text-align: center; box-shadow: var(--shadow);
+  }
+  #score-card h2 { font-size: 1.3rem; color: var(--primary); margin-bottom: 8px; }
+  .score-big { font-size: 3rem; font-weight: 900; color: var(--accent); margin: 12px 0; }
+  .score-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 18px; }
+  .action-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .action-btn {
+    padding: 11px 22px; border-radius: 9px; border: none;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  }
+  .action-btn.primary { background: var(--accent); color: white; }
+  .action-btn.secondary { background: var(--light); color: var(--primary); border: 1.5px solid var(--border); }
+  .action-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .wrong-summary { text-align: left; margin-top: 16px; }
+  .wrong-summary h4 { color: var(--wrong); font-size: 0.88rem; margin-bottom: 8px; }
+  .wrong-item { background: #FFF1F2; border-left: 3px solid var(--wrong); border-radius: 6px; padding: 8px 12px; margin-bottom: 6px; font-size: 0.8rem; color: #7F1D1D; }
+
+  @media (max-width: 500px) {
+    .cat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🦴 정형외과 · 골절 핵심 퀴즈</h1>
+  <p>문제 1~30번 | 골절 분류 · 상지 · 하지 · 치유</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('classify')">📋 분류/개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ═══════════════════════════════════════════ 분류 탭 -->
+<div id="tab-classify" class="panel active">
+  <div class="cat-grid">
+    <div class="cat-card" style="border-color:#2563EB">
+      <h3>🦴 상지 골절 (Q1~Q8)</h3>
+      <ul>
+        <li>Q1 위팔뼈 Four-part → AVN</li>
+        <li>Q2 Monteggia vs Galeazzi</li>
+        <li>Q3 해부학적 코담배갑 골절</li>
+        <li>Q4 위팔뼈 근위부 Neer 분류</li>
+        <li>Q5 완전골절 유형 분류</li>
+        <li>Q6 Maisonneuve test</li>
+        <li>Q7 등허리뼈 근위부 분류</li>
+        <li>Q8 베네트/롤란도 골절</li>
+      </ul>
+    </div>
+    <div class="cat-card" style="border-color:#7C3AED">
+      <h3>🦵 하지 골절 (Q3~Q5)</h3>
+      <ul>
+        <li>Q3 발목 인대 손상 2도</li>
+        <li>Q4 Pott's 골절 – 손상 부위 아닌 것</li>
+        <li>Q5 연골 치유 순서 임증기</li>
+      </ul>
+    </div>
+    <div class="cat-card" style="border-color:#0891B2">
+      <h3>🔬 골절 분류 (Q9~Q15)</h3>
+      <ul>
+        <li>Q9 Neer 분류 1~4분절</li>
+        <li>Q10 엄지손가락 특수 골절</li>
+        <li>Q11 방산형 골절 특징</li>
+        <li>Q12 골절선 무관절 내 연결</li>
+        <li>Q13 배내트 골절 특징</li>
+        <li>Q14 골절 구조 용어</li>
+        <li>Q15 골절 치유 칼슘화 순서</li>
+      </ul>
+    </div>
+    <div class="cat-card" style="border-color:#059669">
+      <h3>🩹 치유 & 해부 (Q16~Q30)</h3>
+      <ul>
+        <li>Q16 위팔뼈 몸통 – 겨드랑 신경</li>
+        <li>Q17 갈레아찌 vs 몬테지아</li>
+        <li>Q18 해부학적 코담배갑 내용</li>
+        <li>Q19 반반고리 골절 (불안정/안정)</li>
+        <li>Q20 치밀뼈 치유 순서</li>
+        <li>Q21 고정기 안전 물리치료</li>
+        <li>Q22 민폭손가락뼈관절 골절</li>
+        <li>Q23 무릎뼈 내 연결 골절 유형</li>
+        <li>Q24 노신경 관련 골절</li>
+        <li>Q25 Neer 3분절 특징</li>
+        <li>Q26 Holstein-Lewis 증후군</li>
+        <li>Q27 넙다리뼈 목 불안정 치료</li>
+        <li>Q28 완전골절 분류 기호</li>
+        <li>Q29 긴뼈 설명 틀린 것</li>
+        <li>Q30 노신경 손상 – 위팔뼈 중간</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:14px">
+    <div class="keyword-row">
+      <span class="kw">AVN</span><span class="kw">Monteggia</span><span class="kw">Galeazzi</span>
+      <span class="kw">Four-part</span><span class="kw">Neer 분류</span><span class="kw">Bennett</span>
+      <span class="kw">Rolando</span><span class="kw">Pott's</span><span class="kw">Holstein-Lewis</span>
+      <span class="kw">Maisonneuve</span><span class="kw">치밀뼈 치유</span><span class="kw">AVN 위험</span>
+      <span class="kw">노신경</span><span class="kw">방산형 골절</span><span class="kw">긴뼈</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ 요약 탭 -->
+<div id="tab-summary" class="panel">
+
+  <details class="summary-section" open>
+    <summary>🔴 AVN 위험이 높은 골절</summary>
+    <div class="content">
+      <p><strong>위팔뼈 근위부 Four-part 골절</strong>은 상완동맥 혈류 차단 가능성이 가장 높아 <strong>무혈성 괴사(AVN)</strong> 위험이 매우 높다.</p>
+      <p style="margin-top:8px">넙다리뼈 목 골절도 AVN 위험이 높으며, <strong>임박골절(impacted fracture)</strong> 시 초기 X-ray에서 잘 나타나지 않을 수 있음.</p>
+      <div style="margin-top:10px">
+        <span class="tag r">위팔뼈 4분절 → AVN</span>
+        <span class="tag r">넙다리뼈 목 → AVN</span>
+        <span class="tag g">1~3분절: 비교적 안전</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>🟡 Monteggia vs Galeazzi 골절</summary>
+    <div class="content">
+      <table>
+        <tr><th>구분</th><th>Monteggia</th><th>Galeazzi</th></tr>
+        <tr><td>골절 부위</td><td>자뼈 몸통(근위부)</td><td>노뼈 원위부</td></tr>
+        <tr><td>탈구</td><td>노뼈 머리(radial head) 탈구</td><td>자뼈 원위부 탈구</td></tr>
+        <tr><td>신경 손상</td><td>후골간신경(PIN) 손상 가능</td><td>중간신경 손상</td></tr>
+        <tr><td>기억법</td><td>Mon = 위쪽(근위)</td><td>Gal = 아래쪽(원위)</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>🟢 해부학적 코담배갑 (Anatomical Snuffbox)</summary>
+    <div class="content">
+      <p>손목 배쪽, 엄지 기저부에 위치. 내용물:</p>
+      <ul style="margin-top:8px;padding-left:16px">
+        <li>노뼈동맥(radial artery)</li>
+        <li>노신경 표재가지</li>
+        <li>손목폄근/엄지긴폄근 힘줄</li>
+      </ul>
+      <p style="margin-top:8px"><strong>압통 시 → 손배뼈(scaphoid) 골절 의심</strong></p>
+      <div style="margin-top:6px">
+        <span class="tag">노쪽(가쪽)경계: 긴엄지벌림근, 짧은엄지폄근</span>
+        <span class="tag">자쪽(안쪽)경계: 긴엄지폄근</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>🔵 Neer 분류 (위팔뼈 근위부)</summary>
+    <div class="content">
+      <table>
+        <tr><th>분절</th><th>특징</th><th>치료</th></tr>
+        <tr><td>1분절</td><td>변위 없음 (단일 골절)</td><td>보존적</td></tr>
+        <tr><td>2분절</td><td>1개 분절 이상 전위</td><td>대부분 수술 불필요</td></tr>
+        <tr><td>3분절</td><td>2개 분절 전위, 관절 불안정</td><td>수술 고려</td></tr>
+        <tr><td>4분절</td><td>3개 이상 전위 + 관절면</td><td>AVN 매우 높음</td></tr>
+      </table>
+      <p style="margin-top:8px;font-size:0.82rem;color:var(--warn)">⚠ 4분절 = 상완동맥 차단 → AVN 위험 최고</p>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>🟣 치밀뼈 치유 순서 (염증기→ 5일 이내)</summary>
+    <div class="content">
+      <p style="font-size:0.85rem;margin-bottom:8px">골절 후 5일 이내: <strong>염증기</strong> 골절 직후부터 언골이나 뼈가 형성될 때까지 계속</p>
+      <p style="background:#F0FDF4;padding:10px;border-radius:8px;font-size:0.85rem;line-height:1.8">
+        연부조직손상 → <strong>원종형성</strong> → 가사조직형성 → 큰포식세포·림프구에 의한 괴사조직 제거 → <strong>새로운 기질 형성</strong>
+      </p>
+      <div style="margin-top:8px">
+        <span class="tag g">정답: 연부→원종→가사조직→괴사제거→새기질</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>🟠 Holstein-Lewis 증후군</summary>
+    <div class="content">
+      <p><strong>위팔뼈 나선형 골절</strong>에서 노신경이 끼어 압박 → 신경손상 증후군</p>
+      <ul style="margin-top:8px;padding-left:16px">
+        <li>손목·손가락 능동적 폄 어려움</li>
+        <li>손등 감각 저하</li>
+        <li>✖ 정중신경 증상 아님</li>
+      </ul>
+      <div style="margin-top:8px">
+        <span class="tag r">노신경 마비 가능성</span>
+        <span class="tag">위팔뼈 중간~원위 나선형 골절</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>🩵 Pott's 골절 – 손상 부위가 아닌 뼈</summary>
+    <div class="content">
+      <p>Pott's 골절: <strong>안쪽복사, 가쪽복사, 세모인대</strong>와 함께 손상 가능</p>
+      <p style="margin-top:8px"><strong>목말뼈</strong>는 Pott's 골절에서 직접 손상되는 부위가 <span style="color:var(--wrong);font-weight:700">아님</span></p>
+      <div style="margin-top:8px">
+        <span class="tag r">✖ 목말뼈 = 직접 손상 아님</span>
+        <span class="tag g">✔ 안쪽/가쪽 복사, 세모인대 손상</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="summary-section">
+    <summary>💜 Hold-Relax 기법</summary>
+    <div class="content">
+      <ul style="padding-left:16px;line-height:1.8">
+        <li>짧아진 근육의 <strong>등척성 수축 후 이완</strong>하여 신장</li>
+        <li>길항근을 반복적으로 등장성 수축시킴</li>
+        <li>치료사가 수동적으로만 신장 → ✖ 틀림</li>
+        <li>환자가 수축 없이 스트레칭만 수행 → ✖ 틀림</li>
+      </ul>
+    </div>
+  </details>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ 퀴즈 탭 -->
+<div id="tab-quiz" class="panel">
+  <div id="quiz-start">
+    <p>총 <strong>30문제</strong> · 틀린 문제 재출제 가능</p>
+    <button class="big-btn" onclick="startQuiz()">🚀 퀴즈 시작</button>
+    <div id="retry-btn-wrap" style="margin-top:12px;display:none">
+      <button class="action-btn secondary" onclick="startRetry()">🔄 틀린 문제만 다시 풀기 (<span id="wrong-count-badge">0</span>문제)</button>
+    </div>
+  </div>
+
+  <div id="quiz-body" style="display:none">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span id="prog-text">0 / 30</span>
+        <span id="score-text">점수: 0</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="q-area"></div>
+  </div>
+
+  <div id="score-card">
+    <h2>🎉 퀴즈 완료!</h2>
+    <div class="score-big" id="final-score">0</div>
+    <p class="score-sub" id="final-sub">0문제 맞음</p>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="restartAll()">처음부터 다시</button>
+      <button class="action-btn secondary" id="retry-wrong-btn" onclick="startRetry()" style="display:none">틀린 문제만 재풀기</button>
+    </div>
+    <div class="wrong-summary" id="wrong-summary-area"></div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "70세 여성이 넘어져 발을 짚은 후 심한 어깨 통증을 호소하여 내원하였다. 방사선 검사 결과, 위팔뼈 머리(humeral head), 큰결절(greater tuberosity), 작은결절(lesser tuberosity)이 각각 1cm 이상 분리되고 45도 이상의 각 변형을 동반한 골절을 보였다. Neer 분류에 해당하며, 이 환자에게 발생할 가능성이 가장 높은 심각한 합병증은 무엇인가?",
+    opts:["겨드랑신경 손상 (Axillary nerve injury)","뼈근육통증 (Myositis ossificans)","불유합 (Nonunion)","무혈성 괴사 (Avascular necrosis)","상완신경얼기 손상 (Brachial plexus injury)"],
+    ans: 3,
+    exp: "위팔뼈 근위부 Four-part 골절(Neer 4분절)은 상완동맥 혈류 차단 가능성이 매우 높아 무혈성 괴사(AVN) 발생 위험이 가장 높다."
+  },
+  {
+    q: "오토바이 사고로 아래팔에 심한 외상을 입은 환자가 응급실로 내원하였다. 검사 결과, 자뼈 몸통 1/3 지점 골절과 함께 노뼈 머리가 앞쪽으로 탈구된 소견이 확인되었다. 이 골절 유형과 관련된 신경학적 합병증은 무엇인가?",
+    opts:["몬테지아 골절 (Monteggia fracture) - 자신경 손상","갈레아찌 골절 (Galeazzi fracture) - 자신경 손상","몬테지아 골절 (Monteggia fracture) - 노신경 깊은가지(뒤뼈사이신경) 손상","갈레아찌 골절 (Galeazzi fracture) - 정중신경 손상","아래팔뼈 동시 골절 (Both forearm fracture) - 노신경 손상"],
+    ans: 2,
+    exp: "자뼈 근위부 골절 + 노뼈 머리 탈구 = Monteggia 골절. 노뼈 머리 탈구 시 후골간신경(PIN, 뒤뼈사이신경) 손상 가능."
+  },
+  {
+    q: "축구선수가 경기 중 왼 발목이 심하게 안쪽번(inversion)된 후 이어서 가쪽번(eversion)되는 동반 힘을 받으며 넘어졌다. 검사 결과 가쪽복사뼈(lateral malleolus) 골절과 함께 골절면의 가 특위가 차단되어 내측 구조물의 손상이 동반되는 것이 나타났다. 이 손상에 Pott's 골절 분류상 몇 도에 해당하며, 동반된 내측 불안정성은 어떤 구조물의 손상으로 인해 발생할 수 있는가?",
+    opts:["1도, 가쪽인대(lateral ligament) 파열","2도, 세모인대(deltoid ligament) 과열 또는 안쪽복사뼈(medial malleolus) 골절","3도, 안쪽정강종아리인대(distal tibiofibular ligament) 파열","3도, 세모인대(deltoid ligament) 과열 및 안쪽복사뼈(medial malleolus) 골절","3도, 정강뼈 뒤쪽모서리(posterior margin of tibia) 골절"],
+    ans: 1,
+    exp: "문제에서 명시된 가쪽복사뼈 골절로 Pott's 분류상 최소 2도. 2도는 가쪽복사뼈 골절 외 세모인대 과열 또는 안쪽복사뼈 골절이 동반 가능."
+  },
+  {
+    q: "45세 남성이 스키를 타다 넘어져 왼손 손목 통증을 호소했다. 손목 X-ray 상 특이 소견은 없었으나, 해부학적 코담배갑(anatomical snuffbox) 부위에 뚜렷한 압통과 미세한 부종이 관찰되었다. 이 환자에게 가장 심각하게 발생할 수 있는 합병증으로 가장 심각한 합병증은 무엇인가?",
+    opts:["노뼈붓돌기 골절 (Radial styloid fracture) - 관절 강직","손배뼈 허리 골절 (Scaphoid waist fracture) - 무혈성 괴사","반달뼈 탈구 (Lunate dislocation) - 정중신경 압박","사다리뼈 골절 (Trapezium fracture) - 외상성 관절염","콜레스 골절 (Colles' fracture) - 불유합"],
+    ans: 1,
+    exp: "해부학적 코담배갑 압통 → 손배뼈(scaphoid) 골절 의심. 손배뼈 허리 골절은 혈류 공급 불량으로 무혈성 괴사(AVN) 위험이 높다."
+  },
+  {
+    q: "고령의 여성이 낙상 후 발생한 엉덩관절 부위 통증으로 내원하였다. 방사선 검사 결과, 넙다리뼈(femoral neck)의 전위가 없는 감입골절(impacted fracture) 소견을 보였다. 이 환자의 초기 치료로 시 가장 주의해야 할 점은 무엇인가?",
+    opts:["초기부터 체중 부하 운동 시작","무릎 관절의 완전한 폄(extension) 운동 제한","엉덩관절의 과도한 돌림(rotation) 운동 방지","통증이 없는 경우에도 목발 보행 시작","엉덩관절 벌림(abduction) 근력 강화 운동 집중"],
+    ans: 2,
+    exp: "감입골절 시 돌림 운동은 감입된 골절이 전위될 수 있어 과도한 돌림(rotation)을 방지해야 한다."
+  },
+  {
+    q: "메조느-브검사 (Maisonneuve's test)에 대한 설명으로 가장 알맞은 것은?",
+    opts:["환자를 앉은 자세에서 검사를 실시하며 양쪽 발관관절을 약 20도 굽힌 상태에서 만든다","양성 소견으로 아래팔 얼밀 변형, 손목 뒤틀린 변형, 불균형한 손목 자세가 있다","양성 소견으로 아래팔 얼밀 변형, 손목 굽힘 제한이 있다","스미스골절에 대한 여부를 확인하는 검사이다","검사자는 양쪽 손목의 굽힘 범위와 모양을 비교한다"],
+    ans: 1,
+    exp: "환자를 앉은 자세에서 검사를 실시하며 양쪽 발관관절을 약 30도 굽힌 상태에서 손목 뒤틀린 변형, 불균형한 손목 자세가 있는지 확인하는 검사이다."
+  },
+  {
+    q: "등허리뼈 근위부 골절에 대한 분류 중 다음 특성을 가진 골절의 이름으로 알맞은 것은?\n• 불안정성 분골로 분류된다\n• 고에너지 손상에서 발생한다\n• 압박력이 척추체를 360도 방향으로 파열시켜 골편이 후방으로 튀어나온다",
+    opts:["골절 및 탈구","안전벨트 골절","압박 골절","옛길 골절","방산형 골절"],
+    ans: 4,
+    exp: "방산형(burst) 골절은 압박력이 척추체를 360도 방향으로 파열시켜 골편이 후방으로 튀어나오는 불안정성 골절이다."
+  },
+  {
+    q: "베내트골절은 (①)의 바닥의 (②) 골절로, 골절과 함께 (③)을 동반하며, 예후가 (④)하다.\n빈칸에 들어갈 가장 알맞은 단어를 고르시오.",
+    opts:["1번째 손허리뼈 / 관절외 / 탈구 / 양호","2번째 손허리뼈 / 관절외 / 탈구 / 불량","1번째 손허리뼈 / 관절외 / 분절 / 양호","1번째 발뼈 / 관절외 / 분절 / 장기적인 기능장애 가능성","1번째 손허리뼈 / 관절외 / 불안정성 / 불량"],
+    ans: 0,
+    exp: "베내트골절은 1번째 손허리뼈 바닥의 단일 골절로, 노쪽 손목뼈 관절과 연결된 관절내 골절이다. 골절과 함께 탈구(불안정성)을 동반하며 비교적 예후가 양호하다."
+  },
+  {
+    q: "다음 중 위팔뼈 근위부 골절에 대해 옳지 않은 것은?",
+    opts:["엄지손허리뼈바닥부 골절은 1번째 손허리뼈 바닥 부위에서 발생하는 특수 골절이다","베네트골절은 정확한 정복 시 비교적 예후가 양호하다","베네트골절은 엄지손가락에 측방 압력 또는 축방 압력이 가해질 때 발생한다","롤란도골절은 조각과 골절 형태여서 완전한 해부학적 정복이 어렵다","몰란도골절은 고에너지 손상으로 엄지에 강한 압력이 작용할 때 발생한다"],
+    ans: 3,
+    exp: "롤란도골절은 Y형 또는 T형 분쇄골절 형태이므로 내고정을 시도하나 완전한 해부학적 정복이 어렵다. (정답: 4번)"
+  },
+  {
+    q: "다음 중 엄지손허리뼈바닥부 골절에 대해 옳지 않은 것은?",
+    opts:["엄지손허리뼈바닥부 골절은 1번째 손허리뼈 바닥 부위에서 발생하는 특수 골절이다","베네트골절은 정확한 정복 시 비교적 예후가 양호하다","베네트골절은 엄지손가락에 측방 압력이 가해질 때 발생한다","롤란도골절은 조각과 골절 형태여서 해부학적 정복이 어렵다","몰란도골절은 고에너지 손상으로 엄지에 강한 압력이 작용할 때 발생한다"],
+    ans: 2,
+    exp: "베네트골절은 측방 압력이 아니라 엄지손가락의 축방향(종축) 압력이 가해질 때 발생한다."
+  },
+  {
+    q: "메조느-브검사 (Maisonneuve's test)에 대한 설명으로 가장 알맞은 것은?",
+    opts:["환자를 앉은 자세에서 검사를 실시하며 양쪽 발관관절을 약 20도 굽힌 상태에서 만든다","환자를 앉은 자세에서 검사를 실시하며 양쪽 발관관절을 약 30도 굽힌 상태에서 만든다","양성 소견으로 아래팔 얼밀 변형, 손목 굽힘 제한이 있다","스미스골절에 대한 여부를 확인하는 검사이다","검사자는 양쪽 손목의 굽힘 범위와 모양을 비교한다"],
+    ans: 1,
+    exp: "Maisonneuve's test: 환자를 앉은 자세에서 양쪽 발관관절을 약 30도 굽힌 상태, 손목 뒤틀린 변형 및 불균형 자세 확인."
+  },
+  {
+    q: "동허리뼈 근위부에 대한 분류 중 다음 특성을 가진 골절의 이름으로 알맞은 것은?\n• 불안정성 골절로 분류된다\n• 고에너지 손상에서 발생한다\n• 압박력이 척추체를 360도 방향으로 파열시켜 골편이 후방으로 튀어나온다",
+    opts:["골절 및 탈구","안전밸드 골절","압박 골절","옛길 골절","방산형 골절"],
+    ans: 4,
+    exp: "방산형(burst) 골절: 압박력이 척추체를 360도 방향으로 파열. 골편이 후방으로 나와 신경관을 침범할 수 있음."
+  },
+  {
+    q: "베내트골절은 (①)의 바닥의 (②) 골절로, 골절과 함께 (③)을 동반하며, 예후가 (④)하다.",
+    opts:["1번째 손허리뼈 / 관절외 / 탈구 / 양호","2번째 손허리뼈 / 관절내 / 탈구 / 불량","1번째 손허리뼈 / 관절외 / 분절 / 양호","1번째 발뼈 / 관절외 / 분절 / 장기 기능장애","1번째 손허리뼈 / 관절외 / 불안정성 / 불량"],
+    ans: 0,
+    exp: "베내트골절은 1번째 손허리뼈 바닥의 단일 골절(관절외). 탈구 동반, 예후 양호."
+  },
+  {
+    q: "골절의 구조로 옳은것은?",
+    opts:["자형성전위=골절면이 옆으로 밀러난 상태","신연전위=골절면이 비틀린 상태","겹입전위=골절 각도가 생긴 상태","끼임전위=뼈 조각이 서로 파고들어 짧아진 상태","돌림전위=골절면 사이가 벌어진 상태"],
+    ans: 3,
+    exp: "끼임전위: 뼈 조각이 서로 파고들어 짧아진 상태. 각형성전위=각도 생김, 신연전위=사이 벌어짐, 돌림=비틀림."
+  },
+  {
+    q: "골절치유 과정으로 옳은것은?",
+    opts:["혈종>해면뼈>치밀뼈","가골>혈종>해면뼈>치밀뼈","해면뼈>치밀뼈>가골>혈종","치밀뼈>가골>해면뼈>혈종","혈종>가골>해면뼈>치밀뼈"],
+    ans: 4,
+    exp: "골절 치유: 혈종 형성 → 가골(연골 가골) 형성 → 해면뼈(경골 가골) → 치밀뼈(완전 개형)."
+  },
+  {
+    q: "위팔뼈 몸통골절 내용 중 틀린것은?",
+    opts:["곤다공증이 있는 노인여성에게 자주 발생·된다","신경·근원 손상이나 관절 기능 장애가 동반될 수 있다","특히한 겨드랑신경 손상이 흔하다","임상에서 Neer 분류방법을 가장 널리 사용한다","간접외상은 골절부의 손에 전달된 충격이 위팔로 전해지는 경우이다"],
+    ans: 2,
+    exp: "위팔뼈 몸통 골절에서는 겨드랑신경 손상이 아닌 노신경(radial nerve) 손상이 더 흔하다."
+  },
+  {
+    q: "갈레아찌와 몬테지아 골절에서 서로 짝지어지지 않은 것은?",
+    opts:["몬테지아: 원인-왼쪽 뒤쪽 타격,손 고 넘어진 경우","몬테지아: 완인-과회전 도는 과신전 시 자뼈 손상","갈레아찌 치료-완관관절 90도 굽힘,완전 뒤침 자세로 긴 팔 석고로 6-8주 고정","몬테지아: 주요치료-내고정,연요 시 환형인대의 재건술/관절적적맞춤","몬테지아 주요 병리-아래노자관절 불안정성"],
+    ans: 4,
+    exp: "몬테지아의 주요 병리는 아래노자관절 불안정성이 아니라 위노자관절(proximal radioulnar joint) 불안정성 및 노뼈 머리 탈구이다."
+  },
+  {
+    q: "해부학적 코담배갑에 대한 내용으로 옳은 것을 고르시오.",
+    opts:["노쪽(가쪽)경계: 긴엄지벌림근, 짧은엄지폄근","자쪽(안쪽)경계: 긴엄지벌림근","자쪽(안쪽)경계: 긴엄지지벌림근, 긴엄지폄근","노쪽(가쪽)경계: 긴엄지지벌림근, 짧은엄지폄근","엄지를 폈을 때 손바닥 쪽에 오목하게 들어가는 공간이다"],
+    ans: 0,
+    exp: "해부학적 코담배갑: 노쪽(가쪽) 경계 = 긴엄지벌림근 + 짧은엄지폄근 / 자쪽(안쪽) 경계 = 긴엄지폄근."
+  },
+  {
+    q: "반반고리 골절 중 불안정성 골절이 아닌것은?",
+    opts:["양동이 손잡이형 골절","수직얼결잡힘 골절","두덩뼈 앞쪽활 골절","엉치엉덩관절 골절","엉덩뼈 날개 골절"],
+    ans: 2,
+    exp: "두덩뼈 앞쪽활 골절은 안정성 골절에 해당한다. 불안정성 골절: 양동이 손잡이형, 수직얼결잡힘, 두덩뼈 앞쪽활 골절은 일부 안정성 포함."
+  },
+  {
+    q: "치밀뼈의 치유과정 중 임증기에 대한 순서로 옳은 것은?",
+    opts:["연부조직손상 → 큰포식세포와 림프구에의한 괴사조직·괴사조직형성 → 원종형성 → 새로운 기질 형성","연부조직손상 → 원종형성 → 새로운 기질 형성 → 큰포식세포와 림프구에 의한 괴사조직제거 → 괴사조직형성","연부조직손상 → 괴사조직형성 → 원종형성 → 큰포식세포와 림프구에 의한 괴사조직 제거 → 새로운 기질 형성","연부조직손상 → 원종형성 → 괴사조직형성 → 큰포식세포와 림프구에 의한 괴사조직 제거 → 새로운 기질 형성","연부조직손상 → 원종형성 → 큰포식세포와 림프구에 의한 괴사조직 제거 → 괴사조직형성 → 새로운 기질 형성"],
+    ans: 3,
+    exp: "치밀뼈 염증기 순서: 연부조직손상 → 원종형성 → 괴사조직형성 → 큰포식세포·림프구에 의한 괴사조직 제거 → 새로운 기질 형성."
+  },
+  {
+    q: "고정기간에 가장 안전한 치료기구로 금속 삽입물이 있는 경우에도 실시할 수 있는 물리치료적 중재로 옳은 것은?",
+    opts:["초음파","단파","전기치료","극초단파","신장운동"],
+    ans: 0,
+    exp: "초음파는 금속 삽입물 부위에 영 집중현상으로 조직파괴가 생기므로 주의가 필요하다. 다른 전기치료는 일반으로 문제. 신장운동이 가장 안전하다. → 정답은 신장운동(5번)."
+  },
+  {
+    q: "민폭손가락뼈관절에 강한 힘으로 굽힘력을 받을 때 손가락폄근의 민폭부착점이 단열되면서 발생한다. 이로 인해 끝마디뼈가 굽혀지지 않아 굽힘 변형을 초래하는 골절로 옳은 것은?",
+    opts:["망치손가락","베네트골절","스미스골절","콜레스골절","복서골절"],
+    ans: 0,
+    exp: "망치손가락: 민폭손가락뼈관절에 강한 힘으로 굽힘력을 받을 때 손가락폄근의 민폭부착점이 단열되어 끝마디뼈가 굽혀지지 않는 골절."
+  },
+  {
+    q: "골절선이 무릎관절 내에까지 연결되어 I형 혹은 Y형을 나타난 골절로 옳은 것은?",
+    opts:["무릎뼈골절","넙다리뼈관절융기골절","정강뼈관절융기기골절","I형 골절","정강뼈가시골절"],
+    ans: 1,
+    exp: "넙다리뼈 관절융기 골절: 골절선이 무관절 내까지 연결, I형 또는 Y형 나타남."
+  },
+  {
+    q: "다음 중 노신경(Radial nerve) 손상과 가장 관련 깊은 골절은?",
+    opts:["넙다리뼈목골절","정강뼈 유가골절","위팔뼈 중간 골절","어깨뼈 골절","자뼈 단근 골절"],
+    ans: 2,
+    exp: "위팔뼈 중간(몸통) 골절은 노신경이 위팔뼈 몸통과 밀접해 있어 노신경 손상과 가장 관련이 깊다."
+  },
+  {
+    q: "다음 중 위팔뼈 근위부(몸통) 골절과 관련된 Neer 분류에서 '3분절 골절'의 특징으로 가장 적절한 것은?",
+    opts:["골절 조각 사이에 이격이 없고, 회전 각도도 20도 이하이다","하나의 골절 조각만 전위된 상태에 관절 안정성은 유지된다","세 개의 분절 중 두 개 이상에서 전위가 발생하며 관절 불안정이 나타난다","넙다리뼈에 가장 흔하게 발생하는 골절 유형이다","대부분 보존적 치료만으로 충분히 회복된다"],
+    ans: 2,
+    exp: "Neer 3분절 골절: 세 개의 분절 중 두 개 이상에서 전위가 발생한 상태로 관절 불안정성이 저하되어 수술적 치료가 필요한 경우가 많다."
+  },
+  {
+    q: "다음 중 위팔뼈 중간 골절 후 발생할 수 있는 Holstein-Lewis 증후군에 대한 설명으로 옳지 않은 것은?",
+    opts:["나선형 골절에서 자주 발생한다","노신경이 골절선 사이에 끼어 발생하는 질환이다","손목과 손가락의 능동적 폄 불가능하다","손등의 감각 소실이 발생할 수 있다","손의 부력감은 정중신경 손상에 의한 것이다"],
+    ans: 4,
+    exp: "Holstein-Lewis 증후군은 위팔뼈 나선형 골절에서 노신경이 끼어 압박되어 발생하는 신경손상 증후군으로, 정중신경에 해당하는 증상이 아니다."
+  },
+  {
+    q: "74세 여성이 낙상 후 엉덩관절 통증을 호소하며 내원하였다. X-ray에서 넙다리뼈 목 골절이 관찰되며, 전위가 뚜렷하며 혈류 공급이 차단된 상태로 불안정한 골절로 판단됨. 이 환자에게 적용할 수 있는 적절한 치료 방법은?",
+    opts:["석고 고정 후 경과 관찰","보존적 재활 치료와 삼각건 고정","인공관절치환술 또는 나사 고정술","근위부 골이식술 시행 후 재활","단기 견인인 후 골수강 내 금속정 삽입"],
+    ans: 2,
+    exp: "전위된 불안정 넙다리뼈 목 골절에서는 AVN 위험이 높으므로 인공관절치환술 또는 나사 고정술이 적절하다."
+  },
+  {
+    q: "완전 골절 유형에 해당하는 것으로 옳은 것을 고르시오.\n- 가: 잠입골절  나: 관통골절  다: 개방골절  라: 압박골절  마: 분쇄골절  바: 함몰골절",
+    opts:["가,나,다,마","가,나,다,마,바","나,다,마,H","가,나,다,마,H","다,라,마,H"],
+    ans: 0,
+    exp: "완전골절: 잠입골절(가), 관통골절(나), 개방골절(다), 분쇄골절(마). 압박골절·함몰골절은 불완전골절에 해당."
+  },
+  {
+    q: "긴상뼈에 대한 설명으로 옳지 않은 것을 고르시오.",
+    opts:["길이가 길고 중강부가 가늘며 양쪽 끝이 팽대한 형태의 뼈이다","지렛대 역할을 하며, 하중지지, 운동 기능을 한다","외부는 치밀뼈로, 내부는 해면뼈로 구성되어있다","뼈조직의 한 형태이다","넙다리뼈, 위팔뼈, 정강뼈가 해당한다"],
+    ans: 3,
+    exp: "긴상뼈는 뼈의 외형적 분류(모양에 따른 분류)이지, 뼈조직의 한 형태가 아니다."
+  },
+  {
+    q: "26세의 프로야구 투수 김○우 선수는 경기 중 140km/h 이상의 빠른 공을 반복적으로 던진중, 공을 던지는 순간 '뚝' 하는 소리와 함께 우측 위팔에 극심한 통증을 느끼며 마운드에서 쓰러졌으며 병원에 이송된 후 Passive wrist extension은 가능하나 Active wrist extension이 제한이 발생하였으며 운동 감각에 저하가 있다. - 위 환자의 골절부위와 합병증으로 가장 올바른 것을 고르시오.",
+    opts:["위팔뼈 몸통 골절 - 정중신경 손상","위팔뼈 안쪽 골절 - 무혈성 괴사","위팔뼈 중간 골절 - 노신경 손상","위팔뼈 중간 골절 - holstein-Lewis증후군","위팔뼈 중간 골절 - 정중신경 손상"],
+    ans: 2,
+    exp: "위팔뼈 중간 골절은 야구 투수동작, 팔던지기 동작에서 발생할 수 있으며 해부학적으로 노신경이 위팔뼈 몸통과 밀접해 있어 노신경 손상."
+  }
+];
+
+let queue = [];
+let currentIdx = 0;
+let score = 0;
+let answered = false;
+let wrongList = [];
+let isRetry = false;
+
+function showTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function startQuiz() {
+  queue = shuffleArr([...Array(QUESTIONS.length).keys()]);
+  currentIdx = 0; score = 0; wrongList = []; answered = false; isRetry = false;
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('score-card').style.display = 'none';
+  document.getElementById('quiz-body').style.display = 'block';
+  renderQ();
+}
+
+function startRetry() {
+  if (wrongList.length === 0) return;
+  queue = shuffleArr([...wrongList]);
+  currentIdx = 0; score = 0; answered = false; isRetry = true;
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('score-card').style.display = 'none';
+  document.getElementById('quiz-body').style.display = 'block';
+  renderQ();
+}
+
+function shuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function renderQ() {
+  const total = queue.length;
+  const done = currentIdx;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('prog-text').textContent = `${done} / ${total}`;
+  document.getElementById('score-text').textContent = `점수: ${score}`;
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const qIdx = queue[currentIdx];
+  const q = QUESTIONS[qIdx];
+  answered = false;
+
+  let optsHtml = q.opts.map((o, i) =>
+    `<li id="opt-${i}" onclick="selectOpt(${i}, ${q.ans})">\
+      <span class="opt-num">${i+1}.</span>\
+      <span>${o}</span></li>`
+  ).join('');
+
+  document.getElementById('q-area').innerHTML = `
+    <div class="q-card">
+      <div class="q-num">문제 ${qIdx + 1} / ${total}문제</div>
+      <div class="q-text">${q.q.replace(/\n/g,'<br>')}</div>
+      <ul class="opt-list">${optsHtml}</ul>
+      <div class="explain-box" id="exp-box"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQ()">다음 문제 →</button>
+    </div>`;
+}
+
+function selectOpt(chosen, correct) {
+  if (answered) return;
+  answered = true;
+  const items = document.querySelectorAll('.opt-list li');
+  items.forEach(li => li.classList.add('disabled'));
+  items[correct].classList.add('correct');
+
+  const expBox = document.getElementById('exp-box');
+  const qIdx = queue[currentIdx];
+  const q = QUESTIONS[qIdx];
+
+  if (chosen === correct) {
+    score++;
+  } else {
+    items[chosen].classList.add('wrong');
+    if (!isRetry && !wrongList.includes(qIdx)) wrongList.push(qIdx);
+    expBox.classList.add('wrong-exp');
+  }
+  expBox.textContent = '💡 ' + q.exp;
+  expBox.classList.add('show');
+  document.getElementById('next-btn').classList.add('show');
+  document.getElementById('score-text').textContent = `점수: ${score}`;
+}
+
+function nextQ() {
+  currentIdx++;
+  if (currentIdx >= queue.length) {
+    showScore();
+  } else {
+    renderQ();
+  }
+}
+
+function showScore() {
+  document.getElementById('quiz-body').style.display = 'none';
+  const card = document.getElementById('score-card');
+  card.style.display = 'block';
+  const total = queue.length;
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('final-score').textContent = pct + '%';
+  document.getElementById('final-sub').textContent = `${total}문제 중 ${score}문제 정답`;
+
+  const retryBtn = document.getElementById('retry-wrong-btn');
+  const badge = document.getElementById('wrong-count-badge');
+  if (wrongList.length > 0 && !isRetry) {
+    retryBtn.style.display = 'inline-block';
+    retryBtn.textContent = `틀린 문제만 재풀기 (${wrongList.length}문제)`;
+    badge.textContent = wrongList.length;
+    document.getElementById('retry-btn-wrap').style.display = 'block';
+  }
+
+  const area = document.getElementById('wrong-summary-area');
+  if (wrongList.length > 0 && !isRetry) {
+    area.innerHTML = `<h4>❌ 틀린 문제 목록</h4>` +
+      wrongList.map(i => `<div class="wrong-item">Q${i+1}. ${QUESTIONS[i].q.substring(0,50)}…</div>`).join('');
+  } else {
+    area.innerHTML = '';
+  }
+}
+
+function restartAll() {
+  document.getElementById('score-card').style.display = 'none';
+  document.getElementById('quiz-start').style.display = 'block';
+  wrongList = [];
+  document.getElementById('retry-btn-wrap').style.display = 'none';
+}
+</script>
+</body>
+</html>

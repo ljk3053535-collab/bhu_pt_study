@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PT Quiz 6W</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0b0e18;
+  --s1:       #131725;
+  --s2:       #1c2035;
+  --s3:       #242840;
+  --border:   #2a2f4a;
+  --accent:   #7ee8a2;
+  --blue:     #5b9cf6;
+  --red:      #ff6b6b;
+  --yellow:   #ffd166;
+  --text:     #dde3f0;
+  --muted:    #5a637a;
+  --radius:   14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;padding:0 0 80px;}
+
+/* ── NAV TABS ── */
+.nav{display:flex;background:var(--s1);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav-btn{flex:1;padding:14px 8px;font-size:13px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;letter-spacing:.5px;transition:color .2s,border-bottom .2s;border-bottom:3px solid transparent;font-family:'Noto Sans KR',sans-serif;}
+.nav-btn.active{color:var(--accent);border-bottom:3px solid var(--accent);}
+
+/* ── VIEWS ── */
+.view{display:none;padding:16px 14px;}
+.view.active{display:block;}
+
+/* ── HEADER ── */
+.quiz-header{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px 14px;margin-bottom:16px;text-align:center;}
+.quiz-header h1{font-family:'JetBrains Mono',monospace;font-size:clamp(13px,3.2vw,17px);color:var(--accent);letter-spacing:1px;margin-bottom:4px;}
+.quiz-header p{font-size:12px;color:var(--muted);}
+.prog-bar{background:var(--s2);border-radius:99px;height:6px;margin:12px 0 6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:99px;width:0%;transition:width .4s;}
+.prog-txt{font-size:11px;color:var(--muted);}
+
+/* ── CARD ── */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;transition:border-color .25s;}
+.card-head{padding:12px 14px 8px;display:flex;gap:9px;align-items:flex-start;}
+.q-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);background:rgba(126,232,162,.1);border:1px solid rgba(126,232,162,.2);border-radius:6px;padding:2px 7px;flex-shrink:0;margin-top:3px;}
+.q-text{font-size:13.5px;line-height:1.65;font-weight:500;}
+.cat-tag{display:inline-block;font-size:10px;color:var(--blue);background:rgba(91,156,246,.1);border:1px solid rgba(91,156,246,.2);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:middle;}
+.opts{padding:0 12px 12px;display:flex;flex-direction:column;gap:5px;}
+.opt-btn{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer;border:1px solid var(--border);background:var(--s2);transition:all .18s;font-size:13px;line-height:1.5;color:var(--text);text-align:left;width:100%;font-family:'Noto Sans KR',sans-serif;}
+.opt-btn:hover:not(.locked){border-color:var(--blue);background:rgba(91,156,246,.07);}
+.opt-btn.correct{border-color:var(--accent)!important;background:rgba(126,232,162,.1)!important;color:var(--accent);}
+.opt-btn.wrong{border-color:var(--red)!important;background:rgba(255,107,107,.07)!important;color:var(--red);}
+.opt-btn.locked{pointer-events:none;}
+.opt-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;margin-top:3px;}
+.opt-btn.correct .opt-lbl,.opt-btn.correct .opt-tx{color:var(--accent);}
+.opt-btn.wrong .opt-lbl,.opt-btn.wrong .opt-tx{color:var(--red);}
+.exp{display:none;margin:0 12px 12px;padding:9px 11px;background:rgba(91,156,246,.07);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;font-size:12.5px;color:#8fa3c8;line-height:1.65;}
+.exp.show{display:block;}
+.exp-label{font-weight:700;color:var(--blue);margin-right:4px;}
+
+/* ── SCORE BOARD ── */
+.score-board{display:none;background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 16px;text-align:center;margin-bottom:16px;}
+.score-board.show{display:block;}
+.s-label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+.s-big{font-family:'JetBrains Mono',monospace;font-size:52px;color:var(--accent);line-height:1;}
+.s-pct{font-size:14px;color:var(--text);margin-top:6px;}
+.btn-reset{margin-top:14px;padding:9px 28px;border-radius:9px;background:var(--accent);color:#0b0e18;font-weight:700;font-size:13px;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.btn-reset:hover{opacity:.85;}
+
+/* ── SUMMARY ── */
+.sum-hero{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:18px 16px;margin-bottom:14px;text-align:center;}
+.sum-hero h2{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--accent);margin-bottom:4px;}
+.sum-hero p{font-size:12px;color:var(--muted);}
+.sum-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.stat-box{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:14px 12px;text-align:center;}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:26px;color:var(--accent);}
+.stat-num.blue{color:var(--blue);}
+.stat-num.red{color:var(--red);}
+.stat-num.yellow{color:var(--yellow);}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:3px;}
+.cat-section{margin-bottom:14px;}
+.cat-title{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.sum-row{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:var(--s1);border:1px solid var(--border);border-radius:9px;margin-bottom:6px;}
+.sum-num{font-family:'JetBrains Mono',monospace;font-size:10px;min-width:28px;padding-top:2px;}
+.sum-num.ok{color:var(--accent);}
+.sum-num.ng{color:var(--red);}
+.sum-num.skip{color:var(--muted);}
+.sum-q{font-size:12.5px;line-height:1.5;flex:1;}
+.sum-ans{font-size:11px;margin-top:3px;color:var(--muted);}
+.sum-ans span{font-weight:600;}
+.sum-ans span.ok{color:var(--accent);}
+.sum-ans span.ng{color:var(--red);}
+.sum-note{font-size:11px;color:#8fa3c8;margin-top:3px;line-height:1.5;}
+.sum-hint{text-align:center;font-size:12px;color:var(--muted);padding:20px;background:var(--s1);border:1px dashed var(--border);border-radius:var(--radius);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab('quiz')">퀴즈</button>
+  <button class="nav-btn" onclick="showTab('summary')">서머리</button>
+</nav>
+
+<!-- QUIZ TAB -->
+<div id="tab-quiz" class="view active">
+  <div class="quiz-header">
+    <h1>근골격계물리치료문제해결</h1>
+    <p>6주차 · 50문제 선별</p>
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <div class="prog-txt" id="progTxt">0 / 50 완료</div>
+  </div>
+  <div class="score-board" id="scoreBoard">
+    <div class="s-label">최종 점수</div>
+    <div class="s-big" id="sBig">-</div>
+    <div class="s-pct" id="sPct"></div>
+    <button class="btn-reset" onclick="resetQuiz()">다시 풀기</button>
+  </div>
+  <div id="qContainer"></div>
+</div>
+
+<!-- SUMMARY TAB -->
+<div id="tab-summary" class="view">
+  <div class="sum-hero">
+    <h2>SUMMARY</h2>
+    <p>퀴즈를 완료하면 결과가 표시됩니다</p>
+  </div>
+  <div class="sum-stats" id="sumStats" style="display:none;">
+    <div class="stat-box"><div class="stat-num" id="st-total">-</div><div class="stat-lbl">전체 문제</div></div>
+    <div class="stat-box"><div class="stat-num blue" id="st-done">-</div><div class="stat-lbl">완료</div></div>
+    <div class="stat-box"><div class="stat-num" id="st-correct">-</div><div class="stat-lbl">정답</div></div>
+    <div class="stat-box"><div class="stat-num red" id="st-wrong">-</div><div class="stat-lbl">오답</div></div>
+  </div>
+  <div id="sumContent">
+    <div class="sum-hint">퀴즈를 풀면 문항별 결과가 여기 표시됩니다.</div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+var Q = [
+  // 근이영양증 (10)
+  {c:"근이영양증", q:"진행근디스트로피에 대한 설명으로 틀린 것은?",
+   o:["중추신경계나 말초신경계 손상 없이 발생한다","유전적 이상으로 발생하는 근육질환이다","검사로 가우어스방법, 토마스검사 등이 있다","X염색체열성에 뒤센느형과 팔다리이음형이 포함된다","주로 남성에게 발생한다"],
+   a:3, e:"팔다리이음형은 X염색체가 아닌 상동염색체 열성형이다."},
+  {c:"근이영양증", q:"뒤센형의 특징적인 임상 징후는?",
+   o:["반복 운동하면 근력이 좋아진다","바닥에서 일어날 때 몸을 짚는 고어 징후가 나타난다","얼굴 근육 마비가 가장 먼저 시작된다","성인기에 발병하며 진행이 느리다","근긴장도가 비정상적으로 높아진다"],
+   a:1, e:"뒤센형은 근력 약화로 바닥에서 몸을 짚고 일어나는 고어 징후와 종아리 가성비대가 특징이다."},
+  {c:"근이영양증", q:"뒤센느형 진행성근이영양증에 대한 설명으로 옳은 것은?",
+   o:["상염색체 우성유전이며 성인에게도 발병한다","반성 열성유전이며 아동기 초기에 발병한다","상염색체 열성유전이며 남녀 모두에서 나타난다","병의 진행이 느리고 15세 이후에도 독립 보행 가능","초기 증세는 어깨·허벅지 근육 약화이다"],
+   a:1, e:"뒤센느형은 반성 열성 유전이며 2~4세에 발병한다. 베커형이 15세 이후도 보행 가능. 초기 어깨·허벅지 약화는 팔다리이음형."},
+  {c:"근이영양증", q:"진행성근이영양증과 관련된 혈액 검사 효소는?",
+   o:["ATPase","Glucose","Epinephrine","Calcitonin","Creatine kinase"],
+   a:4, e:"근육이 손상되면 CK(크레아틴 키나아제)가 혈액으로 유출되어 수치가 상승한다."},
+  {c:"근이영양증", q:"베커형 근디스트로피에서 나타나지 않는 특징은?",
+   o:["뒤센느형보다 진행이 느리다","일반적으로 7세 이후에 증상 시작","12세 전후 첨족 보행과 오리걸음","종아리 근육 가성비대 없음","15세 이후까지 독립 보행 가능"],
+   a:3, e:"베커형에서도 종아리 근육의 가성비대가 나타날 수 있다."},
+  {c:"근이영양증", q:"상염색체 우성 근이영양증이 아닌 것은?",
+   o:["팔다리이음형","얼굴어깨위팔근육형","유아 얼굴어깨위팔형","어깨종아리형","눈디스트로피형"],
+   a:0, e:"팔다리이음형은 상동염색체 열성이다."},
+  {c:"근이영양증", q:"뒤셴느 근이영양증 연령별 특징으로 옳지 않은 것은?",
+   o:["0-3세: 늦게 걷기 시작","3-6세: 척추측만증","3-6세: 발가락 끝 걷기","9-12세: 가우어스 징후가 처음 나타남","9-12세: 휠체어 이용"],
+   a:3, e:"가우어스 징후는 3~6세에 처음 나타난다. 9~12세에는 휠체어를 이용하게 된다."},
+  {c:"근이영양증", q:"진행성 근이영양증 설명으로 몸쪽 근육 약화를 알 수 있는 가장 좋은 검사는?",
+   o:["오버검사","텐실론검사","바빈스키반사 검사","가우어스방법","토마스검사"],
+   a:3, e:"가우어스방법은 바닥에서 한 손을 넙다리에 짚고 일어나는 방식으로 몸쪽 근력 약화를 평가한다."},
+  {c:"근이영양증", q:"진행성 근이영양증에서 몸쪽보다 먼쪽 근육이 더 먼저 침범된다 - 맞는가?",
+   o:["맞다, 손발 근육부터 시작된다","틀리다, 몸쪽(근위부) 근육에 더 잘 침범된다","반반이다","진행 단계에 따라 다르다","어깨와 발목이 동시에 침범된다"],
+   a:1, e:"진행성 근이영양증은 먼쪽보다 몸쪽 팔다리, 골반 및 이음부위에 우선 침범된다."},
+  {c:"근이영양증", q:"뒤시엔느형 근이영양증의 합병증으로 옳은 것은?",
+   o:["뇌졸중","심근병증, 호흡기 합병증, 척추측만","말초신경병증","파킨슨병","고혈압과 당뇨"],
+   a:1, e:"뒤센느형의 주요 합병증은 심근병증, 호흡기 합병증(호흡근 약화), 척추측만증이다."},
+
+  // 검사법 (8)
+  {c:"검사법", q:"Gower's sign에 대한 설명으로 옳은 것은?",
+   o:["손의 감각 이상을 평가하는 검사","상지 근력을 평가하는 검사","몸통을 일으킬 때 손으로 허벅지를 짚고 일어나는 모습","무릎 안정성을 평가하는 검사","발목 반사를 확인하는 검사"],
+   a:2, e:"Gower's sign은 골반·몸통 근약화로 손으로 몸을 짚으며 일어나는 DMD의 대표 징후이다."},
+  {c:"검사법", q:"메이온스 징후(Meryon's sign)에 대한 설명으로 옳은 것은?",
+   o:["팔이음뼈 근약화 검사, 눕힌 상태에서 겨드랑에 손을 넣어 검사","세운 상태에서 겨드랑에 손을 넣어 들 때 팔이 위로 올라가면 양성","팔꿈치와 무릎을 동시에 검사하는 방법","팔꿈치 기능을 평가하는 검사","발목 관절 구축 여부 확인"],
+   a:1, e:"세운 상태에서 겨드랑이에 손을 넣어 들어올릴 때 팔이음뼈 근약화로 팔이 위로 밀려올라가는 현상이다."},
+  {c:"검사법", q:"토마스 검사(Thomas test) 양성 시 보상 작용은?",
+   o:["골반의 뒤쪽 기울임","허리의 앞굽음 증가","어깨 익상 견갑","무릎관절 과도 굽힘","발바닥 굽힘 증가"],
+   a:1, e:"엉덩관절 굽힘근 단축 시 다리를 내릴 때 골반이 앞으로 기울고 허리 앞굽음이 심해진다."},
+  {c:"검사법", q:"진행성 근이영양증과 직접 관련이 없는 검사는?",
+   o:["Ober's test","Thomas test","Ely test","Gower's maneuver","Meryon's sign"],
+   a:2, e:"Ely test는 넓적다리네갈래근 근길이 검사로 근이영양증과 직접 관련이 없다."},
+  {c:"검사법", q:"Tensilon test의 목적은?",
+   o:["근육 구조적 손상 확인","신경전도 속도 측정","AChE 억제로 아세틸콜린 증가 시 증상 호전 여부 확인","근육 단면적 측정","근력 강화 효과 평가"],
+   a:2, e:"Tensilon test(에드로포늄 주입)는 아세틸콜린 분해를 억제해 근력이 일시 호전되는지 확인하는 MG 진단 검사이다."},
+  {c:"검사법", q:"팔렌 검사(Phalen's Test)의 목적은?",
+   o:["근육 강도 측정","어깨 관절 운동 범위 측정","손목터널증후군(CTS) 진단","목뼈 정렬 평가","고관절 굴곡 구축 평가"],
+   a:2, e:"손목을 굽혀 정중신경이 압박될 때 저림·통증이 재현되면 CTS를 의심한다."},
+  {c:"검사법", q:"오버 검사(Ober test)에서 평가하는 구조물은?",
+   o:["중둔근","넙다리근막긴장근 및 장경인대","가자미근","비골근","대퇴이두근"],
+   a:1, e:"오버 검사는 넙다리근막긴장근과 장경인대의 구축 여부를 확인한다."},
+  {c:"검사법", q:"근이영양증 진단에서 전기적 활성도를 측정해 신경지배 상태를 감별하는 검사는?",
+   o:["유전자 검사","근전도 검사(EMG)","근생검(Biopsy)","혈액 검사(CK 수치)","X-선 촬영"],
+   a:1, e:"EMG는 근육에 바늘을 찔러 전기 신호를 기록해 근성/신경성 여부를 감별한다."},
+
+  // 중증 근무력증 (8)
+  {c:"중증근무력증", q:"중증 근무력증(MG)의 주요 원인 기전은?",
+   o:["신경 종말에서 아세틸콜린 방출 차단","말이집(미엘린)이 자가면역 공격으로 파괴","아세틸콜린 수용체(AChR)에 자가항체가 결합해 기능 방해","근육 세포 내 디스트로핀 단백질 결핍","척수 앞뿔세포의 퇴행성 변화"],
+   a:2, e:"자가항체(IgG)가 신경근 접합부의 AChR을 공격하는 자가면역 질환이다."},
+  {c:"중증근무력증", q:"중증성 근무력증(MG)의 특징으로 옳은 것은?",
+   o:["근육 수축 시 근력이 점점 증가한다","반복 사용 시 근력이 감소한다","감각 소실이 나타난다","반사 소실이 주요 증상이다","근육이 비대해진다"],
+   a:1, e:"사용할수록 근력이 감소(fatigability)하는 신경근접합부 질환이다."},
+  {c:"중증근무력증", q:"중증근무력증의 증상에 대한 설명으로 옳지 않은 것은?",
+   o:["얼굴근육 대부분을 침범한다","반복 운동으로 쉽게 피로해진다","휴식에 의해 근육 피로가 일시적으로 회복된다","힘줄반사가 소실되거나 현저히 감소한다","점차적으로 팔 및 호흡근에 침범한다"],
+   a:3, e:"MG에서 힘줄반사는 정상이거나 약간 상승한다. 반사 소실은 하위운동신경원 손상 특징이다."},
+  {c:"중증근무력증", q:"중증 근무력증 환자의 일반적 증상으로 옳은 것은?",
+   o:["얼굴 근육 약화로 눈을 오래 뜨기 어렵고 고개 유지도 힘들다","팔의 마비가 가장 먼저 나타나며 팔꿈치·손목에 국한된다","목 근육 약화 시 비음이 감소한다","전신 근육 약화 없이 얼굴 근육만 영향받는다","아침에 증상이 가장 심하고 오후에는 완화된다"],
+   a:0, e:"MG는 안검하수, 눈 뜨기 어려움, 고개 유지 어려움이 특징. 비음은 감소가 아니라 증가한다."},
+  {c:"중증근무력증", q:"소아 중증 근무력증 중 가족성 유아형은 연령 증가와 함께 어떻게 되는가?",
+   o:["더욱 악화된다","호전된다","변화가 없다","주기적으로 악화와 호전 반복","성인기에 급격히 악화된다"],
+   a:1, e:"가족성 유아형은 연령 증가와 함께 호전된다."},
+  {c:"중증근무력증", q:"중증 근무력증의 원인에 대한 설명으로 틀린 것은?",
+   o:["수의근을 침범하는 신경근성 자가면역질환","근육 약화를 초래한다","신경충동이 뼈대근으로 전달되지 못해 발생","전염성·유전성 질환이 아니다","활동 지속 시 근력 약화 증세가 뚜렷해진다"],
+   a:0, e:"중증 근무력증은 '급성'이 아닌 '만성' 신경근성 자가면역질환이다."},
+  {c:"중증근무력증", q:"MG 검사에 대한 설명으로 옳지 않은 것은?",
+   o:["Tensilon test는 일시적으로 근력을 호전시켜 진단에 도움","반복 신경자극 검사에서 점진적 반응 감소가 나타남","근전도(EMG)에서 신경전도 속도가 증가한다","아세틸콜린 수용체 항체 검사가 진단에 활용된다","근피로도 증가 양상이 평가에 중요하다"],
+   a:2, e:"MG는 신경근 접합부 질환으로, 전도 속도 증가가 아닌 반복 자극 시 반응 감소가 특징이다."},
+  {c:"중증근무력증", q:"다음 임상 특징에 해당하는 질환은? - 얼굴근육 침범, 눈뜨기 어렵고 고개 유지 어려움, 근 피로 반복, 말기에 팔 마비, 턱을 손으로 받치기도 함",
+   o:["진행성 근이영양증","선천성 근무력증","중증성 근무력증","선천성 근무긴장증","뒤센느형"],
+   a:2, e:"중증성 근무력증: 얼굴 근육 침범, 눈뜨기 어려움, 고개 유지 어려움, 근 피로, 점차 팔·호흡근 침범."},
+
+  // 근긴장증 (7)
+  {c:"근긴장증", q:"선천 근긴장증(myotonia) 환자의 특징적인 증상은?",
+   o:["근육 수축 후 즉각 이완이 어렵다","근육이 너무 말랑말랑하고 힘이 없다","근육이 심하게 위축되어 뼈가 보인다","감각 신경 손상으로 통증을 못 느낀다","하지에서 시작해 상지로 진행하는 마비"],
+   a:0, e:"근긴장증은 근육 수축 후 이완이 지연되는 현상이 핵심이다."},
+  {c:"근긴장증", q:"선천 근무긴장증(오펜하임병)의 임상증상으로 옳은 것은?",
+   o:["전신 근육이 뻣뻣하게 굳어있다","출생 직후부터 근긴장도가 매우 낮아 늘어진 아기 양상","지적 장애가 반드시 동반된다","근육의 비정상적 비대가 나타난다","안구 근육 마비가 가장 먼저 나타난다"],
+   a:1, e:"선천 근무긴장증은 근긴장도가 비정상적으로 낮아 몸이 축 늘어지는 이완성 마비가 특징이다."},
+  {c:"근긴장증", q:"선천 근긴장증 톰슨형과 베커형 비교 설명으로 옳지 않은 것은?",
+   o:["톰슨형은 비교적 어린 시기에 증상 나타남","베커형은 톰슨형보다 증상이 더 심한 경향","두 유형 모두 근수축 후 이완 지연이 특징","베커형은 근육 비대와 기능적 제한이 클 수 있다","톰슨형이 베커형보다 보행장애와 낙상이 더 흔하다"],
+   a:4, e:"톰슨형은 기능제한이 비교적 적고, 베커형에서 보행장애·낙상이 더 잘 발생한다."},
+  {c:"근긴장증", q:"선천 근긴장증 임상증상으로 아닌 것은?",
+   o:["출생 시부터 근긴장 증상","쥐기·타진 근긴장증 증상","전신보다 손끝·발끝 근긴장이 더 심하다","반복운동 후 근긴장증이 점차 감소","10대 후반에 확실해지며 침범 근육 광범위"],
+   a:2, e:"전신 근긴장이 더욱 심하게 나타나며, 손끝·발끝이 더 심한 것은 아니다."},
+  {c:"근긴장증", q:"웜업(Warm-up) 현상에 대해 옳지 않은 것은?",
+   o:["근긴장증 환자에게 나타나는 대표적 특징","근위축·말초신경병과 구별하는 데 유용","반복 움직임 후 증상이 가벼워짐","반복 수축 시 이완 반응이 향상됨","초기에 유연함"],
+   a:4, e:"웜업 현상은 초기에 뻣뻣하지만 반복 움직임 후 증상이 가벼워지는 것이다. 초기가 유연한 것이 아니다."},
+  {c:"근긴장증", q:"오펜하임병에 대한 설명으로 옳은 것은?",
+   o:["DTR 반사가 증가한다","아세틸콜린 수용기 항체 양을 측정한다","냉치료를 적용해야 한다","항문괄약근 이상이 보인다","일반적으로 근육의 쇠약이 별로 없다"],
+   a:4, e:"오펜하임병: DTR 저하. 냉에 민감해 온치료 적용. 항문괄약근 정상. 일반적으로 근육 쇠약은 별로 없다."},
+  {c:"근긴장증", q:"태어날 때부터 이완성 마비 형태, 감각과 지능은 정상, 가로막은 침범되지 않는 질환은?",
+   o:["선천 근긴장증","근이영양증","오펜하임병","파킨슨병","말초신경병증"],
+   a:2, e:"오펜하임병(선천 근무긴장증)은 이완성 마비, 정상 감각·지능, 가로막 미침범이 특징이다."},
+
+  // 신경계 UMN/LMN (6)
+  {c:"신경계", q:"위운동신경세포의 경로로 옳은 것은?",
+   o:["대뇌 피질 → 척수뒤뿔 → 말초신경 → 골격근","대뇌 피질 → 내포 → 중간뇌 → 다리뇌 → 숨뇌 피라미드 교차 → 척수","대뇌 피질 → 시상 → 소뇌 → 척수앞뿔","뇌줄기 → 말초신경 → 골격근","척수앞뿔 → 말초신경 → 골격근"],
+   a:1, e:"위운동신경세포: 대뇌피질 → 내포 → 중간뇌 → 다리뇌 → 숨뇌 피라미드 교차 → 척수 → 아래운동신경세포."},
+  {c:"신경계", q:"위운동신경세포 손상 시 나타나는 특징은?",
+   o:["아래운동신경세포 조절이 강화된다","말초 근육에 신호 과다 전달","자율적이고 억제되지 않은 반사 발생","근육의 위축만 나타난다","운동 명령 자체가 생성되지 않는다"],
+   a:2, e:"UMN 손상 시 억제 조절이 풀려 자율적·억제되지 않은 반사(경직, 항진 반사)가 나타난다."},
+  {c:"신경계", q:"아래운동신경세포 손상 시 나타나는 증상은?",
+   o:["칼날접이식 경직","근긴장도 저하와 반사 소실","클로누스 현상","병적 반사 출현","과다 반사"],
+   a:1, e:"LMN 손상은 근육으로 가는 신호가 차단되어 이완성 마비, 반사저하·소실, 심한 근위축이 나타난다."},
+  {c:"신경계", q:"위운동신경세포 손상의 전형적인 임상 특징은?",
+   o:["뚜렷한 근육 위축과 심한 소실","근긴장도 증가 및 심부건반사 항진","근육의 잔떨림 발생","무릎반사·팔꿈치반사 소실","바빈스키 징후 음성"],
+   a:1, e:"UMN 손상 시 경직과 반사 항진이 발생하고 바빈스키 징후 양성이 나타난다."},
+  {c:"신경계", q:"아래운동신경세포의 증상이 아닌 것은?",
+   o:["근위축","근력저하","심부건반사 소실","바빈스키 반사","근섬유다발 수축"],
+   a:3, e:"바빈스키 반사는 UMN 손상의 특징이다. UMN 손상으로 억제되지 않아 원시 반사가 다시 나타난다."},
+  {c:"신경계", q:"위운동신경세포와 아래운동신경세포 손상의 차이로 옳은 것은?",
+   o:["위: 이완성 마비, 아래: 경직성 마비","위: 경직성 마비, 아래: 이완성 마비","둘 다 경직성 마비","둘 다 이완성 마비","위: 반사 소실, 아래: 반사 항진"],
+   a:1, e:"UMN 손상은 경직성 마비(spastic), LMN 손상은 이완성 마비(flaccid)가 나타난다."},
+
+  // PNF (5)
+  {c:"PNF", q:"PNF 기법 중 주동근과 길항근의 교대 수축으로 근력·균형·협응력을 향상시키는 기법은?",
+   o:["율동적 개시","등장성 혼합","안정적 반전","복제","반복 신장"],
+   a:2, e:"안정적 반전은 작용근과 대항근 사이의 협응력을 증진시키고 안정성과 균형을 향상시킨다."},
+  {c:"PNF", q:"유지-이완(Hold-Relax) 기법에 관한 설명으로 옳지 않은 것은?",
+   o:["근육 긴장을 줄이고 유연성을 증가시킨다","근육 긴장 감소, ROM 증가, 유연성 향상 효과","등장성 수축을 이용한 기법이다","고유수용성 감각 수용체를 자극하여 신경근 자극 촉진","타이트한 근육 끝지점에서 수행하는 능동억제 기법"],
+   a:2, e:"유지-이완 기법은 등척성 수축을 사용한다. 등장성 수축은 근육 길이가 변하는 수축이다."},
+  {c:"PNF", q:"반복 신장(Repeated Stretch) 기법에 대한 설명으로 옳은 것은?",
+   o:["특정 자세를 반복해 동작 학습 촉진","근육에 반복적으로 빠른 신장 자극을 주어 운동능력 증가","근육의 등척성 수축 후 이완하여 근육 길이 증가","주동근·길항근 교대 수축으로 근력·균형 향상","초기에 리듬감 있는 동작으로 움직임 촉진"],
+   a:1, e:"반복신장은 근육에 반복적인 빠른 신장 자극을 가해 운동능력 및 근력을 증가시키는 기법이다."},
+  {c:"PNF", q:"율동적 개시(Rhythmic Initiation)의 목적은?",
+   o:["ROM 끝지점에서 등척성 수축 후 이완","반복 수축 시 근력 증가","초기 리듬감 있는 동작으로 움직임 촉진","주동근·길항근 교대 수축","관절 안정성 증가"],
+   a:2, e:"율동적 개시는 움직임 초기에 리듬감 있는 동작을 통해 움직임 시작을 촉진하는 기법이다."},
+  {c:"PNF", q:"PNF 기법 설명이 틀린 것은?",
+   o:["유지-이완(HR): 근육에 빠른 신장 자극을 주어 운동 능력 증가","율동적 개시: 초기에 리듬감 있는 동작으로 움직임 촉진","길항근 반전: 주동근과 길항근의 교대 수축으로 근력·균형·협응력 향상","등장성 혼합: 등장성·등척성 수축을 혼합하여 근력·운동조절 향상","복제: 특정 자세나 위치를 반복 수행하여 동작 학습 촉진"],
+   a:0, e:"유지-이완은 ROM 끝지점에서 등척성 수축 후 이완해 근길이를 증가시키는 기법이다. 빠른 신장 자극은 반복신장 기법이다."},
+
+  // 운동치료/단계 (6)
+  {c:"운동치료", q:"근이영양증 환자에게 적합한 운동 처방은?",
+   o:["플라이오메트릭","고강도 유산소 운동","Pull 관절운동범위 운동","저강도-중강도 등척성 또는 등속성 운동","절대적 휴식"],
+   a:3, e:"능동·보조적 ROM, 저강도-중강도 등척성·등속성 운동, 호흡근 강화, 심폐지구력 유지, 피로 관리가 핵심이다."},
+  {c:"운동치료", q:"근육계 질환에서 과도한 운동의 문제점은?",
+   o:["근력이 빠르게 향상된다","피로가 줄어들어 더 많이 운동할 수 있다","근손상을 유발할 수 있다","신경 재생을 촉진한다","관절 가동범위가 증가한다"],
+   a:2, e:"근육계 질환에서 과사용은 근손상 위험을 증가시킨다. 저강도, 피로 관리, 기능 유지 중심으로 운동해야 한다."},
+  {c:"운동치료", q:"진행성 근이영양증 진행 단계로 옳은 것은?",
+   o:["보행 단계","보행+의자차 단계","의자차+침상 단계","보행+침상 단계","보행+의자차+침상 단계"],
+   a:4, e:"진행 근디스트로피는 보행 단계 → 의자차 단계 → 침상 단계 모두를 거친다."},
+  {c:"운동치료", q:"진행성 근이영양증 진행 단계 설명으로 알맞지 않은 것은?",
+   o:["보행단계: 과도한 운동 시 근육 파괴 가능","보행단계: 호흡근 근력 저하로 심호흡·기침 약화","의자차단계: 운동 부족으로 비만이나 순환장애 발생","의자차단계: 오랜 앉은 자세로 욕창이 쉽게 생긴다","침상단계: 가래 배출 곤란으로 폐렴 위험"],
+   a:4, e:"가래 배출 곤란과 폐렴 위험은 의자차 단계의 설명이다. 침상 단계에서는 영양장애, 욕창, 심부전 등이 주요 문제이다."},
+  {c:"운동치료", q:"근이영양증 휠체어 단계에서의 치료 원칙은?",
+   o:["목표지향적 운동선택","척추기형 교정 및 초기 예방","근육힘줄의 수축력 관리","물리치료와 함께 부목의 적절한 적용","적절한 호흡근 관리 및 기도분비물 제거"],
+   a:1, e:"목표지향 운동·근육힘줄 관리·부목은 걷기 단계, 호흡근 관리는 생존 단계, 척추기형 교정·예방이 휠체어 단계 핵심이다."},
+  {c:"운동치료", q:"진행성 근이영양증 중재 목표로 가장 적절한 것은?",
+   o:["고강도 근력 강화","관절 구축 예방","완전한 근력 회복","신경 재생 촉진","감각 회복"],
+   a:1, e:"DMD는 진행성 질환이라 과도한 근력 운동은 금지. 구축 예방·기능 유지·호흡 관리가 중요 목표이다."},
+
+  // 정형외과 (5)
+  {c:"정형외과", q:"오목테두리 손상에 대한 설명으로 옳은 것은?",
+   o:["Bankart 병변은 위쪽 오목테두리 손상이다","SLAP은 위팔두갈래근 긴갈래 힘줄 부착부 손상이다","SLAP은 앞에서 뒤로 파열된다","SLAP 2형은 양동이 손잡이형 파열 양상을 보인다","SLAP 1형은 안쪽 모서리의 마모와 세동이 심한 상태이다"],
+   a:4, e:"Bankart는 앞아래 오목테두리 손상. SLAP은 위팔두갈래근 긴갈래 부착부. 뒤에서 앞으로 파열. 3형이 양동이 손잡이형."},
+  {c:"정형외과", q:"가쪽위관절융기염에 대한 설명으로 옳은 것은?",
+   o:["골프 엘보우라고 한다","주먹쥐기 시 통증이 나타난다","안쪽 위관절융기 부위에 통증이 있다","안쪽위관절융기에서 폄근 기시","역코젠검사와 역밀검사를 실시한다"],
+   a:1, e:"가쪽위관절융기염(테니스 엘보)은 주먹쥐기 시 통증. 골프 엘보는 안쪽위관절융기염. 역코젠·역밀검사는 안쪽이다."},
+  {c:"정형외과", q:"궁둥구멍근 증후군에 대한 설명으로 옳은 것은?",
+   o:["궁둥구멍근은 엉치뼈 앞면에서 시작해 넙다리뼈 작은돌기에 붙는다","발생빈도는 남성이 높다","의자에서 다리를 꼬는 자세에서 통증이 감소한다","궁둥구멍근은 엉덩관절의 가쪽돌림과 벌림과 폄 작용","궁둥구멍근은 궁둥신경의 지배를 받는다"],
+   a:3, e:"궁둥구멍근은 큰돌기에 붙는다. 발생빈도는 여성이 높다. 다리꼬기는 통증 증가. 엉치신경 지배."},
+  {c:"정형외과", q:"혈우병성 관절염의 임상증상 단계로 옳은 것은?",
+   o:["관절내출혈>관절변형>관절운동제한>염증반응","관절내출혈>염증반응>관절운동제한>관절변형","염증반응>관절내출혈>관절운동제한>관절변형","염증반응>관절내출혈>관절변형>관절운동제한","관절운동제한>관절변형>염증반응>관절내출혈"],
+   a:1, e:"관절내출혈 → 염증반응 → 관절운동제한 → 관절변형 순서이다."},
+  {c:"정형외과", q:"급성 삠(염좌)의 초기 치료로 올바른 것은?",
+   o:["온열치료","강도 높은 운동","스테로이드 주사","냉치료와 필요 시 목발 사용","관절경 수술"],
+   a:3, e:"급성 삠 초기에는 PRICE 요법(보호·휴식·냉치료·압박·올림)을 적용하고 필요 시 목발로 체중을 분산한다."},
+
+  // 사례 (5)
+  {c:"사례", q:"만 5세 남아, 계단 오르기 어려움, 가우어스 징후, 종아리 거짓비대 관찰 - 의심 질환은?",
+   o:["팔다리이음형","유아 얼굴어깨위팔근육형","뒤센느형","베커형","다리이음형"],
+   a:2, e:"2~5세 남아, 가우어스 징후, 종아리 거짓비대는 뒤센느형 근이영양증의 전형 특징이다."},
+  {c:"사례", q:"20대 여성, 오후에 눈꺼풀 처지고 복시, 반복 사용 시 근력 약화, 휴식 후 완화 - 적합한 진단 검사는?",
+   o:["오버 검사","토마스 검사","가우어스 방법","텐시론 검사","메이온스 징후"],
+   a:3, e:"반복 활동 시 피로·근력 약화, 휴식 시 완화는 중증 근무력증의 전형 증상. 텐시론 검사로 진단한다."},
+  {c:"사례", q:"45세 남성, 엄지를 안으로 말아 쥐고 손목을 굽혔을 때 통증 심화 - 이 검사는?",
+   o:["팔렌 검사","오버 검사","핀켈스타인 검사","토마스 검사","코젠 검사"],
+   a:2, e:"엄지 주먹 쥐고 손목 자척 굴곡 시 통증(핀켈스타인 검사 양성) - 드퀘르벵병(협착성 힘줄 윤활막염) 진단."},
+  {c:"사례", q:"어깨에 심한 통증, 팔 들 때 특정 각도에서 통증과 뚝뚝 소리 - 의심 질환은?",
+   o:["가시위근 힘줄염","팔꿈치 염좌","손목터널증후군","앞목갈비근증후군","가쪽위관절융기염"],
+   a:0, e:"가시위근 힘줄염은 어깨 벌림 시 특정 각도에서 통증과 소리(painful arc)가 특징이다."},
+  {c:"사례", q:"신경근육 질환과 특징 연결이 틀린 것은?",
+   o:["중증 근무력증 - 오후에 증상 심해짐","선천 근긴장증 - 근육 수축 후 이완 지연","뒤센 근디스트로피 - 가성 비대","선천 근무긴장증 - 근긴장도의 비정상적 저하","중증 근무력증 - 반복 자극 시 근수축력이 강해짐"],
+   a:4, e:"중증 근무력증은 반복 자극·운동 시 아세틸콜린 소모로 근력이 더욱 약화된다."}
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+var TOTAL = Q.length;
+var answered = 0;
+var correct = 0;
+var userAns = new Array(TOTAL).fill(-1);
+var revealed = new Array(TOTAL).fill(false);
+
+// ─── TABS ────────────────────────────────────────────────────────────────────
+function showTab(name) {
+  document.getElementById('tab-quiz').classList.remove('active');
+  document.getElementById('tab-summary').classList.remove('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+    b.classList.remove('active');
+  });
+  var btns = document.querySelectorAll('.nav-btn');
+  if (name === 'quiz') btns[0].classList.add('active');
+  else { btns[1].classList.add('active'); renderSummary(); }
+}
+
+// ─── BUILD QUIZ ──────────────────────────────────────────────────────────────
+function buildQuiz() {
+  var container = document.getElementById('qContainer');
+  container.innerHTML = '';
+  for (var qi = 0; qi < TOTAL; qi++) {
+    (function(qi) {
+      var q = Q[qi];
+      var card = document.createElement('div');
+      card.className = 'card';
+      card.id = 'card-' + qi;
+
+      // header
+      var head = document.createElement('div');
+      head.className = 'card-head';
+
+      var num = document.createElement('span');
+      num.className = 'q-num';
+      num.textContent = 'Q' + (qi + 1);
+
+      var qtext = document.createElement('span');
+      qtext.className = 'q-text';
+      qtext.textContent = q.q;
+
+      var ctag = document.createElement('span');
+      ctag.className = 'cat-tag';
+      ctag.textContent = q.c;
+      qtext.appendChild(ctag);
+
+      head.appendChild(num);
+      head.appendChild(qtext);
+      card.appendChild(head);
+
+      // options
+      var optsDiv = document.createElement('div');
+      optsDiv.className = 'opts';
+      for (var oi = 0; oi < q.o.length; oi++) {
+        (function(oi) {
+          var btn = document.createElement('button');
+          btn.className = 'opt-btn';
+          btn.id = 'opt-' + qi + '-' + oi;
+
+          var lbl = document.createElement('span');
+          lbl.className = 'opt-lbl';
+          lbl.textContent = (oi + 1) + '';
+
+          var tx = document.createElement('span');
+          tx.className = 'opt-tx';
+          tx.textContent = q.o[oi];
+
+          btn.appendChild(lbl);
+          btn.appendChild(tx);
+          btn.addEventListener('click', function() { selectAnswer(qi, oi); });
+          optsDiv.appendChild(btn);
+        })(oi);
+      }
+      card.appendChild(optsDiv);
+
+      // explanation
+      var exp = document.createElement('div');
+      exp.className = 'exp';
+      exp.id = 'exp-' + qi;
+      var elbl = document.createElement('span');
+      elbl.className = 'exp-label';
+      elbl.textContent = '해설';
+      exp.appendChild(elbl);
+      exp.appendChild(document.createTextNode(q.e));
+      card.appendChild(exp);
+
+      container.appendChild(card);
+    })(qi);
+  }
+  updateProg();
+}
+
+// ─── ANSWER ──────────────────────────────────────────────────────────────────
+function selectAnswer(qi, oi) {
+  if (revealed[qi]) return;
+  revealed[qi] = true;
+  userAns[qi] = oi;
+  answered++;
+  if (oi === Q[qi].a) correct++;
+
+  for (var i = 0; i < Q[qi].o.length; i++) {
+    var btn = document.getElementById('opt-' + qi + '-' + i);
+    btn.classList.add('locked');
+    if (i === Q[qi].a) btn.classList.add('correct');
+    else if (i === oi) btn.classList.add('wrong');
+  }
+
+  document.getElementById('exp-' + qi).classList.add('show');
+  updateProg();
+
+  if (answered === TOTAL) {
+    setTimeout(showScore, 350);
+  }
+}
+
+function updateProg() {
+  var pct = (answered / TOTAL) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = answered + ' / ' + TOTAL + ' 완료';
+}
+
+function showScore() {
+  var board = document.getElementById('scoreBoard');
+  board.classList.add('show');
+  board.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  var pct = Math.round((correct / TOTAL) * 100);
+  document.getElementById('sBig').textContent = correct + '/' + TOTAL;
+  var grade = pct >= 80 ? '우수 🎉' : pct >= 60 ? '양호 👍' : '복습 필요 📚';
+  document.getElementById('sPct').textContent = '정답률 ' + pct + '% · ' + grade;
+}
+
+function resetQuiz() {
+  answered = 0; correct = 0;
+  userAns = new Array(TOTAL).fill(-1);
+  revealed = new Array(TOTAL).fill(false);
+  document.getElementById('scoreBoard').classList.remove('show');
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── SUMMARY ─────────────────────────────────────────────────────────────────
+function renderSummary() {
+  var hero = document.querySelector('.sum-hero p');
+  var statsDiv = document.getElementById('sumStats');
+  var content = document.getElementById('sumContent');
+
+  var done = revealed.filter(function(r) { return r; }).length;
+
+  if (done === 0) {
+    hero.textContent = '퀴즈를 풀면 결과가 표시됩니다';
+    statsDiv.style.display = 'none';
+    content.innerHTML = '<div class="sum-hint">퀴즈를 풀면 문항별 결과가 여기 표시됩니다.</div>';
+    return;
+  }
+
+  var wrong = 0;
+  for (var i = 0; i < TOTAL; i++) {
+    if (revealed[i] && userAns[i] !== Q[i].a) wrong++;
+  }
+
+  hero.textContent = done + '문제 완료 · ' + correct + '정답 · ' + wrong + '오답';
+  statsDiv.style.display = 'grid';
+  document.getElementById('st-total').textContent = TOTAL;
+  document.getElementById('st-done').textContent = done;
+  document.getElementById('st-correct').textContent = correct;
+  document.getElementById('st-wrong').textContent = wrong;
+
+  // group by category
+  var cats = {};
+  for (var qi = 0; qi < TOTAL; qi++) {
+    var cat = Q[qi].c;
+    if (!cats[cat]) cats[cat] = [];
+    cats[cat].push(qi);
+  }
+
+  content.innerHTML = '';
+
+  Object.keys(cats).forEach(function(cat) {
+    var section = document.createElement('div');
+    section.className = 'cat-section';
+
+    var title = document.createElement('div');
+    title.className = 'cat-title';
+    title.textContent = cat.toUpperCase();
+    section.appendChild(title);
+
+    cats[cat].forEach(function(qi) {
+      var row = document.createElement('div');
+      row.className = 'sum-row';
+
+      var numEl = document.createElement('div');
+      numEl.className = 'sum-num';
+
+      var qAns = userAns[qi];
+      var correct_ans = Q[qi].a;
+      var isOk = revealed[qi] && qAns === correct_ans;
+      var isNg = revealed[qi] && qAns !== correct_ans;
+
+      if (!revealed[qi]) {
+        numEl.className = 'sum-num skip';
+        numEl.textContent = 'Q' + (qi + 1);
+      } else if (isOk) {
+        numEl.className = 'sum-num ok';
+        numEl.textContent = 'Q' + (qi + 1);
+      } else {
+        numEl.className = 'sum-num ng';
+        numEl.textContent = 'Q' + (qi + 1);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'sum-q';
+
+      var qtxt = document.createTextNode(Q[qi].q);
+      body.appendChild(qtxt);
+
+      if (revealed[qi]) {
+        var ansLine = document.createElement('div');
+        ansLine.className = 'sum-ans';
+
+        var correctSpan = document.createElement('span');
+        correctSpan.className = 'ok';
+        correctSpan.textContent = (correct_ans + 1) + '. ' + Q[qi].o[correct_ans];
+
+        if (isOk) {
+          ansLine.appendChild(document.createTextNode('정답: '));
+          ansLine.appendChild(correctSpan);
+        } else {
+          var wrongSpan = document.createElement('span');
+          wrongSpan.className = 'ng';
+          wrongSpan.textContent = (qAns + 1) + '. ' + Q[qi].o[qAns];
+          ansLine.appendChild(document.createTextNode('내 답: '));
+          ansLine.appendChild(wrongSpan);
+          ansLine.appendChild(document.createTextNode(' / 정답: '));
+          ansLine.appendChild(correctSpan);
+        }
+        body.appendChild(ansLine);
+
+        var note = document.createElement('div');
+        note.className = 'sum-note';
+        note.textContent = Q[qi].e;
+        body.appendChild(note);
+      } else {
+        var skipLine = document.createElement('div');
+        skipLine.className = 'sum-ans';
+        skipLine.textContent = '미완료';
+        body.appendChild(skipLine);
+      }
+
+      row.appendChild(numEl);
+      row.appendChild(body);
+      section.appendChild(row);
+    });
+
+    content.appendChild(section);
+  });
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+buildQuiz();
+</script>
+</body>
+</html>

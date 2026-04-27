@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>근골격계 3주차</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--bg:#0d0d12;--surf:#161620;--surf2:#1e1e2a;--brd:#2a2a3a;--acc:#5b8dee;--acc2:#ee5b8d;--ok:#5bee8d;--ng:#ee5b8d;--warn:#eeb85b;--txt:#e6e6f0;--muted:#7777aa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 40%,rgba(91,141,238,.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(238,91,141,.05) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.nav-tabs{position:sticky;top:0;z-index:50;background:rgba(13,13,18,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);display:flex;padding:0 16px;}
+.nav-tab{padding:14px 20px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.nav-tab.active{color:var(--acc);border-bottom-color:var(--acc);}
+.tab-pane{display:none;position:relative;z-index:1;}
+.tab-pane.active{display:block;}
+.wrap{max-width:820px;margin:0 auto;padding:20px 16px 60px;}
+.hdr{text-align:center;padding:28px 0 20px;}
+.badge{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;}
+.hdr h1{font-size:22px;font-weight:900;margin-bottom:4px;}
+.hdr p{font-size:12px;color:var(--muted);}
+.prog-wrap{background:var(--surf);border-radius:12px;padding:14px 18px;margin-bottom:18px;border:1px solid var(--brd);}
+.prog-info{display:flex;justify-content:space-between;margin-bottom:8px;}
+.prog-info span{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.prog-info strong{color:var(--acc);font-size:13px;}
+.prog-bar{height:5px;background:var(--brd);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .4s ease;}
+.stats{display:flex;gap:10px;margin-top:10px;}
+.stat{flex:1;background:var(--surf2);border-radius:8px;padding:7px 10px;text-align:center;border:1px solid var(--brd);}
+.sv{font-size:17px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.sl{font-size:10px;color:var(--muted);margin-top:1px;}
+.stat.ok .sv{color:var(--ok);}.stat.ng .sv{color:var(--ng);}.stat.rm .sv{color:var(--acc);}
+.qcard{background:var(--surf);border:1px solid var(--brd);border-radius:14px;padding:22px;margin-bottom:14px;animation:su .3s ease;}
+@keyframes su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.qmeta{display:flex;gap:8px;margin-bottom:14px;}
+.qnum{background:linear-gradient(135deg,var(--acc),#7b6cee);color:#fff;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:6px;}
+.qtxt{font-size:14px;font-weight:500;line-height:1.75;}
+.opts{display:flex;flex-direction:column;gap:9px;margin-top:18px;}
+.opt{background:var(--surf2);border:1.5px solid var(--brd);border-radius:11px;padding:12px 14px;color:var(--txt);font-family:'Noto Sans KR',sans-serif;font-size:13px;text-align:left;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:11px;line-height:1.55;}
+.opt:hover:not(:disabled){border-color:var(--acc);background:rgba(91,141,238,.1);transform:translateX(3px);}
+.on{min-width:22px;height:22px;border-radius:5px;background:var(--brd);color:var(--muted);font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;}
+.opt.correct{border-color:var(--ok);background:rgba(91,238,141,.1);}
+.opt.correct .on{background:var(--ok);color:#0d0d12;}
+.opt.wrong{border-color:var(--ng);background:rgba(238,91,141,.1);}
+.opt.wrong .on{background:var(--ng);color:#0d0d12;}
+.opt.sc{border-color:rgba(91,238,141,.4);background:rgba(91,238,141,.04);opacity:.8;}
+.opt:disabled{cursor:default;}
+.exp{display:none;margin-top:14px;background:rgba(91,141,238,.07);border:1px solid rgba(91,141,238,.25);border-radius:11px;padding:14px;}
+.exp.show{display:block;animation:fi .3s ease;}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.exp-t{font-size:10px;font-weight:700;color:var(--acc);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;}
+.exp-b{font-size:12px;line-height:1.8;color:#c0c0d8;}
+.nxtbtn{display:none;width:100%;padding:15px;background:linear-gradient(135deg,var(--acc),#7b6cee);border:none;border-radius:11px;color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:10px;}
+.nxtbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,141,238,.3);}
+.nxtbtn.show{display:block;animation:fi .3s ease;}
+.result{display:none;text-align:center;padding:40px 20px;}
+.result.show{display:block;animation:su .4s ease;}
+.rscore{font-size:68px;font-weight:900;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin:14px 0;}
+.rlbl{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:280px;margin:0 auto 28px;}
+.ri{background:var(--surf);border:1px solid var(--brd);border-radius:11px;padding:14px;}
+.ri .v{font-size:26px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.ri .l{font-size:11px;color:var(--muted);margin-top:3px;}
+.ri.ok .v{color:var(--ok);}.ri.ng .v{color:var(--ng);}
+.rbtn{padding:12px 32px;border:none;border-radius:11px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin:5px;}
+.rbtn.p{background:linear-gradient(135deg,var(--acc),#7b6cee);color:#fff;}
+.rbtn.p:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,141,238,.3);}
+.rbtn.s{background:var(--surf);border:1.5px solid var(--brd);color:var(--txt);}
+.wlist{display:none;margin-top:20px;text-align:left;}
+.wlist.show{display:block;}
+.wi{background:var(--surf);border:1px solid var(--brd);border-left:3px solid var(--ng);border-radius:11px;padding:14px;margin-bottom:10px;}
+.wi-q{font-size:12px;font-weight:500;margin-bottom:9px;line-height:1.6;}
+.wi-a{font-size:11px;margin-bottom:3px;}
+.wi-a span{font-weight:600;}
+.wi-a.my span{color:var(--ng);}.wi-a.ans span{color:var(--ok);}
+.wi-e{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.7;border-top:1px solid var(--brd);padding-top:7px;}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--surf);border:1px solid var(--brd);border-radius:10px;padding:10px 18px;font-size:12px;font-weight:500;transition:transform .3s ease;z-index:100;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.okt{border-color:var(--ok);color:var(--ok);}
+.toast.ngt{border-color:var(--ng);color:var(--ng);}
+/* SUMMARY */
+.sumwrap{padding:24px 16px 60px;max-width:860px;margin:0 auto;}
+.ssec{background:var(--surf);border:1px solid var(--brd);border-radius:14px;margin-bottom:14px;overflow:hidden;}
+.shead{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s;}
+.shead:hover{background:var(--surf2);}
+.shead h3{font-size:14px;font-weight:700;color:var(--acc);}
+.sarr{font-size:16px;color:var(--muted);transition:transform .3s;}
+.sbody{display:none;padding:16px 20px;border-top:1px solid var(--brd);}
+.sbody.open{display:block;}
+.shead.open .sarr{transform:rotate(180deg);}
+.stbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px;}
+.stbl th{background:var(--surf2);color:var(--acc);font-weight:700;padding:8px 10px;text-align:left;border-bottom:1px solid var(--brd);}
+.stbl td{padding:8px 10px;border-bottom:1px solid rgba(42,42,58,.6);vertical-align:top;line-height:1.6;}
+.stbl tr:last-child td{border-bottom:none;}
+.stbl tr:hover td{background:rgba(91,141,238,.04);}
+.tag{display:inline-block;background:rgba(91,141,238,.15);color:var(--acc);border-radius:5px;padding:1px 8px;font-size:10px;font-weight:700;margin-right:4px;}
+.tag.g{background:rgba(91,238,141,.15);color:var(--ok);}
+.tag.r{background:rgba(238,91,141,.15);color:var(--ng);}
+.tag.y{background:rgba(238,184,91,.15);color:var(--warn);}
+.sbody p{font-size:12px;line-height:1.8;color:#c0c0d8;margin-bottom:8px;}
+.sbody ul{font-size:12px;line-height:1.8;color:#c0c0d8;padding-left:18px;}
+.sbody ul li{margin-bottom:4px;}
+.hl{color:var(--acc);font-weight:700;}
+.hl.g{color:var(--ok);}.hl.r{color:var(--ng);}.hl.y{color:var(--warn);}
+.kbox{background:var(--surf2);border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.8;color:#c0c0d8;}
+</style>
+</head>
+<body>
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="switchTab('quiz')">📝 퀴즈 (80문제)</div>
+  <div class="nav-tab" onclick="switchTab('sum')">📚 서머리</div>
+</div>
+
+<!-- QUIZ -->
+<div class="tab-pane active" id="tab-quiz">
+<div class="wrap">
+  <div class="hdr"><div class="badge">Week 3 · 2026</div><h1>근골격계 물리치료 문제해결</h1><p>3주차 · 80문제 · 랜덤 출제</p></div>
+  <div class="prog-wrap" id="pw">
+    <div class="prog-info"><span>진행률</span><strong id="pt">0 / 80</strong></div>
+    <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+    <div class="stats">
+      <div class="stat ok"><div class="sv" id="cok">0</div><div class="sl">정답</div></div>
+      <div class="stat ng"><div class="sv" id="cng">0</div><div class="sl">오답</div></div>
+      <div class="stat rm"><div class="sv" id="crm">80</div><div class="sl">남은</div></div>
+    </div>
+  </div>
+  <div id="qa">
+    <div class="qcard" id="qc">
+      <div class="qmeta"><div class="qnum" id="qn">Q001</div></div>
+      <div class="qtxt" id="qt"></div>
+      <div class="opts" id="oa"></div>
+      <div class="exp" id="eb"><div class="exp-t">📖 해설</div><div class="exp-b" id="et"></div></div>
+    </div>
+    <button class="nxtbtn" id="nb" onclick="nextQ()">다음 문제 →</button>
+  </div>
+  <div class="result" id="rb">
+    <div class="badge">완료!</div>
+    <div class="rscore" id="rs">0%</div>
+    <div class="rlbl" id="rl"></div>
+    <div class="rgrid">
+      <div class="ri ok"><div class="v" id="rok">0</div><div class="l">정답</div></div>
+      <div class="ri ng"><div class="v" id="rng">0</div><div class="l">오답</div></div>
+    </div>
+    <button class="rbtn p" onclick="restart()">🔄 다시 풀기</button>
+    <button class="rbtn s" onclick="toggleW()">📋 오답 보기</button>
+    <div class="wlist" id="wl"></div>
+  </div>
+</div>
+</div>
+
+<!-- SUMMARY -->
+<div class="tab-pane" id="tab-sum">
+<div class="sumwrap">
+  <div class="hdr"><div class="badge">Week 3 · Summary</div><h1>근골격계 운동치료 핵심 정리</h1><p>탭을 클릭하면 내용이 펼쳐집니다</p></div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>I. 관절질환 분류 & 특징 비교</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>구분</th><th>류마티스관절염(RA)</th><th>골관절염(OA)</th></tr>
+        <tr><td>초기 침범부위</td><td>윤활막</td><td>관절연골</td></tr>
+        <tr><td>초기 침범관절</td><td>MCP, PIP, 손목 (소관절 대칭)</td><td>DIP, CMC (체중부하 비대칭)</td></tr>
+        <tr><td>무릎관절 변형</td><td><span class="hl r">밖굽이무릎</span></td><td><span class="hl">안굽이무릎</span></td></tr>
+        <tr><td>강직</td><td><span class="hl r">아침강직</span> (30분↑, 휴식 후 악화)</td><td>오후강직 (활동 후 악화)</td></tr>
+        <tr><td>결절</td><td>없음</td><td><span class="hl">헤버딘결절(DIP), 보챠드결절(PIP)</span></td></tr>
+        <tr><td>침범관절 특징</td><td>부드러움(soft)</td><td>딱딱함(hard), 염발음</td></tr>
+        <tr><td>검사소견</td><td>RF+, ESR↑, CRP↑</td><td>RF-, ESR 정상, CRP 정상</td></tr>
+      </table>
+      <div class="kbox">💡 통풍: 퓨린 대사장애 → 요산↑ → 요산염결정 침착 / 30~50대 남성 호발 / 엄지발가락 발작성 통증 / 야간에 심함<br>
+      💡 혈우병성 관절염: 혈액응고인자 VIII·IX 결핍 / 반복적 관절 내 출혈 / 남성 호발</div>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>II. 관절 변형 정리</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>변형명</th><th>특징</th><th>원인</th></tr>
+        <tr><td><span class="tag r">단추구멍 변형</span></td><td><span class="hl r">PIP 굽힘 + DIP 과다폄</span></td><td>류마티스관절염, 중앙 폄근힘줄 파열</td></tr>
+        <tr><td><span class="tag y">백조목 변형</span></td><td><span class="hl y">PIP 과다폄 + DIP 굽힘</span></td><td>류마티스관절염, 내재근 구축</td></tr>
+        <tr><td><span class="tag">Z형(엄지)</span></td><td>MP 과다폄 + IP 굽힘</td><td>자쪽곁인대 파열</td></tr>
+        <tr><td><span class="tag g">망치손가락</span></td><td>DIP 굽힘 변형</td><td>DIP 폄근힘줄 파열</td></tr>
+        <tr><td><span class="tag">원숭이손</span></td><td>엄지두덩 위축, 엄지 맞섬 소실</td><td><span class="hl">정중신경 마비</span></td></tr>
+        <tr><td><span class="tag r">갈퀴손(비숍손)</span></td><td>MCP 폄 + IP 굽힘 (4·5번)</td><td><span class="hl r">자신경 마비</span></td></tr>
+        <tr><td><span class="tag">손목처짐</span></td><td>손목관절 폄 불가</td><td><span class="hl">노신경 마비</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>III. 관절질환 중재</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>질환</th><th>중재</th></tr>
+        <tr><td>류마티스관절염 급성기</td><td><span class="hl r">침상안정</span>, ROM 유지, 부목·보조기</td></tr>
+        <tr><td>류마티스관절염 아급성·만성기</td><td>ROM 운동, 근력강화, 기형 방지, 관절 보호</td></tr>
+        <tr><td>골관절염</td><td>넙다리네갈래근 강화운동, 무릎 주변 근육 강화</td></tr>
+        <tr><td>통풍성 관절염</td><td>급성기: <span class="hl r">냉치료</span>, 이온도입(리도카인·디클로페낙)</td></tr>
+        <tr><td>TKR(무릎전치환술) 후</td><td>쪼그려 앉기 최소화 / 걷기·수영 권장</td></tr>
+      </table>
+      <div class="kbox">💡 RA 관절 보호: 가방끈이 있는 가방을 어깨로 걸쳐 메도록 함 (손가락 관절 보호)</div>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>IV. 연부조직 손상 & 구축</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>인대 파열 등급</th><th>특징</th></tr>
+        <tr><td>1도 (경도)</td><td>섬유 몇 개 손상 / 관절 불안정성 없음</td></tr>
+        <tr><td>2도 (중등도)</td><td>섬유 절반 손상 / 불안정성 약간</td></tr>
+        <tr><td>3도 (중증)</td><td>섬유 모두 손상 / 불안정성 심함</td></tr>
+      </table>
+      <table class="stbl" style="margin-top:10px">
+        <tr><th>구축 종류</th><th>특징</th></tr>
+        <tr><td><span class="tag g">근정적 구축</span></td><td>근힘줄 단위 적응적 단축 / 원섬유 수 유지 / <span class="hl g">뻗침으로 완화</span></td></tr>
+        <tr><td><span class="tag r">가성 근정적 구축</span></td><td>근육 <span class="hl r">과긴장(spasticity)</span>으로 ROM 제한</td></tr>
+        <tr><td><span class="tag y">섬유성 구축</span></td><td>비가역적, 섬유화 변화</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>V. 근거중심 물리치료 & ICF</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <div class="kbox">💡 근거수준 피라미드 (신뢰도 ↓): <span class="hl">체계적고찰 > 무작위임상시험 > 코호트연구 > 환자-대조군연구 > 사례연구 > 전문가의견</span></div>
+      <p><strong>PICO:</strong> Population(환자) / Intervention(중재) / Comparison(비교) / Outcome(결과) → 1단계 임상 질문 작성 시 사용</p>
+      <p><strong>코호트 연구:</strong> 특정요인 노출 집단을 장기간 추적관찰 → 비노출 집단과 비교하여 비교위험도 제시</p>
+      <table class="stbl">
+        <tr><th>임상의사결정 과정</th><td>검사 → 평가 → 진단 → 예후 → 중재</td></tr>
+        <tr><th>SOAP 노트</th><td>S(주관적) → O(객관적) → A(평가/사정) → P(계획)</td></tr>
+        <tr><th>ICF 모델</th><td>신체기능·구조 / 활동·참여 / 환경요인·개인요인</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>VI. PNF 기법 요약</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>기법</th><th>설명</th></tr>
+        <tr><td><span class="tag">유지-이완(HR)</span></td><td>등척성 수축 후 이완 / 자가억제(GTO) / ROM 변화 없음</td></tr>
+        <tr><td><span class="tag g">수축-이완(CR)</span></td><td>등장성 수축 후 이완 / ROM 변화 있음</td></tr>
+        <tr><td><span class="tag y">주동근수축(AC)</span></td><td>반대방향 동심성 수축 / 상호억제 원리</td></tr>
+        <tr><td><span class="tag r">안정적 반전</span></td><td>주동근·길항근 교대 수축 / 균형·협응력↑</td></tr>
+        <tr><td><span class="tag">반복 신장</span></td><td>반복적 빠른 신장 자극 / 운동능력·근력↑</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>⭐ VII. 시험 핵심 암기 포인트</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <div class="kbox">
+        ⭐ <span class="hl r">RA vs OA 핵심 구별</span>:<br>
+        RA = MCP·PIP 침범, <span class="hl r">밖굽이무릎</span>, 아침강직 30분↑, RF+, 부드러운 관절<br>
+        OA = DIP 침범, <span class="hl">안굽이무릎</span>, 헤버딘결절, RF-, 딱딱한 관절, 염발음<br><br>
+        ⭐ <span class="hl">손가락 변형 구별</span>:<br>
+        단추구멍 = PIP 굽힘+DIP 폄 (RA, 폄근힘줄 파열)<br>
+        백조목 = PIP 폄+DIP 굽힘 (RA, 내재근 구축)<br>
+        원숭이손 = 정중신경 마비 / 갈퀴손 = 자신경 마비 / 손목처짐 = 노신경 마비<br><br>
+        ⭐ <span class="hl y">통풍 특징</span>: 퓨린→요산↑ / 30~50대 남성 / 야간 발작성 / 이온도입(리도카인, 디클로페낙) / 급성기 냉치료
+      </div>
+    </div>
+  </div></div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+function switchTab(t){
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>{el.classList.toggle('active',['quiz','sum'][i]===t);});
+  document.querySelectorAll('.tab-pane').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+}
+function ts(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('open');}
+
+const AQ=[
+  {q:"비타민 D의 기능으로 틀린 것은?",o:["과활성화된 면역세포를 억제함","정상적인 면역 반응 조절","염증성 사이토카인을 억제하여 관절염 진행을 늦출 가능성 있음","류마티스 관절염 증상 완화 불가","비타민 D 부족 시 염증 반응이 과도하게 활성화되어 류마티스 관절염 악화"],a:3,e:"비타민 D는 항염증성 사이토카인을 증가시키고 염증성 사이토카인을 억제한다. 일부 연구에서 비타민 D 보충이 류마티스 관절염 증상을 완화할 수 있다는 가능성이 제기되었다."},
+  {q:"류마티스 관절염 증상으로 옳은 것은?",o:["단추구멍 변형","헤버딘 결절","보차드 결절","내반슬 변형","발목 관절염"],a:0,e:"류마티스관절염의 변형으로는 백조목 변형, 단추구멍 변형, 갈퀴발가락 변형, 망치 손가락, 족부 청족변형 등이 있다."},
+  {q:"류마티스 관절염의 검사로 틀린 것은?",o:["류마티스 인자 검사","항시트룰린단백질 항체 검사","적혈구 침강 속도 검사","C-반응성 단백 검사","골형성 활성화 검사"],a:4,e:"골형성 활성화 검사는 퇴행성 관절염(골관절염) 검사이다. 류마티스 관절염 검사: RF, ACPA, ESR, CRP 등"},
+  {q:"프로테오글라이칸에 대한 설명으로 틀린 것은?",o:["연골 속 스펀지 같은 물질이다","약물 치료가 필수적이다","탄수화물과 단백질 복합체로 수분을 유지하고 관절의 충격을 흡수하는 역할이다","수분을 잡아두어 관절이 부드럽게 움직이도록 도와준다","노화, 염증, 영양 부족, 과사용 등이 감소 원인이다"],a:1,e:"올바른 생활 습관과 영양 섭취로 보호 가능하다. 약물 치료가 필수적인 것은 아니다."},
+  {q:"뼈관절염의 임상증상으로 틀린 것은?",o:["뼈 마찰음이 발생한다","활동 시 통증이 먼저 나타난다","휴식 시에 통증이 지속된다","조조강직이 나타난다","헤버딘 결절이 발생한다"],a:3,e:"조조강직은 류마티스 관절염 환자에게서 나타나는 증상이다. 골관절염은 활동 후 통증이 심해지고 오후강직이 나타난다."},
+  {q:"통풍성 관절염의 치료 중재로 틀린 것은?",o:["보조기","온치료","리튬 이온도입법","콜치신으로 급성 발작 치료","프로베네시드로 요산 수치 조절"],a:1,e:"급성기 통증 완화를 위해 냉치료를 시행해야 한다. 온치료는 급성기에 금기이다."},
+  {q:"수축-이완 기법에 대한 설명으로 가장 적절한 것은?",o:["환자의 등척성 수축을 이용한다","주동근의 등장성 수축을 이용한다","스트레칭 전에 길항근의 활성을 유도한다","통증이 있는 범위에서만 수행한다","주로 관절의 가동성을 제한하는 구축 치료에 사용된다"],a:4,e:"수축-이완 기법은 늘리려는 근육의 대항근(길항근)을 먼저 수축시킨 다음, 이완될 때 더 많이 늘어나게 하는 원리이다."},
+  {q:"류마티스관절염(RA)과 골관절염(OA)의 핵심 특징으로 옳은 것은?",o:["RA – 퇴행성, 국소적, 연골 손상 / OA – 자가면역, 대칭적","RA – 대칭적, 자가면역, 아침 강직 / OA – 퇴행성, 국소적, 체중부하관절","RA – 급성, 한쪽 관절, 체중부하 / OA – 전신 피로, 자가면역","RA – 대칭적, 연골 퇴행 / OA – 자가면역, 아침 강직","RA – 퇴행성, 아침 강직 없음 / OA – 자가면역, 대칭적"],a:1,e:"류마티스관절염: 대칭적, 자가면역, 아침 강직 오래 지속. 골관절염: 퇴행성, 국소적, 주로 체중부하관절에 영향."},
+  {q:"통풍성 관절염에 대한 설명으로 옳은 것은?",o:["통풍은 칼슘 침착으로 관절에 염증을 유발하며 주로 여성에게 발생한다","통풍성 관절염은 바이러스 감염으로 인해 발생하며 대개 어깨 관절을 침범한다","통풍성 관절염은 요산 결정이 관절에 쌓여 급성 염증을 일으키며 주로 남성에게 흔하다","통풍은 손목이나 손가락 관절에만 나타난다","통풍성 관절염은 아침 강직이 1시간 이상 지속되는 전신 자가면역 질환이다"],a:2,e:"통풍성 관절염은 요산 결정으로 인해 발생하고, 남성에게 더 흔하며, 급성으로 발작적으로 나타나는 특징이 있다."},
+  {q:"혈우병성 관절염에 대한 설명으로 가장 적절한 것은?",o:["칼슘 피로인산 결정이 침착되어 주로 무릎 관절에 영향을 준다","남성에게 호발하고 대부분 10세 이전에 관절염 증상을 보인다","주로 자가면역 반응으로 대칭적인 소관절 염증과 아침 강직을 유발한다","바이러스 감염으로 인한 일시적인 관절 염증이 반복된다","혈우병성 관절염은 관절 연골이 닳아 생기는 질환이다"],a:1,e:"혈우병은 주로 남성에게 나타나고, 어릴 때부터 관절 내 출혈이 반복되면서 증상이 시작되는 경우가 많다."},
+  {q:"류마티스관절염 중재에 대한 설명으로 가장 적절한 것은?",o:["관절이 붓고 열이 날 때는 온찜질을 한다","통증을 줄이기 위해 활동을 최소화한다","관절운동범위를 최대한 넓히는 운동을 매일 한다","증상이 나타나면 바로 약물 복용을 시작한다","피로는 관절염과 관련이 없으므로 무시한다"],a:2,e:"류마티스관절염 환자는 관절이 굳는 것을 막기 위해 매일 관절운동범위를 최대한 움직여 주는 것이 중요하다."},
+  {q:"무릎 관절 전치환술이 필요한 상황으로 가장 적절한 것은?",o:["가벼운 운동 후 발생하는 일시적인 통증","약물치료나 물리치료로 호전되는 초기 관절염","심한 통증으로 일상생활이 어렵고 다른 비수술적 치료에 반응하지 않는 말기 관절염","활동적인 스포츠 활동을 하기 위한 관절강화","나이가 많아 막연히 수술을 고려하는 경우"],a:2,e:"무릎 관절 전치환술은 심한 통증으로 일상생활에 제약이 많고, 다른 비수술적 치료가 효과 없을 때 고려한다."},
+  {q:"뼈관절염의 병리적 변화로 가장 적절한 것은?",o:["관절 활막의 만성적인 염증과 두꺼워짐","관절 연골이 점차 닳고 파괴되어 뼈끼리 마찰이 발생함","관절 내부에 칼슘 결정이 침착되어 급성 통증을 유발함","바이러스 감염으로 인한 일시적인 관절 손상","골밀도 감소로 인한 관절 주변의 미세 골절"],a:1,e:"뼈관절염은 관절 연골이 점차 닳아 없어지면서 뼈와 뼈가 직접 부딪혀 통증과 변형을 일으키는 질환이다."},
+  {q:"류마티스관절염을 평가하는 기준으로 가장 적절한 것은?",o:["관절 주변의 골밀도 검사 결과","혈액 검사에서의 류마티스 인자 및 항시트룰린 단백질 항체 양성 여부","관절 내부의 칼슘 결정 유무를 확인하기 위한 활막액 검사","관절 주변의 피부 상태와 발진 여부","단순히 환자가 느끼는 통증의 주관적인 수준"],a:1,e:"류마티스관절염은 혈액 검사를 통해 류마티스 인자나 항시트룰린 단백질 항체를 확인하는 것이 중요하며, 이는 진단에 큰 도움을 준다."},
+  {q:"양측 손가락과 손목의 통증, 종창, 아침 심한 관절 뻣뻣함을 호소하는 환자의 진단은?",o:["골관절염","통풍성 관절염","류마티스 관절염","건선성 관절염","혈우병성 관절염"],a:2,e:"류마티스 관절염: 손가락, 손목, 발목 등 작은 관절에 주로 발생하며 대칭적인 통증과 종창, 조조강직이 특징이다."},
+  {q:"류마티스 관절염의 검사 및 평가에 대한 설명으로 가장 옳은 것은?",o:["류마티스 인자(RF)는 단독으로 확진이 가능하다","항시트룰린단백질 항체(ACPA)는 류마티스 인자보다 특이성이 낮다","적혈구침강속도(ESR)는 근력 감소를 직접 평가하는 검사이다","항시트룰린단백질 항체(ACPA)는 류마티스 관절염에서 비교적 특이적이며 조기 발견에 도움이 된다","C-반응성 단백(CRP)은 관절 변형의 형태를 확인하는 영상검사이다"],a:3,e:"ACPA는 류마티스 관절염에서 더 특이적이며 조기 진단에 유용하다. RF는 다른 자가면역질환에서도 증가할 수 있어 단독 확진 검사로 사용하지 않는다."},
+  {q:"무릎 통증 환자에서 활동 시 통증 증가, 방사선상 관절 간격 감소와 골극 형성이 관찰되었다. 진단은?",o:["류마티스 관절염","골관절염","건성성 관절염","통풍성 관절염","혈우병성 관절염"],a:1,e:"골관절염: 활동 시 통증이 증가하고 휴식 시 완화. 방사선 검사에서 관절 간격 감소, 골극 형성, 뼈경화 등의 소견이 나타난다."},
+  {q:"골관절염 환자의 초기 물리치료 중재로 가장 적절한 것은?",o:["절대 침상안정만 시행한다","근력 강화 운동과 관절 보호를 시행한다","고강도 점프 운동을 우선 시행한다","냉·열치료는 모두 금기이다","모든 환자에게 즉시 수술을 시행한다"],a:1,e:"골관절염의 물리치료 중재에는 냉·열치료를 통한 통증 완화, 보조기 사용을 통한 관절 보호, 그리고 운동치료를 통한 근력 강화가 포함된다."},
+  {q:"갑자기 엄지발가락 관절의 극심한 통증, 발적, 부종을 호소하는 환자의 핵심 병인은?",o:["활막의 자가면역성 염증","연골의 퇴행성 마모","요산 결정의 관절 침착","혈액 응고 인자 결핍","피부 건선만에 의한 국소 통증"],a:2,e:"통풍성 관절염은 혈액 내 요산 수치가 높아져 요산 결정이 관절에 침착하면서 발생하는 대사성 질환이다. 대표적인 발생 부위는 엄지발가락이다."},
+  {q:"통풍성 관절염의 치료에 대한 설명으로 가장 옳은 것은?",o:["급성 발작 시 운동치료만 시행한다","급성 발작 치료에는 콜히친, 인도메타신 등이 사용될 수 있다","통풍은 요산과 관련이 없으므로 식이조절이 필요 없다","급성기에는 반드시 열치료만 시행해야 한다","통풍성 관절염은 수술이 기본 치료이다"],a:1,e:"통풍성 관절염의 급성 발작기에는 염증과 통증을 줄이기 위해 콜히친, 인도메타신 등이 사용될 수 있다."},
+  {q:"건선성 관절염에 대한 설명으로 가장 옳은 것은?",o:["주로 혈액 응고 인자 결핍으로 발생한다","건선과 관련이 없으며 연골 마모만으로 발생한다","손가락과 발가락 관절에 영향을 주며 면역계 이상과 관련된다","엄지발가락 관절에만 국한되어 발생한다","치료에서 항류마티스 약물은 사용되지 않는다"],a:2,e:"건선성 관절염은 건선 환자에게 나타나는 만성 관절 질환으로, 손가락과 발가락 관절에 영향을 주는 경우가 많다."},
+  {q:"전신질환으로 윤활막의 만성적 비대 및 염증반응이 나타나는 자가면역질환은?",o:["결절종","감염성관절염","류마티스관절염","통풍성관절염","골관절염"],a:2,e:"류마티스관절염은 전신증상(식욕부진, 피로, 전신쇠약증)과 함께 윤활막의 만성적 비대 및 염증반응이 나타나 관절연골과 그 주위조직을 파괴하는 자가면역질환이다."},
+  {q:"급성기 류마티스관절염 환자를 위한 치료로 옳은 것은?",o:["기형의 예방","ROM 유지","가벼운 마사지","침상안정","구축의 방지"],a:3,e:"급성기에는 환자가 쉽게 피로하므로 많은 휴식이 요구된다. 침상안정이 급성기의 주요 중재이다."},
+  {q:"요산염 결정(urate crystal)이 관절주위 및 물렁조직에 침착하여 염증을 유발하는 대사성 질환으로 옳은 것은?",o:["아침에 통증이 심하다","20~30대 여성에서 호발한다","통증은 매우 심한 발작성으로 나타난다","습관적으로 장시간 무릎을 구부리고 일하는 사람에게서 호발한다","염발음이 촉진된다"],a:2,e:"통풍의 통증은 매우 심한 발작성으로 야간에 심하고 7~10일 내로 증상이 완화된다. 주로 40대 이상 남성에서 호발한다."},
+  {q:"류마티스관절염의 진행순서로 옳은 것은?",o:["윤활막 침범 – 관절부종과 통증 – 연골주변 조직손상 – 강직발생","윤활막 침범 – 연골주변 조직손상 – 관절부종과 통증 – 강직발생","연골주변 조직손상 – 윤활막 침범 – 관절부종과 통증 – 강직발생","연골주변 조직손상 – 관절부종과 통증 – 윤활막 침범 – 강직발생","윤활막 침범 – 연골주변 조직손상 – 강직발생 – 관절부종과 통증"],a:1,e:"류마티스관절염 진행순서: 윤활막 침범 → 연골주변 조직손상 → 관절부종과 통증 → 강직발생 → 전신적 쇠약"},
+  {q:"헤버딘결절이 나타날 수 있는 질환으로 옳은 것은?",o:["다발성경화증","화농성척추관절염","다발성근염","골관절염","류마티스관절염"],a:3,e:"골관절염의 증상으로는 방사선 소견상 관절공간이 좁아지고, 헤버딘결절이 발생하며 윤활막의 비대가 후기에 나타난다."},
+  {q:"골관절염에 대한 설명 중 옳은 것은?",o:["윤활막의 만성적인 비대로 발생한다","노인 및 중년에게 호발하는 질환이다","헤버딘결절이 동반하지 않는다","관절에 대칭적으로 침범하는 양상이 나타남","비체중부하 관절에 가장 많이 호발한다"],a:1,e:"골관절염은 주로 중년기 이후 체중부하관절을 침범한다. 헤버딘 결절이 동반하고 윤활막의 비대는 후기에 나타난다."},
+  {q:"성인에게 나타나는 RA의 방사선소견으로 가장 옳은 것은?",o:["연골하 골낭 형성 및 관절염 침식","관절의 변형","현저한 골 흡수","뼈의 까짐, 뼈성강직","MP joint의 아탈구"],a:3,e:"RA의 방사선 소견으로는 뼈엉성증, 뼈의 까짐, 관절연골의 파괴, 간격소실, 뼈성강직이 나타난다."},
+  {q:"류마티스관절염의 증상으로 틀린 것은?",o:["전신증상으로 만성 염증으로 인한 심한 피로감, 전신 쇠약, 식욕부진 등의 증상이 나타난다","초기 관절 증상으로 통증, 종창, 발적이 엉덩관절, 어깨관절 같은 큰 관절에서 대칭적으로 나타난다","아침에 일어났을 때 손가락의 뻣뻣함 때문에 움직이기 어려운 증상이 30분 이상 나타난다","관절염이 더욱 진행되면 관절연골이 파괴되어 관절간격이 좁아지고 뼈까지 침범된다","관절염 증상은 호전과 악화, 재발이 빈번하게 반복된다"],a:1,e:"관절염 초기에는 손목관절, 발목관절, 손가락과 같은 작은 관절에 대칭적으로 나타난다. 큰 관절 침범은 진행 시 나타난다."},
+  {q:"다음 설명하는 류마티스관절염의 변형으로 옳은 것은? PIP 굽힘 / DIP 과다폄",o:["Z 손가락 변형","백조목 변형","망치손가락 변형","단추구멍 변형","갈퀴손 변형"],a:3,e:"단추구멍 변형: PIP 굽힘 + DIP 과다폄. 백조목 변형: PIP 과다폄 + DIP 굽힘. Z형: MP 과다폄 + IP 굽힘."},
+  {q:"골관절염(OA)의 설명으로 옳은 것은?",o:["골관절염은 가장 흔한 관절질환으로 염증으로 인해 일어나는 급성 질환이다","골관절염은 관절 주변의 섬유조직의 변화로 인해 통증, 강직, 관절기능장애가 발생한다","골관절염의 원인은 일차성(특발성)과 이차성(속발성)으로 분류된다","일차성 골관절염은 외상, 탈구, 감염, 비만, 당뇨병과 같은 내분비 기능 이상으로 발생한다","이차성 골관절염은 성, 비만, 나쁜 자세, 가족력, 유전적 요소 등과 같은 내적 요인에 의해 발생한다"],a:2,e:"골관절염의 원인은 일차성(특발성)과 이차성(속발성)으로 분류된다. 일차성은 내적 변화에 의해, 이차성은 외상, 감염 등 확실한 원인에 의해 발생한다."},
+  {q:"류마티스관절염(RA)과 골관절염(OA)의 특징에 대한 설명으로 틀린 것은?",o:["골관절염의 초기 침범부위는 관절연골이다","골관절염의 강직은 활동 후에 악화되어 나타나며 오후에 심해진다","골관절염은 류마티스 인자가 음성이 뜨며 적혈구 침강속도가 정상이다","류마티스관절염은 침범관절이 딱딱해지는 특징을 가지고 있다","류마티스관절염은 해버딘결절이 나타나지 않는다"],a:3,e:"침범관절의 특징 – RA: 부드러움(soft) / OA: 딱딱함(hard), 뼈에서 염발음이 발생한다."},
+  {q:"무릎관절전치환술(TKR)의 설명으로 틀린 것은?",o:["골관절염의 증상이 심해지는 경우 실시하는 치료 방법이다","적응증으로는 골관절염 외에도 류마티스관절염, 외상성 관절염, 골괴사증 등이 있다","통증 조절이 힘들거나 심한 변형이 있을 때 또는 보행에 문제가 있을 때 행해진다","쪼그려 앉는 자세나 반복적으로 일어나는 활동을 최소화하며 걷기, 수영과 같은 운동은 최소화한다","65세 전후 연령의 환자가 수술 대상으로 적절하며 그 이상의 환자들은 합병증 발생률이 올라가 위험하다"],a:3,e:"가정에서 쪼그려 앉는 자세나 반복적으로 일어나는 활동을 최소화하며, 걷기 또는 수영 등의 운동은 오히려 권장된다."},
+  {q:"통풍관절염의 요산염 결정(Monosodium urate crystal)을 일으키는 요소인 것은?",o:["나트륨","칼슘","림프구","비타민 B","퓨린"],a:4,e:"통풍관절염은 퓨린의 대사장애로 인해 혈중 요산농도가 증가하여 요산염 결정이 관절, 연골 및 물렁조직에 침착하여 염증이 유발되는 대사성 질환이다."},
+  {q:"혈우병성 관절염의 설명으로 틀린 것은?",o:["반복적인 관절 내 출혈로 인해 관절 염증과 퇴행성 변화가 나타나는 관절질환이다","혈액응고인자 VIII, IX의 결핍으로 인해 발생한다","심한 외상이나 수술 후 지속적인 출혈로 인해 우연히 발견되는 경우가 많다","주로 체중부하 관절인 무릎관절에 많이 발생한다","관절에 가해지는 스트레스를 감소시키는 운동을 적용 할 수 있다"],a:2,e:"혈우병성 관절염은 가벼운 외상이나 수술 후 지속적인 출혈로 인해 우연히 발견되는 경우가 많다. 심한 외상이 아니다."},
+  {q:"류마티스관절염(rheumatoid arthritis)에 대해 옳은 것은?",o:["우리 몸의 면역체계가 이상을 일으켜 발생하는 자가면역 질환이다","관절에만 문제가 생길 뿐, 심장이나 허파 같은 다른 곳에서는 영향을 주지 않는다","주로 남성에게서 여성보다 더 많이 발생한다","한쪽 손에만 증상이 나타나는 비대칭적인 특징이 있다","뼈가 닳아서 생기는 노인성 질환으로 주로 큰 관절부터 시작된다"],a:0,e:"류마티스관절염은 전신적 영향을 미치는 자가면역성 질환이다. 여성이 남성보다 약 2~3배 더 많이 발생하며, 대칭적으로 소관절부터 시작된다."},
+  {q:"류마티스 관절염(RA)의 임상적 특징으로 옳은 것은?",o:["주로 무릎이나 엉덩관절 같은 큰 관절에서 비대칭적으로 시작된다","아침에 관절이 뻣뻣해지는 증상은 보통 5~10분 이내에 사라진다","발병 후 2년 이내에 환자의 과반수에서 뼈의 부분적 침식과 판누스(Pannus)가 형성된다","손가락 마디 중 먼쪽손가락뼈사이관절(DIP)에 가장 흔하게 침범한다","남성에게서 여성보다 발생 빈도가 훨씬 높게 나타나는 것이 특징이다"],a:2,e:"류마티스관절염은 발병 후 2년 이내에 환자의 과반수에서 뼈의 침식과 판누스가 형성된다. 소관절(PIP, MCP)에 대칭적으로 나타나며 아침 강직이 30분 이상 지속된다."},
+  {q:"손가락 변형과 원인에 대한 설명으로 옳은 것을 모두 고른 것은? 가.백조목 변형은 PIP 과다폄 DIP 굽힘이 특징. 나.단추구멍 변형은 중앙 폄근힘줄 손상으로 발생. 다.망치손가락 변형은 DIP를 펴주는 힘줄이 끊어져서 끝 마디를 펴지 못하는 상태. 라.단추구멍 변형은 PIP 과다폄을 유발한다.",o:["가, 나, 다","가, 다","나, 라","라","가, 나, 다, 라"],a:0,e:"가(O): 백조목은 PIP 과다폄+DIP 굽힘. 나(O): 단추구멍은 중앙 폄근힘줄 손상. 다(O): 망치손가락은 DIP 폄근힘줄 파열. 라(X): 단추구멍은 PIP 굽힘을 유발한다."},
+  {q:"골관절염(OA)의 임상적 특성에 대한 설명으로 옳은 것은?",o:["주로 젊은 층에서 급성 염증 반응으로 시작되는 자가면역 질환이다","전신 질환으로 심장, 허파 등 내부 장기에도 염증을 유발한다","75세 이상의 거의 모든 인구에서 방사선 검사상 골관절염 소견이 관찰된다","주로 손목이나 발목 같은 작은 관절에 대칭적으로 나타나는 것이 특징이다","체중부하와 상관없는 어깨나 팔꿈치 관절에서 가장 높은 발생률을 보인다"],a:2,e:"골관절염은 퇴행성 질환의 특성상 연령에 비례하여 발생하며, 75세 이상 노인층에서는 대부분 방사선학적 변화가 관찰된다."},
+  {q:"골관절염의 병리적 변화의 순서로 옳은 것은? ㄱ.프로테오글리칸 감소 ㄴ.윤활막 비후 ㄷ.관절 기능 소실 ㄹ.연골연화증 발생 ㅁ.연골세포 연골 파괴 가속화·새로운 뼈 형성",o:["ㄱ-ㄹ-ㅁ-ㄴ-ㄷ","ㄱ-ㄹ-ㄴ-ㅁ-ㄷ","ㄴ-ㄹ-ㄱ-ㅁ-ㄷ","ㄹ-ㄴ-ㄱ-ㅁ-ㄷ","ㄹ-ㄱ-ㅁ-ㄴ-ㄷ"],a:0,e:"골관절염 병리 순서: 프로테오글리칸 감소 → 연골연화증 발생 → 연골 파괴 가속화/새로운 뼈 형성 → 윤활막 비후 → 관절 기능 소실"},
+  {q:"통풍관절염 환자에게 이온도입치료로 사용되는 약물이 아닌 것은?",o:["덱사메타손","메트포르민","리도카인","디클로페낙","하이드로코르티손"],a:1,e:"메트포르민은 당뇨병 치료제로 혈당을 조절하는 약물이다. 이온도입에 사용되는 약물: 덱사메타손(항염), 리도카인(진통), 디클로페낙(NSAIDs), 하이드로코르티손(스테로이드)"},
+  {q:"건선성 관절염에 대한 설명 중 옳지 않은 것은?",o:["만성 질환이다","전염성이 없다","자가면역성 질환이다","아침 강직이 있다","혈액검사에서 양성으로 판정된다"],a:4,e:"건선성 관절염은 류마티스관절염 증상과 비슷하지만 혈액검사에서 음성으로 판정되는 것이 류마티스관절염과 다른 점이다."},
+  {q:"류마티스 관절염의 관절 변형 중 짝이 맞는 것은?",o:["망치수지 – PIP 굽힘 – DIP 굽힘","단추구멍변형 – PIP 굽힘 – DIP 폄","엄지 지그재그변형 – 손목손허리뼈관절 폄/벌림 – 손허리손가락뼈관절 과다폄","백조목 변형 – PIP 굽힘 – DIP 폄","갈퀴발가락 변형 – 발허리발가락관절 굽힘 - 몸쪽발가락뼈사이관절 굽힘"],a:1,e:"단추구멍 변형: PIP 굽힘 + DIP 과다폄. 백조목 변형: PIP 과다폄 + DIP 굽힘. 엄지 Z형: CMC 굽힘/모음 + MCP 과다폄."},
+  {q:"통풍성 관절염에서 이온도입치료로 주로 사용하는 약물은?",o:["엄지발가락의 발가락사이뼈관절에서부터 시작된다","주로 아침에 통증이 심해진다","혈액검사에서의 특이점은 없다","식이-생활 요법 관리보단 약물이 더 효과가 있다","이온도입치료를 적용할 수 있고 주로 리도카인, 디클로페낙을 사용한다"],a:4,e:"통풍성 관절염에 이온도입치료를 적용할 수 있으며 주로 리도카인(진통), 디클로페낙(항염)을 사용한다."},
+  {q:"골관절염의 병리학적 변화가 맞는 것은?",o:["프로테오글라이칸이 증가한다","관절 안의 섬유화로 인해 관절 기능이 소실된다","뼈바탕질이 얇아진다","새로운 뼈가 형성되지 않는다","윤활막이 위축된다"],a:1,e:"골관절염 병리: 프로테오글라이칸 감소, 뼈바탕질 증식, 새로운 뼈(골극) 형성, 후기에 윤활막 비후, 결국 관절 섬유화로 기능 소실."},
+  {q:"류마티스관절염에 대한 설명으로 틀린 것은?",o:["만성 염증성 자가면역 질환이다","활막조직에 염증이 발생하여 관절의 부종, 통증, 강직 및 변형을 초래하는 질환이다","발생 빈도는 여성이 남성보다 2~3배 높다","손목관절, 발목관절, 손가락과 같은 작은 관절에 대칭적으로 나타난다","손가락 관절의 변형인 갈퀴손 변형이 일어난다"],a:4,e:"손가락 관절에서의 변형은 백조목 변형, 단추구멍 변형, 망치손가락 변형이 일어난다. 갈퀴손 변형은 자신경 마비 시 나타난다."},
+  {q:"48세 여성, 양측 손 통증, MCP 및 PIP 관절에 부종과 압통, 아침 강직이 1시간 이상 지속, X-ray에서 관절 간격 감소와 골미란이 관찰되는 환자의 진단은?",o:["골관절염","통풍","류마티스관절염","강직성 척추염","골다공증"],a:2,e:"류마티스관절염: 주로 중년 여성, 조조강직이 30분 이상, 작은 관절(MCP, PIP)에 대칭적으로 나타난다."},
+  {q:"골관절염에 대한 설명으로 옳은 것은?",o:["MCP 관절 침범이 흔하다","pannus 형성이 관찰된다","아침 강직이 1시간 이상 지속된다","활동 시 통증이 감소한다","DIP 관절 침범이 흔하다"],a:4,e:"골관절염은 DIP 관절 침범이 흔하며 헤버든 결절이 특징적으로 나타난다. 활동 시 통증이 증가하고 휴식 시 완화된다."},
+  {q:"류마티스관절염과 골관절염의 비교로 옳은 것은?",o:["류마티스관절염은 비대칭적으로 관절을 침범한다","골관절염은 pannus 형성이 특징이다","류마티스관절염은 DIP 관절을 주로 침범한다","골관절염은 활동 시 통증이 증가한다","류마티스관절염은 아침 강직이 짧다"],a:3,e:"골관절염은 활동 시 통증이 증가하고 휴식 시 완화되는 기계적 통증이 특징이다. RA는 염증성 질환으로 아침 강직이 길고, 대칭적으로 소관절(MCP, PIP)을 침범한다."},
+  {q:"RA에서 주로 침범하지 않는 관절은?",o:["MCP 관절","PIP 관절","손목관절","DIP 관절","발허리발가락관절 (MTP)"],a:3,e:"RA는 주로 MCP, PIP, 손목, MTP를 대칭적으로 침범한다. DIP 관절은 거의 침범하지 않는다."},
+  {q:"류마티스 관절염의 검사 및 평가 방법에 대한 설명으로 옳지 않은 것은?",o:["류마티스 인자(RF) 검사는 환자의 약 70~80%에서 양성으로 나오지만, 다른 자가면역질환에서도 높을 수 있어 단독 확진 검사로 사용하지 않는다","항시트룰린단백질 항체(ACPA)는 류마티스 관절염 환자에서 매우 특이적인 항체로 조기에 발견이 가능하다","C-반응성 단백(CRP)은 염증이 있을 때 간에서 생성되며 염증 정도를 추적하는 데 사용된다","항시트룰린단백질 항체(ACPA) 검사는 류마티스 인자(RF) 검사보다 정확도가 떨어진다","적혈구 침강 속도(ESR) 수치가 높으면 몸에 염증이 많다는 것을 의미한다"],a:3,e:"ACPA는 류마티스 관절염 환자에게 나타나는 매우 특이적인 항체로 RF 검사보다 더 정확하며 조기에 발견이 가능하다."},
+  {q:"통풍성 관절염의 원인과 임상적 특징으로 가장 옳은 것은?",o:["퓨린 대사 장애로 인해 혈액 내 요산 수치가 높아져 요산 결정체가 관절에 침착되어 발생한다","혈액 응고 인자의 결핍으로 인해 관절 내 출혈이 쉽게 발생하는 것이 핵심 원인이다","주요 발생 부위는 척추와 엉덩이 관절이며 서서히 통증이 증가한다","피부에 붉고 딱딱한 비늘 모양의 발진이 함께 나타나는 것이 특징이다","주로 관절 연골이 닳아 없어지면서 관절 운동이 제한되는 퇴행성 질환이다"],a:0,e:"통풍성 관절염은 퓨린 대사 장애로 인해 요산 수치가 높아지고, 이 요산 결정체가 관절(주로 엄지발가락)에 침착되어 극심한 통증과 부종을 유발하는 질환이다."},
+  {q:"혈우병성 관절염의 임상 증상 진행 단계에서 4단계의 설명으로 옳지 않은 것은?",o:["1단계에서는 가벼운 외상이나 수술 후 관절 내 출혈이 발생한다","2단계에서는 염증 반응으로 인해 관절 부종과 발적, 열감이 나타난다","3단계에서는 관절 부종과 경직으로 인해 운동성이 감소하고 관절 운동이 제한된다","4단계에서는 요산 결정체가 누적되어 관절의 구조적 변형을 초래한다","질환이 진행될수록 반복적인 출혈로 인해 관절 연골 파괴 및 장기 합병증이 발생한다"],a:3,e:"혈우병성 관절염의 4단계는 반복적 출혈로 인해 관절 연골이 파괴되고 구조적 변형이 일어나는 단계이다. 요산 결정체 누적은 통풍성 관절염의 특징이다."},
+  {q:"건선성 관절염의 특징 및 치료 중재에 대한 설명으로 가장 옳은 것은?",o:["유전적 요인과는 무관하며 오직 환경적 요인에 의해서만 발생한다","주로 체중이 많이 실리는 무릎과 엉덩이 관절에만 국한되어 발생한다","건선 환자에게 나타나는 관절 질환으로 손가락과 발가락 관절 등에 영향을 미친다","급성기 물리적 인자 치료로는 통증 완화를 위해 반드시 온치료를 적용해야 한다","질병 조절 항류마티스제(DMARDs)는 건선성 관절염 치료에 절대 사용해서는 안 된다"],a:2,e:"건선성 관절염은 피부질환인 건선 환자에게 나타나며 손가락, 발가락, 무릎, 척추 등 여러 관절에 영향을 미친다. 급성기에는 냉치료를 적용한다."},
+  {q:"뼈관절염(OA) 환자의 기능 상태와 통증, 뻣뻣함을 평가하기 위한 전용 평가 도구는?",o:["BBS (Berg Balance Scale)","MBI (Modified Barthel Index)","MMSE (Mini Mental Status Examination)","WOMAC (Western Ontario and McMaster Universities Osteoarthritis Index)","GOAT (Galveston Orientation and Amnesia Test)"],a:3,e:"WOMAC index는 골관절염 환자의 통증, 뻣뻣함, 일상생활 어려움을 평가하기 위해 개발된 특이적 도구이다."},
+  {q:"연부조직의 구성요소 중 틀린 것은?",o:["근육 : 신체의 움직임을 담당하며 수축과 이완을 통해 관절을 움직이는 조직","피부 : 신체의 최외곽층으로 보호, 체온조절, 감각 수용을 담당","지방조직 : 신체 내 에너지 저장, 충격 흡수 및 단열을 제공","힘줄 : 뼈와 뼈를 연결하는 조직으로 근육이 생성한 힘을 뼈에 전달함","활액막 : 관절 내부에 위치하여 윤활액을 생산하고 관절의 마찰을 감소시킴"],a:3,e:"힘줄은 근육과 뼈를 연결하는 조직으로 근육이 생성한 힘을 뼈에 전달한다. 뼈와 뼈를 연결하는 것은 인대이다."},
+  {q:"구축의 형태 중 근힘줄 단위의 적응적 단축, 단시간 뻗침으로 완화 가능한 것은?",o:["관절성 구축","근정적 구축","섬유성 구축","비가역성 구축","관절 주위성 구축"],a:1,e:"근정적 구축은 근육의 수축으로 인한 구축 상태로 근육 원섬유의 마디가 유지되며, 단시간 뻗침 운동으로 완화시킬 수 있다."},
+  {q:"인대의 스트레스-스트레인 곡선에서 스트레스 제거 시 원래 길이로 돌아오는 구간은?",o:["최종파열점","가소성영역","항복점","병목영역","탄성영역"],a:4,e:"탄성영역은 힘을 가하면 변형되지만 외부 하중을 제거하면 원래 상태로 돌아오는 구간이다."},
+  {q:"근육이 짧아지는 속도가 증가하면 힘은 감소하는 형태의 수축은?",o:["편심성 수축","등척성 수축","등속성 수축","동심성 수축","동심성-편심성 교차 수축"],a:3,e:"동심성 수축(구심성 수축)에서 근육이 짧아지는 속도가 증가할수록 힘이 감소하는 힘-속도 관계가 나타난다."},
+  {q:"근거수준 피라미드에서 제일 상위 연구수준에 해당되는것은?",o:["무작위 임상실험","체계적 고찰","사례연구","코호트 연구","환자-대조군연구"],a:1,e:"근거수준 피라미드: 체계적 고찰 > 무작위 임상시험 > 코호트 연구 > 환자-대조군 연구 > 사례연구"},
+  {q:"수동관절운동(PROM)에 대한 내용이 아닌 것은?",o:["의식이 없는 환자에게 적용한다","통증을 감소시킨다","관절주변 조직의 경직예방을 한다","근력과 근지구력을 증진시킨다","급성기 환자에게 적용한다"],a:3,e:"수동관절운동은 근육이 능동적으로 수축하지 않으므로 근력과 지구력을 증가시킬 수 없다."},
+  {q:"근육이 불수의적으로 갑자기 강하게 수축하는 상태로, 일시적인 통증이 함께 나타나는 것은?",o:["구축","단축","연축","유착","강직"],a:2,e:"연축: 근육이 불수의적으로 갑자기 강하게 수축하는 상태. 구축: 연부조직이 병리적 원인으로 ROM이 제한된 상태. 강직: 비정상적으로 단단해지고 수동적으로 움직일 때 저항이 증가하는 상태."},
+  {q:"기계적 저항운동의 특징으로 알맞은 것은?",o:["조직손상 초기에 적용한다","유연성이 증가한다","비용이 싸다","다양한 저항이 제공된다","통증감소에 효과적이다"],a:3,e:"기계적 저항운동의 특징: 다양한 저항이 제공된다. 조직손상 초기에는 부적절하며 비용은 높다."},
+  {q:"관절가동술의 금기증 및 주의사항이 아닌 것은?",o:["종양 부위에 치료는 하면 안된다","환자가 통증을 느끼면 중단한다","급성 골절시 적용하면 안된다","관절 안정성을 정기적으로 평가하지 않아도 된다","관절 과가동성을 신경써야한다"],a:3,e:"관절 안정성을 정기적으로 평가하여 적용해야 한다."},
+  {q:"스트레스 스트레인 곡선 중 탄성에서 소성으로 전환되는 지점은?",o:["탄성영역","탄성한계점","말단영역","가소성 영역","병목현상"],a:1,e:"탄성한계점은 탄성에서 소성으로 전환되는 지점이다. 이 점을 넘으면 영구적인 변형이 시작된다."},
+  {q:"연부조직 중 뼈와 뼈 사이를 연결하여 관절의 안정성을 유지하는 조직은?",o:["힘줄","근막","혈액막","근육","인대"],a:4,e:"인대는 뼈와 뼈 사이를 연결하여 관절의 안정성을 유지한다. 힘줄은 근육과 뼈를 연결한다."},
+  {q:"수동관절가동운동에 대한 설명으로 옳지 않은 것은?",o:["통증 감소의 효과가 있다","관절의 유연성을 유지할 수 있다","의식이 없는 환자에게 적용한다","근력유지와 관절 가동성을 향상시킨다","급성기 환자에게 적용한다"],a:3,e:"수동관절가동운동은 근력과 지구력을 증가할 수 없는 한계점을 갖고 있다. 근력유지와 관절 가동성을 향상시키는 것은 능동관절가동운동이다."},
+  {q:"닫힌사슬운동에 대한 설명으로 틀린 것은?",o:["먼쪽 분절이 고정된 상태이다","예측이 가능한 움직임 패턴이다","스쿼트, 데드리프트, 푸쉬업 등이 있다","비체중지지 자세에서 수행한다","다양한 근육 그룹을 활성화 시킨다"],a:3,e:"비체중지지 자세에서 수행하는 것은 열린사슬운동이다. 닫힌사슬운동은 체중지지 자세에서 수행한다."},
+  {q:"연부조직의 구성요소로 옳지 않은 것은?",o:["근육 : 수축과 이완을 통해 관절을 움직이는 조직","힘줄 : 근육과 뼈를 연결하는 조직","인대 : 뼈와 뼈사이를 연결하여 관절의 안정성을 유지함","뼈막 : 뼈의 표면을 감싸는 결합조직으로 뼈의 성장과 골절시 뼈를 붙게 하는 작용","근막 : 근육 및 내장기관을 감싸는 결합조직으로 구조적지지와 움직임 조절"],a:3,e:"뼈막(periosteum)은 연부조직이 아니라 골조직의 일부이다. 연부조직은 뼈를 제외한 신체의 부드러운 조직이다."},
+  {q:"임상의사결정 과정을 올바르게 나열한 것은?",o:["검사→평가→진단→예후→중재","검사→예후→진단→평가→중재","진단→검사→평가→중재→예후","중재→예후→진단→평가→검사","예후→중재→평가→검사→진단"],a:0,e:"임상의사결정 과정: 검사 → 평가 → 진단 → 예후 → 중재"},
+  {q:"PNF 기법 중 주동근과 길항근의 교대로 수축하여 근력, 균형, 협응력을 향상시키는 기법은?",o:["율동적 개시","등장성 혼합","안정적 반전","복제","반복 신장"],a:2,e:"안정적 반전은 안정성, 균형, 근력을 증가시키고 작용근과 대항근 사이의 협응력을 증진시키는 기법이다."},
+  {q:"기계적 저항운동의 설명으로 틀린 것은?",o:["근력 증진 및 지구력을 향상시킬 수 있다","통증의 적응성이 높다","조직 손상 초기에는 부적절한 방법이다","동적/정적 근력이 증가한다","MMT Poor에서도 가능하다"],a:1,e:"기계적 저항운동은 통증의 적응성이 부족하다."},
+  {q:"운동단위의 설명으로 옳은 것은?",o:["type I - 수축 속도가 빠르고 피로에 중간 정도에 저항한다","type II b – 피로에 강하고 지구력 운동에 사용된다","type I – 자세 유지 근육에 많이 분포된다 (척추기립근, 가자미근, 횡격막 등)","type II – 단거리 스프린트, 점프, 고중량 저반복 웨이트 운동에 사용된다","type I – 빠르고 강한 힘을 발휘한다"],a:2,e:"type I (적색근): 피로에 강하고 지구력 운동에 사용, 자세 유지 근육에 많이 분포. type II b (백색근): 빠르고 강한 힘, 단거리 스프린트에 사용."},
+  {q:"근거수준 피라미드에서 신뢰도가 높은 순으로 배열된 것은?",o:["체계적고찰 – 사례연구 – 코호트연구 – 환자대조군연구 – 무작위임상시험 – 기술적고찰","체계적고찰 – 코호트연구 – 환자대조군연구 – 무작위임상시험 – 사례연구 – 기술적고찰","체계적고찰 – 코호트연구 – 무작위임상시험 – 환자대조군연구 – 사례연구 – 기술적고찰","체계적고찰 – 무작위임상시험 – 코호트연구 – 환자대조군연구 – 사례연구 – 기술적고찰"],a:3,e:"근거수준 피라미드 (신뢰도 높은 순): 체계적고찰 → 무작위임상시험 → 코호트연구 → 환자-대조군연구 → 사례연구 → 기술적고찰/전문가의견"},
+  {q:"SOAP 노트에 대한 설명으로 옳지 않은 것은?",o:["S(Subjective) 항목에는 환자가 직접 표현한 증상, 통증 정도, 불편감 등을 기록한다","O(Objective) 항목은 객관적인 데이터로, 물리적인 검사, 생리학적 지표, 측정 결과 등을 포함한다","A(Assessment) 항목에서는 환자의 상태를 주관적으로 평가하며 치료사 개인의 의견이나 감정을 주로 기록한다","P(Plan) 항목에는 향후 치료 계획, 목표 설정, 사용될 치료 방법 등을 포함한다","SOAP 노트는 치료 과정의 일관성 유지와 환자 상태의 변화 추적을 위한 중요한 도구이다"],a:2,e:"A(Assessment) 항목에서는 환자의 상태를 객관적으로 평가하고 전문가로서의 평가가 중심이 된다. 주관적인 감정이나 개인적인 의견은 포함되지 않는다."},
+  {q:"도수 저항 운동에 대한 특성으로 옳은 것은?",o:["근력이 약하면 적용하기 어렵다","근강화의 재활 운동 초기 단계에 가장 효과적이다","운동 범위의 한 지점에서 최대 부하를 받는다","도수 고정을 하면 대상 운동을 방지하기 어렵다","저항의 양을 정량적으로 측정할 수 있다"],a:1,e:"도수 저항 운동은 근강화의 재활 운동 초기 단계에서 가장 효과적이다. 근력이 약할 때도 사용 가능하며 도수 고정을 통해 대상 운동을 방지할 수 있다."},
+  {q:"뻗침 운동의 금기증으로 옳지 않은 것은?",o:["골성 방해물","골절 회복","급성 염증","관절운동범위 제한","조직 손상"],a:3,e:"관절운동범위 제한은 뻗침운동의 적응증이다. 골성 방해물, 골절 후, 급성 염증, 조직 손상은 금기증이다."},
+  {q:"PICO 가 해당하는 근거중심 물리치료의 수행단계는?",o:["1단계-임상적 질문 작성","2단계- 근거찾기","3단계- 근거평가","4단계- 임상적용","5단계- 치료에 대한 평가"],a:0,e:"근거중심 물리치료의 1단계(임상 질문 작성)에서 PICO를 활용한다. PICO: Population(환자), Intervention(중재), Comparison(비교), Outcome(결과)"},
+  {q:"특정요인에 노출된 집단을 장기간 추적관찰 후 비교하여 비교위험도를 제시하는 연구는?",o:["메타분석","체계적 고찰","무작위 대조군 연구","코호트 연구","사례 연구"],a:3,e:"코호트 연구는 동일한 위험요인적 특성을 갖는 연구대상자를 전향적으로 추적관찰하여 위험요인에 노출되지 않은 대상자와 비교하는 연구 설계이다."},
+  {q:"다음에 대한 설명으로 옳은 것은? 기능 장애 단락은 신체 기능 및 구조, 활동 및 참여를 포함하며, 배경요인은 환경요인과 개인요인을 포함한다.",o:["나기 모델(Nagi model)","국제질병분류(ICD)","미국의료재활연구센터모형(NCMRR)","국제기능 장애 건강분류(ICF)","ICIDH-1 장애모델"],a:3,e:"국제기능 장애 건강분류(ICF)는 신체 기능 및 구조와 손상, 활동 및 참여와 활동 제한과 참여 제한, 환경요인과 배경요인을 포함하는 생물심리사회적 장애모델이다."}
+];
+
+let qs=[],cur=0,score=0,wrongs=[],answered=false;
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function init(){qs=shuffle(AQ);cur=0;score=0;wrongs=[];answered=false;document.getElementById('rb').classList.remove('show');document.getElementById('qa').style.display='block';document.getElementById('pw').style.display='block';updateProg();loadQ();}
+function updateProg(){const t=qs.length,d=cur;document.getElementById('pt').textContent=`${d} / ${t}`;document.getElementById('pf').style.width=(d/t*100)+'%';document.getElementById('cok').textContent=score;document.getElementById('cng').textContent=d-score;document.getElementById('crm').textContent=t-d;}
+function loadQ(){answered=false;const q=qs[cur];document.getElementById('qn').textContent=`Q${String(cur+1).padStart(3,'0')}`;document.getElementById('qt').textContent=q.q;const oa=document.getElementById('oa');oa.innerHTML='';q.o.forEach((opt,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="on">${i+1}</span><span>${opt}</span>`;b.onclick=()=>selAns(i);oa.appendChild(b);});document.getElementById('eb').classList.remove('show');document.getElementById('nb').classList.remove('show');const c=document.getElementById('qc');c.style.animation='none';c.offsetHeight;c.style.animation='';}
+function selAns(idx){if(answered)return;answered=true;const q=qs[cur];const btns=document.querySelectorAll('.opt');btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===idx&&i!==q.a)b.classList.add('wrong');});if(idx===q.a){score++;showToast('✓ 정답!','okt');}else{wrongs.push({q:q.q,my:q.o[idx],ans:q.o[q.a],e:q.e});showToast('✗ 오답','ngt');}document.getElementById('et').textContent=q.e;document.getElementById('eb').classList.add('show');document.getElementById('nb').classList.add('show');document.getElementById('nb').textContent=cur<qs.length-1?'다음 문제 →':'결과 보기 →';updateProg();}
+function nextQ(){cur++;if(cur>=qs.length)showResult();else loadQ();}
+function showResult(){document.getElementById('qa').style.display='none';document.getElementById('pw').style.display='none';const t=qs.length,p=Math.round(score/t*100);document.getElementById('rs').textContent=p+'%';document.getElementById('rok').textContent=score;document.getElementById('rng').textContent=t-score;const msgs=['💪 다시 도전!','📚 절반 이상! 오답 확인하세요.','👍 잘했어요!','🏆 완벽합니다!'];document.getElementById('rl').textContent=`${score}/${t}문제 정답 · ${msgs[p>=90?3:p>=70?2:p>=50?1:0]}`;document.getElementById('rb').classList.add('show');}
+function restart(){init();}
+let wshow=false;
+function toggleW(){wshow=!wshow;const wl=document.getElementById('wl');if(wshow){wl.innerHTML=wrongs.length===0?'<p style="color:var(--ok);text-align:center;padding:20px">🎉 오답이 없습니다!</p>':wrongs.map((w,i)=>`<div class="wi"><div class="wi-q">${i+1}. ${w.q}</div><div class="wi-a my">내 답: <span>${w.my}</span></div><div class="wi-a ans">정답: <span>${w.ans}</span></div><div class="wi-e">📖 ${w.e}</div></div>`).join('');wl.classList.add('show');}else wl.classList.remove('show');}
+let tt;
+function showToast(msg,cls){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+cls+' show';clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800);}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>근골격계 5주차</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--bg:#0d0d12;--surf:#161620;--surf2:#1e1e2a;--brd:#2a2a3a;--acc:#5b8dee;--acc2:#ee5b8d;--ok:#5bee8d;--ng:#ee5b8d;--warn:#eeb85b;--txt:#e6e6f0;--muted:#7777aa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 40%,rgba(91,141,238,.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(238,91,141,.05) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.top-nav{position:sticky;top:0;z-index:50;background:rgba(13,13,18,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);}
+.top-tabs{display:flex;padding:0 12px;overflow-x:auto;scrollbar-width:none;}
+.top-tabs::-webkit-scrollbar{display:none;}
+.top-tab{padding:13px 16px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.top-tab.active{color:var(--acc);border-bottom-color:var(--acc);}
+.cat-nav{background:rgba(22,22,32,.97);border-bottom:1px solid var(--brd);overflow-x:auto;scrollbar-width:none;display:flex;padding:0 12px;}
+.cat-nav::-webkit-scrollbar{display:none;}
+.cat-btn{padding:9px 14px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:all .2s;}
+.cat-btn.active{color:var(--acc2);border-bottom-color:var(--acc2);}
+.cat-count{display:inline-block;background:var(--surf2);border-radius:8px;padding:1px 6px;font-size:10px;margin-left:4px;font-family:'JetBrains Mono',monospace;}
+.tab-pane{display:none;position:relative;z-index:1;}
+.tab-pane.active{display:block;}
+.wrap{max-width:820px;margin:0 auto;padding:20px 16px 60px;}
+.hdr{text-align:center;padding:24px 0 16px;}
+.badge{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;}
+.hdr h1{font-size:22px;font-weight:900;margin-bottom:4px;}
+.hdr p{font-size:12px;color:var(--muted);}
+.prog-wrap{background:var(--surf);border-radius:12px;padding:14px 18px;margin-bottom:18px;border:1px solid var(--brd);}
+.prog-info{display:flex;justify-content:space-between;margin-bottom:8px;}
+.prog-info span{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.prog-info strong{color:var(--acc);font-size:13px;}
+.prog-bar{height:5px;background:var(--brd);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .4s ease;}
+.stats{display:flex;gap:10px;margin-top:10px;}
+.stat{flex:1;background:var(--surf2);border-radius:8px;padding:7px 10px;text-align:center;border:1px solid var(--brd);}
+.sv{font-size:17px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.sl{font-size:10px;color:var(--muted);margin-top:1px;}
+.stat.ok .sv{color:var(--ok);}.stat.ng .sv{color:var(--ng);}.stat.rm .sv{color:var(--acc);}
+.qcard{background:var(--surf);border:1px solid var(--brd);border-radius:14px;padding:22px;margin-bottom:14px;animation:su .3s ease;}
+@keyframes su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.qmeta{display:flex;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
+.qnum{background:linear-gradient(135deg,var(--acc),#7b6cee);color:#fff;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:6px;}
+.qcat-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;background:rgba(238,91,141,.15);color:var(--acc2);}
+.qtxt{font-size:14px;font-weight:500;line-height:1.75;}
+.opts{display:flex;flex-direction:column;gap:9px;margin-top:18px;}
+.opt{background:var(--surf2);border:1.5px solid var(--brd);border-radius:11px;padding:12px 14px;color:var(--txt);font-family:'Noto Sans KR',sans-serif;font-size:13px;text-align:left;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:11px;line-height:1.55;}
+.opt:hover:not(:disabled){border-color:var(--acc);background:rgba(91,141,238,.1);transform:translateX(3px);}
+.on{min-width:22px;height:22px;border-radius:5px;background:var(--brd);color:var(--muted);font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;}
+.opt.correct{border-color:var(--ok);background:rgba(91,238,141,.1);}
+.opt.correct .on{background:var(--ok);color:#0d0d12;}
+.opt.wrong{border-color:var(--ng);background:rgba(238,91,141,.1);}
+.opt.wrong .on{background:var(--ng);color:#0d0d12;}
+.opt:disabled{cursor:default;}
+.exp{display:none;margin-top:14px;background:rgba(91,141,238,.07);border:1px solid rgba(91,141,238,.25);border-radius:11px;padding:14px;}
+.exp.show{display:block;animation:fi .3s ease;}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.exp-t{font-size:10px;font-weight:700;color:var(--acc);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;}
+.exp-b{font-size:12px;line-height:1.8;color:#c0c0d8;}
+.nxtbtn{display:none;width:100%;padding:15px;background:linear-gradient(135deg,var(--acc),#7b6cee);border:none;border-radius:11px;color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:10px;}
+.nxtbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,141,238,.3);}
+.nxtbtn.show{display:block;animation:fi .3s ease;}
+.result{display:none;text-align:center;padding:40px 20px;}
+.result.show{display:block;animation:su .4s ease;}
+.rscore{font-size:68px;font-weight:900;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin:14px 0;}
+.rlbl{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:280px;margin:0 auto 28px;}
+.ri{background:var(--surf);border:1px solid var(--brd);border-radius:11px;padding:14px;}
+.ri .v{font-size:26px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.ri .l{font-size:11px;color:var(--muted);margin-top:3px;}
+.ri.ok .v{color:var(--ok);}.ri.ng .v{color:var(--ng);}
+.rbtn{padding:12px 32px;border:none;border-radius:11px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin:5px;}
+.rbtn.p{background:linear-gradient(135deg,var(--acc),#7b6cee);color:#fff;}
+.rbtn.p:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,141,238,.3);}
+.rbtn.s{background:var(--surf);border:1.5px solid var(--brd);color:var(--txt);}
+.wlist{display:none;margin-top:20px;text-align:left;}
+.wlist.show{display:block;}
+.wi{background:var(--surf);border:1px solid var(--brd);border-left:3px solid var(--ng);border-radius:11px;padding:14px;margin-bottom:10px;}
+.wi-q{font-size:12px;font-weight:500;margin-bottom:9px;line-height:1.6;}
+.wi-a{font-size:11px;margin-bottom:3px;}
+.wi-a span{font-weight:600;}
+.wi-a.my span{color:var(--ng);}.wi-a.ans span{color:var(--ok);}
+.wi-e{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.7;border-top:1px solid var(--brd);padding-top:7px;}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--surf);border:1px solid var(--brd);border-radius:10px;padding:10px 18px;font-size:12px;font-weight:500;transition:transform .3s ease;z-index:100;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.okt{border-color:var(--ok);color:var(--ok);}
+.toast.ngt{border-color:var(--ng);color:var(--ng);}
+.sumwrap{padding:24px 16px 60px;max-width:860px;margin:0 auto;}
+.ssec{background:var(--surf);border:1px solid var(--brd);border-radius:14px;margin-bottom:14px;overflow:hidden;}
+.shead{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s;}
+.shead:hover{background:var(--surf2);}
+.shead h3{font-size:14px;font-weight:700;color:var(--acc);}
+.sarr{font-size:16px;color:var(--muted);transition:transform .3s;}
+.sbody{display:none;padding:16px 20px;border-top:1px solid var(--brd);}
+.sbody.open{display:block;}
+.shead.open .sarr{transform:rotate(180deg);}
+.stbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px;}
+.stbl th{background:var(--surf2);color:var(--acc);font-weight:700;padding:8px 10px;text-align:left;border-bottom:1px solid var(--brd);}
+.stbl td{padding:8px 10px;border-bottom:1px solid rgba(42,42,58,.6);vertical-align:top;line-height:1.6;}
+.stbl tr:last-child td{border-bottom:none;}
+.stbl tr:hover td{background:rgba(91,141,238,.04);}
+.sbody p{font-size:12px;line-height:1.8;color:#c0c0d8;margin-bottom:8px;}
+.hl{color:var(--acc);font-weight:700;}
+.hl.g{color:var(--ok);}.hl.r{color:var(--ng);}.hl.y{color:var(--warn);}
+.kbox{background:var(--surf2);border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.8;color:#c0c0d8;}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-tabs">
+    <div class="top-tab active" onclick="switchTop('quiz')">📝 퀴즈</div>
+    <div class="top-tab" onclick="switchTop('sum')">📚 서머리</div>
+  </div>
+  <div class="cat-nav" id="catNav">
+    <div class="cat-btn active" onclick="setCat('all')">전체 <span class="cat-count" id="cnt-all">63</span></div>
+    <div class="cat-btn" onclick="setCat('muscle')">근육계 질환 <span class="cat-count" id="cnt-muscle">0</span></div>
+    <div class="cat-btn" onclick="setCat('bone')">뼈 질환 <span class="cat-count" id="cnt-bone">0</span></div>
+    <div class="cat-btn" onclick="setCat('spine')">척추 <span class="cat-count" id="cnt-spine">0</span></div>
+    <div class="cat-btn" onclick="setCat('amputation')">절단·의지 <span class="cat-count" id="cnt-amputation">0</span></div>
+    <div class="cat-btn" onclick="setCat('deformity')">기형·탈구 <span class="cat-count" id="cnt-deformity">0</span></div>
+    <div class="cat-btn" onclick="setCat('foot')">발 변형 <span class="cat-count" id="cnt-foot">0</span></div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="tab-pane active" id="tab-quiz">
+<div class="wrap">
+  <div class="hdr"><div class="badge">Week 5 · 2026</div><h1>근골격계 물리치료 문제해결</h1><p id="subTitle">5주차 · 전체 63문제 · 랜덤 출제</p></div>
+  <div class="prog-wrap" id="pw">
+    <div class="prog-info"><span>진행률</span><strong id="pt">0 / 63</strong></div>
+    <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+    <div class="stats">
+      <div class="stat ok"><div class="sv" id="cok">0</div><div class="sl">정답</div></div>
+      <div class="stat ng"><div class="sv" id="cng">0</div><div class="sl">오답</div></div>
+      <div class="stat rm"><div class="sv" id="crm">63</div><div class="sl">남은</div></div>
+    </div>
+  </div>
+  <div id="qa">
+    <div class="qcard" id="qc">
+      <div class="qmeta"><div class="qnum" id="qn">Q001</div><div class="qcat-badge" id="qcatbadge"></div></div>
+      <div class="qtxt" id="qt"></div>
+      <div class="opts" id="oa"></div>
+      <div class="exp" id="eb"><div class="exp-t">📖 해설</div><div class="exp-b" id="et"></div></div>
+    </div>
+    <button class="nxtbtn" id="nb" onclick="nextQ()">다음 문제 →</button>
+  </div>
+  <div class="result" id="rb">
+    <div class="badge">완료!</div>
+    <div class="rscore" id="rs">0%</div>
+    <div class="rlbl" id="rl"></div>
+    <div class="rgrid">
+      <div class="ri ok"><div class="v" id="rok">0</div><div class="l">정답</div></div>
+      <div class="ri ng"><div class="v" id="rng">0</div><div class="l">오답</div></div>
+    </div>
+    <button class="rbtn p" onclick="restart()">🔄 다시 풀기</button>
+    <button class="rbtn s" onclick="toggleW()">📋 오답 보기</button>
+    <div class="wlist" id="wl"></div>
+  </div>
+</div>
+</div>
+
+<!-- SUMMARY -->
+<div class="tab-pane" id="tab-sum">
+<div class="sumwrap">
+  <div class="hdr"><div class="badge">Week 5 · Summary</div><h1>근골격계 운동치료 핵심 정리</h1><p>탭을 클릭하면 내용이 펼쳐집니다</p></div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>I. 근육계 질환</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>질환</th><th>특징</th></tr>
+        <tr><td>뒤시엔느 근이영양증(DMD)</td><td>장딴지근 가성비대 / 가우어스 징후 / 첨족보행·오리걸음 / 12세 전후 독립보행 불가</td></tr>
+        <tr><td>베커형 근이영양증</td><td>가장 양호한 예후 / 15세 이후 독립보행 가능</td></tr>
+        <tr><td>중증성 근무력증</td><td>자가면역 / 아세틸콜린 수용체↓ / 여자 2배 호발 / 30대 호발</td></tr>
+        <tr><td>선천성 근긴장증</td><td>운동 시도 시 수의근 경련↑ / 다리에서 현저</td></tr>
+        <tr><td>선천성 근무긴장증(오펜하임병)</td><td>근육 이완·생리적 긴장성 손실 / 2~3세 머리·허리 못 가눔 / 깊은힘줄반사 상실</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>II. 뼈 질환</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>질환</th><th>특징</th></tr>
+        <tr><td>뼈엉성증(골다공증)</td><td>T-score -1.0↓→골절위험 2~3배 / T-score -2.5 이하=뼈엉성증 / 체중부하운동 적용</td></tr>
+        <tr><td>파제트병</td><td>원인불명 대사성 만성 / 다리뼈: bowing변형 / 머리뼈: 시각·청각·후각 소실 / Cotton wool 소견</td></tr>
+        <tr><td>뼈속질염(골수염)</td><td>성장기 남아 혈행성 감염 / 정강뼈위끝·넙다리뼈아래끝·위팔뼈위끝 호발</td></tr>
+        <tr><td>척추결핵</td><td>척주뒤굽음증 / 아래등뼈·위허리뼈 호발 / 소아 호발</td></tr>
+        <tr><td>강직성 척추염</td><td>bamboo spine / 아침 강직·통증 심함 / HLA-B27 양성 / 아래→위 진행 / 쇼베르 검사</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>III. 척추 질환 & 운동치료</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>질환/운동</th><th>핵심</th></tr>
+        <tr><td>추간판탈출증 분류</td><td>bulge(살짝)→protrusion(허리 불편)→extrusion(다리 불편)→sequestration(이탈)</td></tr>
+        <tr><td>척추관협착증</td><td>폄 시 통증↑ / 굽힘 시 통증↓ / 간헐적 파행</td></tr>
+        <tr><td>강직성 척추염</td><td>아침 강직 / bamboo spine / SLR 검사</td></tr>
+        <tr><td>척추전방전위증</td><td>메이어딩: 1등급25% / 2등급50% / 3등급75% / 4등급100% / 안정화운동</td></tr>
+        <tr><td>척추옆굽음증</td><td>아담 앞굽음 검사 / 30도↑: 밀워키보조기(T7이상) / 30도↓: 크랩운동</td></tr>
+        <tr><td>윌리엄 운동</td><td>허리앞굽음증 / 몸통 굽힘 → 앞굽음↓ / 배근육·큰볼기근·뒤넙다리근 강화</td></tr>
+        <tr><td>맥켄지 운동</td><td>추간판탈출증 / 허리 폄 운동 → 추간판 복위</td></tr>
+      </table>
+      <div class="kbox">💡 SLR 검사: 척추전방전위증·허리척추원반탈출증 경질막징후 검사<br>
+      💡 견인력: 목뼈=체중의 7% / 허리뼈=체중의 50% / 경추는 굽힘 상태에서 견인<br>
+      💡 허리통증 일상자세: 발 받침대 사용 / 뒷굽이 낮은 신발 / 침대: 몸 옆으로 돌리고 일어남</div>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>IV. 절단 & 의지</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>절단 부위</th><th>구축 방향</th><th>강화 근육</th><th>뻗침 근육</th></tr>
+        <tr><td>넙다리절단(A/K)</td><td>엉덩관절 굽힘·벌림·가쪽돌림</td><td>폄근(큰볼기근), 모음근, 안쪽돌림근</td><td>엉덩허리근, 중간볼기근, 궁둥구멍근</td></tr>
+        <tr><td>종아리절단</td><td>무릎관절 굽힘</td><td>무릎폄근(넙다리네갈래근)</td><td>무릎굽힘근(뒤넙다리근)</td></tr>
+        <tr><td>위팔절단(A/E)</td><td>어깨관절 굽힘·모음·안쪽돌림</td><td>폄근(넓은등근), 벌림근, 가쪽돌림근</td><td>어깨세모근, 모음근, 안쪽돌림근</td></tr>
+        <tr><td>아래팔절단</td><td>팔꿉관절 굽힘</td><td>폄근(위팔세갈래근)</td><td>굽힘근(위팔두갈래근)</td></tr>
+      </table>
+      <div class="kbox">💡 종아리절단: 가장 많이 시행 / 에너지소비 최소 / 환상통 최소화<br>
+      💡 사임절단: 즉시 체중부하 가능 / 외관 나쁨 / SACH 사용 / 큰돌기에서 5cm 이상 유지<br>
+      💡 쇼파르절단: 안쪽들린휜발증 변형 쉬움 / 탄력붕대: 끝에서부터 위쪽으로 감아 올림</div>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>V. 기형 & 탈구 중재</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <table class="stbl">
+        <tr><th>기형/탈구</th><th>중재</th></tr>
+        <tr><td>선천성 엉덩관절 탈구(CDH)</td><td>0~6개월: 파브릭 하네스, 본 로젠 / 6~18개월: 견인 / 18개월↑: 수술</td></tr>
+        <tr><td>무릎뼈 가쪽 탈구</td><td>안쪽넓은근(VMO) 강화</td></tr>
+        <tr><td>노뼈머리 아탈구</td><td>팔꿉 굽힘+아래팔 뒤침으로 정복 / 팔걸이 2주간 보호</td></tr>
+        <tr><td>기운목(사경)</td><td>뻗침: 반대쪽 가쪽굽힘, 동측 돌림 / 심부마찰마사지</td></tr>
+        <tr><td>밖굽이 엉덩관절(coxa valga)</td><td>ROM: 모음↑ / 근력: 모음근 / 뻗침: 벌림근</td></tr>
+        <tr><td>안굽이 엉덩관절(coxa vara)</td><td>ROM: 벌림↑ / 근력: 벌림근 / 뻗침: 모음근</td></tr>
+        <tr><td>밖굽이무릎(X형)</td><td>강화: 안쪽(반막근·반힘줄근·안쪽넓은근) / 뻗침: 가쪽(넙다리두갈래근·TFL)</td></tr>
+        <tr><td>안굽이무릎(O형)</td><td>강화: 가쪽(넙다리두갈래근·TFL) / 뻗침: 안쪽(반막근·반힘줄근·안쪽넓은근)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ssec">
+    <div class="shead" onclick="ts(this)"><h3>⭐ VI. 발 변형 & 척추 운동 핵심</h3><span class="sarr">▼</span></div>
+    <div class="sbody">
+      <div class="kbox">
+        ⭐ <span class="hl r">선천성 내반첨족</span>: 데니스브라운 스프린트<br>
+        ⭐ <span class="hl">젖힌무릎</span>: 스웨덴무릎보조기<br>
+        ⭐ <span class="hl">편평발</span>: 앞정강근·뒤정강근 강화<br>
+        ⭐ <span class="hl">엄지발가락가쪽휨증</span>: 엄지모음근 강화 / 가쪽휨 방지 보조기<br>
+        ⭐ <span class="hl">발꿈치보행</span>: 가자미근 강화<br><br>
+        ⭐ <span class="hl r">허리앞굽음증 단축근</span>: 엉덩허리근, 척주세움근, 넙다리곧은근<br>
+        ⭐ <span class="hl g">허리앞굽음증 약화근</span>: 배곧은근, 뒤넙다리근<br>
+        ⭐ <span class="hl">위교차증후군</span>: 뻗침-위등세모근·어깨올림근·큰·작은가슴근 / 강화-깊은목굽힘근·아래등세모근·마름근·앞톱니근
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+function switchTop(t){
+  document.querySelectorAll('.top-tab').forEach((el,i)=>{el.classList.toggle('active',['quiz','sum'][i]===t);});
+  document.querySelectorAll('.tab-pane').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('catNav').style.display = t==='quiz'?'flex':'none';
+}
+function ts(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('open');}
+
+const CATS={
+  muscle:'💪 근육계 질환',
+  bone:'🦴 뼈 질환',
+  spine:'🔬 척추',
+  amputation:'✂️ 절단·의지',
+  deformity:'🦾 기형·탈구',
+  foot:'🦶 발 변형'
+};
+
+const AQ=[
+  {q:"발목인대 손상에서 가장 호발하는 부위로 옳은 것은?",o:["안쪽의 세모인대","가쪽의 앞목말종아리인대","가쪽의 뒤목말종아리인대","안쪽의 용수철인대","가쪽의 발꿈치종아리인대"],a:1,e:"발목인대 손상의 호발부위는 가쪽의 앞목말종아리인대이다.",c:"foot"},
+  {q:"아킬레스힘줄 고정 자세로 옳은 것은?",o:["발등쪽굽힘, 무릎관절 폄 상태","무릎관절 45도 굽힘, 발바닥쪽굽힘 자세","발목관절 중립(90도), 무릎관절 폄","발목관절 최대 발등쪽굽힘","엉덩관절 굽힘 상태"],a:1,e:"아킬레스힘줄염 고정 자세: 무릎관절 45도 굽힘, 발바닥쪽굽힘 자세로 고정.",c:"foot"},
+  {q:"발바닥근막염(족저근막염)의 운동치료로 옳은 것은?",o:["발뒤꿈치 들기 운동","수건모으기운동","발가락 벌리기 운동","발목 발등굽힘 강화운동","종아리 근력강화운동"],a:1,e:"발바닥근막염의 운동치료: 수건모으기운동 (발가락으로 수건을 모으는 운동).",c:"foot"},
+  {q:"톰슨 검사(Thomson's test)에 대한 설명으로 옳은 것은?",o:["바로누운자세에서 종아리근육을 쥐어짜서 발바닥쪽굽힘이 나오면 정상","엎드려누운자세에서 종아리근육을 쥐어짜서 발바닥쪽굽힘이 나오면 정상","바로누운자세에서 정강뼈를 앞으로 당겨서 움직임이 크면 양성","엎드려누운자세에서 발을 아래로 내려뜨린 후 발등굽힘 각도 측정","바로누운자세에서 무릎을 굽히고 정강뼈를 뒤쪽으로 밀었을 때 쳐지면 양성"],a:1,e:"톰슨 검사(아킬레스힘줄 검사): 엎드려누운자세에서 종아리근육을 쥐어짬. 정상: 발바닥쪽굽힘이 나옴. 양성(아킬레스힘줄 손상): 운동범위가 저하됨.",c:"foot"},
+  {q:"불행삼주징(unhappy triad)의 구성으로 옳은 것은?",o:["앞십자인대 + 가쪽곁인대 + 가쪽반달연골","뒤십자인대 + 안쪽곁인대 + 안쪽반달연골","앞십자인대 + 안쪽곁인대 + 안쪽반달연골","뒤십자인대 + 가쪽곁인대 + 가쪽반달연골","앞십자인대 + 가쪽곁인대 + 안쪽반달연골"],a:2,e:"불행삼주징(unhappy triad): 앞십자인대 + 안쪽곁인대 + 안쪽반달연골의 파열.",c:"deformity"},
+  {q:"앞십자인대 손상 검사인 라크만 검사(Lachman test)의 자세로 옳은 것은?",o:["바로누운자세, 엉덩관절 45도 굽힘, 무릎관절 90도 굽힘","바로누운자세, 무릎 30도 굽힘 후 정강뼈 가쪽돌림 시키며 앞으로 당김","엎드려누운자세, 무릎 90도 굽힘","바로누운자세, 무릎 완전 폄 상태에서 정강뼈 앞으로 당김","옆으로누운자세, 엉덩관절 60도 굽힘, 무릎관절 굽힘"],a:1,e:"라크만 검사: 바로누운자세, 무릎 30도 굽힘, 정강뼈 가쪽돌림 시키며 앞으로 당김. 양성: 통증 및 과도한 움직임.",c:"deformity"},
+  {q:"반달연골 손상 검사인 맥머레이 검사(McMurray test)에서 안쪽반달 검사 방법으로 옳은 것은?",o:["정강뼈 안쪽돌림 + 안굽이력을 가하면서 무릎 폄","정강뼈 가쪽돌림 + 밖굽이력을 가하면서 무릎 폄","정강뼈 안쪽돌림 + 밖굽이력을 가하면서 무릎 폄","정강뼈 가쪽돌림 + 안굽이력을 가하면서 무릎 폄","무릎 90도 굽힘 상태에서 넙다리뼈 가쪽위관절융기를 압박하며 수동적으로 굽힘-폄"],a:1,e:"맥머레이 검사: 안쪽반달=정강뼈 가쪽돌림+밖굽이력. 가쪽반달=정강뼈 안쪽돌림+안굽이력.",c:"deformity"},
+  {q:"안쪽곁인대 손상의 원인으로 옳은 것은?",o:["안쪽으로의 외력, 정강뼈 모음·안쪽돌림","가쪽으로의 외력, 정강뼈 벌림·가쪽돌림","앞쪽으로의 외력, 정강뼈 과도한 앞쪽 병진운동","뒤쪽으로의 외력, 정강뼈 과도한 뒤쪽 병진운동","과도한 비틀림과 굴곡 동반"],a:1,e:"안쪽곁인대 손상: 가쪽으로의 외력, 넙다리 고정 상태에서 정강뼈의 벌림, 가쪽돌림 등에 의해 발생함.",c:"deformity"},
+  {q:"앞십자인대의 기능으로 옳은 것은?",o:["무릎 굽힘에 저항","정강뼈의 과도한 뒤쪽 병진운동에 저항","정강뼈의 과도한 앞쪽 병진운동에 저항","넙다리뼈의 앞쪽 병진운동에 저항","주로 무릎 가쪽 안정성 담당"],a:2,e:"앞십자인대: 무릎 폄에 저항 / 정강뼈의 과도한 앞쪽 병진운동에 저항 / 넙다리뼈의 뒤쪽 병진운동에 저항.",c:"deformity"},
+  {q:"무릎 곁인대 손상에서 밖굽이긴장 검사(valgus stress test)로 평가하는 인대는?",o:["앞십자인대","뒤십자인대","안쪽곁인대","가쪽곁인대","슬개인대"],a:2,e:"밖굽이긴장 검사: 넙다리 고정 - 정강뼈에 밖굽이력 적용. 안쪽곁인대 안정성 검사.",c:"deformity"},
+  {q:"무릎 곁인대 손상 2도(중등도)의 고정 방법으로 옳은 것은?",o:["탄력붕대를 사용함","폄 상태로 석고 고정함 (3~4주)","굽힘-모음 상태로 석고 고정함","수술이 필요","부목 없이 즉시 부분체중부하"],a:2,e:"무릎 곁인대 손상: 1도-탄력붕대, 폄 상태로 석고 고정(3~4주). 2도-굽힘-모음 상태로 석고 고정. 3도-수술이 필요.",c:"deformity"},
+  {q:"발목인대 손상 3도의 고정 기간으로 옳은 것은?",o:["1~2주간 석고부목","3~4주간 석고부목","4~6주간 석고부목","6~8주간 석고부목","단순한 압박붕대만 사용"],a:2,e:"발목인대 손상 고정: 1도-단순 압박붕대 / 2도-3~4주간 석고부목 / 3도-4~6주간 석고부목.",c:"foot"},
+  {q:"진행성 근이영양증(뒤시엔느형)의 특징으로 옳은 것은?",o:["병의 진행이 느리고 15세 이후에도 독립적인 보행이 가능하다","장딴지근에 가성비대가 특징적이며 가우어스 징후가 나타난다","어깨 주위 근육에서 근위축이 초기에 나타난다","양쪽에 발생하며 남녀 모두에서 호발한다","안면근육의 초기 이환이 특징이다"],a:1,e:"뒤시엔느 근이영양증: 장딴지근 가성비대 특징적 / 가우어스 징후(Gower's sign) / 근약화는 몸통→먼쪽 진행 / 첨족보행, 외반슬, 오리걸음.",c:"muscle"},
+  {q:"가우어스 징후(Gower's sign)에 대한 설명으로 옳은 것은?",o:["한 손을 짚거나 손을 넙다리부에 위치시킨 후 밀면서 일어남","팔이음뼈 근육의 약화로 겨드랑이에 손을 넣어 들어올릴 때 손이 미끌어짐","엉덩관절 폄 후 벌림 시 다리가 바닥으로 내려가지 않음","넙다리뼈 가쪽위관절융기를 압박하며 무릎을 수동적으로 굽힘-폄","종아리근육을 쥐어짬"],a:0,e:"가우어스 징후: 질환의 초기에 아이는 한 손을 짚거나 혹은 한 손을 넙다리(femur)부에 위치시킨 후 손을 밀면서 일어남. 병이 진행하면 양손으로 미는 위치가 점차 땅→무릎→넙다리부로 단계적으로 옮겨감.",c:"muscle"},
+  {q:"뒤시엔느 vs 베커형 근이영양증의 비교로 옳은 것은?",o:["뒤시엔느가 베커보다 진행이 느리다","뒤시엔느는 15세 이후에도 독립적인 보행이 가능하다","베커형은 진행성 근이영양증 중 가장 양호한 예후를 가진다","뒤시엔느는 12세 전후로 첨족보행, 오리걸음이 나타난다","베커형은 뒤시엔느보다 발병 연령이 빠르다"],a:2,e:"베커형 근이영양증: 병의 진행이 느리고 유전적인 요소에 의함 / 15세 이후에도 독립적인 보행이 가능 / 진행성 근이영양증 중 가장 양호함. 12세 전후로 첨족보행, 오리걸음은 베커형의 특징.",c:"muscle"},
+  {q:"중증성 근무력증(myasthenia gravis)에 대한 설명으로 옳은 것은?",o:["유전성으로 뼈대근육의 섬유막에 이상이 생겨 자극에 과민하게 반응한다","자가면역과 관련되어 아세틸콜린 수용체 수가 감소되어 근육 피로가 쉽게 일어나는 질환이다","운동을 시도할 때 수의근에 경련성이 증가하는 질병이다","근육의 이완, 생리적 긴장성 손실이 나타나는 질병이다","남자가 2배 더 호발한다"],a:1,e:"중증성 근무력증: 자가면역과 관련되어 아세틸콜린 수용체 수가 감소되어 근육 피로가 쉽게 일어나는 질환. 여자가 2배 더 호발. 30대에 호발.",c:"muscle"},
+  {q:"선천성 근긴장증(myotonia congenita)에 대한 설명으로 옳은 것은?",o:["아세틸콜린 수용체 수 감소로 발생한다","운동을 시도할 때 수의근에 경련성이 증가하는 질병이다","근육의 이완, 생리적 긴장성 손실이 나타난다","다리보다 팔에서 현저하게 나타난다","항문괄약근과 깊은힘줄반사가 상실된다"],a:1,e:"선천성 근긴장증: 운동을 시도할 때 수의근에 경련성이 증가하는 질병. 수의적 근수축 후 이완에 어려움. 운동 시작 시 긴장성 경련이 발생하고 팔보다 다리에서 현저함.",c:"muscle"},
+  {q:"선천성 근무긴장증(amyotonia congenita, 오펜하임병)의 특징으로 옳은 것은?",o:["수의적 근수축 후 이완에 어려움을 보임","근육의 이완, 생리적 긴장성 손실 / 2~3세가 되도록 머리·허리를 가누지 못하는 이완성 마비","장딴지근에 가성비대가 나타남","반복되는 운동으로 쉽게 피로해지고 휴식에 의해 일시적으로 회복","아세틸콜린 항체검사 양성"],a:1,e:"선천성 근무긴장증(오펜하임병): 근육의 이완, 생리적 긴장성 손실 / 다리에 가장 많이 나타나고 허리근육의 약화 동반 / 2~3세가 되도록 머리·허리를 가누지 못하는 이완성 마비 / 항문괄약근 정상 / 깊은힘줄반사 상실.",c:"muscle"},
+  {q:"뼈엉성증(골다공증)의 진단 기준인 T-score로 옳은 것은?",o:["T-score -1.0 감소 시 골절의 위험도가 약 2~3배 증가하고, T-score -2.5 넘어갈 경우 뼈엉성증으로 진단","T-score -2.0 감소 시 골절의 위험도가 약 2~3배 증가하고, T-score -3.0 넘어갈 경우 뼈엉성증으로 진단","T-score -0.5 감소 시 골절의 위험도가 약 2~3배 증가하고, T-score -2.0 넘어갈 경우 뼈엉성증으로 진단","T-score -1.5 감소 시 골절의 위험도가 약 2~3배 증가하고, T-score -3.5 넘어갈 경우 뼈엉성증으로 진단","T-score +1.0 감소 시 골절의 위험도가 약 2~3배 증가하고, T-score +2.5 넘어갈 경우 뼈엉성증으로 진단"],a:0,e:"뼈엉성증 진단: T-score가 -1.0 감소하면 골절의 위험도가 약 2~3배 증가함. T-score -2.5가 넘어갈 경우 뼈엉성증으로 진단.",c:"bone"},
+  {q:"뼈엉성증(골다공증)의 물리치료 중재로 옳은 것은?",o:["수중치료만 시행한다","체중부하운동 및 신체활동으로 뼈에 적당한 스트레스를 적용한다","모든 움직임을 최소화하여 골절 위험을 줄인다","냉치료를 통해 뼈밀도를 증가시킨다","전기치료만 시행한다"],a:1,e:"뼈엉성증: 체중부하운동 및 신체활동으로 뼈에 적당한 스트레스를 적용함 → 뼈의 기질 및 무기질이 상승하여 골절 위험이 감소함. 바른자세교육도 중요.",c:"bone"},
+  {q:"파제트병(변형성 뼈염)의 특징으로 옳은 것은?",o:["소아 남아에서 호발하는 혈행성 감염질환이다","다리뼈에 침범 시 활처럼 휘어지는 변형(bowing)이 나타남","방사선상 특별한 증상인 'Scottie dog'이 나타남","허리통증에 의한 스트레스 골절로 발생함","HLA-B27 항원검사 양성"],a:1,e:"파제트병(변형성 뼈염): 원인 불명의 대사성 만성 뼈 질환 / 다리뼈에 침범 시 활처럼 휘어지는 변형(bowing) / 머리뼈에 침범 시 뼈의 비후로 시각·청각·후각 소실 / 방사선상 'Cotton wool' 나타남.",c:"bone"},
+  {q:"뼈속질염(골수염)의 특징으로 옳은 것은?",o:["성인 여성에서 호발하는 자가면역 질환이다","성장기 남아에서 호발하는 혈행성 감염질환이다","퓨린 대사장애로 인한 대사성 질환이다","관절연골의 퇴행성 변화로 발생한다","30~50대 남성에게 호발하는 통풍성 관절염이다"],a:1,e:"뼈속질염(골수염): 성장기 남아에서 호발하는 혈행성 감염질환. 호발부위: 정강뼈 위끝, 넙다리뼈의 아래끝, 위팔뼈 위끝.",c:"bone"},
+  {q:"척추결핵의 특징으로 옳은 것은?",o:["허리통증에 의한 스트레스 골절로 발생한다","척주뒤굽음증이 발생하며 아래등뼈, 위허리뼈 부위에서 호발한다","HLA-B27 항원검사 양성이다","방사선상 'Scottie dog'이 확인된다","L5→L4 순으로 호발한다"],a:1,e:"척추결핵: 다른 부위의 결핵이 혈관을 타고 전위되어 발생 / 척주뒤굽음증 발생 / 아래등뼈, 위허리뼈 부위에서 호발 / 소아에서 호발.",c:"bone"},
+  {q:"강직성 척추염의 특징으로 옳은 것은?",o:["통증이나 강직이 오후에 심해진다","방사선 사진상 대나무 척추(bamboo spine) 모양이 보이는 질환이다","HLA-B27 항원검사 음성이다","통증은 주로 위쪽 척추에서 아래쪽 척추로 진행된다","엉덩관절에서 과운동성이 나타난다"],a:1,e:"강직성 척추염: bamboo spine / 통증이나 강직이 아침에 심해짐 / HLA-B27 항원검사 양성 / 통증은 주로 아래쪽 척추에서 위쪽 척추로 진행 / 엉덩관절과 무릎관절에서 굽힘 구축 발생.",c:"bone"},
+  {q:"척추전방전위증의 진단 메이어딩 등급(Meyerding grade)에서 2등급은?",o:["척추뼈몸통이 25% 앞쪽 전위","척추뼈몸통이 50% 앞쪽 전위","척추뼈몸통이 75% 앞쪽 전위","척추뼈몸통이 100% 앞쪽 전위","척추뼈몸통이 10% 앞쪽 전위"],a:1,e:"메이어딩 등급: 1등급-25% / 2등급-50% / 3등급-75% / 4등급-100% 앞쪽 전위.",c:"spine"},
+  {q:"허리앞굽음증의 중재에서 윌리엄 운동(William exercise)의 목적으로 옳은 것은?",o:["허리 폄운동으로 척추세움근을 강화하여 허리통증 개선","몸통 굽힘운동으로 허리앞굽음증 감소 / 배근육·큰볼기근·뒤넙다리근 강화","위팔을 위로 올리고 목을 뒤로 젖혀 일하는 직업에서 원인이 될 수 있다","허리뼈의 운동범위 감소 등을 확인하는 검사","척추 불안정성을 감소시키는 안정화 운동"],a:1,e:"윌리엄 운동: 몸통 굽힘 운동 → 허리앞굽음증 감소 / 배곧은근 강화 → 복강내압 증가 / 능동적 근력강화: 배근육, 큰볼기근, 뒤넙다리근 / 수동적 신장: 엉덩허리근, 엉치가시근.",c:"spine"},
+  {q:"맥켄지 운동(McKenzie exercise)의 적용 대상과 목적으로 옳은 것은?",o:["허리앞굽음증 환자를 위한 운동으로 허리를 굽히는 운동","추간판탈출증 환자를 위한 운동으로 허리 폄 운동을 통해 척추 앞쪽을 넓혀 추간판을 다시 넣어주어 허리통증 개선","허리 분리증 환자를 위한 안정화 운동","강직성 척추염을 위한 가동범위 운동","척추협착증을 위한 굽힘 운동"],a:1,e:"맥켄지 운동(McKenzie exercise): 추간판탈출증 환자를 위한 운동. 허리 폄 운동을 통해 척추 앞쪽을 넓혀 추간판을 다시 넣어주어 허리통증을 개선함.",c:"spine"},
+  {q:"척추옆굽음증(척추측만증)에서 비구조적 척추옆굽음증의 특징으로 옳은 것은?",o:["앞쪽 굽힘 시 갈비뼈돌출이 소실됨","심한 경우 심폐기능의 문제가 나타남","척추가 선천적으로 발육 이상을 보임","마비성 옆굽음증으로 진행속도가 빠름","방사선상 척추의 돌림이 심함"],a:0,e:"비구조적 척추옆굽음증: 앞쪽 굽힘 시 갈비뼈돌출이 소실됨 / 엎드려누운자세에서 옆굽음증이 소실됨 / 방사선 소견상 척추의 돌림이 적음.",c:"spine"},
+  {q:"척추옆굽음증에서 각도 30도 이상의 구조적 척주옆굽음증에 사용하는 보조기는?",o:["파브릭 하네스(Pavlik harness)","본 로젠(Von Rosen) 보조기","밀워키 보조기 (T7 이상 교정 시)","스웨덴무릎보조기","데니스브라운 스프린트"],a:2,e:"척추옆굽음증 중재: 각도 30도 이상-밀워키 보조기(T7 이상 교정 시, 3점압 원리) / 각도 30도 이하-크랩(Klapp) 운동(고양이 자세에서 척추 굽힘-폄 반복).",c:"spine"},
+  {q:"아담 앞굽음 검사(Adam's forward bending test)로 평가하는 질환은?",o:["강직성 척추염","허리앞굽음증","척추옆굽음증(측만증)","척추전방전위증","척추후관절증후군"],a:2,e:"아담 앞굽음 검사: 선 자세에서 양 팔을 내려 발을 만지려고 시도. 양성: 한쪽 갈비 봉우리의 높이가 비정상적으로 높으면 높은 쪽이 볼록하게 휨. 척주옆굽음증 평가.",c:"spine"},
+  {q:"허리통증 환자의 일상생활자세 관리로 옳지 않은 것은?",o:["선반과 같은 머리 위 물건을 옮길 때 발 받침대를 사용","목과 허리를 편 상태에서 운전하기","뒷굽이 낮은 신발을 신고 서기","무릎을 굽히고 허리를 편 상태에서 세수하기","물건을 몸의 중심에서 가까이하여 들어 올리기"],a:2,e:"허리통증 환자 일상생활자세: 뒷굽이 낮은 신발을 신고 서기(O) / 몸통을 앞으로 구부리는 자세는 반드시 피해야 함 / 침대에서 일어날 때는 몸을 옆으로 돌리고 일어남.",c:"spine"},
+  {q:"경추(목뼈) 견인치료에서 견인 시 목의 자세로 옳은 것은?",o:["목뼈 앞굽음증 증가시키기 위해 폄 상태에서 견인","목뼈 앞굽음증 감소시키기 위해 굽힘 상태에서 견인","목뼈 완전 중립 자세에서 견인","목뼈 가쪽굽힘 자세에서 견인","목뼈 돌림 자세에서 견인"],a:1,e:"경추 견인치료 주의사항: 목뼈 견인 시 앞굽음증 감소시키기 위해 굽힘 상태에서 견인. 목뼈: 전체 체중의 약 7%만 적용. 허리뼈: 전체 체중의 약 50%만 적용.",c:"spine"},
+  {q:"넙다리절단(A/K, 무릎위 절단) 후 구축이 발생하는 방향으로 옳은 것은?",o:["엉덩관절 폄-모음-안쪽돌림","엉덩관절 굽힘-벌림-가쪽돌림","무릎관절 폄 구축","발목관절 발등쪽굽힘 구축","어깨관절 굽힘-모음-안쪽돌림"],a:1,e:"넙다리절단(무릎위 절단) 후 구축 방향: 엉덩관절 굽힘-벌림-가쪽돌림. 강화근육: 엉덩관절 폄근(큰볼기근), 모음근, 안쪽돌림근. 뻗침근육: 엉덩허리근(굽힘근), 중간볼기근(벌림근), 궁둥구멍근(가쪽돌림근).",c:"amputation"},
+  {q:"종아리절단(무릎밑 절단) 후 강화해야 하는 근육으로 옳은 것은?",o:["무릎관절 굽힘근(뒤넙다리근)","무릎관절 폄근(넙다리네갈래근)","팔꿉관절 폄근(위팔세갈래근)","어깨관절 폄근(넓은등근)","발목관절 발바닥쪽굽힘근"],a:1,e:"종아리절단: 무릎관절 굽힘 구축이 발생. 강화근육: 무릎관절 폄근(넙다리네갈래근). 뻗침근육: 무릎관절 굽힘근(뒤넙다리근).",c:"amputation"},
+  {q:"아래팔절단(팔꿉밑 절단) 후 발생하는 구축과 필요한 운동으로 옳은 것은?",o:["팔꿉관절 폄 구축 / 굽힘근 강화","팔꿉관절 굽힘 구축 / 폄근(위팔세갈래근) 강화","어깨관절 굽힘 구축 / 폄근 강화","발목관절 발바닥굽힘 구축 / 발등굽힘근 강화","손목관절 굽힘 구축 / 폄근 강화"],a:1,e:"아래팔절단: 팔꿉관절 굽힘 구축이 발생. 강화근육: 팔꿉관절 폄근(위팔세갈래근). 뻗침근육: 팔꿉관절 굽힘근(위팔두갈래근).",c:"amputation"},
+  {q:"절단 후 잘린끝(stump) 탄력붕대 감는 방향으로 옳은 것은?",o:["잘린끝의 끝에서부터 위쪽으로 감아 올림","위쪽에서부터 끝으로 감아 내림","나선 방향으로만 감음","원형으로만 감음","감는 방향은 중요하지 않음"],a:0,e:"잘린끝의 성숙을 위해서는 탄력붕대를 사용하여 잘린끝의 끝에서부터 위쪽으로 감아 올림. 몸쪽: 느슨히 고정 / 먼쪽: 단단히 고정.",c:"amputation"},
+  {q:"의지 장착을 위한 준비에서 절단끝을 성숙시키는 방법이 아닌 것은?",o:["붕대고정법 (soft dressing)","견고한고정법 (rigid dressing)","중간견고한방법 (semirigid dressing)","임시의지 착용","부목고정법"],a:4,e:"절단끝 성숙 방법: 붕대고정법(soft dressing) / 견고한고정법(rigid dressing) / 중간견고한방법(semirigid dressing). 부목고정법은 해당되지 않는다.",c:"amputation"},
+  {q:"다리 절단 중 가장 많이 시행되는 절단술로 에너지 소비를 감소시키며 환상통 발생을 최소화하는 절단은?",o:["엉덩관절 분리절단","넙다리절단","무릎관절 분리절단","종아리절단","사임절단"],a:3,e:"종아리절단(무릎밑 절단): 가장 많이 시행되는 절단술. 기능적인 활동에 용이한 의지 처방에 적합. 에너지 소비를 감소시키며 환상통 발생을 최소화시키는 장점이 있음.",c:"amputation"},
+  {q:"넙다리 의지의 소켓 장착 시 큰돌기에서 유지해야 하는 최소 길이는?",o:["1cm","3cm","5cm","7cm","10cm"],a:2,e:"넙다리의지의 소켓 장착: 큰돌기에서 5cm 이상 길이를 유지함.",c:"amputation"},
+  {q:"사임절단(Syme 절단)의 특징으로 옳은 것은?",o:["절단 후 즉시 체중부하 불가능","외관상 보기 좋음","말단 팽대로 의족 장착 곤란 / SACH 사용 가능","PTB(patellar tendon bearing) 의지를 주로 착용","발꿈치뼈 절반 + 사임절단"],a:2,e:"사임절단: 정강뼈·종아리뼈 위 0.5cm 절단 / 절단 후 즉시 체중부하 가능 / 외관상 보기 좋지 않음 / 말단 팽대로 의족 장착 곤란 / SACH 사용 가능.",c:"amputation"},
+  {q:"쇼파르절단(Chopart 절단)에서 발생하기 쉬운 변형은?",o:["첨족변형(꿈치들린휜발증)","편평발 변형","밖굽이 엉덩관절","안쪽들린휜발증 변형","첨내반족 변형"],a:3,e:"쇼파르절단: (발배뼈+입방뼈) - (목말뼈+발꿈치뼈)의 사이를 절단함. 안쪽들린휜발증 변형이 일어나기 쉬움.",c:"amputation"},
+  {q:"선천성 엉덩관절 탈구(CDH) 출생~6개월 치료에서 사용하는 보조기로 옳은 것은?",o:["밀워키 보조기","스웨덴무릎보조기","파브릭 하네스(Pavlik harness)","너클벤더","데니스브라운 스프린트"],a:2,e:"선천성 엉덩관절 탈구 출생~6개월: 엉덩관절 90도 굽힘-벌림 상태에서 고정. 보조기: 파브릭 하네스(Pavlik harness), 본 로젠(Von Rosen).",c:"deformity"},
+  {q:"무릎뼈 가쪽 탈구의 중재로 옳은 것은?",o:["큰볼기근 강화운동","엉덩허리근 강화운동","넙다리네갈래근의 안쪽넓은근 강화운동","가쪽넓은근 강화운동","뒤넙다리근 강화운동"],a:2,e:"무릎뼈 가쪽 탈구: 안쪽넓은근(VMO)을 강화함. 원인: 넙다리가쪽 근육의 뻣뻣함 / Q각이 클 경우.",c:"deformity"},
+  {q:"노뼈머리 아탈구(당겨진팔꿈치증후군)의 정복 방법으로 옳은 것은?",o:["팔꿉관절 굽힘 및 아래팔 뒤침시키면서 정복","팔꿉관절 폄 및 아래팔 엎침시키면서 정복","어깨관절을 벌림하면서 정복","손목관절을 최대 굽힘하면서 정복","강한 견인력을 이용하여 정복"],a:0,e:"노뼈머리 아탈구 정복: 팔꿉관절 굽힘 및 아래팔 뒤침시키면서 정복. 이후 팔걸이를 이용하여 약 2주간 보호함.",c:"deformity"},
+  {q:"기운목(사경) 뻗침운동의 방향으로 옳은 것은?",o:["동측 가쪽굽힘, 동측 돌림","반대쪽 가쪽굽힘, 동측 돌림","동측 가쪽굽힘, 반대쪽 돌림","반대쪽 가쪽굽힘, 반대쪽 돌림","목의 폄만 시행"],a:1,e:"기운목 뻗침운동: 반대쪽 가쪽굽힘, 동측 돌림. 마사지: 목 부위에 심부마찰마사지를 적용하여 목빗근의 종창을 감소시킴.",c:"deformity"},
+  {q:"밖굽이 엉덩관절(coxa valga)의 중재로 옳은 것은?",o:["관절가동범위운동: 엉덩관절 벌림 증가 / 근력운동: 엉덩관절 벌림근 / 뻗침운동: 엉덩관절 모음근","관절가동범위운동: 엉덩관절 모음 증가 / 근력운동: 엉덩관절 모음근 / 뻗침운동: 엉덩관절 벌림근","관절가동범위운동: 엉덩관절 굽힘 증가 / 근력운동: 엉덩관절 굽힘근","관절가동범위운동: 엉덩관절 폄 증가 / 근력운동: 엉덩관절 폄근","관절가동범위운동: 발목관절 발등굽힘 증가"],a:1,e:"밖굽이 엉덩관절(coxa valga): ROM-엉덩관절 모음 증가 목적 / 근력운동-엉덩관절 모음근 / 뻗침운동-엉덩관절 벌림근.",c:"deformity"},
+  {q:"안굽이 엉덩관절(coxa vara)의 중재로 옳은 것은?",o:["관절가동범위운동: 엉덩관절 모음 증가 / 근력운동: 엉덩관절 모음근 / 뻗침운동: 엉덩관절 벌림근","관절가동범위운동: 엉덩관절 벌림 증가 / 근력운동: 엉덩관절 벌림근 / 뻗침운동: 엉덩관절 모음근","관절가동범위운동: 엉덩관절 굽힘 증가 / 근력운동: 엉덩관절 굽힘근","관절가동범위운동: 엉덩관절 폄 증가 / 근력운동: 엉덩관절 폄근","관절가동범위운동: 발목관절 발등굽힘 증가"],a:1,e:"안굽이 엉덩관절(coxa vara): ROM-엉덩관절 벌림 증가 목적 / 근력운동-엉덩관절 벌림근 / 뻗침운동-엉덩관절 모음근.",c:"deformity"},
+  {q:"밖굽이 무릎(genu valgum, X형 다리)의 강화운동으로 옳은 것은?",o:["넙다리두갈래근, TFL, 엉덩정강띠 강화","반막근, 반힘줄근, 안쪽넓은근 강화","큰볼기근, 중간볼기근 강화","엉덩허리근, 넙다리곧은근 강화","앞정강근, 뒤정강근 강화"],a:1,e:"밖굽이무릎(X형) 중재: 강화운동-넙다리 안쪽 근육(반막근, 반힘줄근, 넙다리빗근, 안쪽넓은근) / 뻗침운동-넙다리 가쪽 근육(넙다리두갈래근, TFL, 엉덩정강띠).",c:"deformity"},
+  {q:"안굽이 무릎(genu varum, O형 다리)의 뻗침운동으로 옳은 것은?",o:["넙다리두갈래근, TFL 뻗침","반막근, 반힘줄근, 안쪽넓은근 뻗침","큰볼기근, 중간볼기근 뻗침","엉덩허리근, 넙다리곧은근 뻗침","앞정강근, 뒤정강근 뻗침"],a:1,e:"안굽이무릎(O형) 중재: 강화운동-넙다리 가쪽 근육(넙다리두갈래근, TFL) / 뻗침운동-넙다리 안쪽 근육(반막근, 반힘줄근, 넙다리빗근, 안쪽넓은근).",c:"deformity"},
+  {q:"선천성 안쪽들린휜발증(선천성 내반첨족)에 사용하는 보조기로 옳은 것은?",o:["파브릭 하네스","스웨덴무릎보조기","밀워키 보조기","데니스브라운 스프린트","너클벤더"],a:3,e:"선천성 안쪽들린휜발증(congenital talipes varus, equinovarus): 보조기로 데니스브라운 스프린트(Denis Browne splint)를 사용한다.",c:"foot"},
+  {q:"편평발(flat foot)의 근력운동으로 옳은 것은?",o:["장딴지근, 가자미근 강화","앞정강근, 뒤정강근 강화","넙다리네갈래근, 뒤넙다리근 강화","엉덩허리근, 큰볼기근 강화","중간볼기근, 작은볼기근 강화"],a:1,e:"편평발: 발바닥의 안쪽세로활 높이가 감소되어 발바닥이 편평해지는 변형. 근력운동: 앞정강근, 뒤정강근 강화.",c:"foot"},
+  {q:"엄지발가락가쪽휨증(hallux valgus)의 중재로 옳은 것은?",o:["엄지모음근 근력운동, 엄지발가락가쪽휨 방지 보조기 사용","가자미근 강화, PTB 의지 착용","앞정강근 강화, 데니스브라운 스프린트 사용","종아리세갈래근 강화, 스웨덴무릎보조기 사용","깊은목굽힘근 강화, 목고정대 사용"],a:0,e:"엄지발가락가쪽휨증 중재: 근력운동-엄지모음근 / 보조기-엄지발가락가쪽휨 방지 보조기.",c:"foot"},
+  {q:"발꿈치보행(heel gait) 중재로 옳은 것은?",o:["앞정강근 강화","가자미근 강화","뒤정강근 강화","종아리세갈래근 강화","중간볼기근 강화"],a:1,e:"발꿈치보행(heel gait) 중재: 가자미근 강화.",c:"foot"},
+  {q:"젖힌무릎(genu recuvatum)에 사용하는 보조기로 옳은 것은?",o:["파브릭 하네스","스웨덴무릎보조기","밀워키 보조기","데니스브라운 스프린트","너클벤더"],a:1,e:"젖힌무릎(genu recuvatum): 무릎의 중립에서 10도를 넘어선 과다폄. 보조기: 스웨덴무릎보조기.",c:"deformity"},
+  {q:"위팔절단(어깨위 절단, A/E) 후 구축 방향과 강화·뻗침운동 처방으로 옳은 것은?",o:["구축: 어깨관절 굽힘-벌림-가쪽돌림 / 강화: 폄근(넓은등근)·벌림근·가쪽돌림근 / 뻗침: 굽힘근(어깨세모근)·모음근·안쪽돌림근","구축: 어깨관절 폄-모음-가쪽돌림 / 강화: 굽힘근·벌림근 / 뻗침: 폄근·모음근","구축: 팔꿉관절 굽힘 / 강화: 폄근(위팔세갈래근) / 뻗침: 굽힘근(위팔두갈래근)","구축: 어깨관절 가쪽돌림 / 강화: 안쪽돌림근 / 뻗침: 가쪽돌림근","구축: 손목관절 폄 / 강화: 굽힘근 / 뻗침: 폄근"],a:0,e:"위팔절단(A/E) 후 구축: 어깨관절 굽힘-모음-안쪽돌림. 강화: 어깨관절 폄근(넓은등근), 벌림근, 가쪽돌림근. 뻗침: 어깨관절 굽힘근(어깨세모근), 모음근, 안쪽돌림근.",c:"amputation"},
+  {q:"허리척추원반탈출증의 증상 분류 중 외포성 추간판탈출(extrusion)의 특징으로 옳은 것은?",o:["속질핵이 섬유테를 밖으로 살짝 밀고 있음, 허리통증과 간헐적인 다리 당김","속질핵이 섬유테를 밀어냄, 허리가 다리보다 더 불편함","속질핵이 섬유테를 뚫고 나옴, 다리가 허리보다 더 불편함","척추원반 일부분이 이탈하여 경질막 공간의 유리체가 됨","섬유테의 마모만 있고 증상이 없음"],a:2,e:"허리척추원반탈출증 분류: 후방돌출(bulge)-살짝 밀음 / 내포성(protrusion)-섬유테 밀어냄, 허리 더 불편 / 외포성(extrusion)-섬유테 뚫고 나옴, 다리 더 불편 / 조각성(sequestration)-일부분 이탈.",c:"spine"},
+  {q:"뻗은다리올림검사(SLR, straight leg raise)에 대한 설명으로 옳은 것은?",o:["안쪽곁인대 안정성을 평가하는 검사이다","척추전방전위증 및 허리척추원반탈출증 진단에 활용되는 경질막징후 검사이다","엉덩정강근막띠 증후군을 평가하는 검사이다","반달연골 손상을 평가하는 검사이다","볼크만 허혈성 구축을 평가하는 검사이다"],a:1,e:"뻗은다리올림검사(SLR): 척추전방전위증 진단에 사용되며, 허리척추원반탈출증의 경질막징후 검사 종류(밀그람, 나프자이거, 발살바 검사 포함)에 해당한다.",c:"spine"},
+  {q:"허리 척추관협착증의 증상으로 옳은 것은?",o:["허리를 폄하면 통증이 감소하고 굽힘하면 통증이 증가한다","허리를 폄하면 통증이 증가하고 굽힘하면 통증이 감소한다","통증은 주로 아침에 심해진다","방사통이 없는 편측성 허리통증만 나타난다","가시돌기의 깊은 함몰이나 단락(step-off) 현상이 나타난다"],a:1,e:"척추관협착증: 허리를 폄하고 통증이 증가하고 허리를 굽힘하면 통증이 감소함. 지속적, 간헐적인 요통과 감각이상 / 간헐적 파행이 나타남.",c:"spine"},
+  {q:"강직성 척추염 진단에 사용하는 쇼베르 검사(Schober test)의 목적으로 옳은 것은?",o:["엉덩관절의 벌림 범위 확인","허리뼈의 운동범위 감소 등을 확인하는 검사로 강직성 척추염 여부를 확인","골반 앞기울임 각도 측정","척추옆굽음증의 각도 측정","목뼈의 운동범위 감소 확인"],a:1,e:"쇼베르 검사(Schober test): 허리뼈의 운동범위 감소 등을 확인하는 검사로 강직성 척추염 여부를 확인함.",c:"bone"},
+  {q:"위교차증후군(upper crossed syndrome)에서 뻗침이 필요한 근육으로 옳은 것은?",o:["깊은목굽힘근, 아래등세모근, 마름근, 앞톱니근","위등세모근, 어깨올림근, 큰가슴근, 작은가슴근","중간볼기근, 큰볼기근, 뒤넙다리근","배가로근, 배곧은근, 배속빗근","앞정강근, 뒤정강근, 긴종아리근"],a:1,e:"위교차증후군: 뻗침운동 필요 근육-위등세모근, 어깨올림근, 큰가슴근, 작은가슴근 / 근력강화 필요 근육-깊은목굽힘근, 아래등세모근, 마름근, 앞톱니근.",c:"spine"},
+  {q:"허리뼈 견인치료 시 적용하는 견인력으로 옳은 것은?",o:["전체 체중의 약 7%만 적용","전체 체중의 약 25%만 적용","전체 체중의 약 50%만 적용","전체 체중의 약 75%만 적용","전체 체중의 약 100%만 적용"],a:2,e:"견인력: 목뼈-전체 체중의 약 7% / 허리뼈-전체 체중의 약 50%. 견인력은 부드럽고 점진적으로 높임.",c:"spine"},
+  {q:"척추분리증(spondylolysis)의 운동치료로 옳은 것은?",o:["윌리엄 운동(허리 굽힘운동)","맥켄지 운동(허리 폄운동)","몸통근육 및 주변 근육 안정화운동","플라이오메트릭 운동","닫힌사슬 저항운동"],a:2,e:"척추분리증: 운동치료 = 몸통근육 및 주변 근육 안정화운동. 척추전방전위증도 동일하게 몸통근육 안정화운동을 적용한다.",c:"spine"},
+  {q:"허리척추원반탈출증 견인치료로 옳은 것은?",o:["지속적 견인만 적용","간헐적 견인만 적용","지속적 견인 또는 간헐적 견인 적용 (30~50초 견인, 1~20초 휴식)","견인은 금기이다","등속성 견인만 적용"],a:2,e:"척추사이원반탈출증 견인: 지속적 견인, 간헐적 견인 적용 (30~50초 견인, 1~20초 휴식). 관절기능부전, 퇴행성 척추사이원반: 간헐적 견인.",c:"spine"}
+];
+
+const catCounts={all:AQ.length,muscle:0,bone:0,spine:0,amputation:0,deformity:0,foot:0};
+AQ.forEach(q=>{if(catCounts[q.c]!==undefined)catCounts[q.c]++;});
+Object.keys(catCounts).forEach(k=>{const el=document.getElementById('cnt-'+k);if(el)el.textContent=catCounts[k];});
+
+let curCat='all',qs=[],cur=0,score=0,wrongs=[],answered=false;
+
+function setCat(cat){
+  curCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>{
+    b.classList.remove('active');
+    if(b.getAttribute('onclick')===`setCat('${cat}')`) b.classList.add('active');
+  });
+  const label=cat==='all'?'전체':CATS[cat];
+  const filtered=cat==='all'?AQ:AQ.filter(q=>q.c===cat);
+  document.getElementById('subTitle').textContent=`5주차 · ${label} ${filtered.length}문제 · 랜덤 출제`;
+  restart();
+}
+
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+function init(){
+  const src=curCat==='all'?AQ:AQ.filter(q=>q.c===curCat);
+  qs=shuffle(src);cur=0;score=0;wrongs=[];answered=false;
+  document.getElementById('rb').classList.remove('show');
+  document.getElementById('qa').style.display='block';
+  document.getElementById('pw').style.display='block';
+  document.getElementById('crm').textContent=qs.length;
+  updateProg();loadQ();
+}
+
+function updateProg(){
+  const t=qs.length,d=cur;
+  document.getElementById('pt').textContent=`${d} / ${t}`;
+  document.getElementById('pf').style.width=(d/t*100)+'%';
+  document.getElementById('cok').textContent=score;
+  document.getElementById('cng').textContent=d-score;
+  document.getElementById('crm').textContent=t-d;
+}
+
+function loadQ(){
+  answered=false;const q=qs[cur];
+  document.getElementById('qn').textContent=`Q${String(cur+1).padStart(3,'0')}`;
+  document.getElementById('qcatbadge').textContent=CATS[q.c]||'';
+  document.getElementById('qt').textContent=q.q;
+  const oa=document.getElementById('oa');oa.innerHTML='';
+  q.o.forEach((opt,i)=>{
+    const b=document.createElement('button');b.className='opt';
+    b.innerHTML=`<span class="on">${i+1}</span><span>${opt}</span>`;
+    b.onclick=()=>selAns(i);oa.appendChild(b);
+  });
+  document.getElementById('eb').classList.remove('show');
+  document.getElementById('nb').classList.remove('show');
+  const c=document.getElementById('qc');c.style.animation='none';c.offsetHeight;c.style.animation='';
+}
+
+function selAns(idx){
+  if(answered)return;answered=true;
+  const q=qs[cur];
+  const btns=document.querySelectorAll('.opt');
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===idx&&i!==q.a)b.classList.add('wrong');});
+  if(idx===q.a){score++;showToast('✓ 정답!','okt');}
+  else{wrongs.push({q:q.q,my:q.o[idx],ans:q.o[q.a],e:q.e});showToast('✗ 오답','ngt');}
+  document.getElementById('et').textContent=q.e;
+  document.getElementById('eb').classList.add('show');
+  document.getElementById('nb').classList.add('show');
+  document.getElementById('nb').textContent=cur<qs.length-1?'다음 문제 →':'결과 보기 →';
+  updateProg();
+}
+
+function nextQ(){cur++;if(cur>=qs.length)showResult();else loadQ();}
+
+function showResult(){
+  document.getElementById('qa').style.display='none';
+  document.getElementById('pw').style.display='none';
+  const t=qs.length,p=Math.round(score/t*100);
+  document.getElementById('rs').textContent=p+'%';
+  document.getElementById('rok').textContent=score;
+  document.getElementById('rng').textContent=t-score;
+  const msgs=['💪 다시 도전!','📚 절반 이상! 오답 확인하세요.','👍 잘했어요!','🏆 완벽합니다!'];
+  document.getElementById('rl').textContent=`${score}/${t}문제 정답 · ${msgs[p>=90?3:p>=70?2:p>=50?1:0]}`;
+  document.getElementById('rb').classList.add('show');
+}
+
+function restart(){init();}
+let wshow=false;
+function toggleW(){
+  wshow=!wshow;const wl=document.getElementById('wl');
+  if(wshow){
+    wl.innerHTML=wrongs.length===0?'<p style="color:var(--ok);text-align:center;padding:20px">🎉 오답이 없습니다!</p>':
+    wrongs.map((w,i)=>`<div class="wi"><div class="wi-q">${i+1}. ${w.q}</div><div class="wi-a my">내 답: <span>${w.my}</span></div><div class="wi-a ans">정답: <span>${w.ans}</span></div><div class="wi-e">📖 ${w.e}</div></div>`).join('');
+    wl.classList.add('show');
+  }else wl.classList.remove('show');
+}
+let tt;
+function showToast(msg,cls){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast '+cls+' show';clearTimeout(tt);
+  tt=setTimeout(()=>t.classList.remove('show'),1800);
+}
+init();
+</script>
+</body>
+</html>
