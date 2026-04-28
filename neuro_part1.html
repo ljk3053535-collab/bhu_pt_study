@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신경계 진단학 ① — 신경학적 검진 + 표준화 평가도구</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #EEF4FF;
+    --bg2: #E2EDFF;
+    --card: #FFFFFF;
+    --navy: #1E3A5F;
+    --blue: #2563EB;
+    --sky: #3B82F6;
+    --light-blue: #BFDBFE;
+    --accent: #0EA5E9;
+    --teal: #0891B2;
+    --green: #059669;
+    --amber: #D97706;
+    --red: #DC2626;
+    --purple: #7C3AED;
+    --text: #1E293B;
+    --text2: #475569;
+    --text3: #94A3B8;
+    --border: #CBD5E1;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10);
+    --shadow-lg: 0 8px 32px rgba(30,58,95,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 60%, var(--blue) 100%);
+    color: white;
+    padding: 28px 24px 20px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.3);
+  }
+  .site-header h1 { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
+  .site-header p { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .file-badge {
+    display: inline-block; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 2px 10px;
+    font-size: 11px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex; gap: 0; border-bottom: 3px solid var(--light-blue);
+    background: var(--card); padding: 0 20px;
+    position: sticky; top: 80px; z-index: 90;
+    box-shadow: 0 2px 8px rgba(30,58,95,0.08);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .tab-btn {
+    padding: 12px 16px; border: none; background: transparent;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--text2); cursor: pointer; white-space: nowrap;
+    border-bottom: 3px solid transparent; margin-bottom: -3px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--blue); }
+  .tab-btn.active { color: var(--navy); font-weight: 700; border-bottom-color: var(--navy); }
+
+  /* ── CONTENT ── */
+  .tab-panel { display: none; padding: 20px 16px 40px; max-width: 900px; margin: 0 auto; }
+  .tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card); border-radius: 14px;
+    box-shadow: var(--shadow); margin-bottom: 16px;
+    overflow: hidden; border: 1px solid rgba(203,213,225,0.5);
+  }
+  .card-header {
+    background: linear-gradient(90deg, var(--navy) 0%, #1a4a7a 100%);
+    color: white; padding: 12px 16px;
+    font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;
+  }
+  .card-header .icon { font-size: 16px; }
+  .card-body { padding: 14px 16px; }
+
+  /* section header inside card */
+  .sec-title {
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    border-left: 4px solid var(--blue); padding-left: 10px;
+    margin: 14px 0 8px;
+  }
+  .sec-title:first-child { margin-top: 0; }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 8px 0; }
+  .tbl th {
+    background: var(--bg2); color: var(--navy); font-weight: 700;
+    padding: 7px 10px; text-align: left; border-bottom: 2px solid var(--light-blue);
+  }
+  .tbl td { padding: 6px 10px; border-bottom: 1px solid var(--bg2); vertical-align: top; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: #f0f7ff; }
+  .tbl .center { text-align: center; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; border-radius: 6px;
+    padding: 2px 8px; font-size: 11px; font-weight: 700;
+    margin: 1px 2px;
+  }
+  .badge-blue   { background: #DBEAFE; color: #1D4ED8; }
+  .badge-green  { background: #D1FAE5; color: #065F46; }
+  .badge-red    { background: #FEE2E2; color: #991B1B; }
+  .badge-amber  { background: #FEF3C7; color: #92400E; }
+  .badge-purple { background: #EDE9FE; color: #5B21B6; }
+  .badge-teal   { background: #CFFAFE; color: #155E75; }
+  .badge-navy   { background: #1E3A5F; color: #fff; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .hl-box {
+    border-radius: 10px; padding: 10px 14px; margin: 8px 0;
+    font-size: 12.5px; border-left: 4px solid;
+  }
+  .hl-blue   { background: #EFF6FF; border-color: var(--blue);   color: #1E40AF; }
+  .hl-green  { background: #ECFDF5; border-color: var(--green);  color: #065F46; }
+  .hl-red    { background: #FEF2F2; border-color: var(--red);    color: #991B1B; }
+  .hl-amber  { background: #FFFBEB; border-color: var(--amber);  color: #92400E; }
+  .hl-teal   { background: #ECFEFF; border-color: var(--teal);   color: #155E75; }
+  .hl-purple { background: #F5F3FF; border-color: var(--purple); color: #5B21B6; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--light-blue); padding: 14px 16px; margin-bottom: 18px;
+  }
+  .toc-title { font-size: 12px; font-weight: 700; color: var(--text3); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .toc-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .toc-btn {
+    background: var(--bg2); border: 1px solid var(--light-blue);
+    border-radius: 8px; padding: 5px 12px; font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
+    color: var(--navy); cursor: pointer; transition: all 0.15s;
+  }
+  .toc-btn:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* ── SCORE CHIP ── */
+  .score-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+  .score-chip {
+    background: var(--navy); color: white; border-radius: 20px;
+    padding: 3px 12px; font-size: 12px; font-weight: 700;
+  }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── PILL LIST ── */
+  .pill-list { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+  .pill {
+    background: var(--bg2); border: 1px solid var(--light-blue);
+    border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--navy);
+  }
+
+  /* ── REFLEX TABLE specific ── */
+  .reflex-row-pos { background: #FEF2F2; }
+  .reflex-row-neg { background: #ECFDF5; }
+
+  /* ── QUIZ TAB ── */
+  .quiz-progress-bar-wrap { background: var(--bg2); border-radius: 20px; height: 10px; margin: 10px 0; overflow: hidden; }
+  .quiz-progress-bar { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--blue), var(--teal)); transition: width 0.4s; }
+  .quiz-score-display { font-size: 22px; font-weight: 900; color: var(--navy); text-align: center; margin: 8px 0; }
+  .quiz-card {
+    background: var(--card); border-radius: 14px; padding: 18px;
+    box-shadow: var(--shadow-lg); border: 2px solid var(--light-blue); margin-bottom: 14px;
+  }
+  .quiz-q { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; line-height: 1.5; }
+  .quiz-q .qnum { display: inline-block; background: var(--navy); color: white; border-radius: 6px; padding: 1px 8px; font-size: 12px; margin-right: 6px; }
+  .opt-btn {
+    display: block; width: 100%; text-align: left;
+    background: var(--bg2); border: 2px solid var(--light-blue);
+    border-radius: 10px; padding: 10px 14px; margin-bottom: 8px;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
+    cursor: pointer; transition: all 0.15s; font-weight: 400; color: var(--text);
+  }
+  .opt-btn:hover:not(:disabled) { background: #DBEAFE; border-color: var(--blue); color: var(--navy); }
+  .opt-btn.correct { background: #D1FAE5; border-color: var(--green); color: #065F46; font-weight: 700; }
+  .opt-btn.wrong   { background: #FEE2E2; border-color: var(--red);   color: #991B1B; }
+  .opt-btn:disabled { cursor: default; }
+  .quiz-explain {
+    background: #EFF6FF; border-left: 4px solid var(--blue);
+    border-radius: 8px; padding: 10px 14px; margin-top: 8px;
+    font-size: 12.5px; color: #1E40AF; display: none;
+  }
+  .quiz-explain.show { display: block; }
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; gap: 8px; }
+  .btn-primary {
+    background: var(--navy); color: white; border: none;
+    border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: var(--blue); }
+  .btn-secondary {
+    background: var(--bg2); color: var(--navy); border: 2px solid var(--light-blue);
+    border-radius: 10px; padding: 10px 16px; font-size: 13px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-secondary:hover { background: var(--light-blue); }
+  .result-box {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: white; border-radius: 16px; padding: 24px; text-align: center;
+    display: none; margin-top: 16px;
+  }
+  .result-box.show { display: block; }
+  .result-box .big { font-size: 48px; font-weight: 900; }
+  .result-box .sub { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+  .wrong-list { margin-top: 10px; }
+  .wrong-item {
+    background: #FEF2F2; border-left: 4px solid var(--red);
+    border-radius: 8px; padding: 10px 14px; margin-bottom: 8px;
+    font-size: 12.5px;
+  }
+  .wrong-item .wq { font-weight: 700; color: #991B1B; margin-bottom: 4px; }
+  .wrong-item .wa { color: #065F46; }
+
+  /* small helper */
+  b { color: var(--navy); }
+  .text-red { color: var(--red); }
+  .text-green { color: var(--green); }
+  .text-blue { color: var(--blue); }
+  .mt8 { margin-top: 8px; }
+  .mb4 { margin-bottom: 4px; }
+  ul.dash { list-style: none; padding-left: 0; }
+  ul.dash li::before { content: "‣ "; color: var(--blue); font-weight: 700; }
+  ul.dash li { margin-bottom: 3px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="file-badge">FILE 1 / 3</div>
+  <h1>🧠 물리치료 국가고시 — 신경계 진단학</h1>
+  <p>신경학적 검진 · 표준화 평가도구 (ADL · 균형 · 보행 · 인지)</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview')">📋 개요/목차</button>
+  <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+</nav>
+
+<!-- ════════════════════════════════════
+     TAB 1: OVERVIEW
+════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-overview">
+
+  <div class="card">
+    <div class="card-header"><span class="icon">📋</span> 파트 구성 및 핵심 키워드</div>
+    <div class="card-body">
+      <div class="sec-title">신경학적 검진</div>
+      <div class="pill-list">
+        <span class="pill">의식수준 ADSSC</span>
+        <span class="pill">주의력 · 지남력 · 기억력</span>
+        <span class="pill">언어기능 (실어증)</span>
+        <span class="pill">인지 · 인식 · 행동</span>
+        <span class="pill">뇌신경 I~XII</span>
+        <span class="pill">근긴장도 MAS</span>
+        <span class="pill">MMT 0~5등급</span>
+        <span class="pill">근절검사 Myotome</span>
+        <span class="pill">감각검사 (얕은/깊은/복합)</span>
+        <span class="pill">반사검사 DTR/병적반사</span>
+        <span class="pill">신경장력검사 ULTT</span>
+      </div>
+      <div class="sec-title mt8">표준화 평가도구</div>
+      <div class="pill-list">
+        <span class="pill">MBI (수정된 바델지수)</span>
+        <span class="pill">FIM</span>
+        <span class="pill">Katz ADL</span>
+        <span class="pill">PULSES</span>
+        <span class="pill">SCIM</span>
+        <span class="pill">BBS</span>
+        <span class="pill">FRT</span>
+        <span class="pill">TUGT</span>
+        <span class="pill">POMA</span>
+        <span class="pill">10MWT · 6MWT</span>
+        <span class="pill">FAC · DGI</span>
+        <span class="pill">MMSE · GCS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">⚡</span> 시험 포인트 한눈에 보기</div>
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <div class="sec-title">의식수준 5단계</div>
+          <table class="tbl">
+            <tr><th>단계</th><th>특징</th></tr>
+            <tr><td><b>명료</b></td><td>정상 의식</td></tr>
+            <tr><td><b>기면</b></td><td>수면경향, 큰 말소리 반응</td></tr>
+            <tr><td><b>혼미</b></td><td>강자극 시 약간 반응</td></tr>
+            <tr><td><b>반혼수</b></td><td>고통자극 회피반응, 의사소통 불가</td></tr>
+            <tr><td><b>혼수</b></td><td>강자극도 무반응</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="sec-title">MMT 등급</div>
+          <table class="tbl">
+            <tr><th>등급</th><th>기준</th></tr>
+            <tr><td><b class="text-green">5 정상</b></td><td>최대저항 + 중력</td></tr>
+            <tr><td><b>4 우</b></td><td>약간저항 + 중력</td></tr>
+            <tr><td><b>3 양</b></td><td>중력만</td></tr>
+            <tr><td><b>2 가</b></td><td>중력 제거</td></tr>
+            <tr><td><b>1 불가</b></td><td>수축 O, 운동 X</td></tr>
+            <tr><td><b class="text-red">0 영</b></td><td>수축 없음</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="sec-title">MAS (수정 애쉬워스) 핵심</div>
+      <div class="hl-box hl-blue">
+        <b>0</b>: 근긴장 없음 → <b>1</b>: ROM 끝 저항 → <b>1+</b>: ROM 1/2 이하 저항 → <b>2</b>: 전체ROM 긴장 but 쉽게 움직 → <b>3</b>: 수동운동 어려움 → <b>4</b>: 경축(rigidity)
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">🔢</span> ADL 평가도구 핵심 수치 비교</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>도구</th><th>총점</th><th>척도</th><th>특징</th></tr>
+        <tr><td><b>MBI</b></td><td>100점</td><td>5단계</td><td>만성질환자 ADL 자립도</td></tr>
+        <tr><td><b>FIM</b></td><td>18~126점</td><td>7점</td><td>MBI+의사소통·사회인지</td></tr>
+        <tr><td><b>Katz</b></td><td>6~18점</td><td>3점·A~G</td><td>골절·신경계 환자</td></tr>
+        <tr><td><b>PULSES</b></td><td>6~24점</td><td>4점</td><td>12점↑ 심한장애</td></tr>
+        <tr><td><b>SCIM</b></td><td>100점</td><td>-</td><td>척수손상 전용</td></tr>
+      </table>
+      <div class="hl-box hl-amber mt8">
+        <b>MBI 점수 해석:</b> 완전의존 0~24 / 심한의존 25~49 / 중등도 50~74 / 경도 75~90 / 최소의존 91~99
+      </div>
+      <div class="hl-box hl-purple">
+        <b>FIM 7점 척도:</b> 7=완전독립 / 6=약간독립(도구) / 5=감독 / 4=최소보조 / 3=중간보조 / 2=최대보조 / 1=전체보조
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">⚖️</span> 균형·보행 평가도구 낙상기준 정리</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>도구</th><th>총점</th><th>낙상위험</th><th>기타</th></tr>
+        <tr><td><b>BBS</b></td><td>56점</td><td>0~20 높음 / 21~40 중간 / 41~56 낮음</td><td>14항목, 5점척도</td></tr>
+        <tr><td><b>FRT</b></td><td>거리(cm)</td><td>≤15~17cm 제한 / ≥25cm 좋음</td><td>낙상·균형</td></tr>
+        <tr><td><b>TUGT</b></td><td>시간(초)</td><td>14초↑ 낙상위험 / 20초↑ 이동제한 / 30초↑ 의존ADL</td><td>3m 왕복</td></tr>
+        <tr><td><b>POMA</b></td><td>28점</td><td>&lt;19 높음 / 19~24 중간 / 25~28 낮음</td><td>균형9+보행7</td></tr>
+      </table>
+      <div class="sec-title">보행 평가도구</div>
+      <table class="tbl">
+        <tr><th>도구</th><th>정의</th><th>핵심수치</th></tr>
+        <tr><td><b>10MWT</b></td><td>단거리 보행속도</td><td>&lt;0.4=실내 / 0.4~0.8=실외제한 / &gt;0.8=실외</td></tr>
+        <tr><td><b>6MWT</b></td><td>6분 최대 보행거리</td><td>심폐기능 평가, 최대하검사</td></tr>
+        <tr><td><b>FAC</b></td><td>보행 기능 분류</td><td>0~5단계 (0=불가, 5=완전독립)</td></tr>
+        <tr><td><b>DGI</b></td><td>보행 중 자세안정성</td><td>24점, 4점척도</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">🧩</span> 인지기능 평가도구</div>
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <div class="sec-title">MMSE</div>
+          <ul class="dash">
+            <li>총 <b>30점</b>, 30문항</li>
+            <li>지남력 · 기억등록 · 기억회상</li>
+            <li>주의집중/계산 · 언어/시공간</li>
+            <li>24↑: 정상 / 20~23: 치매의심</li>
+            <li>15~19: 경도치매 / 14↓: 중증</li>
+          </ul>
+          <div class="hl-box hl-blue mt8">
+            계산: <b>100-7</b> 반복 (5회)<br>
+            기억: 비행기·연필·소나무
+          </div>
+        </div>
+        <div>
+          <div class="sec-title">GCS</div>
+          <ul class="dash">
+            <li>눈뜨기 <b>4점</b></li>
+            <li>언어반응 <b>5점</b></li>
+            <li>운동반응 <b>6점</b></li>
+            <li>최저 3점 ~ 최고 15점</li>
+          </ul>
+          <div class="hl-box hl-teal mt8">
+            15=정상 / 13~15=경도<br>
+            9~12=중등도 / 3~8=중증
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════
+     TAB 2: SUMMARY
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-summary">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">소단원 바로가기</div>
+    <div class="toc-grid">
+      <button class="toc-btn" onclick="scrollTo2('s-mental')">정신상태</button>
+      <button class="toc-btn" onclick="scrollTo2('s-cranial')">뇌신경검사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-motor')">운동검사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-sensory')">감각검사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-reflex')">반사검사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-adl')">ADL 평가</button>
+      <button class="toc-btn" onclick="scrollTo2('s-balance')">균형 평가</button>
+      <button class="toc-btn" onclick="scrollTo2('s-gait')">보행 평가</button>
+      <button class="toc-btn" onclick="scrollTo2('s-cognition')">인지 평가</button>
+    </div>
+  </div>
+
+  <!-- 1. 정신상태 -->
+  <div class="card" id="s-mental">
+    <div class="card-header"><span class="icon">🧠</span> 1. 정신상태 (Mental Status)</div>
+    <div class="card-body">
+
+      <div class="sec-title">1-1. 의식수준 (Consciousness)</div>
+      <p class="mb4">이완 상태 → 자극 반응성을 기준으로 5단계 분류 (ADSSC 암기)</p>
+      <table class="tbl">
+        <tr><th>단계</th><th>핵심 특징</th></tr>
+        <tr><td><b>명료 Alert</b></td><td>정상 의식, 자발적 움직임, 시간·장소·사람 인식</td></tr>
+        <tr><td><b>기면 Drowsy</b></td><td>수면경향, 큰 말소리 반응 가능, 비교적 정확한 대답</td></tr>
+        <tr><td><b>혼미 Stupor</b></td><td>강자극 시 약간 반응, 이해 어려움, 반복강자극에 일시흥분</td></tr>
+        <tr><td><b>반혼수 Semicoma</b></td><td>자발근육운동 거의 없음, 꼬집으면 피하려는 반응</td></tr>
+        <tr><td><b>혼수 Coma</b></td><td>강자극도 무반응, 눈 감겨있음</td></tr>
+      </table>
+      <div class="hl-box hl-blue mt8">
+        <b>주의력 정상반응:</b> 앞으로 7개 숫자, 뒤로 5개 숫자<br>
+        <b>지남력 손상 순서:</b> 시간 → 장소 → 사람 (회복은 역순)
+      </div>
+
+      <div class="sec-title">1-2. 언어기능 (Language)</div>
+      <table class="tbl">
+        <tr><th>종류</th><th>특징</th></tr>
+        <tr><td><b>베르니케 실어증</b></td><td>들은 것 이해 못함, 말은 할 수 있음 (유창하나 무의미)</td></tr>
+        <tr><td><b>브로카 실어증</b></td><td>이해 가능, 말 못함 (비유창)</td></tr>
+        <tr><td><b>전도성 실어증</b></td><td>이해·말 가능, 따라말하기 어려움</td></tr>
+        <tr><td><b>이름 실어증</b></td><td>이름대기 수행력 유난히 저하</td></tr>
+        <tr><td><b>조음장애</b></td><td>이해·생각 정상, 근육신경 손상으로 말 불가, 글쓰기 가능</td></tr>
+      </table>
+
+      <div class="sec-title">1-3. 인식 / 행동 (Gnosia / Praxis)</div>
+      <div class="two-col">
+        <div>
+          <p class="mb4"><b>인식불능증 (Agnosia)</b> — 감각 정상인데 인식 못함</p>
+          <ul class="dash">
+            <li><b>시각인식불능증:</b> 5가지 물체 중 4개 명명 못함</li>
+            <li><b>색체인식불능증:</b> 물체 색 인식 불가</li>
+            <li><b>입체인식불능증:</b> 촉각으로 물체 인식 불가</li>
+          </ul>
+        </div>
+        <div>
+          <p class="mb4"><b>행위상실증 (Apraxia)</b> — 마비 없는데 과제 수행 불가</p>
+          <ul class="dash">
+            <li><b>운동:</b> 연속동작 어려움</li>
+            <li><b>관념:</b> 실제 사물 사용 불가</li>
+            <li><b>관념운동:</b> 구두명령·모방 불가, 실제 사물 사용 가능 ★</li>
+          </ul>
+        </div>
+      </div>
+      <div class="hl-box hl-amber">
+        <b>관념운동행위상실증 예시:</b> 칫솔로 양치하라 명령 → 못함 / 몸단장 중 칫솔 들면 → 양치질 함
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 뇌신경 -->
+  <div class="card" id="s-cranial">
+    <div class="card-header"><span class="icon">👁️</span> 2. 뇌신경 검사 (Cranial Nerve)</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>번호</th><th>이름</th><th>기능</th><th>기능이상/검사</th></tr>
+        <tr><td>Ⅰ</td><td>후각</td><td>냄새</td><td>후각상실 / 커피·담배 검사 (암모니아 X)</td></tr>
+        <tr><td>Ⅱ</td><td>시각</td><td>시각·시력</td><td>시야·시력 / 스넬렌표(6m)</td></tr>
+        <tr><td>Ⅲ</td><td>눈돌림</td><td>눈운동·동공</td><td>안검하수·동공확장·복시</td></tr>
+        <tr><td>Ⅳ</td><td>도르래</td><td>위빗근</td><td>계단 내려갈 때 복시</td></tr>
+        <tr><td>Ⅴ</td><td>삼차</td><td>혼합(얼굴감각+씹기)</td><td>각막반사, 씹기장애</td></tr>
+        <tr><td>Ⅵ</td><td>갓돌림</td><td>가쪽곧은근</td><td>눈 외측 못움직임</td></tr>
+        <tr><td>Ⅶ</td><td>얼굴</td><td>혼합(표정+미각혀앞2/3)</td><td>안면마비, 미각소실</td></tr>
+        <tr><td>Ⅷ</td><td>속귀</td><td>청각+평형</td><td>청각장애, 불균형</td></tr>
+        <tr><td>Ⅸ</td><td>혀인두</td><td>혼합(혀뒤1/3미각)</td><td>삼킴곤란, 구토반응 소실</td></tr>
+        <tr><td>Ⅹ</td><td>미주</td><td>혼합(발성+내장)</td><td>목젖 반대쪽 치우침</td></tr>
+        <tr><td>Ⅺ</td><td>더부</td><td>목빗근·등세모근</td><td>어깨 늘어짐, 고개 못돌림</td></tr>
+        <tr><td>Ⅻ</td><td>혀밑</td><td>혀근육</td><td>혀 병변반대쪽 치우침</td></tr>
+      </table>
+
+      <div class="sec-title">빛반사 (Light Reflex) 핵심 ★★</div>
+      <div class="hl-box hl-blue">
+        <b>원리:</b> 빛 → 시각신경 → 양쪽 에딩거-베스트팔핵 → 양쪽 눈돌림신경 → 양쪽 동공수축
+      </div>
+      <table class="tbl mt8">
+        <tr><th>손상</th><th>직접빛반사</th><th>간접빛반사</th></tr>
+        <tr><td><b>시각신경(II) 손상</b></td><td class="text-red">소실</td><td class="text-green">존재</td></tr>
+        <tr><td><b>눈돌림신경(III) 손상</b></td><td class="text-red">소실</td><td class="text-red">소실</td></tr>
+      </table>
+
+      <div class="sec-title">각막반사 (V, VII)</div>
+      <div class="hl-box hl-teal">
+        들신경 장애 = <b>삼차신경(V) 안분지</b> 병변 / 날신경 장애 = <b>얼굴신경(VII)</b> 병변<br>
+        정상: 한쪽 자극 시 <b>양쪽</b> 눈 깜박임
+      </div>
+
+      <div class="sec-title">얼굴신경마비 비교 ★</div>
+      <table class="tbl">
+        <tr><th>구분</th><th>마비 범위</th><th>이마주름</th><th>원인</th></tr>
+        <tr><td><b>중추성</b></td><td>손상 반대쪽 눈 이하</td><td class="text-green">정상</td><td>겉질숨뇌로 손상 (뇌졸중)</td></tr>
+        <tr><td><b>말초성 (Bell's)</b></td><td>손상 같은 쪽 얼굴 전체</td><td class="text-red">마비</td><td>다리뇌 얼굴신경핵 이하</td></tr>
+      </table>
+
+      <div class="sec-title">웨버/린네 검사</div>
+      <table class="tbl">
+        <tr><th>검사</th><th>전도성 청각장애</th><th>감각신경성 청각장애</th></tr>
+        <tr><td><b>웨버</b></td><td>병변쪽에서 크게 들림</td><td>병변쪽이 작게 들림</td></tr>
+        <tr><td><b>린네</b></td><td>뼈전도 &gt; 공기전도</td><td>뼈·공기 모두 감소</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3. 운동검사 -->
+  <div class="card" id="s-motor">
+    <div class="card-header"><span class="icon">💪</span> 3. 운동검사 (Motor Test)</div>
+    <div class="card-body">
+
+      <div class="sec-title">근긴장도 분류</div>
+      <table class="tbl">
+        <tr><th>분류</th><th>종류</th><th>특징</th><th>병변</th></tr>
+        <tr><td rowspan="2"><b>과긴장증</b></td>
+          <td>경직 Spasticity</td>
+          <td>속도 비례, 접칼현상, clonus 동반</td>
+          <td>피라미드로 (UMN)</td></tr>
+        <tr><td>경축 Rigidity</td>
+          <td>모든 방향 저항, 납관형/톱니바퀴형</td>
+          <td>바닥핵 (ExtP, UMN)</td></tr>
+        <tr><td><b>저긴장증</b></td>
+          <td>이완 Flaccidity</td>
+          <td>낮은 저항</td>
+          <td>LMN 손상</td></tr>
+      </table>
+
+      <div class="sec-title">근절검사 (Myotome) ★</div>
+      <table class="tbl">
+        <tr><th>신경</th><th>동작</th><th>신경</th><th>동작</th></tr>
+        <tr><td>C4</td><td>어깨뼈 올림</td><td>L1,L2</td><td>엉덩관절 굽힘</td></tr>
+        <tr><td>C5</td><td>어깨관절 벌림</td><td>L3</td><td>무릎관절 폄</td></tr>
+        <tr><td>C5,C6</td><td>팔꿉굽힘·손목폄</td><td>L4</td><td>발목 발등쪽굽힘</td></tr>
+        <tr><td>C7</td><td>팔꿉폄·손목굽힘</td><td>L5</td><td>엄지폄·발목안쪽번짐</td></tr>
+        <tr><td>C8</td><td>손가락 굽힘</td><td>S1</td><td>발목 발바닥굽힘</td></tr>
+        <tr><td>T1</td><td>손가락 벌림</td><td>S2</td><td>무릎관절 굽힘</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4. 감각검사 -->
+  <div class="card" id="s-sensory">
+    <div class="card-header"><span class="icon">✋</span> 4. 감각검사 (Sensory Test)</div>
+    <div class="card-body">
+
+      <div class="sec-title">감각 분류 및 검사도구</div>
+      <table class="tbl">
+        <tr><th>분류</th><th>검사</th><th>도구</th><th>결과 표현</th></tr>
+        <tr><td rowspan="4"><b>얕은감각</b></td>
+          <td>가벼운 접촉</td><td>면봉·모노필라멘트</td><td>hypo/anesthesia/hyperesthesia</td></tr>
+        <tr><td>온각</td><td>찬물7°/온수43°</td><td>thermo-hypesthesia 등</td></tr>
+        <tr><td>통각</td><td>안전핀·클립</td><td>hypo/analgesia/hyperalgesia</td></tr>
+        <tr><td>압각</td><td>면봉</td><td>정상 2.44~2.84mg</td></tr>
+        <tr><td rowspan="2"><b>깊은감각</b></td>
+          <td>진동감각</td><td>128Hz 소리굽쇠·뼈 돌출부</td><td>+ 정상</td></tr>
+        <tr><td>고유·위치감각</td><td>1~2mm 움직임 인식</td><td>언어/모방 표현</td></tr>
+        <tr><td rowspan="4"><b>복합감각</b></td>
+          <td>입체감각인식</td><td>동전·열쇠</td><td>astereognosis/dysstereognosis</td></tr>
+        <tr><td>도서감각</td><td>볼펜(피부에 글쓰기)</td><td>마루엽 기능 / agraphesthesia</td></tr>
+        <tr><td>두점식별</td><td>두점식별기</td><td>팔 39.8~45.4mm / 손바닥 1.9~3.2mm</td></tr>
+        <tr><td>이중동시자극</td><td>동시 자극</td><td>입체·두점 정상 시만 실시</td></tr>
+      </table>
+
+      <div class="sec-title">피부분절 (Dermatome) 핵심</div>
+      <table class="tbl">
+        <tr><th>분절</th><th>감각 부위</th><th>분절</th><th>감각 부위</th></tr>
+        <tr><td>C4</td><td>어깨뼈봉우리</td><td>L4</td><td>정강뼈 안쪽면·안쪽복사</td></tr>
+        <tr><td>C5</td><td>위팔 가쪽</td><td>L5</td><td>정강뼈 가쪽·발등</td></tr>
+        <tr><td>C6</td><td>엄지·검지·아래팔 노쪽</td><td>S1</td><td>다리뒷면가쪽·새끼발가락</td></tr>
+        <tr><td>C7</td><td>가운데손가락</td><td>T4</td><td>젖꼭지</td></tr>
+        <tr><td>C8</td><td>약지·새끼·아래팔 자쪽</td><td>T10</td><td>배꼽</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 5. 반사검사 -->
+  <div class="card" id="s-reflex">
+    <div class="card-header"><span class="icon">🔨</span> 5. 반사검사 (Reflex Test)</div>
+    <div class="card-body">
+
+      <div class="sec-title">깊은힘줄반사 (DTR)</div>
+      <div class="hl-box hl-blue">
+        <b>UMN 손상 → 반사 항진</b> / <b>LMN 손상 → 반사 저하·소실</b><br>
+        등급: 0=무반응 / 1=저반사 / 2=정상 / 3=과반사 / 4=간대성경련+강수축
+      </div>
+      <table class="tbl mt8">
+        <tr><th>반사</th><th>수준</th></tr>
+        <tr><td>위팔두갈래근 반사</td><td>C5</td></tr>
+        <tr><td>위팔노근 반사</td><td>C6</td></tr>
+        <tr><td>위팔세갈래근 반사</td><td>C7</td></tr>
+        <tr><td>넙다리네갈래근 반사</td><td>L4</td></tr>
+        <tr><td>아킬레스힘줄 반사</td><td>S1</td></tr>
+      </table>
+
+      <div class="sec-title">병적반사 ★★</div>
+      <table class="tbl">
+        <tr><th>반사</th><th>자극</th><th>양성반응</th></tr>
+        <tr><td><b>바빈스키</b></td><td>발바닥 바깥→엄지</td><td>엄지 폄, 나머지 굽힘·벌림 → UMN ★</td></tr>
+        <tr><td><b>오펜하임</b></td><td>정강뼈 안쪽 위→아래</td><td>같은 반응 (바빈스키 확진)</td></tr>
+        <tr><td><b>고든</b></td><td>종아리 움켜쥠</td><td>같은 반응</td></tr>
+        <tr><td><b>차도크</b></td><td>가쪽복숭아뼈→새끼발</td><td>같은 반응</td></tr>
+        <tr><td><b>호프만</b></td><td>가운데손가락 끝 압박</td><td>엄지·검지 굽힘 → UMN ★</td></tr>
+        <tr><td><b>트롬너</b></td><td>가운데손가락 끝 튕김</td><td>손가락들 굽힘 → 피라미드 병변</td></tr>
+      </table>
+
+      <div class="sec-title">얕은반사 (표재성)</div>
+      <table class="tbl">
+        <tr><th>반사</th><th>수준</th><th>정상반응</th></tr>
+        <tr><td>배근육반사</td><td>T7~T12</td><td>자극방향으로 배꼽 치우침</td></tr>
+        <tr><td>고환올림근반사</td><td>L1~L2</td><td>자극 쪽 고환 올라감</td></tr>
+        <tr><td>항문조임근반사</td><td>S4~S5</td><td>항문조임근 수축</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 6. ADL 평가 -->
+  <div class="card" id="s-adl">
+    <div class="card-header"><span class="icon">🏥</span> 6. ADL 평가도구</div>
+    <div class="card-body">
+
+      <div class="sec-title">수정된 바델지수 (MBI)</div>
+      <ul class="dash">
+        <li>만성질환자 ADL 자립도 평가 / 총 <b>100점</b>, 10항목, 5단계 척도</li>
+        <li>항목: 개인위생·목욕·식사·화장실·계단·옷입기·대변·소변·이동·보행(휠체어)</li>
+      </ul>
+      <div class="score-row mt8">
+        <span class="score-chip">완전의존 0~24</span>
+        <span class="score-chip">심한의존 25~49</span>
+        <span class="score-chip">중등도 50~74</span>
+        <span class="score-chip">경도 75~90</span>
+        <span class="score-chip">최소의존 91~99</span>
+      </div>
+
+      <div class="sec-title">FIM (기능적 독립측정)</div>
+      <ul class="dash">
+        <li>MBI + <b>의사소통·사회적 인지</b> 추가</li>
+        <li>신체 4영역 + 인지 2영역, 18세부항목 / <b>18~126점</b>, 7점 척도</li>
+        <li>재활치료 후 예후 추정에 효과적</li>
+      </ul>
+
+      <div class="sec-title">Katz ADL Index</div>
+      <ul class="dash">
+        <li>6항목(씻기·옷·화장실·이동·배변·식사) / 6~18점, 3점 척도</li>
+        <li>A(완전독립)~G(완전의존) 누진점수</li>
+        <li>A가 먼저 독립: 식사→배설→이동→화장실→옷→목욕 순</li>
+      </ul>
+
+      <div class="sec-title">PULSES 프로파일</div>
+      <ul class="dash">
+        <li>신체기능 + 지지요소(정신·가족·사회·재정) 평가</li>
+        <li>P·U·L·S·E·S (6항목) / 6~24점, 4점 척도 / <b>12점↑ 심한장애</b></li>
+      </ul>
+
+      <div class="sec-title">SCIM (척수독립척도)</div>
+      <ul class="dash">
+        <li>척수손상 전용 / 자조관리(20)+호흡&조임근(40)+이동(40) = <b>100점</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. 균형 평가 -->
+  <div class="card" id="s-balance">
+    <div class="card-header"><span class="icon">⚖️</span> 7. 균형 평가도구</div>
+    <div class="card-body">
+
+      <div class="sec-title">BBS (버그균형척도)</div>
+      <ul class="dash">
+        <li>정적+동적 균형 / 원래 낙상위험 측정 목적</li>
+        <li>14항목, 5점 척도 / 총 <b>56점</b></li>
+        <li>41~56=낙상위험낮음 / 21~40=중간 / 0~20=높음</li>
+      </ul>
+
+      <div class="sec-title">FRT (기능적 뻗기검사)</div>
+      <ul class="dash">
+        <li>노인 낙상·균형 평가 / 지지면 고정 → 팔 최대 뻗기 거리</li>
+        <li><b>≤15~17cm</b>: 균형 제한 / <b>≥25cm</b>: 균형 좋음</li>
+      </ul>
+
+      <div class="sec-title">TUGT (일어서서 걷기검사)</div>
+      <ul class="dash">
+        <li>앉기→3m→돌기→다시 앉기 시간 / 비마비측 축으로 회전</li>
+        <li>10초↓=정상 / 11~20초=허약노인 / <b>14초↑=낙상위험</b> / 20초↑=이동제한 / 30초↑=의존ADL</li>
+      </ul>
+
+      <div class="sec-title">POMA (Tinetti)</div>
+      <ul class="dash">
+        <li>균형(9항목·16점) + 보행(7항목·12점) = 총 <b>28점</b></li>
+        <li>25~28=낮음 / 19~24=중간 / 19미만=높음</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 8. 보행 평가 -->
+  <div class="card" id="s-gait">
+    <div class="card-header"><span class="icon">🚶</span> 8. 보행 평가도구</div>
+    <div class="card-body">
+
+      <div class="sec-title">10MWT</div>
+      <ul class="dash">
+        <li>총 14m 중 가속(2m)+감속(2m) 제외, 중간 10m 시간 측정</li>
+        <li>&lt;0.4=실내 / 0.4~0.8=실외제한 / &gt;0.8=실외가능</li>
+      </ul>
+
+      <div class="sec-title">6MWT</div>
+      <ul class="dash">
+        <li>평평한 면 6분간 최대 보행거리 / 심폐기능 객관적 평가</li>
+        <li>최대하 운동검사 (환자 능력에 맞춤)</li>
+      </ul>
+
+      <div class="sec-title">FAC (기능적 보행지수)</div>
+      <table class="tbl">
+        <tr><th>단계</th><th>내용</th></tr>
+        <tr><td>0</td><td>보행 불가 / 2명 이상 도움</td></tr>
+        <tr><td>1</td><td>1인 지속적 지지</td></tr>
+        <tr><td>2</td><td>1인 간헐적 도움</td></tr>
+        <tr><td>3</td><td>신체접촉 없이 지시·관찰</td></tr>
+        <tr><td>4</td><td>평지 독립, 계단·경사로 도움</td></tr>
+        <tr><td>5</td><td>완전 독립 보행</td></tr>
+      </table>
+
+      <div class="sec-title">DGI (동적 보행지수)</div>
+      <ul class="dash">
+        <li>보행 중 자세 안정성 평가 / 8항목 / 총 <b>24점</b>, 4점 척도</li>
+        <li>노인 낙상지수 평가 목적으로 개발</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 9. 인지 평가 -->
+  <div class="card" id="s-cognition">
+    <div class="card-header"><span class="icon">🔬</span> 9. 인지기능 평가도구</div>
+    <div class="card-body">
+
+      <div class="sec-title">MMSE (간이 정신상태검사)</div>
+      <p class="mb4">총 <b>30점</b>, 5가지 평가항목</p>
+      <table class="tbl">
+        <tr><th>항목</th><th>내용</th><th>점수</th></tr>
+        <tr><td>지남력</td><td>시간(년월일요일계절)+장소(나라·시·장소·층·용도)</td><td>10점</td></tr>
+        <tr><td>기억등록</td><td>비행기·연필·소나무</td><td>3점</td></tr>
+        <tr><td>주의집중/계산</td><td>100-7 (5회)</td><td>5점</td></tr>
+        <tr><td>기억회상</td><td>3~5분 후 위 3가지 회상</td><td>3점</td></tr>
+        <tr><td>언어/시공간</td><td>이름대기·명령시행·따라하기·오각형·읽기·쓰기</td><td>9점</td></tr>
+      </table>
+      <div class="hl-box hl-amber mt8">
+        24↑=정상 / 20~23=치매의심 / 15~19=경도치매 / 14↓=중증치매
+      </div>
+
+      <div class="sec-title">GCS (글래스고 혼수척도)</div>
+      <div class="two-col">
+        <div>
+          <table class="tbl">
+            <tr><th>항목</th><th>점수</th></tr>
+            <tr><td>눈뜨기 (E)</td><td>1~4점</td></tr>
+            <tr><td>언어반응 (V)</td><td>1~5점</td></tr>
+            <tr><td>운동반응 (M)</td><td>1~6점</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="hl-box hl-teal">
+            <b>15점:</b> 정상<br>
+            <b>13~15점:</b> 경도<br>
+            <b>9~12점:</b> 중등도<br>
+            <b>3~8점:</b> 중증
+          </div>
+        </div>
+      </div>
+      <div class="hl-box hl-blue mt8">
+        <b>언어반응 세부:</b> 5=지남력있음 / 4=혼란 / 3=부적절단어 / 2=이해불가소리 / 1=반응없음<br>
+        <b>운동반응 세부:</b> 6=지시따름 / 5=통증부위찾음 / 4=<b>옴츠림</b> / 3=비정상굽힘 / 2=비정상폄 / 1=반응없음
+      </div>
+    </div>
+  </div>
+
+</div><!-- end tab-summary -->
+
+<!-- ════════════════════════════════════
+     TAB 3: QUIZ
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-quiz">
+  <div id="quiz-container"></div>
+</div>
+
+<script>
+// ── TAB SWITCH ──
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active', ['overview','summary','quiz'][i]===id);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active', p.id==='tab-'+id);
+  });
+  if(id==='quiz' && !quizBuilt) buildQuiz();
+}
+
+// ── SCROLL TO ──
+function scrollTo2(id){
+  document.getElementById('tab-summary').classList.add('active');
+  document.getElementById('tab-overview').classList.remove('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active', i===1);
+  });
+  setTimeout(()=>{
+    const el=document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+// ── QUIZ DATA ──
+const QUESTIONS = [
+  {
+    q:"의식수준 5단계 중 '강자극에도 아무 반응이 없는' 단계는?",
+    opts:["기면(Drowsy)","혼미(Stupor)","반혼수(Semicoma)","혼수(Coma)"],
+    ans:3,
+    ex:"혼수(Coma)는 무반응 단계로 눈이 감겨있고 아무리 강한 자극에도 반응하지 않습니다."
+  },
+  {
+    q:"주의력 검사의 정상 반응으로 옳은 것은?",
+    opts:["앞으로 5개, 뒤로 3개","앞으로 7개, 뒤로 5개","앞으로 9개, 뒤로 7개","앞으로 5개, 뒤로 5개"],
+    ans:1,
+    ex:"주의력 정상반응: 앞으로 7개 숫자, 뒤로 5개 숫자입니다."
+  },
+  {
+    q:"베르니케 실어증의 특징으로 옳은 것은?",
+    opts:["이해 가능, 말 불가능","이해 불가, 말 가능(유창)","이해·말 모두 가능, 따라말하기 불가","이름대기만 유난히 저하"],
+    ans:1,
+    ex:"베르니케 실어증: 들은 것 이해 불가, 말은 가능하나 무의미한 단어 사용. 브로카는 반대입니다."
+  },
+  {
+    q:"관념운동행위상실증(ideomotor apraxia)의 특징으로 옳은 것은?",
+    opts:["실제 사물 사용도 못함","구두명령 수행 불가, 실제 사물은 사용 가능","연속동작 수행이 어려움","공간 개념화에 장애"],
+    ans:1,
+    ex:"관념운동행위상실증: 구두명령·모방으로 수행 불가, but 실제 사물을 두면 정확히 수행 가능. 칫솔 예시 기억!"
+  },
+  {
+    q:"왼쪽 시각신경(II) 손상 시 왼쪽 눈에 빛을 비추었을 때 나타나는 결과는?",
+    opts:["양쪽 모두 정상","왼쪽 직접반사만 소실","오른쪽·왼쪽 모두 빛반사 불가능","왼쪽 직접·간접 모두 소실"],
+    ans:2,
+    ex:"시각신경 손상: 직접빛반사 소실, 간접빛반사 존재. 왼쪽 눈에 빛→왼쪽 직접반사 소실, 오른쪽도 반사 불가"
+  },
+  {
+    q:"중추성 얼굴신경마비와 말초성 얼굴신경마비의 차이점으로 옳은 것은?",
+    opts:["중추성은 이마주름 마비됨","말초성은 눈 이하만 마비","중추성은 같은 쪽 얼굴 전체 마비","말초성(Bell's)은 손상 쪽 얼굴 전체 마비 ★"],
+    ans:3,
+    ex:"말초성(Bell's palsy): 손상 쪽 얼굴 전체 마비(이마 포함). 중추성: 손상 반대쪽 눈 이하, 이마는 정상."
+  },
+  {
+    q:"MAS(수정된 애쉬워스 척도) 3단계의 특징은?",
+    opts:["ROM 끝부분 저항","가동범위 1/2 이하 저항","근긴장 증가로 수동운동 어려움","경축(rigidity) 있음"],
+    ans:2,
+    ex:"MAS 3: 근긴장이 증가되어 수동운동이 어려움. 4단계는 경축(rigidity)."
+  },
+  {
+    q:"MMT 3등급(Fair)의 기준으로 옳은 것은?",
+    opts:["최대저항에서 정상 ROM","중력+약간 저항에서 ROM","중력에 대항하여 정상 ROM","중력 제거 후 정상 ROM"],
+    ans:2,
+    ex:"MMT 3(양/Fair): 중력에 대항하고 능동적으로 정상 ROM을 움직임. 3등급이 외부 보조 없는 기준점."
+  },
+  {
+    q:"L5 신경뿌리(근절)에 해당하는 검사 동작은?",
+    opts:["발목 발바닥굽힘","무릎관절 굽힘","엄지발가락 폄 + 발목 안쪽번짐","발목 발등쪽굽힘"],
+    ans:2,
+    ex:"L5: 엄지발가락 폄 + 발목 안쪽번짐 (긴엄지폄근). S1=발바닥굽힘, S2=무릎굽힘, L4=발등굽힘."
+  },
+  {
+    q:"복합감각 중 도서감각검사(graphesthesia)의 검사방법은?",
+    opts:["시각 차단 후 물체를 손에 쥐어줌","눈을 가리고 피부 위에 숫자·글씨를 씀","두 점을 동시에 피부에 댐","신체 반대쪽 동시 자극"],
+    ans:1,
+    ex:"도서감각검사: 눈을 가리고 피부에 숫자·글씨를 써서 인식 여부 확인. 마루엽 기능. 소실=agraphesthesia."
+  },
+  {
+    q:"바빈스키 반사(Babinski) 양성의 의미로 옳은 것은?",
+    opts:["LMN 병변 의심","소뇌 병변 의심","UMN 병변 의심 ★","말초신경 손상"],
+    ans:2,
+    ex:"바빈스키 양성(엄지 폄+나머지 굽힘·벌림) = UMN 병변 의심. 정상 성인에게는 반응 없음."
+  },
+  {
+    q:"MBI 총점 65점에 해당하는 의존 단계는?",
+    opts:["심한의존","중등도의존","경도의존","최소의존"],
+    ans:1,
+    ex:"MBI 점수: 완전의존 0~24 / 심한의존 25~49 / 중등도의존 50~74 / 경도의존 75~90 / 최소의존 91~99. 65점은 중등도."
+  },
+  {
+    q:"FIM의 총점 범위와 7점 척도에서 '5점'의 의미는?",
+    opts:["18~126점, 최소보조","18~126점, 감독","0~100점, 감독","18~126점, 약간독립"],
+    ans:1,
+    ex:"FIM: 최소 18점~최고 126점. 7점=완전독립, 6점=약간독립(도구), 5점=감독, 4점=최소보조."
+  },
+  {
+    q:"TUGT에서 낙상 위험자에 해당하는 시간은?",
+    opts:["10초 이내","11~13초","14초 이상 ★","20초 이상"],
+    ans:2,
+    ex:"TUGT: 10초↓=정상 / 11~20초=허약노인 / 14초↑=낙상위험 / 20초↑=기능적이동제한 / 30초↑=의존ADL."
+  },
+  {
+    q:"MMSE에서 '기억등록'에 사용되는 세 단어는?",
+    opts:["사과·바나나·포도","자동차·기차·비행기","비행기·연필·소나무 ★","책상·의자·창문"],
+    ans:2,
+    ex:"MMSE 기억등록: 비행기·연필·소나무를 말한 후, 3~5분 후 기억회상 검사 실시."
+  }
+];
+
+let quizBuilt=false, quizState={}, quizCurrent=0, shuffled=[];
+
+function buildQuiz(){
+  quizBuilt=true;
+  shuffled=[...QUESTIONS].sort(()=>Math.random()-0.5);
+  quizState={answered:{}, results:[]};
+  quizCurrent=0;
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const c=document.getElementById('quiz-container');
+  const total=shuffled.length, done=Object.keys(quizState.answered).length;
+  const correct=quizState.results.filter(r=>r).length;
+  const pct=total?Math.round(done/total*100):0;
+
+  let html=`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;color:var(--text2);">진행률 ${done}/${total}</span>
+        <span class="quiz-score-display">${done>0?correct+'/'+done:'—'}</span>
+      </div>
+      <div class="quiz-progress-bar-wrap">
+        <div class="quiz-progress-bar" style="width:${pct}%"></div>
+      </div>
+    </div>`;
+
+  if(done===total && total>0){
+    const pctScore=Math.round(correct/total*100);
+    const wrongItems=shuffled.filter((_,i)=>quizState.answered[i]&&!quizState.results[i]);
+    html+=`<div class="result-box show">
+      <div class="big">${pctScore}점</div>
+      <div class="sub">${correct}/${total} 정답 · ${pctScore>=80?'🎉 훌륭합니다!':pctScore>=60?'👍 잘 하고 있어요!':'💪 다시 도전해보세요!'}</div>
+    </div>`;
+    if(wrongItems.length>0){
+      html+=`<div style="margin-top:16px"><div class="sec-title">틀린 문제 다시 보기</div><div class="wrong-list">`;
+      wrongItems.forEach((q,ii)=>{
+        html+=`<div class="wrong-item">
+          <div class="wq">Q. ${q.q}</div>
+          <div class="wa">✅ 정답: ${q.opts[q.ans]}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:3px">${q.ex}</div>
+        </div>`;
+      });
+      html+=`</div></div>`;
+    }
+    html+=`<button class="btn-primary" style="width:100%;margin-top:14px" onclick="restartQuiz()">🔄 다시 풀기</button>`;
+  } else {
+    const q=shuffled[quizCurrent];
+    const isAnswered=quizState.answered[quizCurrent]!==undefined;
+    html+=`<div class="quiz-card">
+      <div class="quiz-q"><span class="qnum">Q${quizCurrent+1}</span>${q.q}</div>`;
+    q.opts.forEach((opt,i)=>{
+      let cls='';
+      if(isAnswered){
+        if(i===q.ans) cls='correct';
+        else if(i===quizState.answered[quizCurrent]) cls='wrong';
+      }
+      html+=`<button class="opt-btn ${cls}" ${isAnswered?'disabled':''} onclick="answerQ(${i})">${opt}</button>`;
+    });
+    if(isAnswered){
+      html+=`<div class="quiz-explain show">💡 ${q.ex}</div>`;
+    }
+    html+=`</div>
+      <div class="quiz-nav">
+        <button class="btn-secondary" onclick="prevQ()" ${quizCurrent===0?'disabled':''}>← 이전</button>
+        <span style="font-size:12px;color:var(--text3)">${quizCurrent+1} / ${total}</span>
+        <button class="btn-primary" onclick="nextQ()" ${quizCurrent===total-1?'disabled':''}>다음 →</button>
+      </div>`;
+  }
+  c.innerHTML=html;
+}
+
+function answerQ(i){
+  if(quizState.answered[quizCurrent]!==undefined) return;
+  quizState.answered[quizCurrent]=i;
+  quizState.results[quizCurrent]=(i===shuffled[quizCurrent].ans);
+  renderQuiz();
+}
+function nextQ(){ if(quizCurrent<shuffled.length-1){ quizCurrent++; renderQuiz(); } }
+function prevQ(){ if(quizCurrent>0){ quizCurrent--; renderQuiz(); } }
+function restartQuiz(){ shuffled=[...QUESTIONS].sort(()=>Math.random()-0.5); quizState={answered:{},results:[]}; quizCurrent=0; renderQuiz(); }
+</script>
+</body>
+</html>

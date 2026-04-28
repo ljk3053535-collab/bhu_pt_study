@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신경계 질환 & 중재 Part 1</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --card: #ffffff;
+    --primary: #1E3A5F;
+    --accent: #2D6BC4;
+    --accent2: #4A90D9;
+    --light: #B8D0F0;
+    --text: #1a2a3a;
+    --muted: #5a7a9a;
+    --green: #1a7a4a;
+    --red: #c0392b;
+    --orange: #d35400;
+    --highlight: #fff3cd;
+    --clinical: #e8f5e9;
+    --clinical-border: #2e7d32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; font-size: 14px; line-height: 1.6; }
+  
+  header { background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; padding: 20px 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+  header h1 { font-size: 18px; font-weight: 700; }
+  header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  
+  .tab-bar { display: flex; background: var(--primary); border-bottom: 3px solid var(--accent2); position: sticky; top: 68px; z-index: 99; }
+  .tab-btn { flex: 1; padding: 10px 6px; color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; border: none; background: none; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .tab-btn.active { color: white; background: var(--accent); border-bottom: 3px solid #fff; }
+  .tab-btn:hover { color: white; background: rgba(255,255,255,0.1); }
+  
+  .tab-content { display: none; padding: 16px; }
+  .tab-content.active { display: block; }
+  
+  /* 분류 탭 */
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .toc-card { background: var(--card); border-radius: 10px; padding: 12px; border-left: 4px solid var(--accent); box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .toc-card h3 { font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .toc-card ul { list-style: none; }
+  .toc-card ul li { font-size: 12px; padding: 2px 0; color: var(--muted); border-bottom: 1px dotted #ddd; }
+  .toc-card ul li:last-child { border: none; }
+  .keyword-box { background: var(--card); border-radius: 10px; padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .keyword-box h3 { font-size: 13px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+  .kw-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw { background: var(--light); color: var(--primary); border-radius: 12px; padding: 3px 10px; font-size: 11px; font-weight: 600; }
+  .kw.red { background: #fde8e8; color: #c0392b; }
+  .kw.green { background: #e8f5e9; color: #2e7d32; }
+  .kw.orange { background: #fff3e0; color: #e65100; }
+
+  /* 요약 탭 */
+  .summary-nav { background: var(--card); border-radius: 10px; padding: 12px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .summary-nav h3 { font-size: 13px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+  .nav-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .nav-btn { background: var(--light); color: var(--primary); border: none; border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .nav-btn:hover { background: var(--accent); color: white; }
+  
+  .section { background: var(--card); border-radius: 12px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .section-title { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--light); display: flex; align-items: center; gap: 6px; }
+  .section-title span.icon { font-size: 16px; }
+  .sub-section { margin-bottom: 12px; }
+  .sub-title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 6px; padding: 4px 8px; background: #f0f6ff; border-radius: 6px; }
+  .def-box { background: #f8f9ff; border-left: 3px solid var(--accent); padding: 8px 10px; border-radius: 0 6px 6px 0; margin-bottom: 8px; font-size: 13px; }
+  .def-box strong { color: var(--primary); }
+  
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+  th { background: var(--primary); color: white; padding: 6px 8px; text-align: left; }
+  td { padding: 5px 8px; border-bottom: 1px solid #e8f0fe; }
+  tr:nth-child(even) td { background: #f5f8ff; }
+  tr:hover td { background: var(--light); }
+  
+  .clinical-box { background: var(--clinical); border: 1px solid var(--clinical-border); border-radius: 8px; padding: 10px; margin: 8px 0; }
+  .clinical-box .title { font-size: 12px; font-weight: 700; color: var(--clinical-border); margin-bottom: 4px; }
+  .clinical-box p { font-size: 12px; }
+  
+  .highlight-box { background: var(--highlight); border: 1px solid #f0c040; border-radius: 8px; padding: 10px; margin: 8px 0; }
+  .highlight-box .title { font-size: 12px; font-weight: 700; color: #7a5800; margin-bottom: 4px; }
+  
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+  .mini-card { background: #f5f8ff; border-radius: 8px; padding: 8px; font-size: 12px; }
+  .mini-card h4 { color: var(--accent); font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+  
+  ul.point-list { padding-left: 14px; }
+  ul.point-list li { font-size: 13px; margin-bottom: 3px; }
+  ul.point-list li b { color: var(--primary); }
+  ul.point-list li .red { color: var(--red); font-weight: 700; }
+  ul.point-list li .blue { color: var(--accent); font-weight: 700; }
+  
+  .badge { display: inline-block; background: var(--accent); color: white; border-radius: 10px; padding: 1px 8px; font-size: 10px; font-weight: 700; margin-left: 4px; }
+  .badge.red { background: var(--red); }
+  .badge.green { background: var(--green); }
+  .badge.orange { background: var(--orange); }
+  
+  /* 퀴즈 탭 */
+  .quiz-header { background: linear-gradient(135deg, var(--primary), var(--accent2)); color: white; border-radius: 12px; padding: 14px; margin-bottom: 14px; text-align: center; }
+  .quiz-header h2 { font-size: 16px; }
+  .progress-bar { background: rgba(255,255,255,0.3); border-radius: 10px; height: 8px; margin: 8px 0; overflow: hidden; }
+  .progress-fill { background: white; height: 100%; border-radius: 10px; transition: width 0.4s; }
+  .score-display { font-size: 13px; opacity: 0.9; }
+  
+  .quiz-card { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .q-num { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .q-text { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 12px; line-height: 1.5; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn { padding: 10px 14px; border: 2px solid #dde8f8; border-radius: 8px; background: white; text-align: left; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .option-btn:hover { border-color: var(--accent); background: #f0f6ff; }
+  .option-btn.correct { border-color: var(--green); background: #e8f5e9; color: var(--green); font-weight: 700; }
+  .option-btn.wrong { border-color: var(--red); background: #fde8e8; color: var(--red); }
+  .option-btn.reveal { border-color: var(--green); background: #e8f5e9; }
+  .option-btn:disabled { cursor: default; }
+  
+  .explanation { background: #f0f8ff; border-left: 3px solid var(--accent); padding: 10px; border-radius: 0 8px 8px 0; margin-top: 10px; font-size: 12px; display: none; }
+  .explanation.show { display: block; }
+  
+  .quiz-controls { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .ctrl-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .ctrl-btn.primary { background: var(--accent); color: white; }
+  .ctrl-btn.secondary { background: var(--light); color: var(--primary); }
+  .ctrl-btn.danger { background: #fde8e8; color: var(--red); }
+  .ctrl-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  
+  .wrong-section { background: #fff0f0; border: 2px solid #f5c6c6; border-radius: 12px; padding: 14px; margin-top: 14px; display: none; }
+  .wrong-section.show { display: block; }
+  .wrong-section h3 { color: var(--red); font-size: 14px; margin-bottom: 10px; }
+
+  .finish-box { background: linear-gradient(135deg, #e8f5e9, #f0f8ff); border: 2px solid var(--green); border-radius: 12px; padding: 20px; text-align: center; display: none; }
+  .finish-box.show { display: block; }
+  .finish-box h2 { color: var(--green); font-size: 20px; margin-bottom: 8px; }
+  .finish-box p { color: var(--text); font-size: 14px; }
+
+  @media(max-width:480px) {
+    .toc-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 신경계 질환 & 중재 Part 1</h1>
+  <p>뇌졸중 · 외상성뇌손상 · 바닥핵/소뇌 · 뇌성마비 · 척수손상</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('classify')">📋 분류/개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ===== 분류 탭 ===== -->
+<div id="classify" class="tab-content active">
+  <div class="toc-grid">
+    <div class="toc-card">
+      <h3>🧠 I. 뇌졸중</h3>
+      <ul>
+        <li>뇌출혈(10%) / 뇌경색(90%)</li>
+        <li>반신마비, 경직, 행위상실증</li>
+        <li>언어상실증(베르니케/브로카)</li>
+        <li>손상혈관별 임상증상</li>
+        <li>대뇌반구 손상 차이</li>
+      </ul>
+    </div>
+    <div class="toc-card">
+      <h3>💥 II. 외상성 뇌손상</h3>
+      <ul>
+        <li>일차적/이차적 뇌손상</li>
+        <li>란초로스 아미고스 10단계</li>
+        <li>GCS(글래스고 혼수척도)</li>
+        <li>GOS, GOAT, DRS</li>
+        <li>합병증(DVT, 이소성골화)</li>
+      </ul>
+    </div>
+    <div class="toc-card">
+      <h3>⚙️ III. 바닥핵/소뇌</h3>
+      <ul>
+        <li>파킨슨 4대 증상(안정시떨림·경축·운동못함증·자세불안정)</li>
+        <li>종종걸음, 가면얼굴</li>
+        <li>mHY척도, UPDRS</li>
+        <li>소뇌실조: 겨냥이상, 협동운동불능</li>
+        <li>ICARS, SARA</li>
+      </ul>
+    </div>
+    <div class="toc-card">
+      <h3>🧒 IV. 뇌성마비</h3>
+      <ul>
+        <li>강직형(50%↑) / 무정위운동형(20~25%)</li>
+        <li>실조형(2~5%) / 저긴장형</li>
+        <li>출생 전·시·후 원인</li>
+        <li>운동발달 이정표</li>
+        <li>GMFM 평가</li>
+      </ul>
+    </div>
+    <div class="toc-card">
+      <h3>🦴 V. 척수손상</h3>
+      <ul>
+        <li>양다리/팔다리마비</li>
+        <li>완전/불완전 손상</li>
+        <li>5가지 불완전 증후군</li>
+        <li>자율신경반사부전(T6↑)</li>
+        <li>ASIA, FIM, SCIM, WISCI</li>
+      </ul>
+    </div>
+    <div class="toc-card">
+      <h3>⚡ 신경계 중재(I~V)</h3>
+      <ul>
+        <li>뇌졸중: 급성기·회복기 PT</li>
+        <li>외상: 란초로스 단계별 중재</li>
+        <li>파킨슨: 이완·유연성·PNF</li>
+        <li>척수: 수준별 기능적 중재</li>
+        <li>ADL훈련·보행훈련·휠체어</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="keyword-box">
+    <h3>🔑 핵심 키워드 — 뇌졸중</h3>
+    <div class="kw-row">
+      <span class="kw red">브로카실어증</span><span class="kw red">베르니케실어증</span>
+      <span class="kw">반신마비</span><span class="kw">경직(spasticity)</span>
+      <span class="kw orange">중간대뇌동맥</span><span class="kw orange">앞대뇌동맥</span>
+      <span class="kw orange">뒤대뇌동맥</span><span class="kw">밀기증후군</span>
+      <span class="kw green">수정된 애쉬워스(MAS)</span><span class="kw green">BRS 회복단계</span>
+      <span class="kw">행위상실증(apraxia)</span><span class="kw">무시(neglect)</span>
+    </div>
+  </div>
+
+  <div class="keyword-box">
+    <h3>🔑 핵심 키워드 — 척수손상</h3>
+    <div class="kw-row">
+      <span class="kw red">앞척수증후군</span><span class="kw red">중심척수증후군</span>
+      <span class="kw red">브라운-세카르</span><span class="kw">자율신경반사부전</span>
+      <span class="kw orange">T6 이상 손상</span><span class="kw">힘줄고정술(C6)</span>
+      <span class="kw green">ASIA 장애척도</span><span class="kw green">KAFO/AFO 보조기</span>
+      <span class="kw">척수쇼크</span><span class="kw">엉치신경보존반응</span>
+    </div>
+  </div>
+
+  <div class="keyword-box">
+    <h3>🔑 핵심 키워드 — 뇌성마비 · 파킨슨</h3>
+    <div class="kw-row">
+      <span class="kw red">핵황달→무정위운동형</span><span class="kw red">조산→강직형</span>
+      <span class="kw">안정시떨림(pill-rolling)</span><span class="kw">톱니바퀴경축</span>
+      <span class="kw orange">알약돌리기운동</span><span class="kw green">GMFM</span>
+      <span class="kw">운동발달이정표</span><span class="kw green">mHY척도 8단계</span>
+      <span class="kw">겨냥이상(dysmetria)</span><span class="kw">상반운동반복장애</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 요약 탭 ===== -->
+<div id="summary" class="tab-content">
+  <div class="summary-nav">
+    <h3>📑 소단원 목차 바로가기</h3>
+    <div class="nav-btns">
+      <button class="nav-btn" onclick="scrollToId('s-stroke')">뇌졸중</button>
+      <button class="nav-btn" onclick="scrollToId('s-tbi')">외상성뇌손상</button>
+      <button class="nav-btn" onclick="scrollToId('s-parkinson')">파킨슨병</button>
+      <button class="nav-btn" onclick="scrollToId('s-ataxia')">소뇌실조</button>
+      <button class="nav-btn" onclick="scrollToId('s-cp')">뇌성마비</button>
+      <button class="nav-btn" onclick="scrollToId('s-sci')">척수손상</button>
+      <button class="nav-btn" onclick="scrollToId('s-stroke-tx')">뇌졸중 중재</button>
+      <button class="nav-btn" onclick="scrollToId('s-tbi-tx')">뇌손상 중재</button>
+      <button class="nav-btn" onclick="scrollToId('s-pk-tx')">파킨슨 중재</button>
+      <button class="nav-btn" onclick="scrollToId('s-sci-tx')">척수손상 중재</button>
+    </div>
+  </div>
+
+  <!-- 뇌졸중 -->
+  <div class="section" id="s-stroke">
+    <div class="section-title"><span class="icon">🧠</span>I. 뇌졸중 (CVA)</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 정의 & 원인</div>
+      <div class="def-box">뇌출혈·뇌경색으로 인한 뇌혈관사고(CVA). 반신마비·감각·운동·언어 문제가 <b>24시간 이상</b> 지속되는 뇌혈관 병변</div>
+      <table>
+        <tr><th>분류</th><th>비율</th><th>특징</th></tr>
+        <tr><td><b>뇌출혈</b></td><td>10%</td><td>허혈+기계적 손상</td></tr>
+        <tr><td><b>뇌혈전</b></td><td rowspan="3">90%(뇌경색)</td><td>재발률 높음</td></tr>
+        <tr><td><b>뇌색전</b></td><td>사망률 낮음</td></tr>
+        <tr><td><b>열공</b></td><td>죽상경화증 관련</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 손상 혈관별 임상증상</div>
+      <table>
+        <tr><th>혈관</th><th>주요 증상</th></tr>
+        <tr><td><b>중간대뇌동맥</b><br>(MCA)</td><td>• 손상 동측 반맹증<br>• 감각성/운동성 언어손상<br>• 반대측 팔·얼굴 운동·감각 마비</td></tr>
+        <tr><td><b>앞대뇌동맥</b><br>(ACA)</td><td>• 반대측 반신마비 (팔<다리)<br>• 움켜잡기반사·빨기반사<br>• 요실금, 기억상실증</td></tr>
+        <tr><td><b>뒤대뇌동맥</b><br>(PCA)</td><td>• 동측 반맹증<br>• 시상증후군, 웨버증후군<br>• 시각인식불능증</td></tr>
+        <tr><td><b>뇌바닥동맥</b></td><td>• 반대쪽 호너증후군<br>• 실조, 수평 눈떨림<br>• 거짓숨뇌마비</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3. 대뇌반구 손상 비교</div>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>🔴 오른쪽 반구 손상</h4>
+          <ul class="point-list">
+            <li>왼쪽 반신마비</li>
+            <li>급하고 충동적 행동</li>
+            <li>시지각 손상 (편측무시)</li>
+            <li>언어는 유창함</li>
+            <li>운동반응 양호</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4>🔵 왼쪽 반구 손상</h4>
+          <ul class="point-list">
+            <li>오른쪽 반신마비</li>
+            <li>느리고 소심한 행동</li>
+            <li>언어 관련 기억 손상</li>
+            <li>운동반응 좋지 않음</li>
+            <li>손상 잘 인식</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">4. 언어장애 분류</div>
+      <table>
+        <tr><th>종류</th><th>손상 부위</th><th>특징</th></tr>
+        <tr><td><b class="red">베르니케 실어증</b><br>(감각성)</td><td>브로드만 22번</td><td>말은 할 수 있으나 <b>이해 불가</b></td></tr>
+        <tr><td><b class="red">브로카 실어증</b><br>(운동성)</td><td>브로드만 44,45번</td><td>이해는 가능하나 <b>말하기 불가</b></td></tr>
+        <tr><td>조음장애</td><td>숨뇌 병변</td><td>발음 불명확</td></tr>
+        <tr><td>언어행위상실증</td><td>-</td><td>무의식적 말은 가능</td></tr>
+      </table>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 뇌졸중</div>
+      <p>• <b>행위상실증</b>: 운동·감각·의식 정상인데 학습된 동작 수행 못함<br>
+      • <b>밀기증후군</b>: 손상 뇌 반대쪽으로 몸 밀어내는 비정상 자세반응<br>
+      • <b>무시(neglect)</b>: 오른쪽 무시보다 왼쪽 무시 흔함<br>
+      • <b>회복</b>: 처음 3~6개월 사이 약 90% 회복</p>
+    </div>
+  </div>
+
+  <!-- 외상성 뇌손상 -->
+  <div class="section" id="s-tbi">
+    <div class="section-title"><span class="icon">💥</span>II. 외상성 뇌손상</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 정의 & 분류</div>
+      <div class="def-box">외부 물리적 힘에 의한 뇌손상. <b>낙상·교통사고·스포츠 손상</b> 등이 주요 원인</div>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>일차적 뇌손상</h4>
+          <ul class="point-list">
+            <li><b>타격손상(coup)</b>: 타격 가해진 쪽 손상 (가속손상)</li>
+            <li><b>반대편타격(countercoup)</b>: 반대쪽 손상 (감속손상)</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4>이차적 뇌손상</h4>
+          <ul class="point-list">
+            <li>뇌부종, 뇌내출혈</li>
+            <li>허혈성 뇌손상</li>
+            <li>뇌이탈, 뇌감염</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 란초로스 아미고스 10단계</div>
+      <table>
+        <tr><th>단계</th><th>분류</th><th>반응</th></tr>
+        <tr><td>I</td><td rowspan="3">낮은수준</td><td>반응 없음</td></tr>
+        <tr><td>II</td><td>일반적 반응 (목적 없음)</td></tr>
+        <tr><td>III</td><td>국소적 반응 (구체적이나 지속적이지 않음)</td></tr>
+        <tr><td>IV</td><td rowspan="3">중간수준</td><td>혼란-흥분(agitated)</td></tr>
+        <tr><td>V</td><td>혼란-부적합 (단순지시 반응)</td></tr>
+        <tr><td>VI</td><td>혼란-적합 (목표지향적이나 지시 필요)</td></tr>
+        <tr><td>VII</td><td rowspan="4">높은수준</td><td>자동-적합 (판단·문제해결 부족)</td></tr>
+        <tr><td>VIII</td><td>목적-적합 (미세한 장애)</td></tr>
+        <tr><td>IX</td><td>목적-적합 (전반적 암시 필요)</td></tr>
+        <tr><td>X</td><td>목적-적합 (임시적 차단 필요)</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3. 글래스고 혼수척도 (GCS)</div>
+      <table>
+        <tr><th>영역</th><th>최대 점수</th></tr>
+        <tr><td>눈뜨기 반응 (E)</td><td>4점</td></tr>
+        <tr><td>언어 반응 (V)</td><td>5점</td></tr>
+        <tr><td>운동 반응 (M)</td><td>6점</td></tr>
+        <tr><td colspan="2"><b>총 15점</b> — 낮을수록 신경학적 상태 나쁨</td></tr>
+      </table>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 외상성 뇌손상</div>
+      <p>• <b>GOS 1등급</b>: 사망 / <b>5등급</b>: 양호한 회복<br>
+      • <b>GOAT</b>: 10개 항목 100점, 낮을수록 심한 기억상실<br>
+      • <b>딴곳뼈되기</b>: 연부조직에 성숙 골층판뼈 생성 → 엉덩·무릎관절 호발<br>
+      • <b>DVT</b>: 약 40~54% 발생, 폐색전증 80%</p>
+    </div>
+  </div>
+
+  <!-- 파킨슨병 -->
+  <div class="section" id="s-parkinson">
+    <div class="section-title"><span class="icon">⚙️</span>III-1. 파킨슨병</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 정의 & 특징</div>
+      <div class="def-box"><b>도파민 경로 장애 + 바닥핵 손상</b>으로 발생하는 만성 진행성 퇴행성 신경질환</div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 4대 주요 운동 증상</div>
+      <table>
+        <tr><th>증상</th><th>세부 내용</th></tr>
+        <tr><td><b class="red">안정시 떨림</b></td><td>수의운동 시 사라짐 / 알약돌리기운동 / <b>손목손허리관절</b></td></tr>
+        <tr><td><b class="red">경축(rigidity)</b></td><td>속도 무관 일정 저항 / 톱니바퀴형 vs 납파이프형</td></tr>
+        <tr><td><b class="red">운동못함증/완만증</b></td><td>운동 시작 어려움(akinesia) / 동결 현상(freezing)</td></tr>
+        <tr><td><b class="red">자세 불안정성</b></td><td>고릴라자세 / 몸통 굽힘근 > 폄근 약화</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3. 보행 특징</div>
+      <ul class="point-list">
+        <li><b>종종걸음 (shuffle gait)</b>: 짧은 스텝, 발 질질 끌기</li>
+        <li><b>가속보행</b>: 점점 빨라지는 보행</li>
+        <li>팔 흔들기 감소, 회전 어려움</li>
+        <li>작은글씨증, 가면얼굴, 단조로운 언어</li>
+      </ul>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">4. 평가도구</div>
+      <table>
+        <tr><th>도구</th><th>내용</th></tr>
+        <tr><td>mHY 척도</td><td>진행 상황 <b>8단계</b></td></tr>
+        <tr><td>mSEADLS</td><td>ADL 능력 (100%=완전독립, 0%=기능 없음)</td></tr>
+        <tr><td>PDQ-39</td><td>삶의 질, <b>8개 항목 39개</b> 설문</td></tr>
+        <tr><td>UPDRS</td><td>임상연구 가장 일반적, <b>4개 파트</b></td></tr>
+      </table>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 파킨슨병</div>
+      <p>• 안정시 떨림은 수의운동 시 사라짐 ↔ 소뇌 활동떨림은 목표 접근 시 심해짐<br>
+      • 톱니바퀴 = <b>불규칙적 저항 + 교대수축이완</b><br>
+      • 납파이프 = <b>균일하고 부드러운 저항</b></p>
+    </div>
+  </div>
+
+  <!-- 소뇌실조 -->
+  <div class="section" id="s-ataxia">
+    <div class="section-title"><span class="icon">🎯</span>III-2. 소뇌실조</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 주요 임상증상</div>
+      <table>
+        <tr><th>증상</th><th>설명</th></tr>
+        <tr><td><b>근육긴장저하(hypotonia)</b></td><td>수동 움직임 저항 감소, 급성 병변에서 뚜렷</td></tr>
+        <tr><td><b>겨냥이상(dysmetria)</b></td><td>측정과소(hypometria) / 측정과대(hypermetria)</td></tr>
+        <tr><td><b>협동운동불능(asynergy)</b></td><td>여러 관절 운동 조절 감소</td></tr>
+        <tr><td><b>상반운동반복장애</b><br>(dysdiadochokinesia)</td><td>뒤침-엎침 반복 시 리듬 깨짐</td></tr>
+        <tr><td><b>활동떨림(intention tremor)</b></td><td>목표물 접근 시 불수의 떨림 발생</td></tr>
+        <tr><td><b>눈떨림(nystagmus)</b></td><td>안뜰소뇌 이상 시</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 롬버그 검사</div>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>감각성 실조</h4>
+          <p>눈 감으면 흔들림 심해짐<br>(시각 의존)</p>
+        </div>
+        <div class="mini-card">
+          <h4>소뇌성 실조</h4>
+          <p>눈 유무 관계없이 흔들림 유사</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 소뇌실조</div>
+      <p>• 협조성 검사: 손가락-코, 발꿈치-정강이, 반동검사, 상반운동반복장애<br>
+      • ICARS: 100점 만점, 높을수록 제한 큼<br>
+      • SARA: 40점 만점, 8가지 항목</p>
+    </div>
+  </div>
+
+  <!-- 뇌성마비 -->
+  <div class="section" id="s-cp">
+    <div class="section-title"><span class="icon">🧒</span>IV. 뇌성마비</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 정의 & 발생 원인</div>
+      <div class="def-box">뇌 성숙 이전 다양한 원인으로 비정상적 근긴장도 발생 → 운동·자세 장애를 보이는 <b>비진행성 증후군</b></div>
+      <table>
+        <tr><th>원인</th><th>비율</th><th>예시</th></tr>
+        <tr><td>출생 전</td><td>30%</td><td>유전, 기형, 모체감염</td></tr>
+        <tr><td>출생 시</td><td>60%</td><td>조산, 핵황달, 산소결핍</td></tr>
+        <tr><td>출생 후</td><td>10%</td><td>뇌출혈, 수막염, 중독</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 유형별 특징</div>
+      <table>
+        <tr><th>유형</th><th>비율</th><th>병변</th><th>핵심 특징</th></tr>
+        <tr><td><b class="red">강직형</b></td><td>50%↑</td><td>대뇌겉질</td><td>높은 근긴장도, 조산 관련</td></tr>
+        <tr><td><b class="orange">무정위운동형</b></td><td>20~25%</td><td>바닥핵</td><td>근긴장도 변화 심함, 핵황달 관련</td></tr>
+        <tr><td><b>실조형</b></td><td>2~5%</td><td>소뇌</td><td>균형·협응 부족, 넓은 기저면</td></tr>
+        <tr><td><b>저긴장형</b></td><td>-</td><td>-</td><td>개구리다리자세, 근긴장도 매우 낮음</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3. 운동발달 이정표</div>
+      <table>
+        <tr><th>월령</th><th>발달</th><th>월령</th><th>발달</th></tr>
+        <tr><td>3개월</td><td>목가누기</td><td>10개월</td><td>가고 잡고 걷기</td></tr>
+        <tr><td>4개월</td><td>뒤집기</td><td>12개월</td><td>혼자 걷기</td></tr>
+        <tr><td>6개월</td><td>배밀이</td><td>15개월</td><td>손잡고 계단오르기</td></tr>
+        <tr><td>7개월</td><td>손 짚지 않고 앉기</td><td>18~24개월</td><td>달리기, 공차기</td></tr>
+        <tr><td>9개월</td><td>네발기기</td><td></td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 뇌성마비</div>
+      <p>• 강직형 자세: <b>thumb in palm</b>, <b>scissoring posture</b><br>
+      • 저긴장형: <b>개구리다리 자세</b> (엉덩관절 굽힘-벌림-가쪽돌림)<br>
+      • 발생빈도: 남 1.4 : 여 1<br>
+      • 강직형은 조산 증가로 발생 증가 / 무정위운동형은 질식 감소로 발생 감소</p>
+    </div>
+  </div>
+
+  <!-- 척수손상 -->
+  <div class="section" id="s-sci">
+    <div class="section-title"><span class="icon">🦴</span>V. 척수손상</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 불완전 손상 5가지</div>
+      <table>
+        <tr><th>증후군</th><th>원인</th><th>상실</th><th>보존</th></tr>
+        <tr><td><b class="red">앞척수증후군</b></td><td>척수 전면 압박</td><td>운동, 통각, 온각</td><td>위치감각, 진동감각</td></tr>
+        <tr><td><b>뒤척수증후군</b></td><td>뒤기둥 손상</td><td>위치·고유수용·식별감각</td><td>운동, 통각</td></tr>
+        <tr><td><b class="red">중심척수증후군</b></td><td>목뼈 젖힘</td><td>팔>다리, 운동>감각</td><td>방광·직장·성기능</td></tr>
+        <tr><td><b>브라운-세카르</b></td><td>반쪽 절단</td><td>동측:운동·고유감각<br>반대:통각·온각</td><td>-</td></tr>
+        <tr><td><b>말총신경증후군</b></td><td>L1 1/2 이하</td><td>재생 가능성 있음</td><td>-</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 자율신경 반사부전</div>
+      <div class="highlight-box">
+        <div class="title">⚠️ T6 이상 척수손상 시 발생</div>
+        <p>두통·발한·입모·얼굴홍조·동공확대·느린맥·호흡곤란<br>
+        → 원인: 방광 팽창, 내장기 팽만 등 유해자극</p>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3. 신경인성 방광</div>
+      <table>
+        <tr><th>종류</th><th>손상</th><th>특징</th></tr>
+        <tr><td><b>무긴장성 방광</b></td><td>척수쇼크 후 3~5주</td><td>배뇨반사 상실, 요 정체</td></tr>
+        <tr><td><b>강직성 방광</b></td><td>UMN</td><td>반사적 배뇨, 방광벽 비후</td></tr>
+        <tr><td><b>이완성 방광</b></td><td>LMN</td><td>요실금, 요 역류</td></tr>
+      </table>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 척수손상</div>
+      <p>• 발생: 70% 외상 (교통사고 50%, 추락 15%)<br>
+      • 호발연령: 20~40세 80% / 남:여 = 2.5:1<br>
+      • 욕창 호발: 엉치, 발뒤꿈치, 넙다리큰돌기, 종아리뼈머리, ASIS<br>
+      • DVT: 손상 후 <b>2개월 이내</b> 호발</p>
+    </div>
+  </div>
+
+  <!-- 뇌졸중 중재 -->
+  <div class="section" id="s-stroke-tx">
+    <div class="section-title"><span class="icon">⚡</span>신경계 중재 I — 뇌졸중</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 급성기 치료 (발생 72시간 이내)</div>
+      <ul class="point-list">
+        <li>욕창방지: <b>2시간마다</b> 자세 변경</li>
+        <li><b>마비쪽이 밝은 곳으로</b> 향하게 (인식 위해)</li>
+        <li>바로누운자세: 마비쪽 어깨관절 <b>가쪽돌림·벌림 30°</b></li>
+        <li>기립성저혈압 방지: 침대 각도 서서히 증가</li>
+      </ul>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 보행훈련 단계</div>
+      <table>
+        <tr><th>상황</th><th>순서</th></tr>
+        <tr><td>평지</td><td>지팡이 → <b>마비쪽 발</b> → 비마비쪽 발</td></tr>
+        <tr><td>계단 오르기</td><td><b>비마비쪽 발</b> → 지팡이 → 마비쪽 발</td></tr>
+        <tr><td>계단 내려가기</td><td>지팡이 → 마비쪽 발 → 비마비쪽 발</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3. 물리적 인자치료</div>
+      <table>
+        <tr><th>치료</th><th>목적</th></tr>
+        <tr><td>핫팩</td><td>만성기 근긴장도 감소, 통증 경감</td></tr>
+        <tr><td>냉치료</td><td>강직 억제, 통증 조절</td></tr>
+        <tr><td>FES(기능적 전기자극)</td><td>어깨 불완전탈구, 보행 보조</td></tr>
+        <tr><td>TENS</td><td>통증 완화 (비침습적)</td></tr>
+      </table>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 뇌졸중 중재</div>
+      <p>• 지팡이 높이: <b>넙다리뼈 큰돌기</b>에 위치<br>
+      • 팔꿉관절 약 <b>20~30° 굽힘</b>되도록 비마비쪽에 잡음<br>
+      • 매트훈련 구르기: 비마비쪽 손으로 마비쪽 손 잡고 굽힘 → 머리부터 분절 돌림<br>
+      • 교각운동: 엉덩·무릎관절 굽힘·폄 조절 증진</p>
+    </div>
+  </div>
+
+  <!-- 외상성뇌손상 중재 -->
+  <div class="section" id="s-tbi-tx">
+    <div class="section-title"><span class="icon">⚡</span>신경계 중재 II — 외상성 뇌손상</div>
+
+    <div class="sub-section">
+      <div class="sub-title">란초로스 단계별 중재 목적</div>
+      <table>
+        <tr><th>단계</th><th>주요 목적</th></tr>
+        <tr><td>I~III</td><td>이차손상 예방, 감각자극, 관절가동범위 운동</td></tr>
+        <tr><td>IV</td><td>주의집중력 훈련, 기능적 훈련 추가</td></tr>
+        <tr><td>V~VI</td><td>발달자세 통한 정상운동패턴 촉진</td></tr>
+        <tr><td>VII~X</td><td>일상생활·지역사회·사회적기술 훈련</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">발달자세 운동 (V~VI 단계)</div>
+      <table>
+        <tr><th>자세</th><th>목적</th></tr>
+        <tr><td>교각 자세(bridging)</td><td>골반·엉덩관절 안정화, 침상활동 준비</td></tr>
+        <tr><td>네발기기(quadruped)</td><td>전신 운동조절, 팔·다리 체중지지</td></tr>
+        <tr><td>무릎서기/반무릎서기</td><td>엉덩관절 체중지지, 균형 증진</td></tr>
+        <tr><td>서기(standing)</td><td>중력중심·체중이동 촉진</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 파킨슨 중재 -->
+  <div class="section" id="s-pk-tx">
+    <div class="section-title"><span class="icon">⚡</span>신경계 중재 III — 파킨슨병</div>
+    <table>
+      <tr><th>중재</th><th>내용</th></tr>
+      <tr><td><b>이완</b></td><td>몸통 폄·돌림 증진, 구축 이완</td></tr>
+      <tr><td><b>유연성</b></td><td>PNF 이용 돌림운동, 구축 예방</td></tr>
+      <tr><td><b>균형·협응</b></td><td>프렌켈 운동, 과제지향 치료</td></tr>
+      <tr><td><b>보행</b></td><td>시각정보(바닥 표시), 정상 자세 보행</td></tr>
+      <tr><td><b>신경근재교육</b></td><td>PNF 율동적 개시(rhythmic initiation)</td></tr>
+      <tr><td><b>ADL</b></td><td>IADL 포함 독립적 기능 향상</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 파킨슨 중재</div>
+      <p>• 시각정보 이용: 바닥에 보폭마다 시각 목표 표시<br>
+      • 동결 현상 시: 운동 시작·끝이 어렵고 낙상 위험<br>
+      • 호흡운동: 경축으로 가슴우리 가동성 저하 → 얕은 복식호흡</p>
+    </div>
+  </div>
+
+  <!-- 척수손상 중재 -->
+  <div class="section" id="s-sci-tx">
+    <div class="section-title"><span class="icon">⚡</span>신경계 중재 V — 척수손상</div>
+
+    <div class="sub-section">
+      <div class="sub-title">1. 수준별 기능적 중재</div>
+      <table>
+        <tr><th>수준</th><th>핵심 기능</th></tr>
+        <tr><td>C1~C3</td><td>인공호흡기 의존</td></tr>
+        <tr><td>C4</td><td>제한적 식사, 전동 휠체어</td></tr>
+        <tr><td>C5</td><td>보조도구 식사훈련, 조이스틱 전동 휠체어</td></tr>
+        <tr><td>C6</td><td><b>힘줄고정술(tenodesis)</b>로 쥐기, 미끄럼판 이동</td></tr>
+        <tr><td>C7</td><td>지퍼·단추 옷입기, 엉덩이 들기 훈련</td></tr>
+        <tr><td>C8~T1</td><td>수동 휠체어 독립 사용</td></tr>
+        <tr><td>T9~T12</td><td>KAFO로 실내 목발보행</td></tr>
+        <tr><td>L4~L5</td><td>AFO로 실내 목발보행</td></tr>
+        <tr><td>S1 이하</td><td>AFO로 실외 기능적 목발보행</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2. 혀인두호흡 (GPB)</div>
+      <div class="highlight-box">
+        <div class="title">⚠️ 상위 목척수 손상 시 응급 자발호흡</div>
+        <p>얼굴·목 근육 사용, 공기를 조금씩 반복해서 흡입 → <b>양서류 호흡</b><br>혀로 공기를 구강 뒷부분→인두→폐로 수송</p>
+      </div>
+    </div>
+
+    <div class="clinical-box">
+      <div class="title">🏥 임상포인트 — 척수손상 중재</div>
+      <p>• 기립자세: 경사침대(tilt table), 자세유지대(standing frame) 점진적 적용<br>
+      • 관절운동: 수동 → 능동-보조 → 능동 → 저항운동 순서<br>
+      • 욕창 예방: 2~4시간마다 체위 변경<br>
+      • 목발보행 순서: 2점 → 4점 → 건너뛰기 목발보행</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 퀴즈 탭 ===== -->
+<div id="quiz" class="tab-content">
+  <div class="quiz-header">
+    <h2>❓ 핵심 퀴즈 (15문제)</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="score-display" id="scoreDisplay">0 / 15 완료</div>
+  </div>
+
+  <div class="quiz-controls">
+    <button class="ctrl-btn primary" onclick="shuffleQuiz()">🔀 랜덤 출제</button>
+    <button class="ctrl-btn secondary" onclick="resetQuiz()">🔄 처음부터</button>
+    <button class="ctrl-btn danger" onclick="showWrong()">❌ 오답 복습</button>
+  </div>
+
+  <div id="quizContainer"></div>
+  <div class="finish-box" id="finishBox">
+    <h2>🎉 완료!</h2>
+    <p id="finalScore"></p>
+    <button class="ctrl-btn primary" onclick="resetQuiz()" style="margin-top:10px;">다시 풀기</button>
+  </div>
+  <div class="wrong-section" id="wrongSection">
+    <h3>❌ 틀린 문제 모음</h3>
+    <div id="wrongContainer"></div>
+  </div>
+</div>
+
+<script>
+const allQuestions = [
+  {
+    q: "브로카 실어증(운동성)의 특징은?",
+    opts: ["말은 하지만 이해 못함","이해는 되지만 말하기 못함","말도 못하고 이해도 못함","글은 읽지만 말을 못함"],
+    ans: 1,
+    exp: "브로카(브로드만 44,45번) 손상 → 듣고 읽는 것은 이해하지만 말을 못함. 베르니케는 반대로 말은 하지만 이해 못함."
+  },
+  {
+    q: "중간대뇌동맥(MCA) 손상 시 나타나는 증상은?",
+    opts: ["손상 반대쪽 반맹증","손상 동측 반맹증","다리마비가 팔보다 심함","움켜잡기반사 출현"],
+    ans: 1,
+    exp: "MCA 손상 → 손상 부위와 같은쪽 반맹증 + 감각성/운동성 언어손상 + 반대쪽 팔·얼굴 마비"
+  },
+  {
+    q: "앞척수증후군에서 보존되는 기능은?",
+    opts: ["운동기능","통각·온각","위치감각과 진동감각","방광·직장 기능"],
+    ans: 2,
+    exp: "앞척수증후군: 운동·통각·온각 상실 → 위치감각과 진동감각은 보존됨"
+  },
+  {
+    q: "중심척수증후군의 특징은?",
+    opts: ["다리 > 팔 신경학적 증상","팔 > 다리 신경학적 증상","동측 운동·반대 통각 소실","위치감각 주로 소실"],
+    ans: 1,
+    exp: "중심척수증후군: 목뼈 젖힘 손상 → 팔 > 다리 신경학적 증상, 운동기능 > 감각소실, 방광·직장 보존"
+  },
+  {
+    q: "T6 이상 척수손상 시 발생하는 자율신경 반사부전의 증상은?",
+    opts: ["저혈압·서맥","고혈압·서맥·발한·안면홍조","저혈압·빈맥·발한","고혈압·빈맥·동공축소"],
+    ans: 1,
+    exp: "자율신경반사부전: T6↑ 손상 시 두통·발한·입모·얼굴홍조·동공확대·느린맥·호흡곤란 — 교감신경계 집단반사반응"
+  },
+  {
+    q: "파킨슨병 4대 증상이 아닌 것은?",
+    opts: ["안정시 떨림","경축(rigidity)","활동 떨림(intention tremor)","자세 불안정성"],
+    ans: 2,
+    exp: "활동떨림(intention tremor)은 소뇌실조의 증상. 파킨슨 4대 증상: 안정시떨림·경축·운동못함증(akinesia)·자세불안정성"
+  },
+  {
+    q: "란초로스 아미고스 10단계 중 '혼란-흥분(confused-agitated)' 상태는 몇 단계인가?",
+    opts: ["III단계","IV단계","V단계","VI단계"],
+    ans: 1,
+    exp: "IV단계 = 혼란-흥분(confused-agitated): 심하게 흥분되고 고조된 반응, 공격적일 수 있음"
+  },
+  {
+    q: "강직형 뇌성마비에서 나타나는 자세로 옳은 것은?",
+    opts: ["개구리다리 자세","scissors posture + thumb in palm","넓은 기저면 보행","근긴장도 변화가 심함"],
+    ans: 1,
+    exp: "강직형 CP: 가위자세(scissors posture), 엄지 손바닥 쥐기(thumb in palm), 발끝 겹치는 자세"
+  },
+  {
+    q: "뇌졸중 보행훈련 시 계단 오르기 순서로 옳은 것은?",
+    opts: ["지팡이→마비쪽→비마비쪽","비마비쪽→지팡이→마비쪽","마비쪽→비마비쪽→지팡이","비마비쪽→마비쪽→지팡이"],
+    ans: 1,
+    exp: "계단 오르기: 비마비쪽 발 → 지팡이 → 마비쪽 발 / 계단 내려가기: 지팡이 → 마비쪽 → 비마비쪽"
+  },
+  {
+    q: "C6 척수손상 환자에게 특히 중요한 기능적 기술은?",
+    opts: ["전동휠체어 조작","힘줄고정술(tenodesis)로 쥐기","인공호흡기 사용","독립적 수동 휠체어"],
+    ans: 1,
+    exp: "C6: 손목관절 폄·아래팔 엎침 가능 → 힘줄고정술(tenodesis)로 쥐기 가능, 미끄럼판 이동훈련"
+  },
+  {
+    q: "소뇌실조에서 롬버그 검사 결과의 특징은?",
+    opts: ["눈 감으면 흔들림 매우 심해짐","눈 뜨고 감고 흔들림 차이 거의 없음","눈 뜨면 흔들림 심해짐","흔들림 전혀 없음"],
+    ans: 1,
+    exp: "소뇌실조: 눈 유무와 관계없이 흔들림 차이 거의 없음. 감각성실조는 눈 감으면 흔들림 심해짐."
+  },
+  {
+    q: "뇌성마비 무정위운동형(athetoid)과 관련된 원인은?",
+    opts: ["조산·저체중아","핵황달·질식(asphyxia)","대뇌겉질 손상","소뇌 병변"],
+    ans: 1,
+    exp: "무정위운동형: 바닥핵 손상 → 핵황달(kernicterus)·질식·난산으로 인함. Rh 부적합, 고빌리루빈혈증 관련"
+  },
+  {
+    q: "척수쇼크(spinal shock)의 해소 징후는?",
+    opts: ["깊은힘줄반사 소실","망울해면체 반사 양성","혈압 하강","피부 발적 출현"],
+    ans: 1,
+    exp: "척수쇼크 해소 징후: 망울해면체 반사 양성 + 손상부위 이하 이완성 또는 강직성 마비 출현"
+  },
+  {
+    q: "뇌졸중 급성기 침상 자세에서 마비쪽이 밑으로 가는 옆으로 누운자세의 장점은?",
+    opts: ["마비쪽 구축 예방","마비쪽 체중부하·고유수용감각 자극 증가","비마비쪽 근력 강화","경직 촉진"],
+    ans: 1,
+    exp: "마비쪽 옆으로 누운자세: 마비쪽 팔다리에 체중부하와 고유수용감각 자극을 증가시키는 장점"
+  },
+  {
+    q: "글래스고 혼수척도(GCS)의 최대 총점은?",
+    opts: ["10점","12점","15점","20점"],
+    ans: 2,
+    exp: "GCS: 눈뜨기(4점)+언어반응(5점)+운동반응(6점) = 최대 15점. 낮을수록 신경학적 상태 나쁨"
+  }
+];
+
+let questions = [...allQuestions];
+let answered = new Array(15).fill(null);
+let correct = 0;
+let wrongList = [];
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shuffleQuiz() {
+  questions = shuffleArray([...allQuestions]);
+  resetQuiz();
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = `qcard-${idx}`;
+    card.innerHTML = `
+      <div class="q-num">문제 ${idx + 1} / ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts-${idx}">
+        ${q.opts.map((o, i) => `
+          <button class="option-btn" onclick="selectAnswer(${idx}, ${i})">${i + 1}. ${o}</button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${idx}">💡 ${q.exp}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (answered[qIdx] !== null) return;
+  answered[qIdx] = optIdx;
+  const correctIdx = questions[qIdx].ans;
+  const opts = document.querySelectorAll(`#opts-${qIdx} .option-btn`);
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIdx) btn.classList.add('reveal');
+    if (i === optIdx && optIdx !== correctIdx) btn.classList.add('wrong');
+    if (i === optIdx && optIdx === correctIdx) btn.classList.add('correct');
+  });
+  document.getElementById(`exp-${qIdx}`).classList.add('show');
+  if (optIdx === correctIdx) {
+    correct++;
+  } else {
+    wrongList.push(qIdx);
+  }
+  updateProgress();
+  const done = answered.filter(a => a !== null).length;
+  if (done === questions.length) {
+    setTimeout(() => {
+      document.getElementById('finishBox').classList.add('show');
+      document.getElementById('finalScore').textContent = `정답: ${correct} / ${questions.length} (${Math.round(correct/questions.length*100)}%)`;
+    }, 500);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a !== null).length;
+  document.getElementById('progressFill').style.width = (done / questions.length * 100) + '%';
+  document.getElementById('scoreDisplay').textContent = `${done} / ${questions.length} 완료 | 정답: ${correct}`;
+}
+
+function resetQuiz() {
+  answered = new Array(questions.length).fill(null);
+  correct = 0;
+  wrongList = [];
+  document.getElementById('finishBox').classList.remove('show');
+  document.getElementById('wrongSection').classList.remove('show');
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('scoreDisplay').textContent = `0 / ${questions.length} 완료`;
+  renderQuiz();
+}
+
+function showWrong() {
+  const ws = document.getElementById('wrongSection');
+  const wc = document.getElementById('wrongContainer');
+  if (wrongList.length === 0) {
+    ws.innerHTML = '<h3 style="color:var(--green)">✅ 틀린 문제가 없습니다!</h3>';
+    ws.classList.add('show');
+    return;
+  }
+  wc.innerHTML = wrongList.map(idx => {
+    const q = questions[idx];
+    return `
+      <div class="quiz-card" style="border:2px solid #f5c6c6">
+        <div class="q-text">${q.q}</div>
+        <div style="color:var(--green);font-size:13px;font-weight:700;padding:8px">✅ 정답: ${q.opts[q.ans]}</div>
+        <div class="explanation show">💡 ${q.exp}</div>
+      </div>
+    `;
+  }).join('');
+  ws.classList.add('show');
+  ws.scrollIntoView({ behavior: 'smooth' });
+}
+
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function scrollToId(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

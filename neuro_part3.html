@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신경계 진단학 ③ — 정상운동발달 · 발달장애 · 자율신경 · 유전면역</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+  :root {
+    --bg:#EEF4FF;--bg2:#E2EDFF;--card:#FFFFFF;
+    --navy:#1E3A5F;--blue:#2563EB;--sky:#3B82F6;
+    --light-blue:#BFDBFE;--accent:#0EA5E9;--teal:#0891B2;
+    --green:#059669;--amber:#D97706;--red:#DC2626;--purple:#7C3AED;
+    --text:#1E293B;--text2:#475569;--text3:#94A3B8;
+    --border:#CBD5E1;--shadow:0 2px 12px rgba(30,58,95,0.10);
+    --shadow-lg:0 8px 32px rgba(30,58,95,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;min-height:100vh;}
+  .site-header{background:linear-gradient(135deg,var(--navy) 0%,#1a4a7a 60%,var(--blue) 100%);color:white;padding:28px 24px 20px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(30,58,95,0.3);}
+  .site-header h1{font-size:20px;font-weight:900;letter-spacing:-0.5px;}
+  .site-header p{font-size:12px;opacity:0.75;margin-top:2px;}
+  .file-badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;margin-bottom:6px;letter-spacing:0.5px;}
+  .tab-nav{display:flex;gap:0;border-bottom:3px solid var(--light-blue);background:var(--card);padding:0 20px;position:sticky;top:80px;z-index:90;box-shadow:0 2px 8px rgba(30,58,95,0.08);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tab-btn{padding:12px 16px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-3px;transition:all 0.2s;}
+  .tab-btn:hover{color:var(--blue);}
+  .tab-btn.active{color:var(--navy);font-weight:700;border-bottom-color:var(--navy);}
+  .tab-panel{display:none;padding:20px 16px 40px;max-width:900px;margin:0 auto;}
+  .tab-panel.active{display:block;animation:fadeIn 0.25s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .card{background:var(--card);border-radius:14px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border:1px solid rgba(203,213,225,0.5);}
+  .card-header{background:linear-gradient(90deg,var(--navy) 0%,#1a4a7a 100%);color:white;padding:12px 16px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;}
+  .card-header .icon{font-size:16px;}
+  .card-body{padding:14px 16px;}
+  .sec-title{font-size:13px;font-weight:700;color:var(--navy);border-left:4px solid var(--blue);padding-left:10px;margin:14px 0 8px;}
+  .sec-title:first-child{margin-top:0;}
+  .tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0;}
+  .tbl th{background:var(--bg2);color:var(--navy);font-weight:700;padding:7px 10px;text-align:left;border-bottom:2px solid var(--light-blue);}
+  .tbl td{padding:6px 10px;border-bottom:1px solid var(--bg2);vertical-align:top;}
+  .tbl tr:last-child td{border-bottom:none;}
+  .tbl tr:hover td{background:#f0f7ff;}
+  .hl-box{border-radius:10px;padding:10px 14px;margin:8px 0;font-size:12.5px;border-left:4px solid;}
+  .hl-blue{background:#EFF6FF;border-color:var(--blue);color:#1E40AF;}
+  .hl-green{background:#ECFDF5;border-color:var(--green);color:#065F46;}
+  .hl-red{background:#FEF2F2;border-color:var(--red);color:#991B1B;}
+  .hl-amber{background:#FFFBEB;border-color:var(--amber);color:#92400E;}
+  .hl-teal{background:#ECFEFF;border-color:var(--teal);color:#155E75;}
+  .hl-purple{background:#F5F3FF;border-color:var(--purple);color:#5B21B6;}
+  .toc{background:var(--card);border-radius:12px;border:1px solid var(--light-blue);padding:14px 16px;margin-bottom:18px;}
+  .toc-title{font-size:12px;font-weight:700;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;}
+  .toc-grid{display:flex;flex-wrap:wrap;gap:6px;}
+  .toc-btn{background:var(--bg2);border:1px solid var(--light-blue);border-radius:8px;padding:5px 12px;font-size:12px;font-family:'Noto Sans KR',sans-serif;font-weight:500;color:var(--navy);cursor:pointer;transition:all 0.15s;}
+  .toc-btn:hover{background:var(--navy);color:white;border-color:var(--navy);}
+  .score-row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;}
+  .score-chip{background:var(--navy);color:white;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .pill-list{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0;}
+  .pill{background:var(--bg2);border:1px solid var(--light-blue);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--navy);}
+  /* reflex card */
+  .reflex-card{background:var(--bg2);border-radius:10px;padding:11px 14px;margin-bottom:8px;border-left:4px solid var(--blue);}
+  .reflex-card .rname{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+  .reflex-card .rrow{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin-top:3px;}
+  .rtag{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;}
+  .rtag-time{background:#DBEAFE;color:#1D4ED8;}
+  .rtag-pos{background:#FEE2E2;color:#991B1B;}
+  .rtag-neg{background:#D1FAE5;color:#065F46;}
+  /* QUIZ */
+  .quiz-progress-bar-wrap{background:var(--bg2);border-radius:20px;height:10px;margin:10px 0;overflow:hidden;}
+  .quiz-progress-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width 0.4s;}
+  .quiz-score-display{font-size:22px;font-weight:900;color:var(--navy);text-align:center;margin:8px 0;}
+  .quiz-card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow-lg);border:2px solid var(--light-blue);margin-bottom:14px;}
+  .quiz-q{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;line-height:1.5;}
+  .quiz-q .qnum{display:inline-block;background:var(--navy);color:white;border-radius:6px;padding:1px 8px;font-size:12px;margin-right:6px;}
+  .opt-btn{display:block;width:100%;text-align:left;background:var(--bg2);border:2px solid var(--light-blue);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-family:'Noto Sans KR',sans-serif;font-size:13px;cursor:pointer;transition:all 0.15s;font-weight:400;color:var(--text);}
+  .opt-btn:hover:not(:disabled){background:#DBEAFE;border-color:var(--blue);color:var(--navy);}
+  .opt-btn.correct{background:#D1FAE5;border-color:var(--green);color:#065F46;font-weight:700;}
+  .opt-btn.wrong{background:#FEE2E2;border-color:var(--red);color:#991B1B;}
+  .opt-btn:disabled{cursor:default;}
+  .quiz-explain{background:#EFF6FF;border-left:4px solid var(--blue);border-radius:8px;padding:10px 14px;margin-top:8px;font-size:12.5px;color:#1E40AF;display:none;}
+  .quiz-explain.show{display:block;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:8px;}
+  .btn-primary{background:var(--navy);color:white;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:background 0.15s;}
+  .btn-primary:hover{background:var(--blue);}
+  .btn-secondary{background:var(--bg2);color:var(--navy);border:2px solid var(--light-blue);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:all 0.15s;}
+  .btn-secondary:hover{background:var(--light-blue);}
+  .result-box{background:linear-gradient(135deg,var(--navy),var(--blue));color:white;border-radius:16px;padding:24px;text-align:center;display:none;margin-top:16px;}
+  .result-box.show{display:block;}
+  .result-box .big{font-size:48px;font-weight:900;}
+  .result-box .sub{font-size:14px;opacity:0.85;margin-top:4px;}
+  .wrong-list{margin-top:10px;}
+  .wrong-item{background:#FEF2F2;border-left:4px solid var(--red);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:12.5px;}
+  .wrong-item .wq{font-weight:700;color:#991B1B;margin-bottom:4px;}
+  .wrong-item .wa{color:#065F46;}
+  b{color:var(--navy);}
+  .text-red{color:var(--red);}
+  .text-green{color:var(--green);}
+  .text-blue{color:var(--blue);}
+  .mt8{margin-top:8px;}
+  .mb4{margin-bottom:4px;}
+  ul.dash{list-style:none;padding-left:0;}
+  ul.dash li::before{content:"‣ ";color:var(--blue);font-weight:700;}
+  ul.dash li{margin-bottom:3px;font-size:13px;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="file-badge">FILE 3 / 3</div>
+  <h1>🧠 물리치료 국가고시 — 신경계 진단학</h1>
+  <p>정상운동발달 · 원시반사 · 중추수준별반사 · 발달장애 · 자율신경계 · 유전면역질환</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview')">📋 개요/목차</button>
+  <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+</nav>
+
+<!-- ── TAB 1: OVERVIEW ── -->
+<div class="tab-panel active" id="tab-overview">
+
+  <div class="card">
+    <div class="card-header"><span class="icon">📋</span> 파트 구성 및 핵심 키워드</div>
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <div class="sec-title">정상운동발달</div>
+          <div class="pill-list">
+            <span class="pill">월령별 발달단계</span>
+            <span class="pill">원시반사 8종</span>
+            <span class="pill">척수수준 반사</span>
+            <span class="pill">뇌줄기수준 반사</span>
+            <span class="pill">중간뇌수준 반사</span>
+            <span class="pill">자동운동반응 (모로·란다우)</span>
+            <span class="pill">대뇌겉질 기울임반응</span>
+          </div>
+          <div class="sec-title">발달장애 아동</div>
+          <div class="pill-list">
+            <span class="pill">보이타 7가지 자세반응</span>
+            <span class="pill">DDST-II</span>
+            <span class="pill">AIMS</span>
+            <span class="pill">GMFM</span>
+            <span class="pill">WeeFIM · PEDI</span>
+            <span class="pill">WISC-R · WPPSI</span>
+          </div>
+        </div>
+        <div>
+          <div class="sec-title">자율신경계 질환</div>
+          <div class="pill-list">
+            <span class="pill">활력징후 (체온·맥박·혈압·호흡)</span>
+            <span class="pill">기립검사</span>
+            <span class="pill">발살바검사</span>
+            <span class="pill">한랭승압검사</span>
+            <span class="pill">땀·피부혈관계 검사</span>
+          </div>
+          <div class="sec-title">유전/면역 질환</div>
+          <div class="pill-list">
+            <span class="pill">다발성경화증 EDSS</span>
+            <span class="pill">길랑-바레 평가</span>
+            <span class="pill">샤르코-마리투스</span>
+            <span class="pill">비외상성 척수질환</span>
+            <span class="pill">ALS 평가척도</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">⚡</span> 반사 통합 시기 퀵 레퍼런스 ★★</div>
+    <div class="card-body">
+      <div class="sec-title">척수 수준 (통합: 생후 1~2개월)</div>
+      <table class="tbl">
+        <tr><th>반사</th><th>출현</th><th>통합</th></tr>
+        <tr><td>굽힘 회피반사</td><td>임신 28주</td><td>생후 1~2개월</td></tr>
+        <tr><td>폄근 뻗침반사</td><td>임신 28주</td><td>생후 1~2개월</td></tr>
+        <tr><td>교차성 폄반사 1, 2</td><td>임신 28주</td><td>생후 1~2개월</td></tr>
+      </table>
+      <div class="sec-title">뇌줄기 수준 (통합: 생후 4~6개월 또는 8~12개월)</div>
+      <table class="tbl">
+        <tr><th>반사</th><th>출현</th><th>통합</th></tr>
+        <tr><td>ATNR (비대칭성긴장성목반사)</td><td>출생 시</td><td>생후 4~6개월</td></tr>
+        <tr><td>STNR (대칭성긴장성목반사) 1, 2</td><td>생후 4~6개월</td><td>생후 8~12개월</td></tr>
+        <tr><td>TLR (긴장성미로반사) 1, 2</td><td>생후 4~6개월</td><td>생후 4~6개월</td></tr>
+        <tr><td>양성지지반응</td><td>생후 3~8개월</td><td>생후 8개월</td></tr>
+      </table>
+      <div class="sec-title">자동운동반응 핵심</div>
+      <table class="tbl">
+        <tr><th>반사</th><th>출현</th><th>통합</th><th>특징</th></tr>
+        <tr><td><b>모로반사</b></td><td>임신 28주</td><td>생후 4개월 ★</td><td>머리 갑자기 뒤로, 팔 벌림·폄</td></tr>
+        <tr><td><b>란다우반사</b></td><td>생후 6개월</td><td>생후 2년 반</td><td>엎드려 머리들면 팔·다리 폄</td></tr>
+        <tr><td><b>보호폄반사</b></td><td>생후 6개월</td><td>평생 지속</td><td>낙하산반응, 손가락 벌려 팔 폄</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">📊</span> 발달검사 도구 요약</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>도구</th><th>대상</th><th>항목</th><th>특징</th></tr>
+        <tr><td>BNBAS</td><td>생후 2개월↓ 신생아</td><td>18반사+27행동+9추가</td><td>최고점 채택</td></tr>
+        <tr><td>DDST-II</td><td>생후 2주~6세</td><td>4영역 125항목</td><td>발달지연 선별</td></tr>
+        <tr><td>AIMS</td><td>출생~18개월</td><td>4자세 58항목</td><td>운동지연 평가</td></tr>
+        <tr><td>GMFM</td><td>5개월~16세</td><td>5영역 88항목</td><td>뇌성마비 아동, 4점 척도</td></tr>
+        <tr><td>WeeFIM</td><td>6개월~8세</td><td>6영역 18항목</td><td>18~126점, 7점 척도</td></tr>
+        <tr><td>PEDI</td><td>6개월~7.5세</td><td>3영역 217문항</td><td>기능수행 독립도</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">💓</span> 활력징후 정상수치 정리</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>항목</th><th>정상 수치</th><th>이상</th></tr>
+        <tr><td><b>체온</b></td><td>겨드랑 36.0~37.3°C / 입 36.5~38°C / 직장 37~38.9°C</td><td>정상범위 이탈 시 감염 의심</td></tr>
+        <tr><td><b>맥박</b></td><td>성인 <b>60~80회/분</b></td><td>100↑=빠른맥 / 60↓=느린맥</td></tr>
+        <tr><td><b>혈압</b></td><td>수축기 <b>120~130mmHg</b> / 이완기 <b>80~85mmHg</b></td><td>높으면 고혈압</td></tr>
+        <tr><td><b>호흡</b></td><td>성인 <b>14~18회/분</b> / 신생아 30~60회</td><td>20↑=빠른호흡 / 20↓=느린호흡</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── TAB 2: SUMMARY ── -->
+<div class="tab-panel" id="tab-summary">
+
+  <div class="toc">
+    <div class="toc-title">소단원 바로가기</div>
+    <div class="toc-grid">
+      <button class="toc-btn" onclick="scrollTo2('s-devstage')">월령별 발달</button>
+      <button class="toc-btn" onclick="scrollTo2('s-primitive')">원시반사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-spinal')">척수수준 반사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-brainstem')">뇌줄기수준 반사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-midbrain')">중간뇌수준 반사</button>
+      <button class="toc-btn" onclick="scrollTo2('s-automatic')">자동운동반응</button>
+      <button class="toc-btn" onclick="scrollTo2('s-cortical')">대뇌겉질 반응</button>
+      <button class="toc-btn" onclick="scrollTo2('s-devchild')">발달장애아동</button>
+      <button class="toc-btn" onclick="scrollTo2('s-autonomic')">자율신경계</button>
+      <button class="toc-btn" onclick="scrollTo2('s-genetic')">유전/면역 질환</button>
+    </div>
+  </div>
+
+  <!-- 월령별 발달 -->
+  <div class="card" id="s-devstage">
+    <div class="card-header"><span class="icon">👶</span> 1. 월령별 정상운동발달</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>월령</th><th>주요 발달 특징</th></tr>
+        <tr><td><b>1개월</b></td><td>엎드려 머리 옆 돌림, 잡기반사 강함, 주먹 쥠</td></tr>
+        <tr><td><b>2개월</b></td><td>엎드려 머리 45°, 집기반사 약해짐, 의도적 잡기 가능</td></tr>
+        <tr><td><b>3개월</b></td><td>머리 수직 가눔, <b>원시반사 사라짐</b>, 손을 입에 가져감</td></tr>
+        <tr><td><b>4개월</b></td><td>앉혀놓으면 머리 잘 가눔, <b>긴장성목반사 사라짐</b>, 눈손협응</td></tr>
+        <tr><td><b>5개월</b></td><td>약간의 지지로 앉기, 팔 뻗어 물체 잡기</td></tr>
+        <tr><td><b>6개월</b></td><td>엎드려 팔꿈치 펴 지지, 구르기 가능, 손바닥으로 물체 잡음</td></tr>
+        <tr><td><b>7개월</b></td><td>양손 지지 앉기, 이름 반응</td></tr>
+        <tr><td><b>8개월</b></td><td>혼자 앉기, 무언가 짚고 서기, 깊이·공간 지각</td></tr>
+        <tr><td><b>9개월</b></td><td>네발 기기, 손가락으로 물체 잡기</td></tr>
+        <tr><td><b>10개월</b></td><td>잡아주면 걷기, 물체 붙잡고 일어서기</td></tr>
+        <tr><td><b>11개월</b></td><td>작은 물체 손가락으로 잡기, 한 손 잡고 걷기</td></tr>
+        <tr><td><b>12개월</b></td><td>혼자 서기, 숟가락·손가락으로 식사</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 원시반사 -->
+  <div class="card" id="s-primitive">
+    <div class="card-header"><span class="icon">🔄</span> 2. 원시반사 (Primitive Reflexes)</div>
+    <div class="card-body">
+      <table class="tbl">
+        <tr><th>반사명</th><th>통합 시기</th><th>통합 중추</th><th>특징</th></tr>
+        <tr><td><b>뿌리반사</b></td><td>생후 4~6개월</td><td>다리뇌</td><td>입 주위 자극 → 자극방향으로 혀·입·머리 돌림</td></tr>
+        <tr><td><b>빨기·삼키기</b></td><td>생후 2~5개월</td><td>다리뇌·중간뇌·5·7·12뇌신경</td><td>영양 섭취 목적</td></tr>
+        <tr><td><b>고유수용성놓기-팔</b></td><td>생후 2개월</td><td>척수·뇌줄기</td><td>손등 테이블 가 접촉→팔꿉·어깨 굽혀 올린 후 폄</td></tr>
+        <tr><td><b>고유수용성놓기-다리</b></td><td>생후 2개월</td><td>척수</td><td>발등 테이블 가에 걸리면 엉덩·무릎 굽힘</td></tr>
+        <tr><td><b>아기 양성지지반사</b></td><td>생후 1~2개월</td><td>-</td><td>직립 시 체중부하 가능</td></tr>
+        <tr><td><b>자발적 보행</b></td><td>생후 2개월</td><td>뇌줄기·사이뇌</td><td>바로세워 앞으로 기울이면 걷는 모습</td></tr>
+        <tr><td><b>당김반사</b></td><td>생후 2~5개월</td><td>뇌줄기·다리뇌</td><td>누운 아기 팔 잡아 일으킬 때 팔 굽힘</td></tr>
+        <tr><td><b>손바닥 움켜잡기</b></td><td>생후 4~6개월</td><td>대뇌겉질 밑</td><td>손바닥 자극→손가락 굽힘</td></tr>
+        <tr><td><b>발바닥 움켜잡기</b></td><td>생후 9개월</td><td>척수</td><td>발바닥 앞쪽 누르면 발가락 굽힘</td></tr>
+        <tr><td><b>갈란트반사</b></td><td>생후 2개월</td><td>척수</td><td>T12→엉덩뼈능선 긁으면 같은쪽 몸통 가쪽굽힘</td></tr>
+      </table>
+      <div class="hl-box hl-amber mt8">
+        <b>갈란트반사 미통합 시:</b> 척주옆굽이증 유발, 머리 독립운동·몸통 대칭성 발달 지연
+      </div>
+    </div>
+  </div>
+
+  <!-- 척수수준 반사 -->
+  <div class="card" id="s-spinal">
+    <div class="card-header"><span class="icon">🦴</span> 3. 척수 수준 반사</div>
+    <div class="card-body">
+      <p class="mb4" style="font-size:12.5px;color:var(--text2)">출현: 임신 28주 / 통합: <b>생후 1~2개월</b> / 생후 2개월 이후 양성반응 = 반사 성숙의 지연</p>
+
+      <div class="reflex-card">
+        <div class="rname">굽힘 회피반사 (Flexor withdrawal)</div>
+        <div>자세: 바로누운자세, 두 다리 펴고 / 자극: 발바닥</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 자극받은 다리 굽힘</span>
+          <span class="rtag rtag-neg">음성: 변화 없음</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">폄근 뻗침반사 (Extensor thrust) ★</div>
+        <div>자세: 한 다리 구부리고 한 다리 편 자세 / 자극: <b>굽힘된 다리 발바닥</b></div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 자극받은 다리 조절 없이 폄 나타남 ★</span>
+          <span class="rtag rtag-neg">음성: 구부린 다리 유지</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">교차성 폄반사 1 (Crossed extension)</div>
+        <div>자세: 한 다리 구부리고 한 다리 편 / 자극: 편 다리를 빠르게 구부림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 반대편 구부렸던 다리가 반사적으로 펴짐</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">교차성 폄반사 2</div>
+        <div>자세: 양 다리 자연스럽게 벌림 / 자극: 한쪽 넙다리 안쪽 두드림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 반대쪽 다리 안쪽돌림+발바닥굽힘, 가위형태</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 뇌줄기수준 반사 -->
+  <div class="card" id="s-brainstem">
+    <div class="card-header"><span class="icon">🧩</span> 4. 뇌줄기 수준 반사</div>
+    <div class="card-body">
+
+      <div class="reflex-card">
+        <div class="rname">ATNR (비대칭성 긴장성 목반사) ★</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 출생 시</span><span class="rtag rtag-time">통합: 생후 4~6개월</span></div>
+        <div>자극: 머리를 한쪽으로 돌림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 머리 돌린 방향 팔·다리 폄, 반대 팔·다리 굽힘 (펜싱 자세)</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">STNR 1 (대칭성 긴장성 목반사)</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 4~6개월</span><span class="rtag rtag-time">통합: 생후 8~12개월</span></div>
+        <div>자세: 네발기기 / 자극: 머리 밑으로 숙임</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 두 팔 굽힘, 두 다리 펴짐</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">STNR 2</div>
+        <div>자극: 머리를 앞으로 들어올림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 두 팔 펴짐, 두 다리 굽혀짐</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">TLR 1 (긴장성 미로반사 - 바로누운)</div>
+        <div class="rrow"><span class="rtag rtag-time">정상: 생후 4~6개월</span><span class="rtag rtag-time">통합: 생후 6개월 이후 양성=지연</span></div>
+        <div>자극: 무릎 아래쪽 가볍게 들어올림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 다리 들 때 폄근 긴장 증가, 펴짐</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">TLR 2 (긴장성 미로반사 - 엎드린)</div>
+        <div>자극: 엎드린 자세 유지</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 머리 못들고 상체 움츠림</span>
+          <span class="rtag rtag-neg">음성: 머리들고 폄근 긴장증가 (정상)</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">양성지지반응</div>
+        <div class="rrow"><span class="rtag rtag-time">통합: 생후 8개월</span></div>
+        <div>자극: 들어올려 발바닥 바닥에 튕김</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 다리 폄근 긴장↑, <b>발바닥굽힘, 젖힘 무릎</b></span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">연합반응</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 3개월</span><span class="rtag rtag-time">통합: 생후 3~9세</span></div>
+        <div>자극: 손에 물건 잡게 하거나 주먹 쥐게 함</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 반대측 팔다리 긴장 증가 또는 최소한의 반응</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 중간뇌수준 반사 -->
+  <div class="card" id="s-midbrain">
+    <div class="card-header"><span class="icon">🎯</span> 5. 중간뇌 수준 반사</div>
+    <div class="card-body">
+
+      <div class="reflex-card">
+        <div class="rname">목바로잡기반사 (Neck righting reflex) ★</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 출생 시</span><span class="rtag rtag-time">통합: 생후 6개월</span></div>
+        <div>자극: 머리를 한쪽으로 돌림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 머리 돌아간 방향으로 몸통 돌림 발생</span>
+          <span class="rtag rtag-neg">음성: 생후 1개월↑ → 반사 성숙 지연</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">몸통바로잡기반사</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 6개월</span><span class="rtag rtag-time">통합: 생후 18개월</span></div>
+        <div>자극: 머리를 한쪽으로 돌림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 어깨·몸통·골반이 부분적으로 돌아감</span>
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">미로 바로잡기반응 1 (엎드린 자세)</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 2개월 / 평생 지속</span></div>
+        <div>자극: 엎드린자세에서 검사자가 들어올림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 머리 들어 얼굴 바로 세우려 노력</span>
+        </div>
+      </div>
+
+      <div class="hl-box hl-blue">
+        <b>미로 바로잡기반응 공통:</b> 평생 지속되는 것이 정상. 생후 해당 월령 이후 음성반응 = 반사 성숙의 지연
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">양서류 반응 (Amphibian reaction) ★</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 6개월 / 평생 지속</span></div>
+        <div>자세: 엎드려서 두 팔 머리위, 다리 폄 / 자극: 한쪽 골반 들어올림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 들어올려진 골반 쪽 팔·다리 자연스럽게 구부러짐</span>
+          <span class="rtag rtag-neg">음성: 아무 반응없음 → 생후 6개월↑ = 반사성숙 지연</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자동운동반응 -->
+  <div class="card" id="s-automatic">
+    <div class="card-header"><span class="icon">🌟</span> 6. 자동운동반응</div>
+    <div class="card-body">
+
+      <div class="reflex-card">
+        <div class="rname">모로반사 (Moro reflex) ★★</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 임신 28주</span><span class="rtag rtag-time">통합: 생후 4개월 ★</span></div>
+        <div>자세: 앉은자세에서 상체 반쯤 뒤로 젖힘 / 자극: 머리 갑자기 뒤로 젖힘</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 양 팔 벌림·폄·가쪽돌림, 손가락 벌림·폄</span>
+        </div>
+        <div class="hl-box hl-amber" style="margin-top:6px;font-size:11.5px">
+          생후 4개월 이후에도 양성 = 반사성숙의 지연. 란다우반사와 보호반응을 위해 통합되어야 함.
+        </div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">란다우반사 (Landau reflex) ★</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 6개월</span><span class="rtag rtag-time">통합: 생후 2년 반</span></div>
+        <div>자세: 엎드려 검사자가 들어올림 / 자극: 머리를 들게 함</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 두 팔과 두 다리를 쭉 뻗는 동작 (역U자)</span>
+        </div>
+        <div style="font-size:12px;color:var(--text2);margin-top:5px">미로반응+시각반응+BOH 결합 효과. 긴장성 미로반사 통합에 도움.</div>
+      </div>
+
+      <div class="reflex-card">
+        <div class="rname">보호 폄근 뻗침반사 (Parachute reaction) = 낙하산반응</div>
+        <div class="rrow"><span class="rtag rtag-time">출현: 생후 6개월 / 평생 지속</span></div>
+        <div>자세: 엎드려 두 팔 머리 위 / 자극: 상체 갑자기 앞으로 떨어뜨림</div>
+        <div class="rrow">
+          <span class="rtag rtag-pos">양성: 손가락 벌리면서 두 팔 반사적으로 폄 (머리 보호)</span>
+          <span class="rtag rtag-neg">음성: STNR 또는 ATNR 나타날 수 있음</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 대뇌겉질 수준 -->
+  <div class="card" id="s-cortical">
+    <div class="card-header"><span class="icon">🧠</span> 7. 대뇌겉질 수준 반응</div>
+    <div class="card-body">
+
+      <div class="sec-title">기울임반응 (Tilting reactions)</div>
+      <div class="hl-box hl-blue">
+        <b>공통:</b> 생후 6개월 이후 출현, 평생 지속. 생후 6개월 이후 음성반응 = 반사 성숙의 지연<br>
+        <b>양성반응:</b> 판이 올라간 쪽으로 몸통 굽이, 팔·다리 벌림
+      </div>
+
+      <div class="sec-title">자세고정반응 (발떼기 반응)</div>
+      <table class="tbl">
+        <tr><th>반응</th><th>자극</th><th>정상 출현</th></tr>
+        <tr><td>발떼기 반응 1</td><td>옆으로 미는 자극</td><td>생후 15~18개월</td></tr>
+        <tr><td>발떼기 반응 2</td><td>앞으로 미는 자극</td><td>생후 15~18개월</td></tr>
+        <tr><td>발떼기 반응 3</td><td>뒤로 끌어당기는 자극</td><td>생후 15~18개월</td></tr>
+        <tr><td>발등굽힘 반응</td><td>뒤쪽으로 기울이는 자극 (발끝 들기)</td><td>생후 15~18개월</td></tr>
+        <tr><td>다리의 시소반응</td><td>굽힌 다리쪽 손 잡아당김</td><td>생후 15개월</td></tr>
+        <tr><td><b>유인원 자세반응</b></td><td>쪼그려 앉아 한쪽으로 미는 자극</td><td>생후 15~18개월</td></tr>
+      </table>
+      <div class="hl-box hl-teal">
+        <b>유인원 자세반응 양성:</b> 기울어진 쪽 팔·다리 보호반응, 반대쪽 팔·다리 폄·벌림 (평생 지속)
+      </div>
+    </div>
+  </div>
+
+  <!-- 발달장애 아동 -->
+  <div class="card" id="s-devchild">
+    <div class="card-header"><span class="icon">🧒</span> 8. 발달장애 아동 평가</div>
+    <div class="card-body">
+
+      <div class="sec-title">보이타 7가지 자세반응</div>
+      <table class="tbl">
+        <tr><th>반응</th><th>시작 자세</th><th>검사 방법</th></tr>
+        <tr><td>견인반응</td><td>바로누운 자세</td><td>45°까지 손 잡아 끌어당김 (4단계)</td></tr>
+        <tr><td>란다우반응</td><td>손 펴고 엎드려누운</td><td>손바닥 위에 배 놓고 수평 (4단계)</td></tr>
+        <tr><td>겨드랑이 걸치기</td><td>엎드려누운</td><td>겨드랑이 잡고 공중 수직 (3단계)</td></tr>
+        <tr><td>보이타반응</td><td>엎드려누운 (팔 머리위)</td><td>수직후 갑자기 옆으로 수평 (5단계)</td></tr>
+        <tr><td>콜리스 수평</td><td>옆으로 누운</td><td>위팔·넙다리 잡고 위로 들기 (3단계)</td></tr>
+        <tr><td>파이퍼 이스베르트</td><td>4~5개월: 바로눕/이후: 엎드려</td><td>무릎 잡고 역수직으로 들기 (4단계)</td></tr>
+        <tr><td>콜리스 수직</td><td>바로누운</td><td>한쪽 무릎 잡고 역수직으로 들기 (2단계)</td></tr>
+      </table>
+
+      <div class="sec-title">발달검사 도구</div>
+      <table class="tbl">
+        <tr><th>도구</th><th>대상연령</th><th>구성</th><th>특징</th></tr>
+        <tr><td>BNBAS</td><td>생후 2개월↓</td><td>18반사+27행동</td><td>최고점 채택</td></tr>
+        <tr><td>DDST-II</td><td>2주~6세</td><td>4영역 125항목</td><td>정상·의심·검사불가 분류</td></tr>
+        <tr><td>AIMS</td><td>출생~18개월</td><td>4자세 58항목</td><td>체중부하·자세·항중력 3측면</td></tr>
+        <tr><td>PDMS-2</td><td>출생~5세</td><td>6항목</td><td>대·소·전체운동</td></tr>
+        <tr><td>BOTMP</td><td>4.5~14.5세</td><td>대·소운동</td><td>운동프로그램 계획</td></tr>
+        <tr><td>GMFM</td><td>5개월~16세</td><td>5영역 88항목</td><td>뇌성마비, 4점척도</td></tr>
+      </table>
+
+      <div class="sec-title">아동 ADL / 지능 평가</div>
+      <div class="two-col">
+        <div>
+          <b>WeeFIM</b><br>
+          <ul class="dash">
+            <li>6개월~8세 / 6영역 18항목</li>
+            <li>18~126점, <b>7점 척도</b></li>
+          </ul>
+          <b style="display:block;margin-top:8px">PEDI</b>
+          <ul class="dash">
+            <li>6개월~7.5세 / 217문항</li>
+            <li>0~100점, 높을수록 기능 좋음</li>
+          </ul>
+        </div>
+        <div>
+          <b>WISC-R</b><br>
+          <ul class="dash">
+            <li>6~16세 / IQ 평균 100, SD 15</li>
+            <li>IQ 80~89=평균하 / 70~79=경계선 / 69↓=정신지체</li>
+          </ul>
+          <b style="display:block;margin-top:8px">WPPSI</b>
+          <ul class="dash">
+            <li>3~7세 / 언어+동작 검사</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자율신경계 -->
+  <div class="card" id="s-autonomic">
+    <div class="card-header"><span class="icon">💓</span> 9. 자율신경계 질환</div>
+    <div class="card-body">
+
+      <div class="sec-title">활력징후 (Vital Signs)</div>
+      <table class="tbl">
+        <tr><th>항목</th><th>정상값</th><th>이상</th></tr>
+        <tr><td>체온</td><td>겨드랑 36.0~37.3°C</td><td>정상범위 이탈 = 감염 등</td></tr>
+        <tr><td>맥박</td><td><b>60~80회/분</b></td><td>100↑=빠른맥, 60↓=느린맥</td></tr>
+        <tr><td>혈압</td><td>수축기 <b>120~130mmHg</b> / 이완기 <b>80~85mmHg</b></td><td>고혈압/저혈압</td></tr>
+        <tr><td>호흡</td><td>성인 <b>14~18회/분</b> / 신생아 30~60회</td><td>20↑=빠른호흡, 20↓=느린호흡</td></tr>
+      </table>
+
+      <div class="sec-title">심혈관계 자율신경 기능검사</div>
+      <table class="tbl">
+        <tr><th>검사</th><th>양성 기준</th><th>의미</th></tr>
+        <tr><td>기립검사</td><td>수축기 20mmHg↓ / 이완기 10mmHg↓</td><td>기립성 저혈압</td></tr>
+        <tr><td>머리들기 경사침대</td><td>압수용기 반사 장애 시 현기증·실신</td><td>자율신경 조절 이상</td></tr>
+        <tr><td>한랭승압검사</td><td>10~20mmHg 상승=정상 / 20↑=고혈압성</td><td>교감신경 반사 기능</td></tr>
+        <tr><td>Aschner 눈압박</td><td>혈압감소+느린맥=정상(미주신경 흥분)</td><td>부교감신경 기능</td></tr>
+        <tr><td>목동맥팽대 마사지</td><td>수축기 50mmHg↑ 감소=부교감 항진</td><td>목동맥굴증후군</td></tr>
+      </table>
+
+      <div class="sec-title">땀·피부 혈관계 검사</div>
+      <ul class="dash">
+        <li><b>요오드녹말검사:</b> 땀나는 부위 흑자색 변색</li>
+        <li><b>바르타검사:</b> 암자색 변색</li>
+        <li><b>환기캡슐검사:</b> 정량적 검사 (습도 전기신호)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 유전/면역 질환 -->
+  <div class="card" id="s-genetic">
+    <div class="card-header"><span class="icon">🔬</span> 10. 유전·면역매개 질환</div>
+    <div class="card-body">
+
+      <div class="sec-title">다발성경화증 평가</div>
+      <table class="tbl">
+        <tr><th>도구</th><th>특징</th></tr>
+        <tr><td><b>EDSS</b></td><td>총 20단계(0~10, 0.5단위) / 8개 기능체계 / 0=정상, 10=사망</td></tr>
+        <tr><td><b>MACFIMS</b></td><td>7개 신경심리검사 / 처리속도·기억·실행기능·시공간</td></tr>
+        <tr><td><b>FSS</b></td><td>9항목 / 1~7점 / 평균치=피로점수 / 점수↑=피로↑</td></tr>
+        <tr><td><b>MS-NPSQ</b></td><td>15항목 / 5점 척도 / 인지기능 손상 설문지</td></tr>
+      </table>
+
+      <div class="sec-title">길랑-바레증후군 평가</div>
+      <ul class="dash">
+        <li>운동: 근력검사(MMT), ROM검사, 통증척도(숫자척도)</li>
+        <li>호흡: 산소포화도 (정상 97~100%, 95% 미만=저산소혈증)</li>
+        <li>강제폐활량(FVC): FEV/FVC 비율 0.7 기준</li>
+        <li>삼킴: VFSS(비디오투시검사) 실시</li>
+        <li>감각: 감각소실·감각이상·무감각 확인</li>
+      </ul>
+      <div class="hl-box hl-amber">
+        <b>양쪽 말초성 얼굴신경마비 → 길랑-바레증후군</b> 연상 기억!
+      </div>
+
+      <div class="sec-title">ALS (근위축성 가쪽경화증) 평가</div>
+      <table class="tbl">
+        <tr><th>도구</th><th>총점</th><th>특징</th></tr>
+        <tr><td>ALSFRS</td><td>48점</td><td>4영역(구강·세밀운동·대운동·호흡) 12문항, 5점</td></tr>
+        <tr><td>ALSSS</td><td>40점</td><td>4영역(다리·팔·말하기·삼키기), 1~10점</td></tr>
+        <tr><td>ALSAQ-40</td><td>-</td><td>5영역 40항목, 5점 척도(전혀~항상)</td></tr>
+      </table>
+      <div class="hl-box hl-red">
+        <b>ALS 반사검사:</b> UMN+LMN 혼합 → 반사항진(UMN)+반사소실(LMN) 동시 관찰 가능<br>
+        병적반사 양성: 호프만·바빈스키·발목간대성경련 ★
+      </div>
+
+      <div class="sec-title">샤르코-마리투스 병 특징</div>
+      <ul class="dash">
+        <li>종아리 근육부피 감소 (둘레 측정)</li>
+        <li>발 기형: 휜발·오목발·망치발가락·편평발</li>
+        <li>감각: 촉각·통각·온각 소실 + 진동·두점식별 소실</li>
+        <li>진단: 전기생리학적 검사·혈액·조직검사</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- end tab-summary -->
+
+<!-- ── TAB 3: QUIZ ── -->
+<div class="tab-panel" id="tab-quiz">
+  <div id="quiz-container"></div>
+</div>
+
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active',['overview','summary','quiz'][i]===id);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active',p.id==='tab-'+id);
+  });
+  if(id==='quiz'&&!quizBuilt) buildQuiz();
+}
+function scrollTo2(id){
+  document.getElementById('tab-summary').classList.add('active');
+  document.getElementById('tab-overview').classList.remove('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===1));
+  setTimeout(()=>{
+    const el=document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+const QUESTIONS=[
+  {
+    q:"모로반사(Moro reflex)의 통합 시기로 옳은 것은?",
+    opts:["생후 2개월","생후 4개월 ★","생후 6개월","생후 1년"],
+    ans:1,
+    ex:"모로반사: 출현 임신28주, 통합 생후 4개월. 이후에도 양성 = 반사성숙 지연. 머리 갑자기 뒤로 → 양팔 벌림·폄."
+  },
+  {
+    q:"ATNR(비대칭성 긴장성 목반사) 양성반응으로 옳은 것은?",
+    opts:["머리 숙이면 팔 굽힘","머리 올리면 팔 폄","머리 돌린 방향 팔·다리 폄, 반대 굽힘 ★","양 팔 동시 굽힘"],
+    ans:2,
+    ex:"ATNR: 머리를 한쪽으로 돌림 → 머리 돌린 방향 팔·다리 폄, 반대쪽 굽힘 (펜싱 자세). 통합 생후 4~6개월."
+  },
+  {
+    q:"란다우반사(Landau reflex)의 통합 시기는?",
+    opts:["생후 6개월","생후 1년","생후 2년 반 ★","평생 지속"],
+    ans:2,
+    ex:"란다우반사: 출현 생후 6개월, 통합 생후 2년 반. 양성: 두 팔과 두 다리를 쭉 뻗는 동작 (역U자)."
+  },
+  {
+    q:"갈란트반사(Galant reflex)가 통합되지 않을 때 나타나는 문제는?",
+    opts:["발바닥굽힘 이상","척주옆굽이증 유발 ★","팔꿉굽힘 약화","균형반응 지연"],
+    ans:1,
+    ex:"갈란트반사 미통합: 척주옆굽이증 유발, 독립적 머리운동·몸통 대칭성 발달 지연. 통합 시기: 생후 2개월."
+  },
+  {
+    q:"보호 폄근 뻗침반사(낙하산반응)의 정상 출현 시기와 지속 기간은?",
+    opts:["생후 4개월, 평생 지속","생후 6개월, 평생 지속 ★","생후 6개월, 2년 후 소실","임신28주, 생후 6개월 통합"],
+    ans:1,
+    ex:"보호 폄근 뻗침반사(낙하산반응): 생후 6개월 출현, 평생 지속. 음성반응=반사성숙 지연. 손가락 벌려 두 팔 폄."
+  },
+  {
+    q:"척수수준 반사들의 통합 시기는?",
+    opts:["임신 28주","생후 1~2개월 ★","생후 4~6개월","생후 8~12개월"],
+    ans:1,
+    ex:"척수수준 반사(굽힘회피·폄근뻗침·교차성폄): 출현 임신28주, 통합 생후 1~2개월. 이후 양성 = 성숙 지연."
+  },
+  {
+    q:"양서류 반응(Amphibian reaction)의 양성반응은?",
+    opts:["양 팔·다리 모두 폄","들어올린 골반 쪽 팔·다리 굽혀짐 ★","몸통 돌림 발생","발바닥굽힘·젖힘무릎 발생"],
+    ans:1,
+    ex:"양서류반응(생후 6개월 출현·평생지속): 한쪽 골반 들어올림 → 들어올려진 쪽 팔·다리 자연스럽게 구부러짐."
+  },
+  {
+    q:"정상운동발달에서 혼자 앉기가 가능한 월령은?",
+    opts:["6개월","7개월","8개월 ★","10개월"],
+    ans:2,
+    ex:"8개월: 혼자 앉기 가능, 무언가 짚고 서기, 깊이·공간 지각 발달. 7개월은 양손 지지 앉기."
+  },
+  {
+    q:"DDST-II(덴버발달선별검사)의 대상 연령은?",
+    opts:["출생~12개월","생후 2주~6세 ★","출생~18개월","3세~7세"],
+    ans:1,
+    ex:"DDST-II: 생후 2주~6세. 4영역(대단위운동·소단위운동·언어·개인/사회) 125항목. 결과: 정상·의심·검사불가."
+  },
+  {
+    q:"GMFM(대단위운동기능척도)의 특징으로 옳은 것은?",
+    opts:["2~15세 대상, 시지각검사","6~16세, IQ 평균 100","5개월~16세, 뇌성마비 아동, 88항목 ★","출생~18개월, 58항목"],
+    ans:2,
+    ex:"GMFM: 5개월~16세. 뇌성마비 아동의 대운동 기능 양적 측정. 5영역 88항목, 4점 척도(0~3점), 백분율 계산."
+  },
+  {
+    q:"활력징후에서 성인 정상 맥박수는?",
+    opts:["40~60회/분","60~80회/분 ★","80~100회/분","100~120회/분"],
+    ans:1,
+    ex:"정상 맥박: 성인 60~80회/분. 100↑=빠른맥(tachycardia), 60↓=느린맥(bradycardia). 노동맥에서 측정."
+  },
+  {
+    q:"EDSS(확장된 장애상태척도)의 총 단계 수는?",
+    opts:["10단계","15단계","20단계 ★","30단계"],
+    ans:2,
+    ex:"EDSS: 0~10까지 0.5단위, 총 20단계. 0=정상, 10=사망. 8개 기능적 체계 평가. 다발성경화증에 사용."
+  },
+  {
+    q:"폄근 뻗침반사(Extensor thrust reflex)에서 자극 부위는?",
+    opts:["편 다리 발바닥","굽힘된 다리 발바닥 ★","넙다리 안쪽","발등굽힘"],
+    ans:1,
+    ex:"폄근 뻗침반사: 자세=한쪽 구부리고 한쪽 편 자세. 자극=굽힘된 다리 발바닥. 양성=자극받은 다리 조절없이 폄."
+  },
+  {
+    q:"목바로잡기반사(Neck righting reflex)에서 생후 1개월 이후 음성반응의 의미는?",
+    opts:["정상 반응","반사 성숙의 지연 ★","통합이 완료됨","대뇌겉질 수준 정상화"],
+    ans:1,
+    ex:"목바로잡기반사: 출현 출생시, 통합 생후 6개월. 생후 1개월 이후 음성반응 = 반사 성숙의 지연. 머리돌림→몸통돌림."
+  },
+  {
+    q:"WeeFIM에서 '7점'의 의미는?",
+    opts:["최소한의 도움","감독이 필요","도구 사용 시 독립","완전 독립 ★"],
+    ans:3,
+    ex:"WeeFIM 7점 척도: 7=완전독립 / 6=도구사용 / 5=감독 / 4=최소도움 / 3=중등도 / 2=최대도움 / 1=전체도움. FIM과 동일."
+  }
+];
+
+let quizBuilt=false,quizState={},quizCurrent=0,shuffled=[];
+
+function buildQuiz(){
+  quizBuilt=true;
+  shuffled=[...QUESTIONS].sort(()=>Math.random()-0.5);
+  quizState={answered:{},results:[]};
+  quizCurrent=0;
+  renderQuiz();
+}
+function renderQuiz(){
+  const c=document.getElementById('quiz-container');
+  const total=shuffled.length,done=Object.keys(quizState.answered).length;
+  const correct=quizState.results.filter(r=>r).length;
+  const pct=total?Math.round(done/total*100):0;
+  let html=`<div style="margin-bottom:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;color:var(--text2);">진행률 ${done}/${total}</span>
+      <span class="quiz-score-display">${done>0?correct+'/'+done:'—'}</span>
+    </div>
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-bar" style="width:${pct}%"></div></div>
+  </div>`;
+  if(done===total&&total>0){
+    const pctScore=Math.round(correct/total*100);
+    const wrongItems=shuffled.filter((_,i)=>quizState.answered[i]!==undefined&&!quizState.results[i]);
+    html+=`<div class="result-box show"><div class="big">${pctScore}점</div><div class="sub">${correct}/${total} 정답 · ${pctScore>=80?'🎉 훌륭합니다!':pctScore>=60?'👍 잘 하고 있어요!':'💪 다시 도전해보세요!'}</div></div>`;
+    if(wrongItems.length>0){
+      html+=`<div style="margin-top:16px"><div class="sec-title">틀린 문제 다시 보기</div><div class="wrong-list">`;
+      wrongItems.forEach(q=>{
+        html+=`<div class="wrong-item"><div class="wq">Q. ${q.q}</div><div class="wa">✅ 정답: ${q.opts[q.ans]}</div><div style="font-size:12px;color:var(--text2);margin-top:3px">${q.ex}</div></div>`;
+      });
+      html+=`</div></div>`;
+    }
+    html+=`<button class="btn-primary" style="width:100%;margin-top:14px" onclick="restartQuiz()">🔄 다시 풀기</button>`;
+  } else {
+    const q=shuffled[quizCurrent];
+    const isAnswered=quizState.answered[quizCurrent]!==undefined;
+    html+=`<div class="quiz-card"><div class="quiz-q"><span class="qnum">Q${quizCurrent+1}</span>${q.q}</div>`;
+    q.opts.forEach((opt,i)=>{
+      let cls='';
+      if(isAnswered){if(i===q.ans)cls='correct';else if(i===quizState.answered[quizCurrent])cls='wrong';}
+      html+=`<button class="opt-btn ${cls}" ${isAnswered?'disabled':''} onclick="answerQ(${i})">${opt}</button>`;
+    });
+    if(isAnswered) html+=`<div class="quiz-explain show">💡 ${q.ex}</div>`;
+    html+=`</div><div class="quiz-nav">
+      <button class="btn-secondary" onclick="prevQ()" ${quizCurrent===0?'disabled':''}>← 이전</button>
+      <span style="font-size:12px;color:var(--text3)">${quizCurrent+1} / ${total}</span>
+      <button class="btn-primary" onclick="nextQ()" ${quizCurrent===total-1?'disabled':''}>다음 →</button>
+    </div>`;
+  }
+  c.innerHTML=html;
+}
+function answerQ(i){
+  if(quizState.answered[quizCurrent]!==undefined)return;
+  quizState.answered[quizCurrent]=i;
+  quizState.results[quizCurrent]=(i===shuffled[quizCurrent].ans);
+  renderQuiz();
+}
+function nextQ(){if(quizCurrent<shuffled.length-1){quizCurrent++;renderQuiz();}}
+function prevQ(){if(quizCurrent>0){quizCurrent--;renderQuiz();}}
+function restartQuiz(){shuffled=[...QUESTIONS].sort(()=>Math.random()-0.5);quizState={answered:{},results:[]};quizCurrent=0;renderQuiz();}
+</script>
+</body>
+</html>
