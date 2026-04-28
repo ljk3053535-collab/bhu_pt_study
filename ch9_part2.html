@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 9 - Part 2 | 머리목·등뼈·허리뼈 운동형상학</title>
+<style>
+  :root {
+    --bg:#EEF4FF;--card:#FFFFFF;--primary:#1E3A5F;--accent:#2E6DB4;
+    --accent2:#4A90D9;--accent3:#E8F0FE;--highlight:#FF6B35;
+    --success:#27AE60;--danger:#E74C3C;--warning:#F39C12;
+    --text:#1a2a3a;--text2:#4a5a6a;--border:#C8D8F0;
+    --shadow:0 2px 12px rgba(30,58,95,0.10);--radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;}
+  .header{background:linear-gradient(135deg,#1E3A5F 0%,#2E6DB4 100%);color:white;padding:20px 24px 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(30,58,95,0.3);}
+  .header-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:1px;}
+  .header h1{font-size:17px;font-weight:700;}
+  .header p{font-size:11px;opacity:0.8;margin-top:2px;}
+  .tabs{display:flex;gap:4px;overflow-x:auto;}
+  .tab-btn{padding:10px 16px;border:none;background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-size:13px;font-weight:600;border-radius:10px 10px 0 0;transition:all 0.2s;white-space:nowrap;}
+  .tab-btn.active{background:var(--bg);color:var(--primary);}
+  .tab-btn:hover:not(.active){background:rgba(255,255,255,0.15);color:white;}
+  .tab-content{display:none;padding:20px;max-width:860px;margin:0 auto;}
+  .tab-content.active{display:block;}
+  .toc{background:var(--card);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;box-shadow:var(--shadow);}
+  .toc h4{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+  .toc-btns{display:flex;flex-wrap:wrap;gap:6px;}
+  .toc-btn{background:var(--accent3);color:var(--accent);border:none;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+  .toc-btn:hover{background:var(--accent);color:white;}
+  .card{background:var(--card);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);}
+  .card-title{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .col-btn{width:100%;background:none;border:none;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0;}
+  .col-btn .arr{transition:transform 0.3s;color:var(--accent);font-size:14px;}
+  .col-btn.open .arr{transform:rotate(180deg);}
+  .col-body{overflow:hidden;max-height:0;transition:max-height 0.4s ease;}
+  .col-body.open{max-height:6000px;}
+  .txt{font-size:13px;line-height:1.85;color:var(--text2);margin-bottom:10px;}
+  .txt b{color:var(--text);}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;}
+  .tbl th{background:var(--primary);color:white;padding:8px 10px;text-align:left;}
+  .tbl td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  .tbl tr:nth-child(even) td{background:#F4F8FF;}
+  .tbl-accent th{background:var(--accent);}
+  .clin{background:linear-gradient(135deg,#FFF3E0,#FFF8F0);border-left:4px solid var(--highlight);border-radius:8px;padding:12px 14px;margin:10px 0;}
+  .clin .lbl{font-size:10px;font-weight:700;color:var(--highlight);letter-spacing:1px;margin-bottom:4px;}
+  .clin p{font-size:12px;color:#5a3a1a;line-height:1.7;}
+  .sf{background:linear-gradient(135deg,#E8F4FD,#F0F8FF);border:2px solid var(--accent2);border-radius:10px;padding:14px 16px;margin:12px 0;}
+  .sf .sf-title{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .sf p,.sf li{font-size:12px;color:#1a3a5a;line-height:1.75;}
+  .sf ul,.sf ol{padding-left:16px;margin-top:4px;}
+  .sf li{margin-bottom:3px;}
+  .range-box{background:var(--accent3);border-radius:10px;padding:14px;margin:10px 0;}
+  .range-box h4{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:10px;}
+  .range-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+  .range-tbl th{background:var(--accent);color:white;padding:7px 10px;text-align:center;}
+  .range-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:center;}
+  .range-tbl tr:nth-child(even) td{background:#EEF4FF;}
+  .range-tbl td:first-child{text-align:left;font-weight:600;}
+  .highlight-num{color:var(--accent);font-weight:800;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="badge">CHAPTER 9 — PART 2</div>
+    <div>
+      <h1>머리목·등뼈·허리뼈 운동형상학</h1>
+      <p>Kinematics: Craniocervical · Thoracic · Lumbar</p>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('cc')">🧠 머리목</button>
+    <button class="tab-btn" onclick="showTab('th')">🫁 등뼈</button>
+    <button class="tab-btn" onclick="showTab('lu')">⬇️ 허리뼈</button>
+  </div>
+</div>
+
+<!-- ===== 머리목 ===== -->
+<div id="tab-cc" class="tab-content active">
+  <div class="toc">
+    <h4>📌 바로가기</h4>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="go('cc1')">고리뒤통수관절</button>
+      <button class="toc-btn" onclick="go('cc2')">고리중쇠관절복합체</button>
+      <button class="toc-btn" onclick="go('cc3')">목뼈속 C2-C7</button>
+      <button class="toc-btn" onclick="go('cc4')">시상면 운동형상학</button>
+      <button class="toc-btn" onclick="go('cc5')">수평면·이마면</button>
+      <button class="toc-btn" onclick="go('cc6')">내밀기·뒤당김</button>
+      <button class="toc-btn" onclick="go('cc7')">가동범위 표</button>
+      <button class="toc-btn" onclick="go('cc8')">SF 9.5</button>
+    </div>
+  </div>
+
+  <div class="range-box">
+    <h4>📊 머리목 영역 가동범위 요약 (표 9.7)</h4>
+    <table class="range-tbl">
+      <tr><th>관절/영역</th><th>굽힘(°)</th><th>폄(°)</th><th>전체굽힘+폄(°)</th><th>축돌림 한쪽(°)</th><th>가쪽굽힘 한쪽(°)</th></tr>
+      <tr><td>고리뒤통수관절</td><td>5</td><td>10</td><td>15</td><td>거의 없음</td><td>~5</td></tr>
+      <tr><td>고리중쇠관절복합체</td><td>5</td><td>10</td><td>15</td><td><span class="highlight-num">35~40</span></td><td>거의 없음</td></tr>
+      <tr><td>목뼈속(C2-C7)</td><td>35~40</td><td>55~60</td><td>90~100</td><td>30~35</td><td>30~35</td></tr>
+      <tr><td><b>머리목 전체</b></td><td><b>45~50</b></td><td><b>75~80</b></td><td><b>120~130</b></td><td><b>65~75</b></td><td><b>35~40</b></td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="cc1">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔵 고리뒤통수관절 (Atlanto-occipital Joint)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">고리뒤통수관절은 <b>머리의 독립적인 움직임</b>을 제공. 볼록한 뒤통수뼈관절융기가 오목한 고리뼈 위관절면과 상응.</div>
+      <table class="tbl">
+        <tr><th>운동</th><th>범위</th><th>관절운동형상학</th></tr>
+        <tr><td><b>굽힘</b></td><td>~5°</td><td>뒤통수뼈관절융기가 고리뼈 위면에서 <b>앞으로 구름(roll) + 뒤로 미끄러짐(slide)</b></td></tr>
+        <tr><td><b>폄</b></td><td>~10°</td><td>뒤통수뼈관절융기가 고리뼈 위면에서 <b>뒤로 구름 + 앞으로 미끄러짐</b></td></tr>
+        <tr><td><b>가쪽굽힘</b></td><td>~5°</td><td>관절 구조에 의해 매우 제한. 고리중쇠관절복합체의 가쪽굽힘은 무시해도 됨</td></tr>
+        <tr><td><b>축돌림</b></td><td>거의 없음</td><td>뒤통수뼈관절융기의 구조로 인해 완전히 제한</td></tr>
+      </table>
+      <div class="txt">
+        앞·뒤고리뒤통수막(atlanto-occipital membrane)이 관절을 앞·뒤에서 둘러쌈. 관절주머니는 얇고 넓음. 뒤쪽 관절주머니인대에서의 장력은 관절 운동형상학의 크기를 제한.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>고리뒤통수관절의 완전 굽힘 시 척추동맥이 가장 크게 신장됨. 굽힘+가쪽굽힘+돌림의 복합 운동 시 더욱 신장 → <b>수기치료 전 척추동맥 검사(vertebral artery test)</b>의 근거.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc2">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔄 고리중쇠관절복합체 (Atlanto-axial Joint Complex)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        고리중쇠관절복합체는 2종류의 관절: <b>정중관절(median joint)</b>과 가쪽의 한 쌍의 <b>돌기관절(apophyseal joint)</b>로 구성.
+      </div>
+      <table class="tbl">
+        <tr><th>구성 관절</th><th>구조</th><th>주요 기능</th></tr>
+        <tr><td><b>정중고리중쇠관절</b></td><td>고리뼈 앞고리의 뒷면 + 치아돌기 앞관절면</td><td>수평면에서 최대 돌림 허용</td></tr>
+        <tr><td><b>고리돌기관절 (2개)</b></td><td>고리뼈의 아래관절면 + 중쇠뼈의 위관절면</td><td>돌림 시 안정성 제공</td></tr>
+      </table>
+      <div class="txt">
+        <b>고리뼈의 가로인대(transverse ligament of atlas):</b> 치아돌기 뒤면 분리. 약 2 cm 길이의 강한 가로인대 — <b>고리중쇠관절의 수평면 안정성에 필수</b>. 가로인대의 저항이 없다면 고리뼈는 중쇠뼈에 대해 앞으로 미끄러질 수 있어 척수 손상 위험.<br><br>
+        <b>축돌림:</b> 전체 머리목 축돌림의 약 <b>50~60%</b>가 이 관절에서. 각 방향으로 약 35~40°. 날개인대와 돌기관절에 의해 제한.
+      </div>
+      <div class="txt">
+        <b>덮개막(tectorial membrane):</b> 뒤세로인대의 연속된 구조. 뒤통수뼈 뇌바닥부의 바로 앞쪽에 부착. 머리목이음부에 여러 방향의 광범위한 안정성 제공.
+      </div>
+      <div class="txt">
+        <b>날개인대(alar ligament):</b> 약 1 cm 길이의 짧은 섬유인대. 치아돌기의 기위쪽 뒤면에서 뒤통수뼈관절융기까지 가쪽·약간 위쪽으로 주행. <b>축돌림 제한의 주요 구조</b>. "제한인대(check ligament)"라 불림.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p><b>류마티스관절염(rheumatoid arthritis):</b> 가로인대 파괴 → 고리중쇠 불안정성 → 굽힘 시 치아돌기 뒤쪽 이동 → 척수 압박 위험. 이 환자들의 <b>기관내삽관 전 경추 X-선 필수</b>. 다운증후군(trisomy 21)에서도 고리중쇠 불안정성 빈도 높음 (약 10~20%).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc3">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔵 목뼈속 관절들 (C2~C7)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">C2~C7에서의 돌림은 돌기관절 내의 관절면의 공간적인 방향에 의해 일차적으로 인도됨. 관절면은 수평면과 이마면 사이에서 형성된 약 <b>45°의 방향</b>.</div>
+      <table class="tbl">
+        <tr><th>운동</th><th>범위(C2-C7)</th><th>관절운동형상학</th></tr>
+        <tr><td><b>굽힘</b></td><td>35~40°</td><td>아래 척추뼈 위관절면에 대해 위쪽 척추뼈 아래관절면이 앞위쪽으로 미끄러짐</td></tr>
+        <tr><td><b>폄</b></td><td>55~60°</td><td>아래관절면이 뒤아래쪽으로 미끄러짐. 관절 닫힘위치(close-packed position) 근접</td></tr>
+        <tr><td><b>축돌림</b></td><td>각 30~35°</td><td>돌림 방향의 아래관절면은 뒤아래쪽, 반대측은 앞위쪽으로 미끄러짐</td></tr>
+        <tr><td><b>가쪽굽힘</b></td><td>각 30~35°</td><td>같은쪽 아래관절면이 아래쪽으로, 반대측은 위쪽으로 미끄러짐</td></tr>
+      </table>
+      <div class="txt">
+        <b>C3-C6에서 관절기둥(articular pillar):</b> 위관절돌기들과 아래관절돌기들이 연속적인 '관절기둥'을 형성. 이 관절면들은 매끈하고 편평하며 이마면과 수평면 사이의 중간 방향을 향함.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 척추사이구멍 크기 (SF 9.5)</div>
+        <p>목뼈 굽힘 시 척추사이구멍 크기 증가 (MRI 측정 약 31%). 폄 시 감소. <b>C3-C4 굽힘 관절면 면적 차이: 약 40% 증가</b>. 신경근병증 환자에서 굽힘 자세가 증상 완화에 도움. 반대로 폄은 구멍을 좁혀 증상 악화 가능. <b>돌림도 40도의 목뼈 돌림에 의해 척추사이구멍 면적 약 20% 감소.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc4">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">↕️ 시상면 운동형상학 — 굽힘과 폄</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">전체 머리목 영역에서 굽힘과 폄의 결합된 범위는 약 <b>120~130°</b>.</div>
+      <table class="tbl">
+        <tr><th>관절/영역</th><th>기여도</th><th>특징</th></tr>
+        <tr><td>고리뒤통수관절</td><td>약 20~25%</td><td>뒤통수뼈가 고리뼈 위에서 구름+미끄러짐</td></tr>
+        <tr><td>고리중쇠관절복합체</td><td>약 10~15%</td><td>일차적 운동은 굽힘·폄, 하지만 작은 범위</td></tr>
+        <tr><td>목뼈속 C2-C7</td><td>약 65~70%</td><td>대부분의 굽힘·폄이 이 영역에서</td></tr>
+      </table>
+      <div class="txt">
+        <b>굽힘의 관절운동형상학 — 고리뒤통수관절:</b> 혼들의자 흔들면(rocker)처럼 뒤통수뼈의 볼록한 관절융기는 굽힘 시에는 앞쪽으로 구르고 굽힘시에는 뒤쪽으로 미끄러짐.<br><br>
+        <b>고리중쇠관절복합체의 굽힘:</b> 고리뼈가 치아돌기의 가로인대와 치아돌기 사이의 접촉에 의해 부분적으로 제한. 굽힘 시에는 앞쪽 고리뼈, 폄 시에는 뒤쪽으로 기울어짐(tilting).
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>목뼈 굽힘의 끝범위: 섬유태의 뒤쪽 모서리로부터의 압박에 의해 제한. 근육들도 굽힘의 끝범위를 제한하는 또 다른 조직. <b>반복적인 과도한 굽힘</b>은 뒤쪽 연부조직과 관절주머니인대에 과부하 → 목통증, 두통 연관.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc5">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔄 수평면·이마면 운동형상학 (축돌림·가쪽굽힘)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt"><b>축돌림 — 빼운동형상학:</b></div>
+      <table class="tbl">
+        <tr><th>관절</th><th>축돌림 범위</th><th>제한 구조</th></tr>
+        <tr><td>고리중쇠관절복합체</td><td><span class="highlight-num">35~40°</span> (한쪽) / <b>전체 80°</b></td><td>날개인대, 돌기관절, 근육들의 장력</td></tr>
+        <tr><td>목뼈속 C2-C7</td><td>30~35° (한쪽)</td><td>관절면의 45° 경사에 의해 제한</td></tr>
+        <tr><td>머리목 전체</td><td><b>65~75°</b> (한쪽)</td><td>양쪽 척추동맥 신장</td></tr>
+      </table>
+      <div class="txt" style="margin-top:8px"><b>가쪽굽힘 — 이마면 운동형상학:</b></div>
+      <table class="tbl">
+        <tr><th>관절</th><th>범위</th><th>특징</th></tr>
+        <tr><td>고리뒤통수관절</td><td>~5° (한쪽)</td><td>짧은 가쪽굽힘만 허용</td></tr>
+        <tr><td>목뼈속 C2-C7</td><td>30~35°</td><td>가쪽굽힘 = <b>같은쪽 돌림 짝지음</b></td></tr>
+        <tr><td>머리목 전체</td><td>35~40°</td><td>귀와 어깨의 접촉 시도하는 정도</td></tr>
+      </table>
+      <div class="txt">
+        <b>C2-C7 가쪽굽힘의 관절운동형상학:</b> 같은쪽 아래관절면이 아래쪽으로, 반대측은 위쪽으로 미끄러짐. 이 짝지음의 이유: 관절면의 약 45° 방향이 이마면과 수평면 사이에 있기 때문.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc6">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">↔️ 내밀기·뒤당김 운동형상학 (Protraction·Retraction)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        머리는 시상면에서 앞·뒤(내밀기, 뒤당김)로 병진운동 가능.
+      </div>
+      <table class="tbl">
+        <tr><th>운동</th><th>아래쪽 목뼈</th><th>위쪽 목뼈</th><th>임상 의미</th></tr>
+        <tr><td><b>내밀기(protraction)</b></td><td>굽힘 (앞쪽으로)</td><td>폄 (뒤쪽으로)</td><td>"앞머리자세(forward head posture)"</td></tr>
+        <tr><td><b>뒤당김(retraction)</b></td><td>폄 (뒤쪽으로)</td><td>굽힘 (앞쪽으로)</td><td>"Chin-in" 자세, 치료적 사용</td></tr>
+      </table>
+      <div class="txt">
+        <b>완전한 뒤당김:</b> 완전한 내밀기 범위보다 약 80% 정도 더 많이 일어남 (중립에서 6.23 cm vs 3.34 cm). 중립의 안정위치는 완전히 뒤당김된 위치에서 약 35% 앞에 위치.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 앞머리자세(Forward Head Posture)</div>
+        <p>
+          <b>앞머리자세:</b> 내밀기 = 아래쪽 목뼈 굽힘 + 위쪽 목뼈 과폄<br>
+          → 아래쪽 목뼈: 돌기관절 앞쪽 압박 증가, 척추사이구멍 크기 감소<br>
+          → 위쪽 목뼈: 뒤쪽 결합조직과 관절주머니인대에 과도한 스트레스<br>
+          → 목 편두통, 두통, 위쪽 몸통 근육 피로 연관<br><br>
+          <b>치료적 접근:</b> 뒤당김 운동, 아래쪽 목뼈 폄 + 위쪽 목뼈 굽힘 유도. 의자 설계, 모니터 위치 조정.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc7">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">📊 가쪽굽힘·축돌림 사이의 척추짝지음</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">C2-C7의 관절면들은 약 45도의 경사를 이루고 있기 때문에 이마면과 수평면에서 일어나는 움직임들 사이에는 역학적 <b>척추짝지음</b>이 나타남.</div>
+      <table class="tbl tbl-accent">
+        <tr><th>영역</th><th>짝지음 방향</th><th>기전</th></tr>
+        <tr><td>C2-C7</td><td><b>가쪽굽힘 = 같은쪽 돌림</b></td><td>오른쪽 아래 척추뼈는 아래쪽 척추뼈의 관절면이 향하고 있는 방향으로 빙글 돌아감 → 오른쪽 축돌림 동반</td></tr>
+        <tr><td>C1(고리뼈)</td><td>가쪽굽힘 시 반대쪽 돌림</td><td>고리뒤통수관절에서의 보상적 반쪽 짝지음</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>이 짝지음 때문에 <b>C2-C7에서 오른쪽 가쪽굽힘 시에는 가시돌기는 왼쪽으로 돌림</b>. 임상에서 척추 촉진 시 이를 고려해야 함. 짝지음의 비정상적 양상은 척추사이이음부 기능이상의 지표로 활용.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="cc8">
+    <div class="sf">
+      <div class="sf-title">⭐ Special Focus 9.5 — 척추사이구멍의 직경에 대한 목뼈 운동 및 운동의 영향</div>
+      <p>등뼈 영역에서의 움직임은 확실히 척추사이구멍(intervertebral foramen)의 크기에 영향. 특히 굽힘과 폄 운동 동안.</p>
+      <ul>
+        <li>MR영상: 굽힘 시 C3 척추사이구멍 면적 약 <b>40% 증가</b>, 폄 시 약 <b>31% 감소</b></li>
+        <li>C3-C4 관절면 사이의 굽힘과 증가된 면적 사이의 관계: 굽힘 자세와 해부학적 위치에서 어떤 면이 증가된 면적을 제공하는지 비교 평가 가능</li>
+        <li>가쪽굽힘 반대측 척추사이구멍 크기 증가 + 같은쪽 감소</li>
+        <li>돌림: 40도의 머리목 돌림에 의해 척추사이구멍 면적 <b>약 20% 감소</b></li>
+        <li>이제까지 설명된 작은 뼈굴기(osteophyte)가 신경뿌리 주변 결합조직의 증가에 의해 협착된(좁아진) 척추사이구멍의 사례들과 특정 임상 연관성을 갖는다는 것을 인지해야 함</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 등뼈 ===== -->
+<div id="tab-th" class="tab-content">
+  <div class="toc">
+    <h4>📌 바로가기</h4>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="go('th1')">관절 해부학</button>
+      <button class="toc-btn" onclick="go('th2')">굽힘·폄</button>
+      <button class="toc-btn" onclick="go('th3')">축돌림</button>
+      <button class="toc-btn" onclick="go('th4')">가쪽굽힘</button>
+      <button class="toc-btn" onclick="go('th5')">등허리이음부 SF</button>
+    </div>
+  </div>
+
+  <div class="range-box">
+    <h4>📊 등뼈 영역 가동범위 (표 9.8)</h4>
+    <table class="range-tbl">
+      <tr><th>운동면</th><th>운동</th><th>범위(도)</th></tr>
+      <tr><td>시상면</td><td>굽힘</td><td>30~40</td></tr>
+      <tr><td>시상면</td><td>폄</td><td>15~20</td></tr>
+      <tr><td>시상면</td><td>전체</td><td>45~60</td></tr>
+      <tr><td>수평면</td><td>축돌림 (한쪽)</td><td><span class="highlight-num">25~35</span></td></tr>
+      <tr><td>이마면</td><td>가쪽굽힘 (한쪽)</td><td>25~30</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="th1">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🫁 등뼈의 관절 구조에 대한 해부학</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">등뼈는 좌우에 각각 12개씩, 총 <b>24개의 돌기관절</b>. 관절면은 평균 15~25도의 약간의 앞쪽 경사를 가진 관절면.</div>
+      <table class="tbl">
+        <tr><th>구조</th><th>특징</th><th>기능</th></tr>
+        <tr><td><b>갈비몸통관절 (costocorporeal joint)</b></td><td>갈비뼈머리의 갈비반관절면과 두 개의 인접 척추뼈 사이의 척추원반 연결</td><td>부채꼴인대·관절주머니인대로 안정화</td></tr>
+        <tr><td><b>갈비가로돌기관절 (costotransverse joint)</b></td><td>갈비뼈의 관절결절이 해당 등뼈의 가로돌기에 연결</td><td>갈비가로돌기인대와 위갈비가로돌기인대로 안정화. 폭 약 2 cm</td></tr>
+        <tr><td><b>돌기관절 방향</b></td><td>거의 이마면, 평균 15~25° 앞쪽 경사 (그림 9.32 참조)</td><td>축돌림과 가쪽굽힘에 유리</td></tr>
+      </table>
+      <div class="txt">
+        갈비뼈는 등뼈에 부착되기 때문에, 가슴 및 갈비몸통관절과 갈비가로돌기관절의 운동형상학은 역학적으로 연관되어 있지만, 이 주제에 대한 정밀하게 연구된 운동형상학은 아직 남아있음.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 등뼈 안정성</div>
+        <p>갈비뼈를 포함한 등뼈는 척추에서 역학적으로 가장 안정된 부분. 이런 고유 안정성의 대부분은 등뼈 영역과 갈비우리 사이의 부착부위들을 통해 제공됨: 갈비우리의 구성요소에는 갈비몸통관절과 갈비가로돌기관절, 갈비뼈들, 복장갈비관절, 그리고 복장뼈가 있다. 갈비우리(복장뼈 포함)는 등뼈의 완전한 전달 동작에 대해 36~78%를 제공.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="th2">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">↕️ 굽힘과 폄의 운동형상학</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        거의 30~40도의 굽힘과 15~20도의 폄이 일반적으로 등뼈 영역에서 일어남. 이러한 운동형상은 전체 등허리 영역에 걸쳐 누적됨. <b>각각 그림 9.52와 9.53에서 나타나 있음.</b>
+      </div>
+      <table class="tbl">
+        <tr><th>운동</th><th>관절운동형상학</th><th>제한 구조</th></tr>
+        <tr><td><b>굽힘</b></td><td>위 척추뼈 아래관절면이 아래 척추뼈 위관절면에 대해 위쪽·앞쪽으로 미끄러짐</td><td>돌기관절의 관절주머니, 가시인대들, 뒤세로인대, 섬유태의 뒤쪽</td></tr>
+        <tr><td><b>폄</b></td><td>위 척추뼈 아래관절면이 아래쪽·뒤쪽으로 미끄러짐</td><td>앞세로인대, 가시돌기 아래가쪽 등뼈들 사이의 충돌, 고리들 사이의 충돌</td></tr>
+      </table>
+      <div class="txt">
+        등뼈에 있는 돌기관절의 관절운동형상은 일반적으로 C2-C7에서 설명된 것과 유사. 미세한 차이는 척추뼈의 형태, 갈비뼈의 고정 작용, 그리고 척추원반의 상대적인 높이를 포함한 여러 인자들에 의해 영향받음.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>앞세로인대에서의 장력에 의해 그리고 특히 위쪽과 중간 등뼈에 있는 고리들 사이의 충돌이나 아래쪽으로 기울어진 가시돌기들 사이의 충돌들에 의해 제한됨. "자유롭게 떠 있는(free-floating)" 가장 아래쪽 갈비뼈들과 좀 더 시상면 쪽으로 향하는 돌기관절의 방향 이동 때문에, 등뼈 굽힘과 폄의 크기는 가장 아래쪽 등뼈 영역에서 가장 크다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="th3">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔄 축돌림의 운동형상학</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">거의 <b>25~35도의 수평면 (축)돌림</b>이 등뼈 영역 전체에 걸쳐 일어남. 이러한 운동은 등허리뼈 영역 전체에 걸쳐 일어나는 축돌림의 결합으로 나타남.</div>
+      <table class="tbl">
+        <tr><th>분절</th><th>개별 관절운동형상</th></tr>
+        <tr><td>T6-T7 사이</td><td>T7의 위관절면이 T6의 아래관절면과 거의 이마면에 가깝게 배열. 짧은 거리 미끄러짐</td></tr>
+        <tr><td>L1</td><td>관절 접근(joint approximation) — 같은 쪽 관절면 눌림. 반대측 관절 분리(joint separation)</td></tr>
+      </table>
+      <div class="txt">
+        이러한 개별적인 돌림이 정말로 작게 일어나 사실상 감지할 수 없지만, 개별적인 돌림들이 더해지면 등뼈 영역 전체에 걸쳐 상당한 범위의 돌림이 나타남. 이런 축돌림의 자유로움은 <b>등뼈 영역에서의 관절면들의 이마면(frontal) 방향</b> 때문임.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="th4">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">↔️ 가쪽굽힘의 운동형상학</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        등뼈 관절면은 주로 이마면을 향하고 있기 때문에 비교적 가쪽굽힘이 자유롭게 일어날 수 있음. 그러나 갈비뼈들의 부착에 의해 제공된 안정화 때문에 이러한 움직임의 가능성이 충분히 활용되지 않음.
+      </div>
+      <table class="tbl">
+        <tr><th>운동</th><th>관절운동형상학</th></tr>
+        <tr><td>T6에 대한 T7의 가쪽굽힘</td><td>T6의 위관절면은 가쪽굽힘 방향과 같은쪽에서는 아래쪽으로 미끄러지고 반대쪽은 위쪽으로 미끄러짐. 가쪽굽힘 방향과 반대쪽에서는 약간 올라감</td></tr>
+      </table>
+      <div class="txt">
+        아래쪽 등뼈 영역에서는 감소됨. 아래쪽 등뼈 영역에서는 돌기관절들이 좀 더 시상면 방향으로 이동하여 약간 좀 더 수직의 방향을 향하기 때문.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="th5">
+    <div class="sf">
+      <div class="sf-title">⭐ Special Focus 9.6 — 등허리이음부에 대한 어떤 임상적 영향</div>
+      <p>등허리이음부(T12-L1) — 등뼈와 허리뼈의 경계에서, 돌기관절의 관절면들은 거의 이 이마면에서 거의 시상면 쪽으로 갑작스런 방향의 변화를 보임 (그림 9.56).</p>
+      <ul>
+        <li>이 이마면에서 시상면 쪽으로의 관절면 방향 전환이 <b>등허리이음부에서 외상성 반분리산(half fracture-dislocation)</b>의 기전</li>
+        <li>위쪽에 하나의 단위로서 강한 굽힘에 영향을 받지 않은 등뼈 영역 + 가쪽굽힘 같은 발생하는 힘들의 조합 → <b>등허리이음부에서 과도한 부하</b></li>
+        <li>가슴에 접혀진 큰 굽힘 토크는 이음부 지점에서 <b>과도한 굴곡비(hyperflexion)</b> 야기. 이 스트레스는 뼈 성분들을 골절시키거나 달구어지게 만들거나 척추의 꼬리뼈 쪽부분을 전방으로 이동시킴</li>
+        <li>이음부를 고정시키기 위해 심어진 외적 고정 장치는 척추의 다른 영역들에 삽입되는 장치들과 비교했을 때 특히 이 스트레스성 파열을 특히 쉽게 당하게 됨</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 허리뼈 ===== -->
+<div id="tab-lu" class="tab-content">
+  <div class="toc">
+    <h4>📌 바로가기</h4>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="go('lu1')">관절 구조 해부학</button>
+      <button class="toc-btn" onclick="go('lu2')">시상면 운동형상학</button>
+      <button class="toc-btn" onclick="go('lu3')">수평면·이마면</button>
+      <button class="toc-btn" onclick="go('lu4')">허리골반리듬</button>
+      <button class="toc-btn" onclick="go('lu5')">골반기울임</button>
+      <button class="toc-btn" onclick="go('lu6')">앉은 자세 영향</button>
+      <button class="toc-btn" onclick="go('lu7')">SF 9.7</button>
+    </div>
+  </div>
+
+  <div class="range-box">
+    <h4>📊 허리뼈 영역 가동범위 (표 9.9)</h4>
+    <table class="range-tbl">
+      <tr><th>운동면</th><th>운동</th><th>범위(도)</th></tr>
+      <tr><td>시상면</td><td>굽힘</td><td><span class="highlight-num">45~55</span></td></tr>
+      <tr><td>시상면</td><td>폄</td><td>15~25</td></tr>
+      <tr><td>시상면</td><td>전체</td><td>60~80</td></tr>
+      <tr><td>수평면</td><td>축돌림 (한쪽)</td><td><span class="highlight-num">5~7</span></td></tr>
+      <tr><td>이마면</td><td>가쪽굽힘 (한쪽)</td><td>20</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="lu1">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔵 L1-L4 영역과 L5-S1 이음부 관절 구조</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">대부분의 허리뼈 돌기관절의 관절면들은 거의 수직으로 놓여 있으며, 그 방향은 중간에서 거의 시상면에 가까운 것까지.</div>
+      <table class="tbl">
+        <tr><th>영역</th><th>관절면 방향</th><th>허용 운동</th></tr>
+        <tr><td><b>L1-L4</b></td><td>거의 시상면, 수직에 가까운 방향</td><td>굽힘·폄 허용 / <b>축돌림 크게 제한</b></td></tr>
+        <tr><td><b>L5-S1</b></td><td>이마면에 더 가까움</td><td>가쪽굽힘 더 허용, <b>앞 전단력에 저항</b></td></tr>
+      </table>
+      <div class="txt">
+        <b>L5-S1 이음부:</b> 전형적인 척추사이이음부에서처럼 앞쪽에는 척추뼈몸통사이관절, 뒤쪽으로는 한 쌍의 돌기관절이 있음. L5-S1 돌기관절의 관절면은 다른 허리뼈 관절들보다 이마면 쪽에 더욱 가깝게 향함 → <b>앞 전단력에 대한 중요한 저항 요소</b>.
+      </div>
+      <div class="txt">
+        <b>L5-S1의 엉치수평각(sacro-horizontal angle):</b> 엉치뼈 윗면은 수평면에 대해 약 <b>40°</b> 경사. 이에 의해 앞 전단력 = BW × sin(40°) ≈ <b>0.64 BW (체중의 약 64%)</b>.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>이 앞 전단력에 저항하는 구조: 척추원반, 관절돌기의 관절주머니, 넓고 강한 앞세로인대, 그리고 엉덩허리인대(iliolumbar ligament). 이 구조들이 약화·손상되면 <b>앞척추전방전위증(anterior spondylolisthesis)</b> 발생.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="lu2">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">↕️ 시상면 운동형상학 — 굽힘과 폄</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        성인의 허리뼈에서는 평균적으로 약 <b>45~55도의 굽힘과 15~25도의 폄</b>이 일반적으로 가능. 단지 다섯 개의 척추사이이음부에서만 일어난다는 것을 고려하면, 전체 60~80도의 시상면 운동호는 크게 일어나는 것이다.
+      </div>
+      <table class="tbl">
+        <tr><th>운동</th><th>관절운동형상학</th><th>제한 구조</th></tr>
+        <tr><td><b>굽힘</b></td><td>위 척추뼈 아래관절면이 아래 척추뼈 위관절면에 대해 위쪽·앞쪽으로 미끄러짐</td><td>돌기관절 관절주머니 신장됨, 모든 뒤쪽 인대들 신장됨, 섬유태 뒤면 신장됨</td></tr>
+        <tr><td><b>폄</b></td><td>아래관절면이 아래쪽·뒤쪽으로 미끄러짐. 폄의 완전 범위에서 인접 고리뼈 영역의 과갈림뼈관절면에 닿음</td><td>앞세로인대 신장됨, 돌기관절 관절주머니 느슨해짐(중립 폄에서만), 관절의 접촉면적 최대화</td></tr>
+      </table>
+      <div class="txt">
+        <b>중요사항:</b> 허리의 굽힘은 척추사이구멍과 척추관의 크기 그리고 속질핵의 변형에 영향을 미침. 해부학적 위치에 비해, 허리의 완전한 굽힘은 척추사이구멍의 직경을 약 <b>19% 정도 증가</b>시킴. 반면 완전한 폄은 약 <b>11% 정도 감소</b>시킴.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 허리뼈 굽힘과 원반탈출</div>
+        <p>굽힘에서처럼, 허리뼈의 폄은 척추사이구멍과 척추관의 크기 그리고 속질핵의 변형에 영향을 미침. 해부학적 위치에 비해, 허리의 완전한 폄은 신경근의 칩범을 받는 사람들은 완전한 굽힘범위의 폄 활동들을 수행하는 동안 활동들을 제한해야 하는데, 특히 이러한 활동들이 하루의 끝에 더 많이 발생하는 경향이 있음.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="lu3">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔄 수평면·이마면 운동형상학</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <table class="tbl tbl-accent">
+        <tr><th>운동</th><th>범위</th><th>특징</th></tr>
+        <tr><td><b>축돌림</b></td><td><span class="highlight-num">5~7°</span> (한쪽)</td><td>허리뼈 영역에서 가장 제한된 운동. 관절면이 거의 시상면 → 축돌림이 물리적으로 차단. L1-2 사이의 돌림은 반대축 돌기관절의 접근(압박)을 유발</td></tr>
+        <tr><td><b>가쪽굽힘</b></td><td>약 20° (한쪽)</td><td>허리뼈 영역에서 각 방향으로 약 20도. 가로돌기사이인대가 가쪽굽힘을 제한. 돌기관절들의 방향과 척추원반의 높이가 영향</td></tr>
+      </table>
+      <div class="txt">
+        <b>수평면에서의 축돌림 제한 이유:</b> 시상면으로 향한 관절면들은 각 돌기관절 내에서 수직으로 배열. 이 배열로 인해 관절면들은 서로를 잠금(block)시켜 돌림을 차단. 돌림이 일어나도 5~7° 사이에서 실제로 관절면들이 맞닿아 더 이상의 돌림 저항.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>허리뼈에서 3도의 축돌림은 관절면들을 손상시키고 섬유태에 아교섬유들에 열상 초래 (연구에서). 가장 정상적인 척추 활동들에서 <b>허리뼈의 축돌림은 안전하게 수행되어야 함</b>. 직업적·스포츠 상황에서의 반복적인 요추 비틀림은 조기 원반 퇴행 위험인자.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="lu4">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔁 몸통 굽힘과 폄 동안의 허리골반리듬</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        허리뼈는 엉덩관절과 연관하여 인체 전체의 중앙에 이루어지는 이 관련 면에서 <b>중심점(pivot point)</b>을 제공. <b>허리골반리듬(lumbopelvic rhythm)</b>이란 이 움직임 기전.
+      </div>
+      <table class="tbl tbl-accent">
+        <tr><th>단계</th><th>허리뼈</th><th>엉덩관절</th><th>주요 근육</th></tr>
+        <tr><td><b>초기단계 (Early phase)</b></td><td>굽힘 → 허리 앞굽음 감소</td><td>비교적 제한된 굽힘</td><td>큰볼기근, 뒤넙다리근 강한 수동장력</td></tr>
+        <tr><td><b>중간단계 (Middle phase)</b></td><td>지속적 굽힘</td><td>굽힘 증가</td><td>허리 폄근육들 점차 활성도 감소 (L3 척추뼈몸통 통과 이후)</td></tr>
+        <tr><td><b>완성 (Completion)</b></td><td>완전 굽힘</td><td>최대 굽힘</td><td>큰볼기근·뒤넙다리근 체중의 외적 모멘트팔 증가에 대항</td></tr>
+      </table>
+      <div class="txt">
+        <b>돌아오는 과정 (몸통 폄):</b> 역순 — 처음에는 엉덩관절이 폄, 다음에 허리뼈가 폄.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 허리골반리듬 변이 (그림 9.61)</div>
+        <p>
+          <b>(A) 정상:</b> 45도의 엉덩관절 굽힘 + 60도의 엉덩관절 굽힘이 함께 발생<br>
+          <b>(B) 엉덩관절 제한:</b> 엉덩관절 굽힘 제한 → 보상성으로 과도한 허리뼈 굽힘 → 원반 압박 증가<br>
+          <b>(C) 허리뼈 제한:</b> 허리 가동성 제한 → 엉덩관절 굽힘이 더 크게 요구됨<br><br>
+          <b>뒤넙다리근(hamstring) 단축:</b> 골반 뒤기울임 야기 → 허리뼈 굽힘에 대한 보상적 제한
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="lu5">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">🔄 골반의 앞기울임·뒤기울임과 허리뼈의 운동형상학</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <table class="tbl tbl-accent">
+        <tr><th>골반 운동</th><th>허리뼈 변화</th><th>관련 근육</th><th>척추원반 변화</th></tr>
+        <tr><td><b>앞기울임 (anterior tilt)</b></td><td>허리뼈 <b>폄(앞굽음 증가)</b></td><td>허리 폄근육 + 엉덩관절 굽힘근 수축</td><td>속질핵 앞쪽으로 이동. 척추사이구멍 좁아짐</td></tr>
+        <tr><td><b>뒤기울임 (posterior tilt)</b></td><td>허리뼈 <b>굽힘(앞굽음 감소)</b></td><td>배근육 + 엉덩관절 폄근 수축</td><td>속질핵 뒤쪽으로 이동. 척추사이구멍 넓어짐</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 과도한 허리뼈 앞굽음과 골반 앞기울임</div>
+        <p>능동적인 골반의 앞기울임은 엉덩관절 굽힘근육들과 허리뼈 폄근육들의 수축에 의해 일어남. 이러한 작용은 속질핵을 앞쪽으로 이동시키고 척추사이구멍의 직경을 감소시키는 경향이 있음 (그림 9.63A, B). 오른쪽 엉덩관절 굽힘 구축을 가진 사람에서 엉덩관절 굽힘근육들, 과도한 골반 앞기울임, 그리고 과도한 허리뼈 앞굽음을 만들어냄.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="lu6">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title">💺 앉은 자세가 허리뼈와 머리목 영역 정렬에 미치는 영향</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        많은 사람들이 대부분의 시간을 직장, 학교, 가정, 또는 교통수단 내에서 앉아 보냄. 앉아 있는 동안의 골반 자세는 척추 전체 정렬에 영향을 미칠 수 있음.
+      </div>
+      <table class="tbl">
+        <tr><th>앉기 자세</th><th>허리뼈 정렬</th><th>머리목 영향</th><th>척추원반 압력</th></tr>
+        <tr><td><b>구부정한 앉기 (Slumped)</b></td><td>허리 앞굽음 감소 (굽힘 증가)</td><td>과도한 목뼈 굽힘 + 머리 앞쪽 이동</td><td>앞쪽 압박 증가, 속질핵 뒤 이동</td></tr>
+        <tr><td><b>이상적인 앉기</b></td><td>허리 정상 앞굽음 유지</td><td>뒤당김("Chin-in") 위치</td><td>보다 균등한 압력 분배</td></tr>
+      </table>
+      <div class="txt">
+        <b>구부정한 앉기 자세:</b> 체중에 의한 외적 모멘트팔을 증가시킴 (그림 9.65A). 이러한 상황은 척추원반을 포함한 아래쪽 몸통들의 굽힘에 정상적으로 저항하는 데 대한 조직 요구를 증가시킴. 이 장의 앞부분에서 언급했듯이, 생체내 압력 측정을 통해 <b>똑바로 앉아 있을 때보다 구부정한 앉기 자세에서 허리뼈 척추원반에서 일반적으로 더 크게 증가</b>된다는 것이 증명됨.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 만성 요통 치료 (SF 9.9)</div>
+        <p>만성 요통 치료 접근법: 1) 척추 움직임과 경렬을 최적화하기 위해 근육들과 결합조직들에 대한 선택적 활성과 신장 2) 진통기법(mobilization)과 교정기법(manipulation) 3) 건침(dry needling), 전기자극, 물리적 가동기술(조임, 연부조직 가동기법, 견인 부조정기법) 포함. 운동은 허리 영역의 움직임을 포함하기 때문에 임상가는 이러한 운동들이 허리뼈의 움직임과 관련된 생체역학적 결과들을 고려해야 함.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="lu7">
+    <div class="sf">
+      <div class="sf-title">⭐ Special Focus 9.7 — L5-S1의 앞척추전방전위증</div>
+      <p><b>앞척추전방전위증(anterior spondylolisthesis):</b> 하나의 척추뼈가 다른 척추뼈에 대해 앞쪽으로 미끄러지거나 이동하는 것을 설명하는 일반적인 용어.</p>
+      <ul>
+        <li>L5-S1 이음부에서 가장 흔함. 허리뼈의 다른 영역 L4-L5에서도 나타남</li>
+        <li><b>기전:</b> 관절사이부분(pars articularis)을 통하는 양성 골절(또는 결손)과 연관. 반복적인 후전적 신체활동들에 의해 유발</li>
+        <li>L5-S1 이음부의 강하고 완전한 폄은 ES/5-1(엉치뼈의 위면에 평행한 앞 전단력)을 발생시킴</li>
+        <li>이 전단력의 방향은 인접한 척추사이이음부들의 섬유태의 방향 및 40도의 엉치수평각을 이용하여 설명됨</li>
+        <li>허리뼈 앞굽음의 정도가 증가함에 따라 L5-S1 이음부에서의 앞 전단력을 증가시킴. 특히 근육활성화에 따라 더욱 앞 전단력을 증가시킬 수 있음</li>
+        <li><b>신경학적 합병증:</b> 말총(cauda equina) 압박 → 하지 방사통, 감각이상, 하지마비, 방광·직장 기능 소실 가능</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+function tog(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

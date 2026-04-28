@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 9 - Part 1 | 골학 & 관절학 총론</title>
+<style>
+  :root {
+    --bg: #EEF4FF; --card: #FFFFFF; --primary: #1E3A5F; --accent: #2E6DB4;
+    --accent2: #4A90D9; --accent3: #E8F0FE; --highlight: #FF6B35;
+    --success: #27AE60; --danger: #E74C3C; --warning: #F39C12;
+    --text: #1a2a3a; --text2: #4a5a6a; --border: #C8D8F0;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10); --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR','Apple SD Gothic Neo',sans-serif; }
+
+  .header {
+    background: linear-gradient(135deg, #1E3A5F 0%, #2E6DB4 100%);
+    color: white; padding: 20px 24px 0; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.3);
+  }
+  .header-top { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .badge { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:4px 12px; font-size:11px; font-weight:700; letter-spacing:1px; }
+  .header h1 { font-size:17px; font-weight:700; }
+  .header p { font-size:11px; opacity:0.8; margin-top:2px; }
+  .tabs { display:flex; gap:4px; overflow-x:auto; }
+  .tab-btn { padding:10px 18px; border:none; background:transparent; color:rgba(255,255,255,0.7); cursor:pointer; font-size:13px; font-weight:600; border-radius:10px 10px 0 0; transition:all 0.2s; white-space:nowrap; }
+  .tab-btn.active { background:var(--bg); color:var(--primary); }
+  .tab-btn:hover:not(.active) { background:rgba(255,255,255,0.15); color:white; }
+
+  .tab-content { display:none; padding:20px; max-width:860px; margin:0 auto; }
+  .tab-content.active { display:block; }
+
+  .sec-title { font-size:17px; font-weight:700; color:var(--primary); margin:20px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--accent); display:flex; align-items:center; gap:8px; }
+
+  /* TOC */
+  .toc { background:var(--card); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; box-shadow:var(--shadow); }
+  .toc h4 { font-size:13px; font-weight:700; color:var(--primary); margin-bottom:8px; }
+  .toc-btns { display:flex; flex-wrap:wrap; gap:6px; }
+  .toc-btn { background:var(--accent3); color:var(--accent); border:none; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+  .toc-btn:hover { background:var(--accent); color:white; }
+
+  /* 카드 */
+  .card { background:var(--card); border-radius:var(--radius); padding:18px 20px; margin-bottom:14px; box-shadow:var(--shadow); }
+  .card-title { font-size:15px; font-weight:700; color:var(--primary); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .card-title .icon { font-size:17px; }
+
+  /* collapsible */
+  .col-btn { width:100%; background:none; border:none; text-align:left; cursor:pointer; display:flex; align-items:center; justify-content:space-between; padding:0; }
+  .col-btn .arr { transition:transform 0.3s; color:var(--accent); font-size:14px; }
+  .col-btn.open .arr { transform:rotate(180deg); }
+  .col-body { overflow:hidden; max-height:0; transition:max-height 0.4s ease; }
+  .col-body.open { max-height:5000px; }
+
+  /* 텍스트 */
+  .txt { font-size:13px; line-height:1.85; color:var(--text2); margin-bottom:10px; }
+  .txt b { color:var(--text); }
+
+  /* 표 */
+  .tbl { width:100%; border-collapse:collapse; font-size:12px; margin:10px 0; }
+  .tbl th { background:var(--primary); color:white; padding:8px 10px; text-align:left; }
+  .tbl td { padding:7px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .tbl tr:nth-child(even) td { background:#F4F8FF; }
+  .tbl-accent th { background:var(--accent); }
+
+  /* 임상 박스 */
+  .clin { background:linear-gradient(135deg,#FFF3E0,#FFF8F0); border-left:4px solid var(--highlight); border-radius:8px; padding:12px 14px; margin:10px 0; }
+  .clin .lbl { font-size:10px; font-weight:700; color:var(--highlight); letter-spacing:1px; margin-bottom:4px; }
+  .clin p { font-size:12px; color:#5a3a1a; line-height:1.7; }
+
+  /* 특수초점 박스 */
+  .sf { background:linear-gradient(135deg,#E8F4FD,#F0F8FF); border:2px solid var(--accent2); border-radius:10px; padding:14px 16px; margin:12px 0; }
+  .sf .sf-title { font-size:12px; font-weight:700; color:var(--accent); letter-spacing:0.5px; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .sf p, .sf li { font-size:12px; color:#1a3a5a; line-height:1.75; }
+  .sf ul { padding-left:16px; margin-top:4px; }
+  .sf li { margin-bottom:3px; }
+
+  /* 키워드 태그 */
+  .kw-wrap { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+  .kw { background:var(--accent3); color:var(--accent); padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+
+  /* 개요 그리드 */
+  .ov-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-bottom:20px; }
+  .ov-card { background:var(--card); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); border-left:4px solid var(--accent); }
+  .ov-card h3 { font-size:13px; font-weight:700; color:var(--primary); margin-bottom:7px; }
+  .ov-card ul { list-style:none; }
+  .ov-card ul li { font-size:12px; color:var(--text2); padding:3px 0; border-bottom:1px dashed var(--border); }
+  .ov-card ul li:last-child { border-bottom:none; }
+
+  @media(max-width:600px){ .tab-btn{padding:8px 10px;font-size:11px;} .tab-content{padding:14px;} }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="badge">CHAPTER 9 — PART 1</div>
+    <div>
+      <h1>골학 · 전체척주 · 관절학 총론</h1>
+      <p>Osteology · Vertebral Column · Arthrology Basics</p>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('ov')">📋 개요</button>
+    <button class="tab-btn" onclick="showTab('os')">🦴 골학</button>
+    <button class="tab-btn" onclick="showTab('col')">📐 전체척주</button>
+    <button class="tab-btn" onclick="showTab('arth')">🔗 관절학</button>
+  </div>
+</div>
+
+<!-- ===== 개요 탭 ===== -->
+<div id="tab-ov" class="tab-content active">
+  <div class="sec-title">📋 Part 1 학습 목표</div>
+  <div class="ov-grid">
+    <div class="ov-card" style="border-color:#2E6DB4">
+      <h3>🦴 골학</h3>
+      <ul>
+        <li>머리뼈 주요 구조물</li>
+        <li>척추뼈 영역별 특징 (C/T/L/S)</li>
+        <li>갈비뼈·복장뼈 해부</li>
+        <li>표 9.4 — 척추의 골학적 특징</li>
+      </ul>
+    </div>
+    <div class="ov-card" style="border-color:#27AE60">
+      <h3>📐 전체로서의 척주</h3>
+      <ul>
+        <li>정상만곡 4가지</li>
+        <li>중력선 경로</li>
+        <li>척주 5가지 인대</li>
+        <li>척주불안정성·중립지대</li>
+      </ul>
+    </div>
+    <div class="ov-card" style="border-color:#9B59B6">
+      <h3>🔗 관절학 총론</h3>
+      <ul>
+        <li>척추사이이음부 3요소</li>
+        <li>돌기관절 구조·기능</li>
+        <li>척추원반 구조 (속질핵·섬유태)</li>
+        <li>Special Focus 9.1~9.4</li>
+      </ul>
+    </div>
+    <div class="ov-card" style="border-color:#E67E22">
+      <h3>🔑 핵심 키워드</h3>
+      <div class="kw-wrap">
+        <span class="kw">치아돌기</span><span class="kw">갈로리돌기</span><span class="kw">황색인대</span>
+        <span class="kw">속질핵</span><span class="kw">섬유태</span><span class="kw">척추끝판</span>
+        <span class="kw">중립지대</span><span class="kw">돌기관절</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 골학 탭 ===== -->
+<div id="tab-os" class="tab-content">
+  <div class="toc">
+    <h4>📌 바로가기</h4>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="go('o1')">머리뼈</button>
+      <button class="toc-btn" onclick="go('o2')">목뼈 (C1~C7)</button>
+      <button class="toc-btn" onclick="go('o3')">등뼈 (T1~T12)</button>
+      <button class="toc-btn" onclick="go('o4')">허리뼈 (L1~L5)</button>
+      <button class="toc-btn" onclick="go('o5')">엉치뼈·꼬리뼈</button>
+      <button class="toc-btn" onclick="go('o6')">갈비뼈·복장뼈</button>
+      <button class="toc-btn" onclick="go('o7')">골학 특징 표</button>
+    </div>
+  </div>
+
+  <!-- 머리뼈 -->
+  <div class="card" id="o1">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">💀</span> 머리뼈 (Skull)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        <b>관자뼈(temporal bone):</b> 머리뼈 가쪽 아래 부분 형성. <b>꼭지돌기(mastoid process)</b>는 귀 바로 뒤에 위치 — 목빗근·등세모근 등 여러 근육의 부착부.<br><br>
+        <b>뒤통수뼈(occipital bone):</b> 머리뼈 뒤 바닥 대부분 차지.
+      </div>
+      <table class="tbl">
+        <tr><th>구조물</th><th>위치</th><th>임상/기능적 의미</th></tr>
+        <tr><td><b>바깥뒤통수뼈융기</b></td><td>뒤통수뼈 후면 중앙</td><td>목밑인대·등세모근 부착점, 촉지 기준점</td></tr>
+        <tr><td><b>위목덜미선</b></td><td>바깥뒤통수뼈융기에서 가쪽</td><td>등세모근·머리반가시근 부착</td></tr>
+        <tr><td><b>아래목덜미선</b></td><td>위목덜미선 아래</td><td>머리반가시근 부착의 앞쪽 가장자리</td></tr>
+        <tr><td><b>큰구멍(foramen magnum)</b></td><td>뒤통수뼈 바닥 중앙</td><td>척수가 통과하는 큰 원형 구멍</td></tr>
+        <tr><td><b>뒤통수뼈관절융기</b></td><td>큰구멍 앞가쪽</td><td>고리뒤통수관절의 볼록 관절면 형성</td></tr>
+        <tr><td><b>뇌바닥부(basilar part)</b></td><td>큰구멍 앞</td><td>인두·목 앞 근육 부착</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>뒤통수뼈관절융기는 <b>고리뒤통수관절(atlanto-occipital joint)</b>을 형성. 이 관절의 볼록-오목 구조가 머리의 독립적 굽힘·폄을 허용. 외상 시 이 부위의 손상은 상위 경추 불안정성을 초래할 수 있음.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 목뼈 -->
+  <div class="card" id="o2">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🔵</span> 목뼈 (Cervical, C1~C7)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">목뼈는 <b>모든 척추 중 가장 가동성이 큰</b> 영역. 세 가지 유형으로 분류됨 — 비전형적 목뼈(C1, C2, C7), 전형적 목뼈(C3~C6).</div>
+      <table class="tbl">
+        <tr><th>분절</th><th>특징 구조</th><th>기능/임상</th></tr>
+        <tr><td><b>고리뼈(C1)</b></td><td>척추뼈몸통 없음, 앞·뒤고리, 2개의 큰 가쪽덩이(lateral mass)</td><td>머리의 독립적 움직임 지지, 가장 큰 가로돌기</td></tr>
+        <tr><td><b>중쇠뼈(C2)</b></td><td>수직 돌출된 <b>치아돌기(dens)</b>, 큰 고리뿌리, 매우 넓은 가시돌기</td><td>고리중쇠관절의 축(pivot) 역할, 목 축돌림 50~60%</td></tr>
+        <tr><td><b>C3~C6</b></td><td>비교적 작은 몸통, <b>갈로리돌기(uncinate process)</b>, 앞결절·뒤결절</td><td>갈로리척추관절 형성, 척추사이구멍 경계</td></tr>
+        <tr><td><b>C7(돌출척추)</b></td><td>크고 돌출된 가시돌기, 여분 목갈비뼈 가능</td><td>임상 촉지 기준점, C7T1 이행부 스트레스 집중</td></tr>
+      </table>
+      <div class="sf">
+        <div class="sf-title">⭐ Special Focus 9.1 — 갈로리척추관절과 퇴행된 척추원반</div>
+        <p>건강한 척추원반은 척추뼈 사이의 "간격재지(spacer)"로서 갈로리척추관절(C2~C6)에 가해지는 압박을 줄여줌. 원반이 퇴행·건조해지면:</p>
+        <ul>
+          <li>원반 높이 감소 → 갈로리돌기가 인접 척추뼈의 갈로리돌기를 압박</li>
+          <li>갈로리척추관절에서 <b>뼈굴기(osteophyte)</b> 형성</li>
+          <li>뼈굴기가 척추사이구멍으로 돌출 → <b>C4, C5 척수신경뿌리 압박</b></li>
+          <li>임상 증상: <b>신경근병증(radiculopathy)</b>, 방사통(shooting pain), 감각이상</li>
+        </ul>
+        <p style="margin-top:6px">💡 갈비척추관절 존재 여부, 관절면 방향의 차이로 실제 생체역학적 역할은 아직 불분명.</p>
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p><b>가로구멍(transverse foramen)</b>에는 척추동맥이 통과 (일반적으로 C6까지). 목뼈 골절·탈구 시 척추동맥 손상 위험. <b>C5-C6, C6-C7</b>이 퇴행성 변화 가장 흔한 부위.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 등뼈 -->
+  <div class="card" id="o3">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🟢</span> 등뼈 (Thoracic, T1~T12)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">등뼈의 가장 두드러진 특징은 <b>갈비뼈와의 관절</b>. 이 구조가 등뼈를 척주에서 가장 안정된 영역으로 만듦.</div>
+      <table class="tbl">
+        <tr><th>분절</th><th>특징</th></tr>
+        <tr><td><b>T2~T9 (전형적)</b></td><td>갈비뼈머리를 위한 <b>위·아래 갈비반관절면(costal demifacet)</b>, 가로돌기에 갈비관절면</td></tr>
+        <tr><td><b>T1</b></td><td>완전한 첫째갈비관절면 + 부분적 둘째갈비관절면 소유</td></tr>
+        <tr><td><b>T10~T12</b></td><td>완전한 갈비관절면, T10~12는 갈비가로돌기관절면 없음</td></tr>
+        <tr><td><b>가시돌기</b></td><td>길고 뾰족하며 아래쪽으로 경사 → 다른 등뼈에 겹침</td></tr>
+        <tr><td><b>관절면 방향</b></td><td>거의 이마면(frontal plane) → 가쪽굽힘·축돌림에 유리</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p><b>등허리이음부(T12-L1):</b> 이마면(등뼈) → 시상면(허리뼈) 관절면 방향 급전환. 과도한 굽힘+축돌림 시 <b>외상성 반분리(fracture-dislocation)</b> 위험. 임상적으로 주의가 필요한 취약 지점.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 허리뼈 -->
+  <div class="card" id="o4">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🟡</span> 허리뼈 (Lumbar, L1~L5)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">허리뼈는 <b>위에 놓인 머리·몸통·팔들의 무게를 지지</b>하는 데 적합한 육중하고 넓은 척추뼈몸통을 보유. 5개의 허리뼈 무게는 7개의 목뼈 무게의 약 2배.</div>
+      <table class="tbl">
+        <tr><th>구조</th><th>특징</th><th>기능</th></tr>
+        <tr><td><b>척추뼈몸통</b></td><td>크고 넓음, L5가 가장 큼</td><td>체중지지의 일차 구조</td></tr>
+        <tr><td><b>고리판·고리뿌리</b></td><td>짧고 두꺼움, 세모 형태의 척추관</td><td>척수 보호</td></tr>
+        <tr><td><b>위관절면</b></td><td>오목(concave), 안쪽과 뒤쪽 향함</td><td>축돌림 제한</td></tr>
+        <tr><td><b>아래관절면</b></td><td>볼록(convex), 가쪽 향함</td><td>위관절면과 상호 일치</td></tr>
+        <tr><td><b>가시돌기</b></td><td>넓고 네모 형태, 수평으로 돌출</td><td>근육·인대 부착</td></tr>
+        <tr><td><b>꼭지돌기(mammillary)</b></td><td>위관절돌기 뒤면</td><td>뭇갈래근 부착</td></tr>
+      </table>
+      <div class="sf">
+        <div class="sf-title">⭐ Special Focus 9.2 — 허리뼈 돌기관절들의 발달이상</div>
+        <p>출생 시 허리뼈 돌기관절면은 이마면에 가까움 → 성장하면서 점차 시상면 방향으로 변화 (약 10~12세에 완성).</p>
+        <ul>
+          <li>이 변화가 <b>허리뼈에서 축돌림을 제한</b>하는 기전</li>
+          <li>관절면 방향의 비대칭(편측 이마면, 반대측 시상면) → <b>척추짝지음(spinal coupling)</b> 유발</li>
+          <li>심한 비대칭 → 척추사이이음부에 과도한 스트레스 → 조기 퇴행 가능</li>
+          <li>아동기에는 돌기관절들이 이마면에 가까워 큰 가쪽굽힘 허용 → 아동 허리 유연성의 이유</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 엉치·꼬리 -->
+  <div class="card" id="o5">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🔴</span> 엉치뼈·꼬리뼈 (Sacrum·Coccyx)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        <b>엉치뼈(sacrum):</b> 바닥부가 위쪽, 꼭지가 아래쪽인 세모 형태. 5개의 엉치뼈가 연골막에 의해 연결되다가 성인기에 단일 뼈로 융합.<br><br>
+        <b>엉치뼈꼿(sacral promontory):</b> 엉치뼈 몸통들의 앞쪽 앞면에서 가장 앞으로 돌출된 부분 — 산과·방사선 검사에서 기준점.
+      </div>
+      <table class="tbl">
+        <tr><th>구조</th><th>설명</th></tr>
+        <tr><td><b>앞엉치뼈구멍(4쌍)</b></td><td>엉치신경얼기의 배쪽가지(ventral rami) 통과</td></tr>
+        <tr><td><b>뒤엉치뼈구멍(4쌍)</b></td><td>등쪽가지(dorsal rami) 통과</td></tr>
+        <tr><td><b>귓바퀴면(auricular surface)</b></td><td>엉치엉덩관절 형성, 엉덩뼈와 관절</td></tr>
+        <tr><td><b>엉치관(sacral canal)</b></td><td>말총(cauda equina) 수용·보호</td></tr>
+        <tr><td><b>엉치결절(spinal tubercles)</b></td><td>가시돌기들의 융합 흔적</td></tr>
+      </table>
+      <div class="sf">
+        <div class="sf-title">⭐ Special Focus 9.3 — 말총(Cauda Equina)</div>
+        <p>태아와 출생 시 척수와 척주는 거의 같은 길이. 이후 척주가 더 빠른 속도로 성장 → <b>L1 척추뼈</b>에서 척수가 끝남.</p>
+        <ul>
+          <li>말총: L1 아래에 위치한 신경뿌리들의 묶음 — 뇌척수액에 잠겨 있음</li>
+          <li>말단 신경은 말초신경계의 일부 → 중추신경계보다 재생 가능성 높음</li>
+          <li><b>말총증후군(cauda equina syndrome):</b> 대용량 중앙 탈출 척추원반 → 양쪽 하지 마비, 방광·직장 기능 소실 → <b>외과적 응급</b></li>
+          <li>경막외(epidural) 마취 시 이 공간에 약물 주입</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 갈비뼈·복장뼈 -->
+  <div class="card" id="o6">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🫁</span> 갈비뼈·복장뼈 (Ribs·Sternum)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        <b>갈비뼈(12쌍):</b> 각 갈비뼈는 <b>머리(head)·목(neck)·몸통(body)</b>으로 구성. 뒤쪽에서 등뼈와 2개의 관절 형성.
+      </div>
+      <table class="tbl">
+        <tr><th>분류</th><th>범위</th><th>복장뼈 연결</th></tr>
+        <tr><td><b>참갈비뼈</b></td><td>1~7번</td><td>7개의 복장갈비관절을 통해 직접 부착</td></tr>
+        <tr><td><b>거짓갈비뼈</b></td><td>8~10번</td><td>바로 위쪽 연골과 합쳐 복장뼈에 부착</td></tr>
+        <tr><td><b>뜬갈비뼈(free floating)</b></td><td>11~12번</td><td>앞쪽에서 복장뼈에 부착되지 않음</td></tr>
+      </table>
+      <div class="txt" style="margin-top:8px">
+        <b>복장뼈(sternum):</b> 3부분 — <b>복장뼈자루(manubrium)</b>, <b>복장뼈몸통</b>, <b>칼돌기(xiphoid process)</b>.
+      </div>
+      <table class="tbl">
+        <tr><th>구조</th><th>특징/관절</th></tr>
+        <tr><td><b>복장패임(jugular notch)</b></td><td>자루 위쪽 패임 — 임상 기준점</td></tr>
+        <tr><td><b>빗장관절면(clavicular facet)</b></td><td>복장빗장관절(sternoclavicular joint) 형성</td></tr>
+        <tr><td><b>자루몸통관절(manubriosternal joint)</b></td><td>약 30대에 뼈화, 흉부 촉진 기준</td></tr>
+        <tr><td><b>복장갈비관절</b></td><td>1~7번 갈비뼈와 관절 형성</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 골학 특징 표 -->
+  <div class="card" id="o7">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">📊</span> 표 9.4 — 척추의 골학적 특징 요약</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <table class="tbl tbl-accent">
+        <tr><th>분절</th><th>척추뼈몸통</th><th>위관절면</th><th>가시돌기</th><th>가로돌기</th></tr>
+        <tr><td><b>C1(고리뼈)</b></td><td>없음</td><td>오목, 위쪽 향함</td><td>없음(작은 뒤결절)</td><td>가장 큼</td></tr>
+        <tr><td><b>C2(중쇠뼈)</b></td><td>치아돌기, 높이 큼</td><td>편평, 앞가쪽 향함</td><td>크고, 이분됨</td><td>앞·뒤결절 형성</td></tr>
+        <tr><td><b>C3~C6</b></td><td>폭>높이, 갈로리돌기</td><td>편평, 뒤위쪽 향함</td><td>이분됨</td><td>가로구멍 있음</td></tr>
+        <tr><td><b>C7</b></td><td>폭>높이</td><td>편평, 뒤위쪽 향함</td><td>크고 돌출, 쉽게 촉지</td><td>여분 목갈비뼈 가능</td></tr>
+        <tr><td><b>T2~T9</b></td><td>폭=높이, 갈비반관절면</td><td>편평, 거의 뒤쪽 향함</td><td>길고 뾰족, 아래 경사</td><td>갈비관절면 있음</td></tr>
+        <tr><td><b>L1~L5</b></td><td>높이>폭, L5 쐐기모양</td><td>오목, 안쪽 향함</td><td>넓고 네모 형태</td><td>가늘고 가쪽, 꼭지돌기</td></tr>
+        <tr><td><b>엉치뼈</b></td><td>융합됨</td><td>편평, 뒤위쪽 향함</td><td>많은 가시결절</td><td>많은 가로결절</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 전체척주 탭 ===== -->
+<div id="tab-col" class="tab-content">
+  <div class="toc">
+    <h4>📌 바로가기</h4>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="go('c1')">정상만곡</button>
+      <button class="toc-btn" onclick="go('c2')">중력선</button>
+      <button class="toc-btn" onclick="go('c3')">척주 인대</button>
+      <button class="toc-btn" onclick="go('c4')">척주불안정성</button>
+    </div>
+  </div>
+
+  <div class="card" id="c1">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">〰️</span> 척주의 정상적인 만곡</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        인간의 척주는 시상면에서 <b>교대적 만곡</b>으로 구성.
+      </div>
+      <table class="tbl">
+        <tr><th>영역</th><th>만곡 방향</th><th>특징</th></tr>
+        <tr><td><b>목뼈 앞굽음(cervical lordosis)</b></td><td>앞쪽으로 볼록</td><td>출생 후 머리를 들기 시작하면서 발달</td></tr>
+        <tr><td><b>등뼈 뒤굽음(thoracic kyphosis)</b></td><td>뒤쪽으로 볼록</td><td>태아 시기부터 존재하는 1차 만곡</td></tr>
+        <tr><td><b>허리뼈 앞굽음(lumbar lordosis)</b></td><td>앞쪽으로 볼록</td><td>걷기 시작할 때 발달, 엉덩관절 굽힘근 당김에 의해</td></tr>
+        <tr><td><b>엉치꼬리 뒤굽음</b></td><td>뒤쪽으로 볼록</td><td>태아 시기부터 존재하는 1차 만곡</td></tr>
+      </table>
+      <div class="txt">
+        <b>기능:</b> 교대 만곡은 척주의 <b>충격흡수 능력</b>을 키움. 순수한 수직 척주에 비해 약 10배 더 많은 압박력을 지탱 가능. 또한 내·외구강(body cavity) 용적 확보.
+      </div>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p><b>자세 이상:</b><br>
+        • 과도한 허리뼈 앞굽음(hyperlordosis) — 약한 배근육 + 팽팽한 엉덩관절 굽힘근<br>
+        • 과도한 등뼈 뒤굽음(hyperkyphosis) — 골다공증, 근 약화, 노인에서 흔함<br>
+        • 등굽음(round back)/평등(flat back) — 운동·근육 불균형 반영<br>
+        • 비정상 만곡 → 체강 용적 감소 (예: 과도한 등뼈 뒤굽음 → 흡기 감소)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="c2">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">↕️</span> 신체를 통과하는 중력선</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        이상적인 자세에서 <b>중력선(line of gravity)</b>은 다음 경로를 지나감:
+      </div>
+      <table class="tbl">
+        <tr><th>부위</th><th>중력선 위치</th></tr>
+        <tr><td>머리</td><td>관자뼈 꼭지돌기 바로 앞쪽</td></tr>
+        <tr><td>목뼈</td><td>척추뼈몸통 앞쪽(몸통 앞굽음)</td></tr>
+        <tr><td>등뼈</td><td>척추뼈몸통 앞쪽(뒤굽음 전체에 걸쳐)</td></tr>
+        <tr><td>허리뼈</td><td>각 영역 만곡의 꼭지(apex) 오목면을 따라</td></tr>
+        <tr><td>엉치뼈</td><td>둘째엉치등뼈 앞쪽</td></tr>
+        <tr><td>엉덩관절</td><td>관절 바로 뒤쪽</td></tr>
+        <tr><td>무릎관절</td><td>관절 앞쪽</td></tr>
+        <tr><td>발목관절</td><td>가쪽복사뼈 앞쪽</td></tr>
+      </table>
+      <div class="txt">
+        중력선과 척주만곡들 사이의 공간적 관계는 <b>각 척추 영역에 대해 굽힘 또는 폄 토크</b>를 생성. 이상적인 자세는 이 토크들에 대한 근육과 인대의 부담을 최소화하는 위치.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="c3">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🔒</span> 척주의 인대지지 (5가지 인대)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <table class="tbl tbl-accent">
+        <tr><th>인대명</th><th>부착부위</th><th>주된 기능</th><th>특기사항</th></tr>
+        <tr><td><b>황색인대</b></td><td>한 고리판 앞면 → 아래 고리판 뒷면</td><td>굽힘 제한, 척추관 보호</td><td><b>탄성조직 80%</b>+아교질 20% — 척주 인대 중 가장 탄성 높음. 완전 굽힘 시 약 35% 신장 견딤</td></tr>
+        <tr><td><b>가시끝인대</b></td><td>C7~엉치까지 가시돌기 끝</td><td>굽힘 제한</td><td>허리 영역에서 가장 두꺼움. 목밑인대(목 확장)와 연속. 허리뼈에서 극단적 굽힘 시 첫 번째로 파열 가능</td></tr>
+        <tr><td><b>가시사이인대</b></td><td>인접 가시돌기들 사이</td><td>굽힘·가쪽굽힘 제한</td><td>목 영역에서 강하고 아교질 풍부, 등 영역은 국소 근육·가시끝인대와 혼합. 허리 영역에 잘 발달됨</td></tr>
+        <tr><td><b>앞세로인대</b></td><td>뒤통수뼈~엉치뼈 전체 척추뼈몸통 앞면</td><td>폄 제한, 척추원반 앞쪽 보강</td><td>허리뼈에서 가장 잘 발달. 뒤세로인대보다 약 2배 강함. 척추전방전위 제한의 주요 구조</td></tr>
+        <tr><td><b>뒤세로인대</b></td><td>C2~엉치뼈 전체 척추뼈몸통 뒷면</td><td>굽힘 제한, 척추원반 뒤쪽 보강</td><td>척추관 안의 척수 바로 앞쪽. 허리뼈에서 좁아져 뒤가쪽 원반 탈출 허용 가능</td></tr>
+      </table>
+      <div class="txt" style="margin-top:8px">
+        <b>돌기관절 관절주머니인대:</b> 각 돌기관절의 가장자리에 부착. 굽힘 범위에서는 느슨하지만 운동 끝 범위에서 팽팽해짐. 목 영역에서 특히 중요한 안정화 구조.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="c4">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">⚠️</span> 척주의 인대지지 — 척주불안정성·중립지대</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        <b>중립지대(neutral zone):</b> Panjabi가 정의 — 주변 조직의 <b>최소 저항으로 가능한 척추 운동의 양(지대)</b>. 살아있는 인간에서 자연스런 "최소 뻣뻣함의 지대"를 의미. 중립지대의 증가가 불안정성의 지표.
+      </div>
+      <table class="tbl">
+        <tr><th>상태</th><th>중립지대</th><th>임상적 의미</th></tr>
+        <tr><td>정상</td><td>정상 범위</td><td>적절한 안정성</td></tr>
+        <tr><td>인대 파열</td><td>증가</td><td>불안정성 → 이상 운동 가능</td></tr>
+        <tr><td>근육 약화</td><td>증가</td><td>인대·뼈에 의존 → 손상 위험</td></tr>
+        <tr><td>근육 강화</td><td>감소</td><td>안정성 회복</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트 — 척추불안정성</div>
+        <p><b>척추불안정성(spinal instability):</b> 비정상적이고 증가된 척추사이 운동을 유발할 수 있는 자연스런 척추사이 뻣뻣함의 상실. 파열·느슨해진 인대는 임상적으로 관련된 척추사이이음부를 적절히 안정시킬 수 없게 됨. 치료는 불안정성의 본질에 따라 해당 척추사이이음부의 자연스런 뻣뻣함을 증가시키기 위한 신경근육계통의 능력을 증진시켜 척추사이이음부를 안정시키는 것.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 관절학 탭 ===== -->
+<div id="tab-arth" class="tab-content">
+  <div class="toc">
+    <h4>📌 바로가기</h4>
+    <div class="toc-btns">
+      <button class="toc-btn" onclick="go('a1')">척추사이이음부 3요소</button>
+      <button class="toc-btn" onclick="go('a2')">돌기관절</button>
+      <button class="toc-btn" onclick="go('a3')">척추원반 구조</button>
+      <button class="toc-btn" onclick="go('a4')">척추끝판</button>
+      <button class="toc-btn" onclick="go('a5')">척추짝지음</button>
+    </div>
+  </div>
+
+  <div class="card" id="a1">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🔗</span> 전형적인 척추사이이음부 — 3가지 기능적 요소</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">전형적인 척추사이이음부(intervertebral junction)는 3가지 기능적 요소로 구성:</div>
+      <table class="tbl tbl-accent">
+        <tr><th>요소</th><th>구조</th><th>주된 기능</th></tr>
+        <tr><td><b>① 가로돌기·가시돌기</b></td><td>뼈 돌기들</td><td>근육·인대의 역학적 지렛대(outrigger/lever). 돌기관절의 철도선 역할로 척추사이 운동 방향 안내</td></tr>
+        <tr><td><b>② 돌기관절</b></td><td>윤활관절</td><td>운동 방향 안내, 압박력 일부 전달, 과도한 운동 방지</td></tr>
+        <tr><td><b>③ 척추뼈몸통사이관절</b></td><td>척추원반 포함</td><td>하중 전달·분산, 척추사이 충격흡수, 굽힘축 역할</td></tr>
+      </table>
+      <div class="txt">
+        돌기관절의 공간적 방향은 해당 척추 영역에서 우세한 운동에 영향을 미치는 <b>가장 중요한 단일 인자</b>. 표 9.5에 관절운동형상학 용어 정리됨.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="a2">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">⭕</span> 돌기관절 (Apophyseal Joint) 구조와 기능</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">척추에 24쌍의 돌기관절. 각각은 마주보는 관절면들 간의 결합으로 형성됨. 역학적으로 <b>평면관절</b>로 분류.</div>
+      <table class="tbl">
+        <tr><th>영역</th><th>관절면 방향</th><th>허용 운동</th><th>제한 운동</th></tr>
+        <tr><td><b>목뼈</b></td><td>이마면과 수평면 사이 약 45°</td><td>3방향 모두 허용</td><td>상대적으로 적음</td></tr>
+        <tr><td><b>등뼈</b></td><td>거의 이마면(frontal)</td><td>가쪽굽힘·축돌림</td><td>굽힘·폄 제한</td></tr>
+        <tr><td><b>허리뼈 L1~L4</b></td><td>거의 시상면(sagittal)</td><td>굽힘·폄</td><td>축돌림 크게 제한</td></tr>
+        <tr><td><b>L5-S1</b></td><td>이마면에 더 가까움</td><td>가쪽굽힘</td><td>앞 전단력 저항</td></tr>
+      </table>
+      <div class="sf">
+        <div class="sf-title">⭐ Special Focus 9.4 — 돌기관절 내에 위치한 관절속 구조</div>
+        <p>돌기관절 주변부에는 <b>주머니밑지방달(subcapsular fat pad)</b>과 <b>섬유-지방달(fibro-adipose meniscoid)</b>이 존재.</p>
+        <ul>
+          <li><b>주머니밑지방달:</b> 목뼈와 허리뼈에서 가장 자주 발달. 관절주머니 속면의 관절연골 비갈림쪽으로 확장. 완전히 형성되면 허리뼈 영역은 큰 주머니밑지방달(extracapsular fat pad) 공간 일부 채움</li>
+          <li><b>섬유-지방달(섬유-지방달):</b> 관절주머니 속면에 따라 다양한 위치 차지. 골막과 아교질과 지방을 보호하는 유동적인 주름(fold)까지 다양</li>
+          <li><b>임상 의미:</b> 이러한 구조들은 관절 내 압박의 완충재. 논란 있지만 <b>급성 목 통증·자물쇠(locked neck)</b>와 연관될 수 있음. 임상적으로 갑자기 목을 돌릴 때 통증의 기전으로 제시됨</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="a3">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">💿</span> 척추뼈몸통사이관절 — 척추원반 구조</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">C2~C3에서 L5~S1까지 23개의 척추원반(intervertebral disc). 전체 척추 높이의 약 25% 차지. 척추원반은 연골성 부동관절(cartilaginous synarthrosis)로 분류.</div>
+      <table class="tbl tbl-accent">
+        <tr><th>구조</th><th>조성</th><th>기능</th></tr>
+        <tr><td><b>속질핵(nucleus pulposus)</b></td><td>약 70~90% 물, 프로테오글리칸 겔, 콜라겐 Type II</td><td>정수압으로 압박력 균등 분산, 척추 높이의 약 50% 차지</td></tr>
+        <tr><td><b>섬유태(annulus fibrosus)</b></td><td>동심원 15~20층, 아교섬유, 65°도 방향 교대 배열</td><td>속질핵 격납, 전단·회전력에 저항, 내장력 제공</td></tr>
+        <tr><td><b>척추끝판</b></td><td>연골성 결합조직, 비교적 얇음</td><td>속질핵과 척추뼈몸통 사이 영양 공급 통로</td></tr>
+      </table>
+      <div class="txt" style="margin-top:8px">
+        <b>속질핵의 압력 변화 (하루 중 변화):</b> 기상 시 압력 비교적 낮음 → 물이 속질핵으로 들어와 척추원반 팽창 → 하루 중 활동으로 압력 증가 → 물 밀려나가며 압력 감소. <b>사람의 키는 하루 평균 약 1% 변화 (약 1.5 cm).</b>
+      </div>
+      <table class="tbl">
+        <tr><th>운동</th><th>속질핵 이동 방향</th><th>섬유태 변화</th><th>임상 연관</th></tr>
+        <tr><td>굽힘</td><td>뒤쪽</td><td>뒤쪽 섬유 신장</td><td>뒤쪽 탈출 위험</td></tr>
+        <tr><td>폄</td><td>앞쪽</td><td>앞쪽 섬유 신장</td><td>McKenzie 폄 치료 근거</td></tr>
+        <tr><td>가쪽굽힘</td><td>반대쪽</td><td>같은쪽 섬유 신장</td><td>—</td></tr>
+        <tr><td>압박</td><td>방사형 팽창</td><td>모든 방향 신장</td><td>서 있을 때 vs 누울 때 차이</td></tr>
+      </table>
+      <div class="sf">
+        <div class="sf-title">⭐ Special Focus 9.8 — 속질핵탈출증(HNP) 상세 설명</div>
+        <p>정식 용어: <b>탈출된 척추원반(herniated disc)</b> 또는 <b>탈출된 척추원반 속질핵(herniated nucleus pulposus, HNP)</b>.</p>
+        <ul>
+          <li><b>탈출(prolapse):</b> 속질핵이 뒤쪽으로 이동하지만 여전히 섬유태 범위 내에 있음</li>
+          <li><b>돌출(bulge/protrude):</b> 뒤쪽 테두리 넘어 약간 나옴, 뒤세로인대 아직 있음</li>
+          <li><b>빠져나옴(extrude):</b> 뒤세로인대 완전히 통과, 경막외 공간으로 진입</li>
+          <li><b>분리(sequestration):</b> 빠져나온 부분이 분리, 경막외 공간에서 이동</li>
+          <li><b>허리뼈 HNP의 역학적·구조적 원인:</b>
+            <ol style="padding-left:16px; margin-top:4px;">
+              <li>속질핵 섬유화 → 경로가 되는 뒤 섬유태의 부채꼴 균열</li>
+              <li>높은 원반 압력 유발 위한 충분한 물 미함유</li>
+              <li>뒤 섬유태가 속질핵 이동으로부터 압력에 저항하지 못함</li>
+              <li>굽힘된 비틀린(비틀림) 척추에 적용된 지속·반복적 부하</li>
+            </ol>
+          </li>
+        </ul>
+        <p style="margin-top:6px">💡 허리뼈에서 가장 흔한 위치: <b>L4-L5, L5-S1</b>. 좌골신경(sciatic nerve, L4~S3)을 구성하는 신경뿌리들에 가장 영향 큼 → <b>좌골신경통(sciatica)</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="a4">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🛡️</span> 척추끝판 — 정수압 분배자</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        척추끝판(vertebral endplate)은 척추뼈몸통의 위·아래면을 덮는 비교적 얇은 연골성 결합조직. <b>척추원반에 영양을 공급하는 독특한 구조.</b>
+      </div>
+      <table class="tbl">
+        <tr><th>기능</th><th>설명</th></tr>
+        <tr><td><b>영양 공급</b></td><td>척추원반은 성인에서 혈관 없음 → 끝판 모세혈관에서 확산으로 영양 공급. 포도당·산소가 척추뼈몸통 혈관에서 끝판 통해 원반으로 이동</td></tr>
+        <tr><td><b>압박력 분배</b></td><td>척추뼈몸통에서 원반으로 하중 균등 분배. 아동기에는 매우 두꺼우며 척추사이 공간 높이의 약 50% 차지</td></tr>
+        <tr><td><b>약한 고리</b></td><td>척추뼈몸통과 원반 사이의 "약한 고리(weak link)" — 높거나 반복적 압박 시 척추뼈몸통사이관절에서 골절 먼저 발생</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>노화에 따른 끝판 혈관 감소 + 프로테오글리칸 합성 억제 → 원반 내 물 함유량 감소 → 원반 퇴행. 이는 척추끝판 석회화와 연관되어 있으며, 비정상적인 역학적 부하가 지속되면 압박 골절 위험 증가.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="a5">
+    <button class="col-btn open" onclick="tog(this)">
+      <div class="card-title"><span class="icon">🔄</span> 척추짝지음 (Spinal Coupling)</div>
+      <span class="arr">▼</span>
+    </button>
+    <div class="col-body open">
+      <div class="txt">
+        <b>척추짝지음(spinal coupling):</b> 어떤 주어진 운동면 내에서 수행된 척추의 움직임은 흔히 임상적으로 감지할 수 없는 다른 운동면에서의 자동적인 움직임과 함께 나타남. 돌림운동과 병진운동 모두에서 일어날 수 있음.
+      </div>
+      <table class="tbl tbl-accent">
+        <tr><th>영역</th><th>짝지음 양상</th><th>특기사항</th></tr>
+        <tr><td><b>목뼈(C2-C7)</b></td><td>가쪽굽힘 + <b>같은쪽 돌림</b></td><td>관절면의 약 45° 경사 방향이 원인</td></tr>
+        <tr><td><b>등뼈(일반)</b></td><td>가쪽굽힘 + 같은쪽 돌림</td><td>중간~아래 등뼈에서 일치된 연구 결과</td></tr>
+        <tr><td><b>허리뼈</b></td><td>가쪽굽힘 + 같은쪽 돌림 (일반적)</td><td>논란 있음, 관절면 방향에 따라 다름</td></tr>
+      </table>
+      <div class="clin">
+        <div class="lbl">🔴 임상 포인트</div>
+        <p>척추짝지음은 도수치료사들이 <b>척추의 기능이상을 측정하고 치료하기 위해 사용</b>. 특정 영역에서 정상이라고 고려되는 짝지음 양상에서 벗어나면 임상적으로 의미 있는 발견. 아직 많은 불일치가 있으며 추가 연구 필요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+function tog(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
