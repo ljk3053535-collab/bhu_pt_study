@@ -7,28 +7,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f6f8;   /* 메인 배경 */
-  --bg2: #ffffff;  /* 카드 배경 */
-  --bg3: #eef0f3;  /* 호버 배경 */
-  --border: #dde1e8; /* 테두리 */
-  --text: #1a1d24;   /* 기본 텍스트 */
-  --text2: #4a5168;  /* 보조 텍스트 */
-  --text3: #9199ad;  /* 흐린 텍스트 * / 
-  --c1: #4f9cf9;
-  --c2: #3dbf8a;
-  --c3: #f9884f;
-  --c4: #c97cf9;
-  --c5: #f95f7a;
-  --c1bg: rgba(79,156,249,0.08);
-  --c2bg: rgba(61,191,138,0.08);
-  --c3bg: rgba(249,136,79,0.08);
-  --c4bg: rgba(201,124,249,0.08);
-  --c5bg: rgba(249,95,122,0.08);
-  --c1bd: rgba(79,156,249,0.2);
-  --c2bd: rgba(61,191,138,0.2);
-  --c3bd: rgba(249,136,79,0.2);
-  --c4bd: rgba(201,124,249,0.2);
-  --c5bd: rgba(249,95,122,0.2);
+  --bg:    #ddeeff;
+  --bg2:   #f0f7ff;
+  --bg3:   #c8e0fa;
+  --border: #b0cfe8;
+  --text:  #0d2a45;
+  --text2: #2d5a7a;
+  --text3: #6a9abf;
+  --c1: #1a7fd4;
+  --c2: #18a06e;
+  --c3: #e07830;
+  --c4: #9055c9;
+  --c5: #d93660;
+  --c1bg: rgba(26,127,212,0.10);
+  --c2bg: rgba(24,160,110,0.10);
+  --c3bg: rgba(224,120,48,0.10);
+  --c4bg: rgba(144,85,201,0.10);
+  --c5bg: rgba(217,54,96,0.10);
+  --c1bd: rgba(26,127,212,0.30);
+  --c2bd: rgba(24,160,110,0.30);
+  --c3bd: rgba(224,120,48,0.30);
+  --c4bd: rgba(144,85,201,0.30);
+  --c5bd: rgba(217,54,96,0.30);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -42,22 +42,22 @@ body {
 /* HEADER */
 .header {
   padding: 32px 40px 24px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, #0d1020 0%, var(--bg) 100%);
+  border-bottom: 2px solid var(--c1bd);
+  background: linear-gradient(135deg, #1a4e7a 0%, #1a7fd4 60%, #4fb8f0 100%);
 }
 .header-top {
   display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
 }
 .header-badge {
-  font-size: 10px; letter-spacing: 0.12em; color: var(--text3);
-  border: 1px solid var(--border); border-radius: 4px;
+  font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.35); border-radius: 4px;
   padding: 3px 8px; text-transform: uppercase;
 }
 .header h1 {
-  font-size: 24px; font-weight: 700; color: var(--text);
+  font-size: 24px; font-weight: 700; color: #fff;
   letter-spacing: -0.5px;
 }
-.header p { font-size: 13px; color: var(--text2); margin-top: 6px; }
+.header p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 6px; }
 
 /* STATS */
 .stats {
@@ -77,7 +77,7 @@ body {
 .subject-header {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 20px; padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
 }
 .subject-num {
   font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
@@ -86,28 +86,16 @@ body {
 .subject-title { font-size: 18px; font-weight: 700; }
 .subject-count { font-size: 12px; color: var(--text3); margin-left: auto; }
 
-/* SUBJECT 1 */
 .s1 .subject-num { background: var(--c1bg); color: var(--c1); border: 1px solid var(--c1bd); }
 .s1 .subject-title { color: var(--c1); }
-/* SUBJECT 2 */
 .s2 .subject-num { background: var(--c2bg); color: var(--c2); border: 1px solid var(--c2bd); }
 .s2 .subject-title { color: var(--c2); }
-/* SUBJECT 3 */
 .s3 .subject-num { background: var(--c3bg); color: var(--c3); border: 1px solid var(--c3bd); }
 .s3 .subject-title { color: var(--c3); }
-
-/* SUBJECT 4 */
 .s4 .subject-num { background: var(--c4bg); color: var(--c4); border: 1px solid var(--c4bd); }
 .s4 .subject-title { color: var(--c4); }
-.s4 .field-card:hover { border-color: var(--c4bd); }
-.s4 .field-dot { background: var(--c4); }
-.s4 .area-item.has-file .area-link-icon { color: var(--c4); }
-/* SUBJECT 5 */
 .s5 .subject-num { background: var(--c5bg); color: var(--c5); border: 1px solid var(--c5bd); }
 .s5 .subject-title { color: var(--c5); }
-.s5 .field-card:hover { border-color: var(--c5bd); }
-.s5 .field-dot { background: var(--c5); }
-.s5 .area-item.has-file .area-link-icon { color: var(--c5); }
 
 /* FIELD GRID */
 .field-grid {
@@ -122,17 +110,19 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.s1 .field-card:hover { border-color: var(--c1bd); }
-.s2 .field-card:hover { border-color: var(--c2bd); }
-.s3 .field-card:hover { border-color: var(--c3bd); }
+.s1 .field-card:hover { border-color: var(--c1bd); box-shadow: 0 2px 12px rgba(26,127,212,0.12); }
+.s2 .field-card:hover { border-color: var(--c2bd); box-shadow: 0 2px 12px rgba(24,160,110,0.12); }
+.s3 .field-card:hover { border-color: var(--c3bd); box-shadow: 0 2px 12px rgba(224,120,48,0.12); }
+.s4 .field-card:hover { border-color: var(--c4bd); box-shadow: 0 2px 12px rgba(144,85,201,0.12); }
+.s5 .field-card:hover { border-color: var(--c5bd); box-shadow: 0 2px 12px rgba(217,54,96,0.12); }
 
 .field-header {
-  padding: 14px 16px 10px;
+  padding: 14px 16px 12px;
   display: flex; align-items: center; gap: 8px;
-  cursor: pointer;
   border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.5);
 }
 .field-dot {
   width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
@@ -140,54 +130,54 @@ body {
 .s1 .field-dot { background: var(--c1); }
 .s2 .field-dot { background: var(--c2); }
 .s3 .field-dot { background: var(--c3); }
+.s4 .field-dot { background: var(--c4); }
+.s5 .field-dot { background: var(--c5); }
 
-.field-name { font-size: 14px; font-weight: 500; flex: 1; }
-.field-toggle {
-  font-size: 10px; color: var(--text3);
-  transition: transform 0.2s;
-}
-.field-card.open .field-toggle { transform: rotate(180deg); }
+.field-name { font-size: 14px; font-weight: 600; flex: 1; }
 
-/* AREA LIST */
-.area-list {
-  display: none; padding: 8px 0;
-}
-.field-card.open .area-list { display: block; }
+/* LINK LIST — direct links, no toggle */
+.link-list { padding: 6px 0; }
 
-.area-item {
+.link-item {
   display: flex; align-items: center; gap: 10px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background 0.15s;
+  padding: 9px 16px;
   text-decoration: none;
   color: inherit;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--border);
 }
-.area-item:hover { background: var(--bg3); }
-.area-num {
-  font-size: 10px; color: var(--text3); min-width: 16px;
-  font-family: monospace;
-}
-.area-name { font-size: 13px; color: var(--text2); flex: 1; }
-.area-link-icon {
-  font-size: 10px; color: var(--text3);
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-.area-item:hover .area-link-icon { opacity: 1; }
-.area-item.has-file .area-name { color: var(--text); }
-.area-item.has-file .area-link-icon { color: var(--c1); }
-.s2 .area-item.has-file .area-link-icon { color: var(--c2); }
-.s3 .area-item.has-file .area-link-icon { color: var(--c3); }
+.link-item:last-child { border-bottom: none; }
+.link-item:hover { background: var(--bg3); }
 
-/* NO FILE badge */
-.area-item.no-file { cursor: default; }
-.area-item.no-file .area-name { color: var(--text3); }
+.link-dot {
+  width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+  opacity: 0.5;
+}
+.s1 .link-dot { background: var(--c1); }
+.s2 .link-dot { background: var(--c2); }
+.s3 .link-dot { background: var(--c3); }
+.s4 .link-dot { background: var(--c4); }
+.s5 .link-dot { background: var(--c5); }
+
+.link-name { font-size: 13px; color: var(--text); flex: 1; font-weight: 500; }
+.link-arrow {
+  font-size: 13px; font-weight: 700;
+  opacity: 0; transition: opacity 0.15s, transform 0.15s;
+}
+.link-item:hover .link-arrow { opacity: 1; transform: translateX(3px); }
+.s1 .link-arrow { color: var(--c1); }
+.s2 .link-arrow { color: var(--c2); }
+.s3 .link-arrow { color: var(--c3); }
+.s4 .link-arrow { color: var(--c4); }
+.s5 .link-arrow { color: var(--c5); }
 
 /* FOOTER */
 .footer {
   text-align: center; padding: 32px;
   color: var(--text3); font-size: 12px;
   border-top: 1px solid var(--border);
+  background: var(--bg2);
+  margin-top: 16px;
 }
 </style>
 </head>
@@ -197,7 +187,7 @@ body {
   <div class="header-top">
     <span class="header-badge">PT Study Portal</span>
   </div>
-  <h1> ♥ 진이랑 보려고 만듬♥ </h1>
+  <h1>♥ 진이랑 보려고 만듬 ♥</h1>
   <p>정리해서 올릴거임</p>
 </div>
 
@@ -223,253 +213,54 @@ body {
     <div class="subject-header">
       <span class="subject-num">01</span>
       <span class="subject-title">물리치료 기초</span>
-      <span class="subject-count">4개 분야</span>
     </div>
     <div class="field-grid">
 
-      <!-- 1. 해부생리 -->
-      <div class="field-card open" id="f-anatomy">
-  <div class="field-header" onclick="toggle('f-anatomy')">
-    <div class="field-dot"></div>
-    <span class="field-name">1. 해부생리</span>
-    <span class="field-toggle">▼</span>
-  </div>
-  <div class="area-list" style="display:block; padding:0;">
-
-    <div class="field-card" id="f-순환_생리">
-      <div class="field-header" onclick="toggle('f-순환_생리')">
-        <div class="field-dot"></div>
-        <span class="field-name">순환_생리</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="순환생리.html"><span class="area-num">01</span><span class="area-name">순환_생리</span><span class="area-link-icon">→</span></a>
-      </div>
-    </div>
-
-    <div class="field-card" id="f-심장_생리">
-      <div class="field-header" onclick="toggle('f-심장_생리')">
-        <div class="field-dot"></div>
-        <span class="field-name">심장_생리</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="심장생리.html"><span class="area-num">01</span><span class="area-name">심장_생리</span><span class="area-link-icon">→</span></a>
-      </div>
-    </div>
-
-    <div class="field-card" id="f-호흡_계통">
-      <div class="field-header" onclick="toggle('f-호흡_계통')">
-        <div class="field-dot"></div>
-        <span class="field-name">호흡_계통</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="호흡계통.html"><span class="area-num">01</span><span class="area-name">호흡_계통</span><span class="area-link-icon">→</span></a>
-      </div>
-    </div>
-</div>
-</div>
-      <!-- 2. 운동학 -->
-      <div class="field-card open" id="f-kinesiology">
-        <div class="field-header" onclick="toggle('f-kinesiology')">
+      <!-- 해부생리 -->
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">2. 운동학(뉴만)</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">해부생리</span>
         </div>
-        <div class="area-list" style="display:block; padding:0;">
-
-          <div class="field-card" id="f-뉴만_CH1">
-            <div class="field-header" onclick="toggle('f-뉴만_CH1')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 1</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-             <a class="area-item has-file" href="뉴만_CH1.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 1</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-뉴만_CH2">
-            <div class="field-header" onclick="toggle('f-뉴만_CH2')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 2</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH2.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 2</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-           <div class="field-card" id="f-뉴만_CH3">
-            <div class="field-header" onclick="toggle('f-뉴만_CH3')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 3</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH3.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 3</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-뉴만_CH4">
-            <div class="field-header" onclick="toggle('f-뉴만_CH4')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 4</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH4.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 4</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-           <div class="field-card" id="f-뉴만_CH1">
-            <div class="field-header" onclick="toggle('f-뉴만 총정리 서머리')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 총정리 서머리</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-             <a class="area-item has-file" href="뉴만_총정리.html"><span class="area-num">01</span><span class="area-name">뉴만 총정리 서머리</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-          
-             <div class="field-card" id="f-뉴만_CH1-4_문제모음+서머리">
-            <div class="field-header" onclick="toggle('f-뉴만_CH1-4_문제모음+서머리')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 CH1-4_문제모음+서머리</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH1-4장_문제모음.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 CH1-4_문제모음+서머리</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-뉴만_CH5">
-            <div class="field-header" onclick="toggle('f-뉴만_CH5')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 5</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH5.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 5</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-뉴만_CH6">
-            <div class="field-header" onclick="toggle('f-뉴만_CH6')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 6</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH6.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 6</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-뉴만_CH7">
-            <div class="field-header" onclick="toggle('f-뉴만_CH7')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 7</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH7.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 7</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-뉴만_CH8">
-            <div class="field-header" onclick="toggle('f-뉴만_CH8')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 8</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH8.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 8</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-             <div class="field-card" id="f-뉴만_CH9">
-            <div class="field-header" onclick="toggle('f-뉴만_CH9')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 9</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_CH9.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 9</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-             <div class="field-card" id="f-뉴만_ CH10">
-            <div class="field-header" onclick="toggle('f-뉴만_ CH10')">
-              <div class="field-dot"></div>
-              <span class="field-name">뉴만 챕터 10</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="뉴만_ CH10.html"><span class="area-num">01</span><span class="area-name">뉴만 챕터 10</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
+        <div class="link-list">
+          <a class="link-item" href="순환생리.html"><div class="link-dot"></div><span class="link-name">순환 생리</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="심장생리.html"><div class="link-dot"></div><span class="link-name">심장 생리</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="호흡계통.html"><div class="link-dot"></div><span class="link-name">호흡 계통</span><span class="link-arrow">→</span></a>
         </div>
       </div>
 
-      <!-- 3. 물리적 인자치료 -->
-      <div class="field-card" id="f-modality">
-        <div class="field-header" onclick="toggle('f-modality')">
+      <!-- 운동학 (뉴만) -->
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">3. 물리적 인자치료</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">운동학 (뉴만)</span>
         </div>
-        <div class="area-list">
-          <div class="field-card" id="f-전기치료학_기초">
-            <div class="field-header" onclick="toggle('f-전기치료학_기초')">
-              <div class="field-dot"></div>
-              <span class="field-name">전기치료학_기초</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="전기치료학_1_기초.html"><span class="area-num">01</span><span class="area-name">전기치료학_기초</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-          <div class="field-card" id="f-전기치료학_응용">
-            <div class="field-header" onclick="toggle('f-전기치료학_응용')">
-              <div class="field-dot"></div>
-              <span class="field-name">전기치료학_응용</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="전기치료학_2_응용.html"><span class="area-num">01</span><span class="area-name">전기치료학_응용</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-          
-            <div class="field-card" id="f-수치료">
-            <div class="field-header" onclick="toggle('f-수치료')">
-              <div class="field-dot"></div>
-              <span class="field-name">수치료</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="수치료_국가고시.html"><span class="area-num">01</span><span class="area-name">수치료</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-          
+        <div class="link-list">
+          <a class="link-item" href="뉴만_CH1.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 1</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH2.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 2</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH3.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 3</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH4.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 4</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH5.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 5</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH6.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 6</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH7.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 7</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH8.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 8</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH9.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 9</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_ CH10.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 10</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_총정리.html"><div class="link-dot"></div><span class="link-name">뉴만 총정리 서머리</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="뉴만_CH1-4장_문제모음.html"><div class="link-dot"></div><span class="link-name">CH1–4 문제모음 + 서머리</span><span class="link-arrow">→</span></a>
         </div>
       </div>
 
-      <!-- 4. 공중보건 -->
-      <div class="field-card" id="f-public">
-        <div class="field-header" onclick="toggle('f-public')">
+      <!-- 물리적 인자치료 -->
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">4. 공중보건</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">물리적 인자치료</span>
         </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">공중보건 총론</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">역학과 감염병</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">환경보건</span></a>
-          <a class="area-item no-file"><span class="area-num">04</span><span class="area-name">보건관리 및 보건사업</span></a>
+        <div class="link-list">
+          <a class="link-item" href="전기치료학_1_기초.html"><div class="link-dot"></div><span class="link-name">전기치료학 기초</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="전기치료학_2_응용.html"><div class="link-dot"></div><span class="link-name">전기치료학 응용</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="수치료_국가고시.html"><div class="link-dot"></div><span class="link-name">수치료</span><span class="link-arrow">→</span></a>
         </div>
       </div>
 
@@ -481,116 +272,22 @@ body {
     <div class="subject-header">
       <span class="subject-num">02</span>
       <span class="subject-title">물리치료 진단평가</span>
-      <span class="subject-count">4개 분야</span>
     </div>
     <div class="field-grid">
 
-      <!-- 1. 진단평가 원리 -->
-      <div class="field-card" id="f-eval-principle">
-        <div class="field-header" onclick="toggle('f-eval-principle')">
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">1. 진단평가 원리</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">신경계 진단 · 중재</span>
         </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">진단평가 검사원리</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">측정 및 평가</span></a>
-        </div>
-      </div>
-
-      <!-- 2. 검사와 평가 -->
-      <div class="field-card" id="f-exam">
-        <div class="field-header" onclick="toggle('f-exam')">
-          <div class="field-dot"></div>
-          <span class="field-name">2. 검사와 평가</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">근골격계 검사 및 평가</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">신경계 검사 및 평가</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">심폐혈관계 검사 및 평가</span></a>
-          <a class="area-item no-file"><span class="area-num">04</span><span class="area-name">피부계 검사 및 평가</span></a>
-          <a class="area-item no-file"><span class="area-num">05</span><span class="area-name">난치성·대사성 질환 검사 및 평가</span></a>
+        <div class="link-list">
+          <a class="link-item" href="신경계_질환_중재_Part1.html"><div class="link-dot"></div><span class="link-name">신경계 중재 Part 1</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="신경계_중재_운동치료_Part2.html"><div class="link-dot"></div><span class="link-name">신경계 중재 Part 2</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="neuro_part1.html"><div class="link-dot"></div><span class="link-name">신경계 진단 Part 1</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="neuro_part2.html"><div class="link-dot"></div><span class="link-name">신경계 진단 Part 2</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="neuro_part3.html"><div class="link-dot"></div><span class="link-name">신경계 진단 Part 3</span><span class="link-arrow">→</span></a>
         </div>
       </div>
-
-      <!-- 3. 임상의사결정 -->
-      <div class="field-card" id="f-clinical">
-        <div class="field-header" onclick="toggle('f-clinical')">
-          <div class="field-dot"></div>
-          <span class="field-name">3. 임상의사결정</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">근거중심 물리치료</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">물리치료 의사결정</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">물리치료 기록</span></a>
-          <a class="area-item no-file"><span class="area-num">04</span><span class="area-name">물리치료 윤리</span></a>
-        </div>
-      </div>
-
-      <!-- 4. 물리치료 문제해결(진단평가) -->
-      <div class="field-card" id="f-dx-problem">
-        <div class="field-header" onclick="toggle('f-dx-problem')">
-          <div class="field-dot"></div>
-          <span class="field-name">4. 물리치료 문제해결(진단평가)</span>
-          <span class="field-toggle">▼</span>
-        </div>
-
-    <div class="field-card" id="f-신경계_진단_part1">
-      <div class="field-header" onclick="toggle('f-신경계_중재_part1')">
-        <div class="field-dot"></div>
-        <span class="field-name">신경계_중재_part1</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="신경계_질환_중재_Part1.html"><span class="area-num">01</span><span class="area-name">신경계_중재_part1</span><span class="area-link-icon">→</span></a>
-      </div>
-    </div>
-        <div class="field-card" id="f-신경계_중재_part2">
-      <div class="field-header" onclick="toggle('f-신경계_중재_part2')">
-        <div class="field-dot"></div>
-        <span class="field-name">신경계_중재_part2</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="신경계_중재_운동치료_Part2.html"><span class="area-num">01</span><span class="area-name">신경계_중재_part2 </span><span class="area-link-icon">→</span></a>
-      </div>
-        </div>
-        
-        <div class="field-card" id="f-신경계_진단_part1">
-      <div class="field-header" onclick="toggle('f-신경계_진단_part1')">
-        <div class="field-dot"></div>
-        <span class="field-name">신경계_진단_part1</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="neuro_part1.html"><span class="area-num">01</span><span class="area-name">신경계_진단_part1 </span><span class="area-link-icon">→</span></a>
-      </div>
-        </div>
-
-        <div class="field-card" id="f-신경계_진단_part2">
-      <div class="field-header" onclick="toggle('f-신경계_진단_part2')">
-        <div class="field-dot"></div>
-        <span class="field-name">신경계_진단_part2</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="neuro_part2.html"><span class="area-num">01</span><span class="area-name">신경계_진단_part2 </span><span class="area-link-icon">→</span></a>
-      </div>
-        </div>
-
-        <div class="field-card" id="f-신경계_진단_part3">
-      <div class="field-header" onclick="toggle('f-신경계_진단_part3')">
-        <div class="field-dot"></div>
-        <span class="field-name">신경계_진단_part3</span>
-        <span class="field-toggle">▼</span>
-      </div>
-      <div class="area-list">
-        <a class="area-item has-file" href="neuro_part3.html"><span class="area-num">01</span><span class="area-name">신경계_진단_part3 </span><span class="area-link-icon">→</span></a>
-      </div>
-        </div>
-    
 
     </div>
   </div>
@@ -600,170 +297,25 @@ body {
     <div class="subject-header">
       <span class="subject-num">03</span>
       <span class="subject-title">물리치료 중재</span>
-      <span class="subject-count">5개 분야</span>
     </div>
     <div class="field-grid">
 
-      <!-- 1. 근골격계 중재 -->
-      <div class="field-card" id="f-msk">
-        <div class="field-header" onclick="toggle('f-msk')">
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">1. 근골격계 중재</span>
-          <span class="field-toggle">▼</span>
-          
-            </div>
-          <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-골절_서머리')">
-              <div class="field-dot"></div>
-              <span class="field-name">골절_서머리</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="Fracture_정리.html"><span class="area-num">01</span><span class="area-name">골절_서머리</span><span class="area-link-icon">→</span></a>
-            </div>
-                </div>
-     <div class="field-card" id="f-스페셜테스트문제(상지)">
-    <div class="field-header" onclick="toggle('f-스페셜테스트문제(상지)')">
-        <div class="field-dot"></div>
-        <span class="field-name">스페셜테스트문제(상지)</span>
-        <span class="field-toggle">▼</span>
-    </div>
-    <div class="area-list">
-        <a class="area-item has-file" href="스페셜테스트_상지.html"><span class="area-num">01</span><span class="area-name">스페셜테스트문제(상지)</span><span class="area-link-icon">→</span></a>
-    </div>
-</div>>
-          <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-근골격계_서머리')">
-              <div class="field-dot"></div>
-              <span class="field-name">근골격계_서머리</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="근골격계 서머리.html"><span class="area-num">01</span><span class="area-name">근골격계_서머리</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-           <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-근골격계중재2주차문제')">
-              <div class="field-dot"></div>
-              <span class="field-name">근골격계중재2주차문제</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="MS2.html"><span class="area-num">01</span><span class="area-name">근골격계중재2주차문제</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-           <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-근골격계중재3주차문제')">
-              <div class="field-dot"></div>
-              <span class="field-name">근골격계중재3주차문제</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="MS3.html"><span class="area-num">01</span><span class="area-name">근골격계중재3주차문제</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-           <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-근골격계중재4주차문제')">
-              <div class="field-dot"></div>
-              <span class="field-name">근골격계중재4주차문제</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="MS4.html"><span class="area-num">01</span><span class="area-name">근골격계중재4주차문제</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-           <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-근골격계중재5주차문제')">
-              <div class="field-dot"></div>
-              <span class="field-name">근골격계중재5주차문제</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="MS5.html"><span class="area-num">01</span><span class="area-name">근골격계중재5주차문제</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-           <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-근골격계중재6주차문제')">
-              <div class="field-dot"></div>
-              <span class="field-name">근골격계중재6주차문제</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="MS6.html"><span class="area-num">01</span><span class="area-name">근골격계중재6주차문제</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-           <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-탈구_Part1')">
-              <div class="field-dot"></div>
-              <span class="field-name">탈구_Part1</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="ch9_dislocation_1.html"><span class="area-num">01</span><span class="area-name">탈구_Part1</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-        
-            <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-탈구_Part2')">
-              <div class="field-dot"></div>
-              <span class="field-name">탈구_Part2</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="ch9_dislocation_2.html"><span class="area-num">01</span><span class="area-name">탈구_Part2</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-        
-      <!-- 2. 신경계 중재 -->
-      <div class="field-card" id="f-neuro">
-        <div class="field-header" onclick="toggle('f-neuro')">
-          <div class="field-dot"></div>
-          <span class="field-name">2. 신경계 중재</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">근골격계 중재</span>
         </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">신경계 질환 및 관리</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">신경계 운동치료</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">신경계 물리적 인자치료</span></a>
-        </div>
-      </div>
-
-      <!-- 3. 심폐혈관계 중재 -->
-      <div class="field-card" id="f-cardio">
-        <div class="field-header" onclick="toggle('f-cardio')">
-          <div class="field-dot"></div>
-          <span class="field-name">3. 심폐혈관계 중재</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">심혈관계 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">호흡기계 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">심폐혈관계 물리치료</span></a>
-        </div>
-      </div>
-
-      <!-- 4. 피부계 중재 -->
-      <div class="field-card" id="f-skin">
-        <div class="field-header" onclick="toggle('f-skin')">
-          <div class="field-dot"></div>
-          <span class="field-name">4. 피부계 중재</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">피부계 손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">피부계 물리치료</span></a>
-        </div>
-      </div>
-
-      <!-- 5. 물리치료 문제해결(중재) -->
-      <div class="field-card" id="f-tx-problem">
-        <div class="field-header" onclick="toggle('f-tx-problem')">
-          <div class="field-dot"></div>
-          <span class="field-name">5. 물리치료 문제해결(중재)</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">근골격계 및 신경계 문제해결</span></a>
+        <div class="link-list">
+          <a class="link-item" href="Fracture_정리.html"><div class="link-dot"></div><span class="link-name">골절 서머리</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="스페셜테스트_상지.html"><div class="link-dot"></div><span class="link-name">스페셜테스트 (상지)</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="근골격계 서머리.html"><div class="link-dot"></div><span class="link-name">근골격계 서머리</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="MS2.html"><div class="link-dot"></div><span class="link-name">근골격계중재 2주차 문제</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="MS3.html"><div class="link-dot"></div><span class="link-name">근골격계중재 3주차 문제</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="MS4.html"><div class="link-dot"></div><span class="link-name">근골격계중재 4주차 문제</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="MS5.html"><div class="link-dot"></div><span class="link-name">근골격계중재 5주차 문제</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="MS6.html"><div class="link-dot"></div><span class="link-name">근골격계중재 6주차 문제</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="ch9_dislocation_1.html"><div class="link-dot"></div><span class="link-name">탈구 Part 1</span><span class="link-arrow">→</span></a>
+          <a class="link-item" href="ch9_dislocation_2.html"><div class="link-dot"></div><span class="link-name">탈구 Part 2</span><span class="link-arrow">→</span></a>
         </div>
       </div>
 
@@ -775,68 +327,16 @@ body {
     <div class="subject-header">
       <span class="subject-num">04</span>
       <span class="subject-title">의료관계법규</span>
-      <span class="subject-count">5개 분야</span>
     </div>
     <div class="field-grid">
 
-      <div class="field-card" id="f-medical-law">
-        <div class="field-header" onclick="toggle('f-medical-law')">
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">1. 의료법</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">의료기사법 서머리</span>
         </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">총칙</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">의료인</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">의료기관</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-tech-law">
-        <div class="field-header" onclick="toggle('f-tech-law')">
-          <div class="field-dot"></div>
-          <span class="field-name">2. 의료기사_서머리</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item has-file" href="medical_law.html"><span class="area-num">01</span><span class="area-name">의료법 + 의료 기사 법 </span><span class="area-link-icon">→</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-disability-law">
-        <div class="field-header" onclick="toggle('f-disability-law')">
-          <div class="field-dot"></div>
-          <span class="field-name">3. 장애인복지법</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">총칙</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">복지 조치</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">복지시설과 단체</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-senior-law">
-        <div class="field-header" onclick="toggle('f-senior-law')">
-          <div class="field-dot"></div>
-          <span class="field-name">4. 노인복지법</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">총칙</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">보건·복지조치</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">노인복지시설의 설치·운영</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-insurance-law">
-        <div class="field-header" onclick="toggle('f-insurance-law')">
-          <div class="field-dot"></div>
-          <span class="field-name">5. 국민건강보험법</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">총칙</span></a>
+        <div class="link-list">
+          <a class="link-item" href="medical_law.html"><div class="link-dot"></div><span class="link-name">의료법 + 의료기사법</span><span class="link-arrow">→</span></a>
         </div>
       </div>
 
@@ -848,124 +348,16 @@ body {
     <div class="subject-header">
       <span class="subject-num">05</span>
       <span class="subject-title">실기시험</span>
-      <span class="subject-count">9개 분야</span>
     </div>
     <div class="field-grid">
 
-      <div class="field-card" id="f-msk-practice">
-        <div class="field-header" onclick="toggle('f-msk-practice')">
+      <div class="field-card">
+        <div class="field-header">
           <div class="field-dot"></div>
-          <span class="field-name">1. 근골격 물리치료</span>
-          <span class="field-toggle">▼</span>
+          <span class="field-name">소아청소년 물리치료</span>
         </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">머리, 목 손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">등, 허리 손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">어깨, 팔 손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">04</span><span class="area-name">골반, 다리 손상 및 질환</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-neuro-practice">
-        <div class="field-header" onclick="toggle('f-neuro-practice')">
-          <div class="field-dot"></div>
-          <span class="field-name">2. 신경 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">뇌손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">척수손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">03</span><span class="area-name">말초신경 손상 및 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">04</span><span class="area-name">유전자 결합 및 면역 매개 질환</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-cardio-practice">
-        <div class="field-header" onclick="toggle('f-cardio-practice')">
-          <div class="field-dot"></div>
-          <span class="field-name">3. 심폐혈관 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">심혈관 질환</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">호흡기 질환</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-skin-practice">
-        <div class="field-header" onclick="toggle('f-skin-practice')">
-          <div class="field-dot"></div>
-          <span class="field-name">4. 피부 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">피부 손상</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">피부 질환</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-community">
-        <div class="field-header" onclick="toggle('f-community')">
-          <div class="field-dot"></div>
-          <span class="field-name">5. 지역사회 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">방문 물리치료</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">지역사회 건강증진</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-pediatric">
-        <div class="field-header" onclick="toggle('f-pediatric')">
-          <div class="field-dot"></div>
-          <span class="field-name">6. 소아청소년 물리치료</span>
-          <span class="field-toggle">▼</span>
-           </div>
-          <div class="field-card" id="f-">
-            <div class="field-header" onclick="toggle('f-소아발달')">
-              <div class="field-dot"></div>
-              <span class="field-name">소아발달</span>
-              <span class="field-toggle">▼</span>
-            </div>
-            <div class="area-list">
-              <a class="area-item has-file" href="소아발달_중간고사.html"><span class="area-num">01</span><span class="area-name">소아발달</span><span class="area-link-icon">→</span></a>
-            </div>
-          </div>
-
-      <div class="field-card" id="f-sports">
-        <div class="field-header" onclick="toggle('f-sports')">
-          <div class="field-dot"></div>
-          <span class="field-name">7. 스포츠 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">스포츠 손상 및 운동능력평가</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">부위별 손상 중재</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-geriatric">
-        <div class="field-header" onclick="toggle('f-geriatric')">
-          <div class="field-dot"></div>
-          <span class="field-name">8. 노인 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">노인의 퇴행성 변화, 치매</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">낙상, 종양 및 암</span></a>
-        </div>
-      </div>
-
-      <div class="field-card" id="f-women">
-        <div class="field-header" onclick="toggle('f-women')">
-          <div class="field-dot"></div>
-          <span class="field-name">9. 여성건강 물리치료</span>
-          <span class="field-toggle">▼</span>
-        </div>
-        <div class="area-list">
-          <a class="area-item no-file"><span class="area-num">01</span><span class="area-name">산전산후 평가 및 중재</span></a>
-          <a class="area-item no-file"><span class="area-num">02</span><span class="area-name">골반 평가 및 중재</span></a>
+        <div class="link-list">
+          <a class="link-item" href="소아발달_중간고사.html"><div class="link-dot"></div><span class="link-name">소아발달</span><span class="link-arrow">→</span></a>
         </div>
       </div>
 
@@ -975,23 +367,8 @@ body {
 </div>
 
 <div class="footer">
-  파일이 연결된 항목은 → 아이콘이 표시됩니다 · 모든 HTML 파일은 같은 폴더에 위치해야 합니다
-  
-<script>
-function toggle(id) {
-  const card = document.getElementById(id);
-  if (card) card.classList.toggle('open');
-}
+  파일이 연결된 항목만 표시됩니다 · 모든 HTML 파일은 같은 폴더에 위치해야 합니다
+</div>
 
-function checkPassword(pw, url) {
-  const input = prompt('🔒 틀리면 못염');
-  if (input === pw) {
-    window.location.href = url;
-  } else if (input !== null) {
-    alert('❌ 틀림 수고요');
-  }
-}
-</script>
-</script>
 </body>
 </html>
