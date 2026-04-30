@@ -7,28 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:    #ddeeff;
-  --bg2:   #f0f7ff;
-  --bg3:   #c8e0fa;
+  --bg:     #ddeeff;
+  --bg2:    #f0f7ff;
+  --bg3:    #c8e0fa;
   --border: #b0cfe8;
-  --text:  #0d2a45;
-  --text2: #2d5a7a;
-  --text3: #6a9abf;
-  --c1: #1a7fd4;
-  --c2: #18a06e;
-  --c3: #e07830;
-  --c4: #9055c9;
-  --c5: #d93660;
-  --c1bg: rgba(26,127,212,0.10);
-  --c2bg: rgba(24,160,110,0.10);
-  --c3bg: rgba(224,120,48,0.10);
-  --c4bg: rgba(144,85,201,0.10);
-  --c5bg: rgba(217,54,96,0.10);
-  --c1bd: rgba(26,127,212,0.30);
-  --c2bd: rgba(24,160,110,0.30);
-  --c3bd: rgba(224,120,48,0.30);
-  --c4bd: rgba(144,85,201,0.30);
-  --c5bd: rgba(217,54,96,0.30);
+  --text:   #0d2a45;
+  --text2:  #2d5a7a;
+  --text3:  #6a9abf;
+  --c1: #1a7fd4; --c1bg: rgba(26,127,212,0.10); --c1bd: rgba(26,127,212,0.30);
+  --c2: #18a06e; --c2bg: rgba(24,160,110,0.10); --c2bd: rgba(24,160,110,0.30);
+  --c3: #e07830; --c3bg: rgba(224,120,48,0.10);  --c3bd: rgba(224,120,48,0.30);
+  --c4: #9055c9; --c4bg: rgba(144,85,201,0.10);  --c4bd: rgba(144,85,201,0.30);
+  --c5: #d93660; --c5bg: rgba(217,54,96,0.10);   --c5bd: rgba(217,54,96,0.30);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -39,79 +29,145 @@ body {
   min-height: 100vh;
 }
 
-/* HEADER */
+/* ── HEADER ── */
 .header {
-  padding: 32px 40px 24px;
-  border-bottom: 2px solid var(--c1bd);
+  padding: 28px 40px 22px;
   background: linear-gradient(135deg, #1a4e7a 0%, #1a7fd4 60%, #4fb8f0 100%);
-}
-.header-top {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+  border-bottom: 2px solid var(--c1bd);
 }
 .header-badge {
+  display: inline-block;
   font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.75);
   border: 1px solid rgba(255,255,255,0.35); border-radius: 4px;
-  padding: 3px 8px; text-transform: uppercase;
+  padding: 3px 8px; text-transform: uppercase; margin-bottom: 8px;
 }
-.header h1 {
-  font-size: 24px; font-weight: 700; color: #fff;
-  letter-spacing: -0.5px;
-}
-.header p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 6px; }
+.header h1 { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+.header p  { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; }
 
-/* STATS */
-.stats {
-  display: flex; gap: 24px; padding: 16px 40px;
-  border-bottom: 1px solid var(--border);
+/* ── STICKY NAV (search + tabs) ── */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 200;
   background: var(--bg2);
+  border-bottom: 2px solid var(--border);
+  box-shadow: 0 2px 12px rgba(13,42,69,0.08);
 }
-.stat { text-align: center; }
-.stat-val { font-size: 20px; font-weight: 700; }
-.stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
 
-/* MAIN LAYOUT */
-.main { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+/* search row */
+.search-row {
+  padding: 12px 40px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.search-box {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 9px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-box:focus-within {
+  border-color: var(--c1);
+  box-shadow: 0 0 0 3px rgba(26,127,212,0.12);
+}
+.search-icon { font-size: 14px; color: var(--text3); }
+.search-input {
+  flex: 1; border: none; outline: none;
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text); background: transparent;
+}
+.search-input::placeholder { color: var(--text3); }
+.search-meta { display: flex; align-items: center; gap: 8px; }
+.search-count { font-size: 11px; color: var(--text3); white-space: nowrap; }
+.search-clear {
+  background: none; border: none; cursor: pointer;
+  color: var(--text3); font-size: 15px; padding: 0; line-height: 1;
+  display: none; transition: color 0.15s;
+}
+.search-clear:hover { color: var(--text); }
+.search-clear.visible { display: block; }
 
-/* SUBJECT SECTION */
-.subject { margin-bottom: 40px; }
+/* tab row */
+.tab-row {
+  display: flex; overflow-x: auto; padding: 0 40px;
+  gap: 0; scrollbar-width: none;
+}
+.tab-row::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 7px;
+  padding: 11px 18px;
+  background: none; border: none; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: var(--text3);
+  border-bottom: 3px solid transparent;
+  transition: color 0.18s, border-color 0.18s, background 0.15s;
+  white-space: nowrap;
+  position: relative; top: 2px; /* overlap bottom border */
+}
+.tab-btn:hover { color: var(--text); background: var(--bg3); }
+.tab-btn.active { color: var(--text); font-weight: 700; }
+
+.tab-btn[data-tab="all"].active        { border-color: var(--text2); color: var(--text2); }
+.tab-btn[data-tab="s1"].active         { border-color: var(--c1); color: var(--c1); }
+.tab-btn[data-tab="s2"].active         { border-color: var(--c2); color: var(--c2); }
+.tab-btn[data-tab="s3"].active         { border-color: var(--c3); color: var(--c3); }
+.tab-btn[data-tab="s4"].active         { border-color: var(--c4); color: var(--c4); }
+.tab-btn[data-tab="s5"].active         { border-color: var(--c5); color: var(--c5); }
+
+.tab-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.tab-btn[data-tab="all"]  .tab-dot { background: var(--text3); }
+.tab-btn[data-tab="s1"]   .tab-dot { background: var(--c1); }
+.tab-btn[data-tab="s2"]   .tab-dot { background: var(--c2); }
+.tab-btn[data-tab="s3"]   .tab-dot { background: var(--c3); }
+.tab-btn[data-tab="s4"]   .tab-dot { background: var(--c4); }
+.tab-btn[data-tab="s5"]   .tab-dot { background: var(--c5); }
+
+/* ── MAIN ── */
+.main { padding: 28px 40px; max-width: 1100px; margin: 0 auto; }
+
+/* subject section */
+.subject { margin-bottom: 36px; }
+.subject.tab-hidden { display: none; }
+
 .subject-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 20px; padding-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; padding-bottom: 10px;
   border-bottom: 2px solid var(--border);
 }
 .subject-num {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-  padding: 4px 10px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  padding: 3px 9px; border-radius: 4px;
 }
-.subject-title { font-size: 18px; font-weight: 700; }
-.subject-count { font-size: 12px; color: var(--text3); margin-left: auto; }
+.subject-title { font-size: 17px; font-weight: 700; }
 
-.s1 .subject-num { background: var(--c1bg); color: var(--c1); border: 1px solid var(--c1bd); }
+.s1 .subject-num   { background: var(--c1bg); color: var(--c1); border: 1px solid var(--c1bd); }
 .s1 .subject-title { color: var(--c1); }
-.s2 .subject-num { background: var(--c2bg); color: var(--c2); border: 1px solid var(--c2bd); }
+.s2 .subject-num   { background: var(--c2bg); color: var(--c2); border: 1px solid var(--c2bd); }
 .s2 .subject-title { color: var(--c2); }
-.s3 .subject-num { background: var(--c3bg); color: var(--c3); border: 1px solid var(--c3bd); }
+.s3 .subject-num   { background: var(--c3bg); color: var(--c3); border: 1px solid var(--c3bd); }
 .s3 .subject-title { color: var(--c3); }
-.s4 .subject-num { background: var(--c4bg); color: var(--c4); border: 1px solid var(--c4bd); }
+.s4 .subject-num   { background: var(--c4bg); color: var(--c4); border: 1px solid var(--c4bd); }
 .s4 .subject-title { color: var(--c4); }
-.s5 .subject-num { background: var(--c5bg); color: var(--c5); border: 1px solid var(--c5bd); }
+.s5 .subject-num   { background: var(--c5bg); color: var(--c5); border: 1px solid var(--c5bd); }
 .s5 .subject-title { color: var(--c5); }
 
-/* FIELD GRID */
+/* field grid */
 .field-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 12px;
 }
-
-/* FIELD CARD */
 .field-card {
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
+  border-radius: 10px; overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
+.field-card.all-hidden { display: none; }
+
 .s1 .field-card:hover { border-color: var(--c1bd); box-shadow: 0 2px 12px rgba(26,127,212,0.12); }
 .s2 .field-card:hover { border-color: var(--c2bd); box-shadow: 0 2px 12px rgba(24,160,110,0.12); }
 .s3 .field-card:hover { border-color: var(--c3bd); box-shadow: 0 2px 12px rgba(224,120,48,0.12); }
@@ -119,40 +175,33 @@ body {
 .s5 .field-card:hover { border-color: var(--c5bd); box-shadow: 0 2px 12px rgba(217,54,96,0.12); }
 
 .field-header {
-  padding: 14px 16px 12px;
+  padding: 13px 16px 11px;
   display: flex; align-items: center; gap: 8px;
   border-bottom: 1px solid var(--border);
   background: rgba(255,255,255,0.5);
 }
-.field-dot {
-  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-}
+.field-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 .s1 .field-dot { background: var(--c1); }
 .s2 .field-dot { background: var(--c2); }
 .s3 .field-dot { background: var(--c3); }
 .s4 .field-dot { background: var(--c4); }
 .s5 .field-dot { background: var(--c5); }
+.field-name { font-size: 13px; font-weight: 600; flex: 1; }
 
-.field-name { font-size: 14px; font-weight: 600; flex: 1; }
-
-/* LINK LIST — direct links, no toggle */
-.link-list { padding: 6px 0; }
-
+/* link list */
+.link-list { padding: 4px 0; }
 .link-item {
   display: flex; align-items: center; gap: 10px;
   padding: 9px 16px;
-  text-decoration: none;
-  color: inherit;
+  text-decoration: none; color: inherit;
   transition: background 0.15s;
   border-bottom: 1px solid var(--border);
 }
 .link-item:last-child { border-bottom: none; }
 .link-item:hover { background: var(--bg3); }
+.link-item.hidden { display: none; }
 
-.link-dot {
-  width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
-  opacity: 0.5;
-}
+.link-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; opacity: 0.45; }
 .s1 .link-dot { background: var(--c1); }
 .s2 .link-dot { background: var(--c2); }
 .s3 .link-dot { background: var(--c3); }
@@ -171,57 +220,85 @@ body {
 .s4 .link-arrow { color: var(--c4); }
 .s5 .link-arrow { color: var(--c5); }
 
-/* FOOTER */
+/* highlight */
+.hl { background: rgba(26,127,212,0.18); color: var(--c1); border-radius: 2px; font-weight: 700; padding: 0 1px; }
+
+/* no results */
+.no-results {
+  display: none; text-align: center;
+  padding: 60px 20px; color: var(--text3); font-size: 15px;
+}
+.no-results.visible { display: block; }
+
+/* search-mode: show all subjects regardless of tab */
+body.searching .subject.tab-hidden { display: block; }
+
+/* footer */
 .footer {
-  text-align: center; padding: 32px;
+  text-align: center; padding: 28px;
   color: var(--text3); font-size: 12px;
   border-top: 1px solid var(--border);
-  background: var(--bg2);
-  margin-top: 16px;
+  background: var(--bg2); margin-top: 8px;
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div class="header-top">
-    <span class="header-badge">PT Study Portal</span>
-  </div>
+  <span class="header-badge">PT Study Portal</span>
   <h1>♥ 진이랑 보려고 만듬 ♥</h1>
   <p>정리해서 올릴거임</p>
 </div>
 
-<div class="stats">
-  <div class="stat">
-    <div class="stat-val" style="color:var(--c1)">5</div>
-    <div class="stat-label">시험과목</div>
+<!-- STICKY: SEARCH + TABS -->
+<div class="sticky-nav">
+  <div class="search-row">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" type="text"
+        placeholder="전체 통합 검색... (예: 뉴만, 신경계, 골절)" autocomplete="off">
+      <div class="search-meta">
+        <span class="search-count" id="searchCount"></span>
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+      </div>
+    </div>
   </div>
-  <div class="stat">
-    <div class="stat-val" style="color:var(--c2)">10</div>
-    <div class="stat-label">분야</div>
-  </div>
-  <div class="stat">
-    <div class="stat-val" style="color:var(--c3)">40+</div>
-    <div class="stat-label">영역</div>
+  <div class="tab-row" id="tabRow">
+    <button class="tab-btn active" data-tab="all" onclick="switchTab('all')">
+      <span class="tab-dot"></span> 전체
+    </button>
+    <button class="tab-btn" data-tab="s1" onclick="switchTab('s1')">
+      <span class="tab-dot"></span> 01 물리치료 기초
+    </button>
+    <button class="tab-btn" data-tab="s2" onclick="switchTab('s2')">
+      <span class="tab-dot"></span> 02 진단평가
+    </button>
+    <button class="tab-btn" data-tab="s3" onclick="switchTab('s3')">
+      <span class="tab-dot"></span> 03 중재
+    </button>
+    <button class="tab-btn" data-tab="s4" onclick="switchTab('s4')">
+      <span class="tab-dot"></span> 04 의료법규
+    </button>
+    <button class="tab-btn" data-tab="s5" onclick="switchTab('s5')">
+      <span class="tab-dot"></span> 05 실기시험
+    </button>
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
-  <!-- ===== 1. 물리치료 기초 ===== -->
-  <div class="subject s1">
+  <!-- 1. 물리치료 기초 -->
+  <div class="subject s1" data-subject="s1">
     <div class="subject-header">
       <span class="subject-num">01</span>
       <span class="subject-title">물리치료 기초</span>
     </div>
     <div class="field-grid">
 
-      <!-- 해부생리 -->
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">해부생리</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">해부생리</span></div>
         <div class="link-list">
           <a class="link-item" href="순환생리.html"><div class="link-dot"></div><span class="link-name">순환 생리</span><span class="link-arrow">→</span></a>
           <a class="link-item" href="심장생리.html"><div class="link-dot"></div><span class="link-name">심장 생리</span><span class="link-arrow">→</span></a>
@@ -229,12 +306,8 @@ body {
         </div>
       </div>
 
-      <!-- 운동학 (뉴만) -->
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">운동학 (뉴만)</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">운동학 (뉴만)</span></div>
         <div class="link-list">
           <a class="link-item" href="뉴만_CH1.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 1</span><span class="link-arrow">→</span></a>
           <a class="link-item" href="뉴만_CH2.html"><div class="link-dot"></div><span class="link-name">뉴만 챕터 2</span><span class="link-arrow">→</span></a>
@@ -251,12 +324,8 @@ body {
         </div>
       </div>
 
-      <!-- 물리적 인자치료 -->
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">물리적 인자치료</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">물리적 인자치료</span></div>
         <div class="link-list">
           <a class="link-item" href="전기치료학_1_기초.html"><div class="link-dot"></div><span class="link-name">전기치료학 기초</span><span class="link-arrow">→</span></a>
           <a class="link-item" href="전기치료학_2_응용.html"><div class="link-dot"></div><span class="link-name">전기치료학 응용</span><span class="link-arrow">→</span></a>
@@ -267,8 +336,8 @@ body {
     </div>
   </div>
 
-  <!-- ===== 2. 물리치료 진단평가 ===== -->
-  <div class="subject s2">
+  <!-- 2. 물리치료 진단평가 -->
+  <div class="subject s2" data-subject="s2">
     <div class="subject-header">
       <span class="subject-num">02</span>
       <span class="subject-title">물리치료 진단평가</span>
@@ -276,10 +345,7 @@ body {
     <div class="field-grid">
 
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">신경계 진단 · 중재</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">신경계 진단 · 중재</span></div>
         <div class="link-list">
           <a class="link-item" href="신경계_질환_중재_Part1.html"><div class="link-dot"></div><span class="link-name">신경계 중재 Part 1</span><span class="link-arrow">→</span></a>
           <a class="link-item" href="신경계_중재_운동치료_Part2.html"><div class="link-dot"></div><span class="link-name">신경계 중재 Part 2</span><span class="link-arrow">→</span></a>
@@ -292,8 +358,8 @@ body {
     </div>
   </div>
 
-  <!-- ===== 3. 물리치료 중재 ===== -->
-  <div class="subject s3">
+  <!-- 3. 물리치료 중재 -->
+  <div class="subject s3" data-subject="s3">
     <div class="subject-header">
       <span class="subject-num">03</span>
       <span class="subject-title">물리치료 중재</span>
@@ -301,10 +367,7 @@ body {
     <div class="field-grid">
 
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">근골격계 중재</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">근골격계 중재</span></div>
         <div class="link-list">
           <a class="link-item" href="Fracture_정리.html"><div class="link-dot"></div><span class="link-name">골절 서머리</span><span class="link-arrow">→</span></a>
           <a class="link-item" href="스페셜테스트_상지.html"><div class="link-dot"></div><span class="link-name">스페셜테스트 (상지)</span><span class="link-arrow">→</span></a>
@@ -322,8 +385,8 @@ body {
     </div>
   </div>
 
-  <!-- ===== 4. 의료관계법규 ===== -->
-  <div class="subject s4">
+  <!-- 4. 의료관계법규 -->
+  <div class="subject s4" data-subject="s4">
     <div class="subject-header">
       <span class="subject-num">04</span>
       <span class="subject-title">의료관계법규</span>
@@ -331,10 +394,7 @@ body {
     <div class="field-grid">
 
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">의료기사법 서머리</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">의료기사법 서머리</span></div>
         <div class="link-list">
           <a class="link-item" href="medical_law.html"><div class="link-dot"></div><span class="link-name">의료법 + 의료기사법</span><span class="link-arrow">→</span></a>
         </div>
@@ -343,8 +403,8 @@ body {
     </div>
   </div>
 
-  <!-- ===== 5. 실기시험 ===== -->
-  <div class="subject s5">
+  <!-- 5. 실기시험 -->
+  <div class="subject s5" data-subject="s5">
     <div class="subject-header">
       <span class="subject-num">05</span>
       <span class="subject-title">실기시험</span>
@@ -352,10 +412,7 @@ body {
     <div class="field-grid">
 
       <div class="field-card">
-        <div class="field-header">
-          <div class="field-dot"></div>
-          <span class="field-name">소아청소년 물리치료</span>
-        </div>
+        <div class="field-header"><div class="field-dot"></div><span class="field-name">소아청소년 물리치료</span></div>
         <div class="link-list">
           <a class="link-item" href="소아발달_중간고사.html"><div class="link-dot"></div><span class="link-name">소아발달</span><span class="link-arrow">→</span></a>
         </div>
@@ -364,11 +421,116 @@ body {
     </div>
   </div>
 
+  <div class="no-results" id="noResults">😢 검색 결과가 없습니다</div>
 </div>
 
 <div class="footer">
   파일이 연결된 항목만 표시됩니다 · 모든 HTML 파일은 같은 폴더에 위치해야 합니다
 </div>
 
+<script>
+// ── 상태 ──
+let currentTab = 'all';
+
+// ── 원본 텍스트 저장 ──
+const allLinks = document.querySelectorAll('.link-item');
+allLinks.forEach(item => {
+  item.querySelector('.link-name').dataset.orig = item.querySelector('.link-name').textContent;
+});
+
+// ── 탭 전환 ──
+function switchTab(tab) {
+  currentTab = tab;
+
+  // 버튼 active
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+
+  // 검색 중이 아닐 때만 섹션 show/hide
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) applyTabVisibility();
+}
+
+function applyTabVisibility() {
+  document.querySelectorAll('.subject').forEach(s => {
+    if (currentTab === 'all') {
+      s.classList.remove('tab-hidden');
+    } else {
+      s.classList.toggle('tab-hidden', s.dataset.subject !== currentTab);
+    }
+  });
+}
+
+// ── 검색 ──
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+const searchCount = document.getElementById('searchCount');
+const noResults   = document.getElementById('noResults');
+const allCards    = document.querySelectorAll('.field-card');
+const allSubjects = document.querySelectorAll('.subject');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim();
+  searchClear.classList.toggle('visible', q.length > 0);
+  doSearch(q);
+});
+
+function doSearch(q) {
+  const lower = q.toLowerCase();
+  let count = 0;
+
+  allLinks.forEach(item => {
+    const nameEl = item.querySelector('.link-name');
+    const orig = nameEl.dataset.orig;
+    const match = !q || orig.toLowerCase().includes(lower);
+    item.classList.toggle('hidden', !match);
+
+    if (q && match) {
+      const i = orig.toLowerCase().indexOf(lower);
+      nameEl.innerHTML =
+        orig.slice(0, i) +
+        '<span class="hl">' + orig.slice(i, i + q.length) + '</span>' +
+        orig.slice(i + q.length);
+      count++;
+    } else {
+      nameEl.textContent = orig;
+      if (!q) count++;
+    }
+  });
+
+  // 카드 숨김
+  allCards.forEach(card => {
+    card.classList.toggle('all-hidden',
+      card.querySelectorAll('.link-item:not(.hidden)').length === 0);
+  });
+
+  if (q) {
+    // 검색 중: 모든 과목 표시 (탭 무시), 결과 없는 과목만 숨김
+    allSubjects.forEach(s => {
+      s.classList.remove('tab-hidden');
+      s.style.display = s.querySelectorAll('.field-card:not(.all-hidden)').length === 0 ? 'none' : '';
+    });
+    searchCount.textContent = count + '개';
+    noResults.classList.toggle('visible', count === 0);
+  } else {
+    // 검색 해제: 탭 기준 복원
+    allSubjects.forEach(s => { s.style.display = ''; });
+    applyTabVisibility();
+    searchCount.textContent = '';
+    noResults.classList.remove('visible');
+  }
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  doSearch('');
+  searchInput.focus();
+}
+
+// 초기 탭 적용
+applyTabVisibility();
+</script>
 </body>
 </html>
