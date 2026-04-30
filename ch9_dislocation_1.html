@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 9 탈구 ① — 총론 & 발달엉덩관절형성이상</title>
+<style>
+  :root {
+    --bg: #EEF4FF;
+    --surface: #ffffff;
+    --surface2: #f4f8ff;
+    --primary: #1E3A5F;
+    --primary-light: #2d5a9e;
+    --accent: #3b82f6;
+    --accent2: #0ea5e9;
+    --green: #059669;
+    --orange: #d97706;
+    --red: #dc2626;
+    --purple: #7c3aed;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #cbd5e1;
+    --highlight: #fef3c7;
+    --highlight2: #dbeafe;
+    --highlight3: #dcfce7;
+    --shadow: 0 2px 12px rgba(30,58,95,0.10);
+    --shadow-lg: 0 8px 32px rgba(30,58,95,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, var(--primary) 0%, #2d5a9e 60%, #1d4ed8 100%);
+    color: white; padding: 28px 24px 20px; text-align: center; position: relative; overflow: hidden;
+  }
+  .main-header::before {
+    content:''; position:absolute; top:-40px; right:-40px; width:200px; height:200px;
+    background: rgba(255,255,255,0.05); border-radius:50%;
+  }
+  .main-header .ch-badge {
+    display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3);
+    border-radius:20px; padding:3px 14px; font-size:11px; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px;
+  }
+  .main-header h1 { font-size:26px; font-weight:800; letter-spacing:-0.5px; }
+  .main-header p { font-size:12px; opacity:0.75; margin-top:4px; }
+  .main-header .part-badge {
+    display:inline-block; background:#fbbf24; color:#1e3a5f; border-radius:20px;
+    padding:4px 16px; font-size:12px; font-weight:700; margin-top:10px;
+  }
+
+  /* TABS */
+  .tab-nav { display:flex; background:var(--primary); border-bottom:2px solid #1d4ed8; }
+  .tab-btn {
+    flex:1; padding:13px 8px; font-size:13px; font-weight:600; color:rgba(255,255,255,0.6);
+    background:none; border:none; cursor:pointer; transition:all 0.2s; position:relative;
+  }
+  .tab-btn.active { color:#fff; background:rgba(255,255,255,0.1); }
+  .tab-btn.active::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:#fbbf24;
+  }
+  .tab-btn:hover:not(.active) { color:rgba(255,255,255,0.85); }
+
+  /* CONTENT */
+  .tab-content { display:none; padding:18px 16px 40px; max-width:760px; margin:0 auto; }
+  .tab-content.active { display:block; }
+
+  /* ---- 개요 탭 ---- */
+  .section-card {
+    background:var(--surface); border-radius:14px; padding:18px; margin-bottom:16px;
+    box-shadow:var(--shadow); border:1px solid rgba(203,213,225,0.5);
+  }
+  .section-title {
+    font-size:15px; font-weight:800; color:var(--primary); margin-bottom:12px;
+    display:flex; align-items:center; gap:8px; padding-bottom:8px;
+    border-bottom:2px solid var(--bg);
+  }
+  .section-title .icon { font-size:18px; }
+
+  .keyword-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .keyword-item {
+    background:var(--highlight2); border-radius:8px; padding:8px 10px;
+    font-size:12px; border-left:3px solid var(--accent);
+  }
+  .keyword-item strong { display:block; font-size:11px; color:var(--primary); margin-bottom:2px; }
+
+  .learning-list { list-style:none; }
+  .learning-list li {
+    padding:8px 12px; background:var(--surface2); border-radius:8px; margin-bottom:6px;
+    font-size:13px; display:flex; gap:8px; align-items:flex-start;
+    border-left:3px solid var(--green);
+  }
+  .learning-list li .num { color:var(--green); font-weight:800; min-width:18px; }
+
+  /* table */
+  .info-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .info-table th { background:var(--primary); color:white; padding:8px 10px; text-align:left; }
+  .info-table th:first-child { border-radius:8px 0 0 0; }
+  .info-table th:last-child { border-radius:0 8px 0 0; }
+  .info-table td { padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+  .info-table tr:nth-child(even) td { background:#f8faff; }
+  .info-table tr:last-child td { border-bottom:none; }
+  .info-table tr:last-child td:first-child { border-radius:0 0 0 8px; }
+  .info-table tr:last-child td:last-child { border-radius:0 0 8px 0; }
+
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700; }
+  .badge-blue { background:#dbeafe; color:#1d4ed8; }
+  .badge-orange { background:#fef3c7; color:#b45309; }
+  .badge-red { background:#fee2e2; color:#dc2626; }
+  .badge-green { background:#dcfce7; color:#15803d; }
+  .badge-purple { background:#ede9fe; color:#7c3aed; }
+
+  /* ---- 요약 탭 ---- */
+  .summary-nav {
+    display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px;
+    background:var(--surface); padding:12px; border-radius:12px; box-shadow:var(--shadow);
+  }
+  .summary-nav a {
+    padding:5px 12px; background:var(--highlight2); color:var(--primary);
+    border-radius:20px; font-size:11px; font-weight:700; text-decoration:none;
+    border:1px solid #bfdbfe; transition:all 0.2s;
+  }
+  .summary-nav a:hover { background:var(--primary); color:white; }
+
+  .sub-section { margin-bottom:24px; }
+  .sub-section-title {
+    font-size:14px; font-weight:800; color:white; background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    padding:10px 14px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:6px;
+  }
+  .sub-section-body {
+    background:var(--surface); border:1px solid var(--border); border-top:none;
+    border-radius:0 0 10px 10px; padding:14px;
+  }
+  .sub-def { font-size:13px; line-height:1.7; margin-bottom:10px; color:var(--text); }
+  .sub-def strong { color:var(--primary); }
+
+  .num-table { width:100%; border-collapse:collapse; font-size:12px; margin:8px 0; }
+  .num-table th { background:#1e3a5f; color:white; padding:6px 10px; text-align:left; font-size:11px; }
+  .num-table td { padding:6px 10px; border-bottom:1px solid #e2e8f0; }
+  .num-table tr:nth-child(even) td { background:#f0f6ff; }
+  .num-table tr:last-child td { border-bottom:none; }
+
+  .clinical-box {
+    background: linear-gradient(135deg, #fff7ed, #fef3c7);
+    border:1.5px solid #fbbf24; border-radius:10px; padding:12px 14px; margin-top:10px;
+  }
+  .clinical-box .clinical-title {
+    font-size:11px; font-weight:800; color:#b45309; margin-bottom:6px;
+    display:flex; align-items:center; gap:4px;
+  }
+  .clinical-box ul { padding-left:16px; font-size:12px; line-height:1.8; color:#7c2d12; }
+  .clinical-box p { font-size:12px; line-height:1.7; color:#7c2d12; }
+
+  .highlight-text { background:var(--highlight); padding:2px 5px; border-radius:4px; font-weight:700; }
+  .bold-kw { font-weight:800; color:var(--primary); }
+
+  .detail-list { padding-left:18px; font-size:12px; line-height:1.9; }
+  .detail-list li { margin-bottom:3px; }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+  .mini-card { background:var(--surface2); border-radius:8px; padding:10px 12px; border-top:3px solid var(--accent); }
+  .mini-card h4 { font-size:11px; font-weight:800; color:var(--primary); margin-bottom:6px; }
+  .mini-card p, .mini-card li { font-size:11px; line-height:1.7; }
+
+  /* intervention timeline */
+  .timeline { position:relative; padding-left:20px; }
+  .timeline::before { content:''; position:absolute; left:7px; top:0; bottom:0; width:2px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:14px; }
+  .tl-item::before {
+    content:''; position:absolute; left:-16px; top:5px; width:10px; height:10px;
+    border-radius:50%; background:var(--accent); border:2px solid white; box-shadow:0 0 0 2px var(--accent);
+  }
+  .tl-item h4 { font-size:12px; font-weight:800; color:var(--primary); margin-bottom:4px; }
+  .tl-item p { font-size:12px; line-height:1.6; color:var(--text-muted); }
+
+  /* ---- 퀴즈 탭 ---- */
+  .quiz-header { background:var(--surface); border-radius:12px; padding:14px; margin-bottom:16px; box-shadow:var(--shadow); }
+  .progress-wrap { margin-bottom:8px; }
+  .progress-info { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:5px; }
+  .progress-bar { height:8px; background:#e2e8f0; border-radius:4px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:4px; transition:width 0.4s; }
+  .score-display { display:flex; gap:12px; flex-wrap:wrap; }
+  .score-item { background:var(--surface2); border-radius:8px; padding:6px 12px; font-size:11px; text-align:center; border:1px solid var(--border); }
+  .score-item .num { font-size:18px; font-weight:800; color:var(--primary); display:block; }
+
+  .quiz-card { background:var(--surface); border-radius:14px; padding:18px; box-shadow:var(--shadow); border:1px solid var(--border); }
+  .q-num { font-size:10px; font-weight:700; color:var(--accent); letter-spacing:1px; margin-bottom:6px; }
+  .q-text { font-size:14px; font-weight:700; line-height:1.6; margin-bottom:16px; color:var(--text); }
+  .q-options { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+  .q-opt {
+    padding:10px 14px; border:1.5px solid var(--border); border-radius:10px;
+    font-size:13px; cursor:pointer; transition:all 0.2s; background:var(--surface);
+    text-align:left; line-height:1.5;
+  }
+  .q-opt:hover:not(:disabled) { border-color:var(--accent); background:var(--highlight2); }
+  .q-opt.correct { background:#dcfce7; border-color:var(--green); color:#15803d; font-weight:700; }
+  .q-opt.wrong { background:#fee2e2; border-color:var(--red); color:var(--red); }
+  .q-opt.show-correct { background:#dcfce7; border-color:var(--green); }
+  .q-opt:disabled { cursor:default; }
+
+  .explanation { background:var(--highlight2); border-radius:10px; padding:12px; font-size:12px; line-height:1.7; margin-top:10px; border-left:3px solid var(--accent); display:none; }
+  .explanation.show { display:block; }
+
+  .quiz-btns { display:flex; gap:8px; flex-wrap:wrap; }
+  .btn-primary {
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    color:white; border:none; border-radius:10px; padding:10px 20px;
+    font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; flex:1;
+  }
+  .btn-primary:hover { opacity:0.9; transform:translateY(-1px); }
+  .btn-secondary {
+    background:var(--surface2); color:var(--primary); border:1.5px solid var(--border);
+    border-radius:10px; padding:10px 16px; font-size:12px; font-weight:700; cursor:pointer;
+    transition:all 0.2s;
+  }
+  .btn-secondary:hover { background:var(--highlight2); border-color:var(--accent); }
+
+  .mode-btns { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .mode-btn {
+    padding:6px 12px; border-radius:20px; font-size:11px; font-weight:700;
+    border:1.5px solid var(--border); background:var(--surface2); cursor:pointer; transition:all 0.2s; color:var(--text-muted);
+  }
+  .mode-btn.active { background:var(--primary); color:white; border-color:var(--primary); }
+
+  .result-screen { text-align:center; padding:20px 0; display:none; }
+  .result-screen.show { display:block; }
+  .result-score { font-size:56px; font-weight:900; color:var(--primary); line-height:1; }
+  .result-msg { font-size:14px; color:var(--text-muted); margin:8px 0 20px; }
+  .wrong-list-title { font-size:13px; font-weight:800; color:var(--red); margin:16px 0 8px; text-align:left; }
+
+  .empty-wrong { text-align:center; padding:20px; color:var(--text-muted); font-size:13px; background:var(--surface2); border-radius:10px; }
+
+  @media(max-width:480px){
+    .keyword-grid { grid-template-columns:1fr; }
+    .two-col { grid-template-columns:1fr; }
+    .main-header h1 { font-size:20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <div class="ch-badge">Chapter 9 · Part ①</div>
+  <h1>탈구 (Dislocation)</h1>
+  <p>Physical Therapy Intervention for Musculoskeletal Diseases</p>
+  <div class="part-badge">탈구 총론 + 발달엉덩관절형성이상</div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ======================== 개요 탭 ======================== -->
+<div class="tab-content active" id="tab-overview">
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">🎯</span> 학습목표</div>
+    <ul class="learning-list">
+      <li><span class="num">1</span>탈구의 개요 및 임상적 특성을 설명할 수 있다.</li>
+      <li><span class="num">2</span>선천성 탈구의 종류와 임상적 특성을 설명하고 중재를 수행할 수 있다.</li>
+      <li><span class="num">3</span>외상성 탈구의 종류와 임상적 특성을 설명하고 중재를 수행할 수 있다.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">📌</span> 주요 용어</div>
+    <div class="keyword-grid">
+      <div class="keyword-item"><strong>발달엉덩관절형성이상</strong>developmental hip dysplasia</div>
+      <div class="keyword-item"><strong>힐-세치 병변</strong>Hill-Sachs lesion</div>
+      <div class="keyword-item"><strong>슬랩병변</strong>SLAP lesion</div>
+      <div class="keyword-item"><strong>반가르트병변</strong>Bankart lesion</div>
+      <div class="keyword-item"><strong>봉우리빗장관절 탈구</strong>dislocation of acromioclavicular</div>
+      <div class="keyword-item"><strong>보모 팔꿈치</strong>nursemaid / pulled elbow</div>
+      <div class="keyword-item"><strong>무릎뼈의 장애</strong>disorders of the patella</div>
+      <div class="keyword-item"><strong>턱관절 기능장애</strong>TMD / TMJD</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">📊</span> 탈구의 분류 (표 9-1)</div>
+    <table class="info-table">
+      <tr>
+        <th>분류</th><th>원인</th><th>특성</th><th>발생부위</th>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">선천성</span></td>
+        <td>유전, 출생 전 환경</td>
+        <td>출생 시 관절형성이상, 조기진단·치료 필요</td>
+        <td>선천성 엉덩관절 탈구</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">외상성</span></td>
+        <td>외부 충격</td>
+        <td>급성 통증·부기, 관절변형, 신경·혈관 손상 가능</td>
+        <td>어깨관절, 엉덩관절</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-orange">습관성</span></td>
+        <td>관절구조 약화, 이전 손상, 결합조직 이상</td>
+        <td>반복성 탈구, 통증이 크지 않음, 재발 방지 치료 필요</td>
+        <td>어깨관절, 턱관절</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">⚡</span> 급성 증상 6가지</div>
+    <div class="keyword-grid">
+      <div class="keyword-item"><strong>① 통증 (Pain)</strong>정복 전까지 극심 → 정복 후 둔통(dull pain)</div>
+      <div class="keyword-item"><strong>② 관절변형</strong>해부학적 위치 이탈, 비정상 모양</div>
+      <div class="keyword-item"><strong>③ 부기 (Swelling)</strong>염증·출혈·관절액 누출</div>
+      <div class="keyword-item"><strong>④ 움직임 제한</strong>능동·수동 운동 제한 또는 불가</div>
+      <div class="keyword-item"><strong>⑤ 압통 (Tenderness)</strong>탈구 부위 누를 시 심한 통증</div>
+      <div class="keyword-item"><strong>⑥ 신경·혈관 손상</strong>감각이상, 혈류장애, 근력약화</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">🔴</span> 신경손상 부위별 정리</div>
+    <table class="info-table">
+      <tr><th>탈구 부위</th><th>손상 신경</th></tr>
+      <tr><td>어깨관절 탈구</td><td>팔신경얼기 및 겨드랑신경</td></tr>
+      <tr><td>무릎관절 안쪽 탈구</td><td>온종아리신경</td></tr>
+      <tr><td>엉덩관절 뒤쪽 탈구</td><td>궁둥신경</td></tr>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">💊</span> 의학적 중재</div>
+    <div class="two-col">
+      <div class="mini-card" style="border-top-color:#2d5a9e;">
+        <h4>비수술적 정복 (Closed)</h4>
+        <p>피부를 절개하지 않고 숙련된 의료진이 정복. 단순 탈구에 우선 적용.</p>
+      </div>
+      <div class="mini-card" style="border-top-color:#dc2626;">
+        <h4>수술적 정복 (Open)</h4>
+        <p>지속 통증·불안정, 합병증, 인대 완전파열, 골절 동반, 만성·습관성 탈구 시</p>
+      </div>
+    </div>
+    <div style="margin-top:10px; background:#f0fdf4; border-radius:8px; padding:10px; border-left:3px solid var(--green); font-size:12px; line-height:1.7;">
+      <strong>프롤로 치료:</strong> 인대·힘줄·관절에 자극제 주사 → 새로운 뼈·섬유조직 생성 촉진 → 손상 조직 치유 촉진 주사법
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><span class="icon">🏃</span> 물리치료 중재 요약</div>
+    <table class="info-table">
+      <tr><th>단계</th><th>중재</th><th>목표</th></tr>
+      <tr><td>물리적 인자<br>(급성기)</td><td>냉치료 (정복 후 12~36시간), 등척성 수축 운동</td><td>통증·부기 감소</td></tr>
+      <tr><td>물리적 인자<br>(급성기 이후)</td><td>온열치료 (hot pack, IR, 단파, 극초단파, 초음파), 마사지</td><td>순환증진, 유착방지</td></tr>
+      <tr><td>전기치료</td><td>전기근육자극치료 (고정기간 저주파)</td><td>근위축 방지, 근경축 감소</td></tr>
+      <tr><td>고정기간 운동</td><td>등척성 운동 → 능동운동</td><td>근위축 방지</td></tr>
+      <tr><td>고정 이후</td><td>관절가동술 (Maitland Ⅰ-Ⅱ등급), 능동운동, 체중부하</td><td>ROM회복, 안정성 훈련</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ======================== 요약 탭 ======================== -->
+<div class="tab-content" id="tab-summary">
+
+  <div class="summary-nav">
+    <a href="#s1">탈구 개요</a>
+    <a href="#s2">탈구 분류</a>
+    <a href="#s3">임상증상</a>
+    <a href="#s4">물리치료 중재</a>
+    <a href="#s5">DDH 개요</a>
+    <a href="#s6">DDH 원인·빈도</a>
+    <a href="#s7">DDH 임상특징</a>
+    <a href="#s8">DDH 검사</a>
+    <a href="#s9">DDH 중재</a>
+  </div>
+
+  <!-- S1 탈구 개요 -->
+  <div class="sub-section" id="s1">
+    <div class="sub-section-title">🔵 1. 탈구 개요 (Dislocation)</div>
+    <div class="sub-section-body">
+      <p class="sub-def">
+        <strong>탈구(dislocation)</strong>란 관절을 구성하는 뼈의 정상 해부학적 위치가 벗어나 서로의 접촉면이 <span class="bold-kw">완전히 분리</span>된 상태. 접촉이 다소 남은 상태는 <span class="highlight-text">불완전탈구(subluxation)</span>.
+        탈구·불완전탈구 모두 가장 중요한 원인은 <span class="bold-kw">외상</span>이며, 관절 주위 골절 및 주위 조직 손상이 흔히 동반된다.
+      </p>
+    </div>
+  </div>
+
+  <!-- S2 탈구 분류 -->
+  <div class="sub-section" id="s2">
+    <div class="sub-section-title">🔵 2. 탈구 분류</div>
+    <div class="sub-section-body">
+      <div class="two-col">
+        <div class="mini-card" style="border-top-color:#059669;">
+          <h4>선천성 탈구</h4>
+          <ul style="padding-left:14px; font-size:11px; line-height:1.8;">
+            <li>태아 발달 중 관절면의 선천성 기형으로 발생</li>
+            <li>소아에서 <strong>선천엉덩관절탈구(CDH)</strong> 많이 발생</li>
+            <li>원인: 유전·자궁 내 환경·모체 호르몬</li>
+            <li>방치 시 관절기능 심각 손상 → <strong>조기 진단·치료 중요</strong></li>
+          </ul>
+        </div>
+        <div class="mini-card" style="border-top-color:#dc2626;">
+          <h4>외상성 탈구</h4>
+          <ul style="padding-left:14px; font-size:11px; line-height:1.8;">
+            <li>물렁조직 유지력 초과 외력으로 발생</li>
+            <li>낙상, 교통사고, 스포츠 외상</li>
+            <li>어깨: <strong>전방 탈구</strong> 가장 흔함</li>
+            <li>엉덩관절: <strong>85~90%</strong>가 후방 탈구</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mini-card" style="border-top-color:#d97706; margin-top:8px;">
+        <h4>습관성 탈구</h4>
+        <p style="font-size:11px; line-height:1.7;">반복 탈구 → 통증 크지 않음. 원인: 인대·관절낭 약화, 재발성 불안정성, 마르판증후군 등. 주요 호발부위: <strong>어깨관절, 턱관절</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 임상증상 -->
+  <div class="sub-section" id="s3">
+    <div class="sub-section-title">🔵 3. 임상증상</div>
+    <div class="sub-section-body">
+      <table class="num-table">
+        <tr><th>구분</th><th>증상</th><th>특징</th></tr>
+        <tr><td>급성①</td><td><strong>통증</strong></td><td>정복 전 극심, 정복 후 dull pain으로 변환</td></tr>
+        <tr><td>급성②</td><td><strong>관절변형</strong></td><td>어깨 앞쪽탈구: 봉우리 돌출, 편평해짐; 엉덩관절 뒤쪽: 굽힘·모음·안쪽돌림</td></tr>
+        <tr><td>급성③</td><td><strong>부기</strong></td><td>염증반응, 관절액 누출</td></tr>
+        <tr><td>급성④</td><td><strong>움직임 제한</strong></td><td>능동·수동운동 제한 또는 불가</td></tr>
+        <tr><td>급성⑤</td><td><strong>압통</strong></td><td>탈구 부위 압박 시 심한 통증</td></tr>
+        <tr><td>급성⑥</td><td><strong>신경·혈관 손상</strong></td><td>paresthesia, 혈류장애, 근력약화</td></tr>
+        <tr><td>만성①</td><td><strong>관절 불안정성</strong></td><td>반복 탈구로 지지구조 약화</td></tr>
+        <tr><td>만성②</td><td><strong>만성 통증</strong></td><td>반복 손상으로 염증·연골 손상 동반</td></tr>
+        <tr><td>만성③</td><td><strong>운동기능 저하</strong></td><td>일상생활·스포츠 기능장애</td></tr>
+        <tr><td>만성④</td><td><strong>관절 강직</strong></td><td>장기간 고정(immobilization) 후 발생</td></tr>
+        <tr><td>만성⑤</td><td><strong>관절 구축</strong></td><td>관절주머니·물렁조직 섬유화로 ROM 제한</td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="clinical-title">⭐ 임상 포인트</div>
+        <ul>
+          <li>이등변삼각형 검사: 정상 팔꿈치는 위팔뼈 안쪽·가쪽위관절융기+팔꿈치머리 → 이등변삼각형 형성, 탈구 시 변형</li>
+          <li>엉덩관절 뒤쪽 탈구: 굽힘+모음+안쪽돌림 변형 + 하지 단축; 앞쪽 탈구: 벌림+가쪽돌림</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 물리치료 중재 -->
+  <div class="sub-section" id="s4">
+    <div class="sub-section-title">🔵 4. 물리치료 중재</div>
+    <div class="sub-section-body">
+      <p class="sub-def">
+        <span class="bold-kw">① 물리적 인자치료:</span> 급성기 — 냉치료 (정복 후 12~36시간), 등척성 수축운동으로 근위축 방지<br>
+        급성기 이후 — <span class="highlight-text">온열치료</span> (hot pack, IR, 단파, 극초단파, 초음파), 마사지 적용, 전기근육자극치료
+      </p>
+      <p class="sub-def">
+        <span class="bold-kw">② 운동치료:</span><br>
+        · 고정기간: <span class="highlight-text">등척성 수축</span> → 능동 범위 운동<br>
+        · 고정 이후: 수동운동 주의 (물렁조직 손상·탈구 위험), 능동운동 우선, ROM·저항 점차 증가<br>
+        · 어깨탈구 후: 팔꿈치관절 능동운동 먼저 → (위팔두갈래근 긴머리힘줄이 어깨관절 통과 → 유착방지)<br>
+        · 엉덩·무릎·발목탈구: 조기 부분 체중부하 선 자세 → 보행훈련 → 완전 체중부하
+      </p>
+      <p class="sub-def">
+        <span class="bold-kw">③ 정형도수물리치료:</span> 급성기 이후 적용. <span class="highlight-text">관절가동술 (Maitland Ⅰ-Ⅱ등급)</span>으로 ROM 점차 증가. 각운동보다 생리적 범위 내 부속운동 활용.
+      </p>
+      <p class="sub-def">
+        <span class="bold-kw">④ 예방·관리:</span> 고정 이후 초기 → 관절 주위 근육 <span class="highlight-text">안정화 운동</span> → 재탈구 방지. 이후 근력강화·재활 프로그램. 턱걸이·팔굽혀펴기 등 신경근 조절동작으로 팔꿈치관절 동적 안정성 증가.
+      </p>
+      <div class="clinical-box">
+        <div class="clinical-title">⭐ 임상 포인트</div>
+        <p>재활운동 프로그램은 <strong>생체역학적 이상 교정</strong>에 역점, 관절 관련 근육의 근력 균형을 맞추도록 설계한다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 DDH 개요 -->
+  <div class="sub-section" id="s5">
+    <div class="sub-section-title">🟢 5. 발달엉덩관절형성이상 (DDH) — 개요</div>
+    <div class="sub-section-body">
+      <p class="sub-def">
+        <strong>발달엉덩관절형성이상(developmental dysplasia of the hip, DDH)</strong>은 이전 명칭 <span class="highlight-text">선천엉덩관절탈구(CDH)</span>에서 개칭. 태아기부터 나타나는 엉덩관절의 불안정성, 불완전탈구, 탈구 또는 절구형성이상 포함.
+      </p>
+      <p class="sub-def">
+        한쪽 혹은 양쪽 넓적다리뼈머리가 부분·전체적으로 골반절구로부터 선천성으로 탈구. 출생 시 외관상 잘 나타나지 않아 <span class="bold-kw">조기진단이 매우 어려움</span> — 걷기 시작할 때 비로소 발견되는 경우 多.
+      </p>
+      <div class="clinical-box">
+        <div class="clinical-title">⭐ 임상 포인트</div>
+        <p>우리나라: <strong>2006년부터</strong> 영유아 검진사업 포함 → <strong>생후 4개월부터</strong> 조기검진. 방치 시 퇴행성 관절질환 → 치료 시 정상 엉덩관절 가능. <strong>조기발견이 핵심!</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 DDH 원인·빈도 -->
+  <div class="sub-section" id="s6">
+    <div class="sub-section-title">🟢 6. DDH — 원인 & 발생 빈도</div>
+    <div class="sub-section-body">
+      <p class="sub-def"><span class="bold-kw">원인:</span> 다요인성. ① 유전(관절막 이완, 가족력), ② 임신 중 호르몬(릴랙신 → 신생아 엉덩관절인대 이완), ③ 태내 자세(과굽힘 → 분만 후 펌·모음 자세 성장 시 빈도↑)</p>
+      <table class="num-table">
+        <tr><th>발생 빈도 항목</th><th>내용</th></tr>
+        <tr><td>성별</td><td>남성보다 <strong>여성</strong>에서 많이 발생</td></tr>
+        <tr><td>측별</td><td>좌측 60%, 우측 20%, 양측 20%</td></tr>
+        <tr><td>태위</td><td><strong>불기태위(둔위, breech presentation)</strong>에서 호발 / 두정위는 4%에 불과</td></tr>
+        <tr><td>동반기형</td><td>다른 부위 선천성 기형과 동반 시 발생빈도↑</td></tr>
+        <tr><td>국가·인종</td><td>엉덩관절 펴고 다리 모은 자세로 아기 고정 시 많이 발생 (몽골인·인디안 등)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S7 DDH 임상특징 -->
+  <div class="sub-section" id="s7">
+    <div class="sub-section-title">🟢 7. DDH — 임상적 특징</div>
+    <div class="sub-section-body">
+      <p class="sub-def"><span class="bold-kw">이차적 변화들:</span></p>
+      <ul class="detail-list">
+        <li>① 엉덩관절 굽힘근·모음근 단축 → <span class="highlight-text">구축</span> 발생</li>
+        <li>② 절구(acetabulum) 자극 없음 → 이형성증 → 더욱 편평·접시모양</li>
+        <li>③ 관절은 섬유지방성 조직(fibrofatty tissue)으로 채워짐</li>
+        <li>④ 넓적다리뼈머리인대 늘어나고 길어져서 너덜너덜해짐</li>
+        <li>⑤ <strong>역 절구테두리(inverted limbus)</strong>: 절구테두리 접혀 관절 내로 들어가 → 정복 불가능 유발</li>
+        <li>⑥ 엉덩허리근힘줄 → 관절주머니 압박, 절구 입구 좁아짐 → <span class="highlight-text">모래시계형 관절공간</span></li>
+        <li>⑦ 넓적다리뼈 형태 이상, 골반에 마찰 → 편평해짐, 정상적 회전 불가</li>
+      </ul>
+      <table class="num-table" style="margin-top:10px;">
+        <tr><th>보행 이후 임상소견</th><th>내용</th></tr>
+        <tr><td>모음·굽힘 근육</td><td>짧아지고 구축됨</td></tr>
+        <tr><td>넓적다리 벌림</td><td>모음근 긴장으로 벌림 제한</td></tr>
+        <tr><td>피부 주름</td><td>한쪽 탈구: 안쪽·뒤쪽 피부주름 비대칭</td></tr>
+        <tr><td>무릎 높이</td><td>바로 누운 자세에서 무릎 높이 불일치 (Allis sign)</td></tr>
+        <tr><td><strong>텔레스코핑징후</strong></td><td>탈구 쪽 넓적다리뼈 위 부위 촉진 + 다리 밀거나 당기면 나타남</td></tr>
+        <tr><td><strong>Trendelenburg 검사</strong></td><td>건강한 쪽 다리로 걷는 절름보행 → 벌림근 약화 측정</td></tr>
+        <tr><td>양측 탈구</td><td>회음부 넓어짐, 큰돌기 돌출, 과전만증(hyperlordosis), 오리걸음(waddling gait)</td></tr>
+        <tr><td>한쪽 탈구</td><td>이차적으로 척주측만증(scoliosis) 발생</td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="clinical-title">⭐ 임상 포인트</div>
+        <p>방사선검사: <span class="bold-kw">생후 4~6개월</span>까지는 진단 큰 도움 안 됨 → <span class="bold-kw">초음파검사가 가장 정확</span> (생후 4~6개월 이전). 탈구 여부·정도·유발 여부·절구 이형성 정도 확인 가능.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8 DDH 검사 -->
+  <div class="sub-section" id="s8">
+    <div class="sub-section-title">🟢 8. DDH — 검사 및 평가</div>
+    <div class="sub-section-body">
+      <table class="num-table">
+        <tr><th>검사</th><th>방법</th><th>양성 소견</th></tr>
+        <tr>
+          <td><strong>바로우검사</strong><br>(Barlow)<br><span style="font-size:10px;color:#64748b;">역 오토라니검사<br>=탈구 유도</span></td>
+          <td>바로 눕혀 엉덩·무릎 90° 굽힘, 가운데손가락은 큰돌기·엄지는 안쪽 작은돌기 위치. 다리를 약간 모으면서 가쪽으로 밀어 탈구 유발 → 벌림으로 정복</td>
+          <td>관절이 탈구되는 느낌</td>
+        </tr>
+        <tr>
+          <td><strong>오토라니검사</strong><br>(Ortolani)<br><span style="font-size:10px;color:#64748b;">= 정복 검사</span></td>
+          <td>바로 누운 상태 엉덩관절 90° 굽힘, 무릎 완전 굽힘. 가운데손가락은 큰돌기, 엄지는 작은돌기. 큰돌기를 안쪽·위로 밀면서 다리 벌림</td>
+          <td>"뚝" 느낌(click) = 오토라니징후(Ortolani sign). 신생아에서는 드묾 → 생후 6개월까지 <strong>바로우검사</strong>가 더 효과적</td>
+        </tr>
+      </table>
+      <div class="clinical-box" style="margin-top:10px;">
+        <div class="clinical-title">⭐ 불안정성 3가지 유형</div>
+        <ul>
+          <li><strong>제1형</strong>: 탈구된 엉덩관절 → 양성 오토라니검사</li>
+          <li><strong>제2형</strong>: 탈구 가능한 엉덩관절 → 바로우검사로 발견</li>
+          <li><strong>제3형</strong>: 불완전탈구 엉덩관절 → 바로우검사로 발견</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9 DDH 중재 -->
+  <div class="sub-section" id="s9">
+    <div class="sub-section-title">🟢 9. DDH — 연령별 중재</div>
+    <div class="sub-section-body">
+      <div class="timeline">
+        <div class="tl-item">
+          <h4>생후 6개월 이전</h4>
+          <p>
+            최적의 정복·안정화 시기: <span class="highlight-text">생후 3개월</span><br>
+            <strong>파블릭 하네스(Pavlik harness) 보조기</strong> — 가장 유용한 치료법. 3~4개월간 착용 → 관절주머니 단단해짐.<br>
+            (기저귀·본 로젠·파블릭 하네스 중 파블릭이 최우선)<br>
+            ※ 물리치료: 의학적 중재 동안 최소화
+          </p>
+        </div>
+        <div class="tl-item">
+          <h4>생후 6~18개월</h4>
+          <p>
+            성공률은 <span class="highlight-text">약 80%</span> (생후 3~18개월 발견 환자)<br>
+            물렁조직 구축 치료 먼저 → 도수 또는 외과적 정복 → 정복 성공 시 최소 <span class="highlight-text">6~18개월</span>동안 <strong>Short leg hip spica cast</strong><br>
+            물리치료: 다리 근력균형·보행훈련·보조장비 사용 증진
+          </p>
+        </div>
+        <div class="tl-item">
+          <h4>생후 18개월 이후</h4>
+          <p>
+            이미 발육성이영양증 이차합병증 나타남. 성공적 치료 비율 매우 낮음.<br>
+            폐쇄 정복 결과 좋지 않음 → 여러 번 수술 필요할 수 있음.<br>
+            수술 후 나선형 붕대나 부목으로 고정.<br>
+            물리치료: 근력강화·보행훈련·자세운동·보조장비, 환자·가족 교육 필수<br>
+            치료기간: 1개월~1년 범위
+          </p>
+        </div>
+      </div>
+      <div class="clinical-box">
+        <div class="clinical-title">⭐ 핵심 수치 정리</div>
+        <ul>
+          <li>조기검진 시작: <strong>생후 4개월</strong></li>
+          <li>최적 정복 시기: <strong>생후 3개월</strong></li>
+          <li>초음파 유효: <strong>생후 4~6개월 이전</strong></li>
+          <li>파블릭 하네스 착용기간: <strong>3~4개월</strong></li>
+          <li>Spica cast 기간: <strong>6~18개월</strong></li>
+          <li>6~18개월 발견 성공률: <strong>약 80%</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 퀴즈 탭 ======================== -->
+<div class="tab-content" id="tab-quiz">
+  <div class="quiz-header">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span id="q-progress-text">문제 1 / 15</span>
+        <span id="q-score-text">점수: 0</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="score-display">
+      <div class="score-item"><span class="num" id="stat-total">0</span>풀었음</div>
+      <div class="score-item"><span class="num" id="stat-correct" style="color:#059669">0</span>정답</div>
+      <div class="score-item"><span class="num" id="stat-wrong" style="color:#dc2626">0</span>오답</div>
+      <div class="score-item"><span class="num" id="stat-remain">15</span>남음</div>
+    </div>
+    <div class="mode-btns" style="margin-top:10px;">
+      <button class="mode-btn active" onclick="setMode('all')">전체순서</button>
+      <button class="mode-btn" onclick="setMode('random')">랜덤</button>
+      <button class="mode-btn" onclick="setMode('wrong')">오답만</button>
+    </div>
+  </div>
+
+  <div id="quiz-area">
+    <div class="quiz-card" id="quiz-card">
+      <div class="q-num" id="q-num">Q1 / 15</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-options" id="q-options"></div>
+      <div class="explanation" id="q-explanation"></div>
+      <div class="quiz-btns">
+        <button class="btn-primary" id="btn-next" onclick="nextQuestion()" style="display:none">다음 문제 →</button>
+        <button class="btn-secondary" onclick="resetQuiz()">처음부터</button>
+      </div>
+    </div>
+
+    <div class="result-screen" id="result-screen">
+      <div class="result-score" id="result-score"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div class="wrong-list-title" id="wrong-list-title" style="display:none">❌ 틀린 문제 목록</div>
+      <div id="wrong-list"></div>
+      <div class="quiz-btns" style="margin-top:16px; justify-content:center;">
+        <button class="btn-primary" onclick="resetQuiz()" style="max-width:200px;">다시 풀기</button>
+        <button class="btn-secondary" onclick="reviewWrong()">오답만 풀기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ALL_QUESTIONS = [
+  {
+    q: "탈구(dislocation)와 불완전탈구(subluxation)의 차이점으로 옳은 것은?",
+    opts:["탈구는 연골 손상, 불완전탈구는 인대 손상이다","탈구는 접촉면이 완전히 분리되고, 불완전탈구는 접촉이 다소 남아 있다","탈구는 선천성, 불완전탈구는 외상성으로만 발생한다","탈구는 통증이 없고 불완전탈구는 통증이 심하다","탈구는 어깨에만 발생한다"],
+    ans:1, exp:"탈구는 관절면이 완전히 분리, 불완전탈구는 접촉이 다소 남아 있는 상태이다."
+  },
+  {
+    q: "탈구의 가장 중요한 원인으로 옳은 것은?",
+    opts:["유전적 요인","노화","외상","과사용","감염"],
+    ans:2, exp:"탈구와 불완전탈구 모두 가장 중요한 원인은 외상이다."
+  },
+  {
+    q: "습관성 탈구에 대한 설명으로 옳은 것은?",
+    opts:["통증이 매우 심하다","단 한 번의 강한 외력에 의해 발생한다","반복성 탈구로 통증이 크지 않을 수 있다","선천적 기형이 없으면 발생하지 않는다","소아에서만 발생한다"],
+    ans:2, exp:"습관성 탈구는 반복성 탈구로 통증이 크지 않거나, 환자 스스로 정복 가능한 경우도 있다."
+  },
+  {
+    q: "외상성 어깨관절 탈구에서 가장 흔한 방향은?",
+    opts:["뒤쪽","위쪽","아래쪽","앞쪽","안쪽"],
+    ans:3, exp:"어깨관절(접시위팔관절)은 앞쪽 탈구가 가장 흔하다."
+  },
+  {
+    q: "엉덩관절 탈구 중 가장 높은 비율을 차지하는 방향은?",
+    opts:["앞쪽 20%","앞쪽 50%","뒤쪽 50%","뒤쪽 85~90%","위쪽 60%"],
+    ans:3, exp:"엉덩관절 탈구에서는 뒤쪽(후방) 탈구가 85~90%로 가장 흔하다."
+  },
+  {
+    q: "탈구 후 급성기(정복 직후 12~36시간) 물리치료로 가장 적절한 것은?",
+    opts:["온열치료","수동 신장 운동","냉치료 + 등척성 수축 운동","강한 관절가동술","점진적 체중부하 보행"],
+    ans:2, exp:"급성기에는 냉치료(얼음)로 통증·부기 감소, 등척성 수축으로 근위축 방지한다."
+  },
+  {
+    q: "어깨관절 탈구 후 팔꿈치관절의 능동운동을 먼저 실시하는 이유로 옳은 것은?",
+    opts:["팔꿈치관절 골절을 예방하기 위해","위팔두갈래근 긴머리힘줄이 어깨관절을 통과하여 어깨 주위 유착을 방지하기 위해","어깨세모근 위축을 막기 위해","겨드랑신경 손상을 회복시키기 위해","어깨관절주머니 염증을 치료하기 위해"],
+    ans:1, exp:"위팔두갈래근 긴머리힘줄(long head tendon)이 어깨관절을 통과하므로, 팔꿈치관절 운동을 통해 어깨관절 주위 조직 및 힘줄 유착을 방지할 수 있다."
+  },
+  {
+    q: "어깨관절 탈구 후 정형도수물리치료로 관절가동술 적용 시 옳은 것은?",
+    opts:["급성기에 즉시 고등급 관절가동술 적용","급성기 이후, 낮은 등급(Maitland Ⅰ-Ⅱ)부터 시작","수술적 정복 직후 적극적으로 적용","각운동(angular movement)을 우선 적용","관절운동범위가 완전히 회복된 후 적용"],
+    ans:1, exp:"정형도수물리치료는 급성기 이후 적용, Maitland Ⅰ-Ⅱ등급의 낮은 강도로 시작하여 ROM을 점차 증가시킨다."
+  },
+  {
+    q: "발달엉덩관절형성이상(DDH)에서 가장 정확한 조기 진단법은?",
+    opts:["CT","방사선검사(X-ray)","초음파검사","MRI","혈액검사"],
+    ans:2, exp:"생후 4~6개월 이전에는 초음파검사가 가장 정확한 검사법이다. 방사선검사는 이 시기에 진단에 큰 도움이 안 된다."
+  },
+  {
+    q: "DDH에서 바로우검사(Barlow test)에 대한 설명으로 옳은 것은?",
+    opts:["탈구된 관절을 정복시키는 검사","탈구를 유도하는 검사","신경손상을 평가하는 검사","근력 약화를 평가하는 검사","골밀도를 측정하는 검사"],
+    ans:1, exp:"바로우검사(= 역 오토라니검사)는 탈구를 유도하는 검사, 오토라니검사는 탈구된 관절을 정복시키는 검사이다."
+  },
+  {
+    q: "DDH에서 오토라니징후(Ortolani sign)는 어떤 느낌인가?",
+    opts:["관절이 탈구될 때 '뚝' 소리","탈구된 관절이 정복될 때 '뚝' 느낌(click)","근육이 수축할 때 진동","인대가 파열될 때 '탁' 소리","뼈가 마찰하는 소리"],
+    ans:1, exp:"오토라니징후는 탈구된 관절이 정복될 때 손끝에 촉지되는 '뚝' 느낌(click)이다."
+  },
+  {
+    q: "DDH 생후 6개월 이전 치료에서 가장 유용한 방법은?",
+    opts:["수술적 정복","석고고정(spica cast)","파블릭 하네스(Pavlik harness) 보조기","견인 치료","물리치료 운동"],
+    ans:2, exp:"파블릭 하네스 보조기가 생후 6개월 이전 DDH 치료에서 가장 유용한 방법으로 보편화되어 있다."
+  },
+  {
+    q: "DDH에서 텔레스코핑징후(Telescoping sign)는 어떻게 검사하는가?",
+    opts:["엉덩관절을 최대로 굽히고 펴기","탈구 있는 넓적다리뼈 위 부위를 촉진하면서 다리를 위쪽이나 아래쪽으로 밀기","무릎을 굽힌 상태에서 정강뼈를 앞·뒤로 당기기","발목을 배측굴곡 시킨 후 종아리를 촉진","탈구 쪽 발목을 잡고 회전시키기"],
+    ans:1, exp:"텔레스코핑징후는 탈구 있는 넓적다리뼈 위 부위를 촉진하면서 다리를 위쪽 또는 아래쪽으로 밀면 나타난다."
+  },
+  {
+    q: "DDH에서 역 절구테두리(inverted limbus)란 무엇인가?",
+    opts:["절구가 너무 깊어진 상태","절구테두리가 관절 내로 접혀 들어가 정복이 불가능한 상태","절구테두리가 골절된 상태","절구테두리가 비대해진 상태","절구테두리 인대가 파열된 상태"],
+    ans:1, exp:"역 절구테두리는 절구테두리(acetabular labrum)가 관절 내로 접혀 들어가 정복을 불가능하게 만드는 상태이다."
+  },
+  {
+    q: "DDH 생후 6~18개월 발견 환자의 대략적인 성공률로 옳은 것은?",
+    opts:["약 20%","약 40%","약 60%","약 80%","약 95%"],
+    ans:3, exp:"생후 3~18개월 사이에서 발견된 환자들의 대략적인 성공률은 80%이다."
+  }
+];
+
+let mode = 'all';
+let order = [];
+let currentIdx = 0;
+let score = 0;
+let wrongList = [];
+let answered = false;
+let sessionTotal = 0;
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  resetQuiz();
+}
+
+function resetQuiz() {
+  score = 0; wrongList = []; currentIdx = 0; answered = false; sessionTotal = 0;
+  if(mode === 'random') {
+    order = [...Array(ALL_QUESTIONS.length).keys()].sort(() => Math.random()-0.5);
+  } else if(mode === 'wrong') {
+    // will be set after review
+    order = [...Array(ALL_QUESTIONS.length).keys()];
+  } else {
+    order = [...Array(ALL_QUESTIONS.length).keys()];
+  }
+  document.getElementById('result-screen').classList.remove('show');
+  document.getElementById('quiz-card').style.display = 'block';
+  updateStats();
+  renderQuestion();
+}
+
+function reviewWrong() {
+  if(wrongList.length === 0) { alert('틀린 문제가 없습니다!'); return; }
+  mode = 'wrong';
+  order = [...wrongList];
+  wrongList = []; score = 0; currentIdx = 0; answered = false; sessionTotal = 0;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mode-btn')[2].classList.add('active');
+  document.getElementById('result-screen').classList.remove('show');
+  document.getElementById('quiz-card').style.display = 'block';
+  updateStats();
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if(currentIdx >= order.length) { showResult(); return; }
+  const qIdx = order[currentIdx];
+  const q = ALL_QUESTIONS[qIdx];
+  document.getElementById('q-num').textContent = `Q${currentIdx+1} / ${order.length}`;
+  document.getElementById('q-text').textContent = q.q;
+  const optDiv = document.getElementById('q-options');
+  optDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-opt';
+    btn.textContent = `${['①','②','③','④','⑤'][i]} ${opt}`;
+    btn.onclick = () => checkAnswer(i, q.ans, q.exp, btn);
+    optDiv.appendChild(btn);
+  });
+  document.getElementById('q-explanation').classList.remove('show');
+  document.getElementById('q-explanation').textContent = '';
+  document.getElementById('btn-next').style.display = 'none';
+  answered = false;
+  updateProgress();
+}
+
+function checkAnswer(selected, correct, exp, btn) {
+  if(answered) return;
+  answered = true;
+  sessionTotal++;
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach(o => o.disabled = true);
+  if(selected === correct) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('show-correct');
+    wrongList.push(order[currentIdx]);
+  }
+  const expEl = document.getElementById('q-explanation');
+  expEl.textContent = '💡 ' + exp;
+  expEl.classList.add('show');
+  document.getElementById('btn-next').style.display = 'block';
+  updateStats();
+}
+
+function nextQuestion() {
+  currentIdx++;
+  renderQuestion();
+}
+
+function updateProgress() {
+  const pct = (currentIdx / order.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('q-progress-text').textContent = `문제 ${currentIdx+1} / ${order.length}`;
+  document.getElementById('q-score-text').textContent = `점수: ${score}`;
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = sessionTotal;
+  document.getElementById('stat-correct').textContent = score;
+  document.getElementById('stat-wrong').textContent = sessionTotal - score;
+  document.getElementById('stat-remain').textContent = order.length - currentIdx;
+}
+
+function showResult() {
+  document.getElementById('quiz-card').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.classList.add('show');
+  const pct = Math.round((score/order.length)*100);
+  document.getElementById('result-score').textContent = `${score}/${order.length}`;
+  let msg = pct >= 90 ? '🎉 완벽! 이 챕터 완전 정복!' : pct >= 70 ? '👍 잘 했어요! 조금 더 복습하면 완벽!' : '📚 다시 한 번 요약을 읽고 재도전!';
+  document.getElementById('result-msg').textContent = msg;
+
+  const wrongIdx = [...new Set(wrongList)];
+  if(wrongIdx.length > 0) {
+    document.getElementById('wrong-list-title').style.display = 'block';
+    const wl = document.getElementById('wrong-list');
+    wl.innerHTML = '';
+    wrongIdx.forEach(i => {
+      const q = ALL_QUESTIONS[i];
+      const d = document.createElement('div');
+      d.style.cssText = 'background:#fff;border:1px solid #fca5a5;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;';
+      d.innerHTML = `<strong style="color:#dc2626">${q.q}</strong><br><span style="color:#059669">정답: ${q.opts[q.ans]}</span>`;
+      wl.appendChild(d);
+    });
+  } else {
+    document.getElementById('wrong-list-title').style.display = 'none';
+    document.getElementById('wrong-list').innerHTML = '<div class="empty-wrong">🎊 오답이 없습니다! 완벽한 점수!</div>';
+  }
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// Init
+resetQuiz();
+</script>
+</body>
+</html>
