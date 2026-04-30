@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전기치료학 ① 기초</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #EEF4FF;
+    --bg2: #E0ECFF;
+    --card: #FFFFFF;
+    --navy: #1E3A5F;
+    --blue: #2563EB;
+    --sky: #3B82F6;
+    --accent: #0EA5E9;
+    --teal: #0891B2;
+    --green: #059669;
+    --amber: #D97706;
+    --red: #DC2626;
+    --purple: #7C3AED;
+    --text: #1E293B;
+    --sub: #475569;
+    --border: #CBD5E1;
+    --shadow: 0 2px 12px rgba(30,58,95,0.08);
+    --shadow-lg: 0 8px 30px rgba(30,58,95,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, #2563EB 100%);
+    color: white;
+    padding: 20px 24px 16px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(30,58,95,0.3);
+  }
+  header h1 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+  header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  
+  /* TABS */
+  .tab-bar {
+    background: white;
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    position: sticky; top: 72px; z-index: 90;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    flex: 1; min-width: 80px;
+    padding: 12px 8px;
+    font-size: 12px; font-weight: 700;
+    color: var(--sub);
+    background: none; border: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+    background: #EFF6FF;
+  }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 16px; }
+  .tab-content.active { display: block; }
+
+  /* OVERVIEW TAB */
+  .chapter-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--blue);
+  }
+  .chapter-card h3 {
+    font-size: 14px; font-weight: 800;
+    color: var(--navy); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .keyword-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .kw {
+    background: #EFF6FF;
+    color: var(--blue);
+    border: 1px solid #BFDBFE;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .kw.red { background:#FEF2F2; color:#DC2626; border-color:#FECACA; }
+  .kw.green { background:#ECFDF5; color:#059669; border-color:#A7F3D0; }
+  .kw.purple { background:#F5F3FF; color:#7C3AED; border-color:#DDD6FE; }
+  .kw.amber { background:#FFFBEB; color:#D97706; border-color:#FDE68A; }
+  .kw.teal { background:#F0FDFA; color:#0891B2; border-color:#A5F3FC; }
+
+  /* SUMMARY TAB */
+  .summary-nav {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 16px;
+    background: white; padding: 12px; border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+  .nav-btn {
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+    background: #EFF6FF; color: var(--blue);
+    border: 1px solid #BFDBFE;
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .nav-btn:hover { background: var(--blue); color: white; }
+
+  .section-block {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .section-block h3 {
+    font-size: 15px; font-weight: 900;
+    color: var(--navy);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg2);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-block h3 .icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--blue), var(--accent));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .def-box {
+    background: #F8FAFF;
+    border-left: 3px solid var(--blue);
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+    font-size: 13px; line-height: 1.7;
+  }
+  .def-box strong { color: var(--blue); }
+
+  .num-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px; margin-bottom: 12px;
+    border-radius: 8px; overflow: hidden;
+  }
+  .num-table th {
+    background: var(--navy);
+    color: white; padding: 7px 10px;
+    text-align: left; font-size: 11px;
+  }
+  .num-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .num-table tr:nth-child(even) td { background: #F8FAFF; }
+  .num-table tr:last-child td { border-bottom: none; }
+
+  .clinical-box {
+    background: linear-gradient(135deg, #FFF7ED, #FFFBEB);
+    border: 1px solid #FDE68A;
+    border-left: 4px solid var(--amber);
+    border-radius: 0 10px 10px 0;
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 12px; line-height: 1.7;
+  }
+  .clinical-box .ct { font-size: 11px; font-weight: 800; color: var(--amber); margin-bottom: 4px; }
+
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .mini-card {
+    background: #F8FAFF; border-radius: 8px;
+    padding: 10px; font-size: 12px;
+    border: 1px solid #E0ECFF;
+  }
+  .mini-card .mc-title { font-weight: 800; color: var(--navy); font-size: 11px; margin-bottom: 5px; }
+  .tag { display: inline-block; background: #DBEAFE; color: #1D4ED8; border-radius: 4px; padding: 1px 5px; font-size: 10px; font-weight: 700; margin-right: 3px; }
+  .tag.r { background: #FEE2E2; color: #DC2626; }
+  .tag.g { background: #D1FAE5; color: #059669; }
+  .tag.p { background: #EDE9FE; color: #7C3AED; }
+  .tag.a { background: #FEF3C7; color: #D97706; }
+
+  b { color: var(--navy); }
+
+  /* QUIZ TAB */
+  .quiz-header {
+    background: white; border-radius: 14px;
+    padding: 16px; margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .quiz-header h3 { font-size: 14px; font-weight: 800; color: var(--navy); }
+  .score-badge {
+    background: linear-gradient(135deg, var(--blue), var(--accent));
+    color: white; padding: 6px 14px; border-radius: 20px;
+    font-size: 13px; font-weight: 800;
+  }
+  .progress-bar {
+    height: 8px; background: var(--border); border-radius: 4px;
+    margin-bottom: 14px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--accent));
+    border-radius: 4px; transition: width 0.4s ease;
+  }
+  .quiz-card {
+    background: white; border-radius: 14px;
+    padding: 18px; box-shadow: var(--shadow);
+    margin-bottom: 12px;
+  }
+  .q-num { font-size: 11px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+  .q-text { font-size: 14px; font-weight: 600; line-height: 1.6; margin-bottom: 14px; color: var(--navy); }
+  .opt-btn {
+    display: block; width: 100%;
+    text-align: left; padding: 11px 14px;
+    margin-bottom: 7px;
+    background: #F8FAFF; border: 1.5px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s; color: var(--text);
+  }
+  .opt-btn:hover { background: #EFF6FF; border-color: var(--blue); }
+  .opt-btn.correct { background: #ECFDF5; border-color: #10B981; color: #065F46; font-weight: 700; }
+  .opt-btn.wrong { background: #FEF2F2; border-color: #EF4444; color: #991B1B; }
+  .opt-btn:disabled { cursor: default; }
+  .explain-box {
+    background: #F0FDF4; border-left: 3px solid #10B981;
+    padding: 10px 12px; border-radius: 0 8px 8px 0;
+    font-size: 12px; line-height: 1.6; color: #065F46;
+    margin-top: 8px; display: none;
+  }
+  .quiz-nav {
+    display: flex; gap: 8px; margin-top: 16px; justify-content: center;
+  }
+  .qbtn {
+    padding: 10px 20px; border-radius: 10px; border: none;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s;
+  }
+  .qbtn.primary { background: var(--blue); color: white; }
+  .qbtn.secondary { background: #E2E8F0; color: var(--navy); }
+  .qbtn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+  .result-screen {
+    text-align: center; padding: 30px 16px;
+    display: none;
+  }
+  .result-screen h2 { font-size: 24px; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+  .result-screen .big-score {
+    font-size: 56px; font-weight: 900;
+    background: linear-gradient(135deg, var(--blue), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin: 16px 0;
+  }
+  .wrong-review {
+    background: #FEF2F2; border-radius: 12px;
+    padding: 14px; margin-top: 16px; text-align: left;
+  }
+  .wrong-review h4 { font-size: 13px; font-weight: 800; color: var(--red); margin-bottom: 10px; }
+  .wrong-item { font-size: 12px; padding: 6px 0; border-bottom: 1px solid #FECACA; color: var(--text); }
+  .wrong-item:last-child { border-bottom: none; }
+
+  ul { padding-left: 16px; }
+  li { font-size: 12px; line-height: 1.8; color: var(--sub); }
+  p { font-size: 13px; line-height: 1.7; color: var(--sub); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ 전기치료학 ① — 기초 이론</h1>
+  <p>물질전자이론 · 의용전류 · 전기진단학 · 전기생리학</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ==================== 개요 탭 ==================== -->
+<div id="tab-overview" class="tab-content active">
+
+  <div class="chapter-card" style="border-left-color:#2563EB">
+    <h3>🔬 물질의 전자이론</h3>
+    <div class="keyword-grid">
+      <span class="kw">원자 구성</span><span class="kw">전자·전하</span><span class="kw">쿨롱(C)</span>
+      <span class="kw">옴의 법칙</span><span class="kw">줄의 법칙</span><span class="kw">패러데이 법칙</span>
+      <span class="kw amber">도체·절연체·반도체</span><span class="kw teal">전도전류·이온화전류·변위전류</span>
+    </div>
+  </div>
+
+  <div class="chapter-card" style="border-left-color:#0891B2">
+    <h3>⚡ 의용전류</h3>
+    <div class="keyword-grid">
+      <span class="kw">직류(DC)</span><span class="kw">교류(AC)</span>
+      <span class="kw">저주파 1,000Hz↓</span><span class="kw">중주파 1,000~100,000Hz</span>
+      <span class="kw">고주파 100,000Hz↑</span>
+      <span class="kw red">열효과 / 화학효과</span><span class="kw green">양극·음극 반응</span>
+    </div>
+  </div>
+
+  <div class="chapter-card" style="border-left-color:#059669">
+    <h3>🧪 전기진단학</h3>
+    <div class="keyword-grid">
+      <span class="kw green">변성반응(RD test)</span><span class="kw green">평류강축비(GTR)</span>
+      <span class="kw">기전류 검사</span><span class="kw">시치검사</span>
+      <span class="kw">강시곡선(SD-커브)</span><span class="kw amber">근전도(EMG)</span>
+      <span class="kw">신경전도 속도</span><span class="kw red">신경재생 1일 1mm</span>
+    </div>
+  </div>
+
+  <div class="chapter-card" style="border-left-color:#7C3AED">
+    <h3>🧬 전기생리학</h3>
+    <div class="keyword-grid">
+      <span class="kw purple">I형·Ia형·II형 섬유</span>
+      <span class="kw purple">A·B·C 신경섬유</span>
+      <span class="kw">안정막전위 -70mV</span>
+      <span class="kw">활동전위·탈분극</span>
+      <span class="kw">절대불응기·상대불응기</span>
+      <span class="kw">실무율 법칙</span>
+      <span class="kw red">근수축 과정(아세틸콜린→Ca²⁺)</span>
+      <span class="kw amber">극성공식 CCC>ACC>AOC>COC</span>
+    </div>
+  </div>
+
+  <div class="chapter-card" style="border-left-color:#D97706">
+    <h3>📐 전기 법칙 & 단위 요약</h3>
+    <div class="keyword-grid">
+      <span class="kw amber">V=IR (옴)</span><span class="kw amber">H=I²RT (줄)</span>
+      <span class="kw">전류 A(C/s)</span><span class="kw">저항 Ω</span>
+      <span class="kw">전압 V</span><span class="kw">전력 W</span>
+      <span class="kw">정전용량 F</span><span class="kw">인덕턴스 H</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 요약 탭 ==================== -->
+<div id="tab-summary" class="tab-content">
+
+  <div class="summary-nav">
+    <a href="#s1" class="nav-btn">🔬 물질전자이론</a>
+    <a href="#s2" class="nav-btn">⚡ 의용전류</a>
+    <a href="#s3" class="nav-btn">🧪 전기진단학</a>
+    <a href="#s4" class="nav-btn">🧬 근육섬유</a>
+    <a href="#s5" class="nav-btn">🧠 신경섬유</a>
+    <a href="#s6" class="nav-btn">⚙️ 전기기기구성</a>
+  </div>
+
+  <!-- S1: 물질전자이론 -->
+  <div id="s1" class="section-block">
+    <h3><span class="icon">🔬</span> 물질의 전자이론</h3>
+    <div class="def-box">
+      <strong>분자</strong>: 물질의 성질을 지닌 최소 단위. 원자 → 분자 → 물질 순으로 구성됨.<br>
+      <strong>전자</strong>: 음전하, 원자 궤도를 돌며 <b>음 → 양</b>으로 흐름 (전류 방향은 반대: 양→음).<br>
+      <strong>전하</strong>: 단위 C(쿨롱). 1C = 1A가 1초 운반하는 전기량.
+    </div>
+    <table class="num-table">
+      <tr><th>법칙</th><th>공식 / 내용</th></tr>
+      <tr><td><b>옴의 법칙</b></td><td>V = I·R (전류는 전압에 비례, 저항에 반비례)</td></tr>
+      <tr><td><b>줄의 법칙</b></td><td>H = I²RT (발열은 전류 제곱에 비례)</td></tr>
+      <tr><td><b>쿨롱의 법칙</b></td><td>전하량 곱에 비례, 거리 제곱에 반비례</td></tr>
+      <tr><td><b>패러데이 법칙</b></td><td>전자유도 현상 → 유도전류 발생</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th>전류 종류</th><th>특징</th></tr>
+      <tr><td><b>전도전류</b></td><td>도체 내 자유전자 흐름 → 자계·열 발생</td></tr>
+      <tr><td><b>이온화전류</b></td><td>이온화액에서 이온 극성 따라 흐름</td></tr>
+      <tr><td><b>변위전류</b></td><td>유전체(절연체)를 통한 전하 이동 → 유도 자기장 발생</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>전류밀도 감소법</b>: ① 전극 접촉면 크게 ② 전극 간격 넓게 ③ 전류강도 낮추기<br>
+      <b>정전압 vs 정전류</b>: 정전압 = 저항 변화 시 전류 변동 / 정전류 = 전압이 보상하여 전류 일정 유지
+    </div>
+  </div>
+
+  <!-- S2: 의용전류 -->
+  <div id="s2" class="section-block">
+    <h3><span class="icon">⚡</span> 의용전류 분류 & 효과</h3>
+    <div class="def-box">
+      <b>직류(DC)</b>: 1초 동안 한 방향으로 흐름. <strong>화학적 효과</strong>가 주됨.<br>
+      <b>교류(AC)</b>: 전기강도·방향이 주기적으로 바뀜. 저·중·고주파로 구분.
+    </div>
+    <table class="num-table">
+      <tr><th>분류</th><th>주파수</th><th>주요 효과</th><th>종류</th></tr>
+      <tr><td><b>저주파</b></td><td>1,000Hz 이하</td><td>신경근 자극, 역학적 효과</td><td>TENS, FES, SSP, HVGS</td></tr>
+      <tr><td><b>중주파</b></td><td>1,000~100,000Hz</td><td>역학적·통증완화·조직치유</td><td>ICT, 러시안전류 (주로 4,000Hz)</td></tr>
+      <tr><td><b>고주파</b></td><td>100,000Hz 이상</td><td>심부투열(열효과만)</td><td>단파, 극초단파, 초음파</td></tr>
+    </table>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">🔴 양극(+) 효과</div>
+        산성 반응 · 흥분성 ↓ · 역치 ↑<br>
+        <b>진정·통증감소</b><br>
+        혈관수축 · 지혈효과
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">🔵 음극(-) 효과</div>
+        알칼리 반응 · 흥분성 ↑ · 역치 ↓<br>
+        <b>자극·통증유발</b><br>
+        혈관확장 · 출혈효과
+      </div>
+    </div>
+    <div class="def-box">
+      <b>화학적 효과</b><br>
+      음극: 4Na + 4H₂O → 4NaOH + 2H₂ (수소 발생)<br>
+      양극: 4Cl + 2H₂O → 4HCl + O₂ (산소 발생)<br>
+      ※ 기체 발생률: 음극(H₂) : 양극(O₂) = <strong>2:1</strong>
+    </div>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>전기진단</b>: 감응전류(교류) → 정상근 / 단속평류전류(직류) → 마비근·변성근<br>
+      <b>전기화학적 화상</b>: 양극에서 주로 발생 (산성 반응으로 조직 손상)
+    </div>
+  </div>
+
+  <!-- S3: 전기진단학 -->
+  <div id="s3" class="section-block">
+    <h3><span class="icon">🧪</span> 전기진단학</h3>
+    <div class="def-box">
+      <b>신경재생</b>: 1일 1mm<br>
+      <b>변성반응</b>: 신경손상 <strong>10일 후</strong> 나타남 (변성 완성까지 10~14일 소요)<br>
+      → 변성반응 없으면 <strong>2~4주 이내</strong> 회복 예상
+    </div>
+    <table class="num-table">
+      <tr><th>검사</th><th>정상값</th><th>비고</th></tr>
+      <tr><td><b>평류강축비(GTR)</b></td><td>3.5~6 : 1</td><td>변성 10:1 / 탈신경 1.5~1:1 / 재생 1~20:1</td></tr>
+      <tr><td><b>기전류 검사</b></td><td>2~18mA</td><td>최소 가시 수축 유발 최소 전류강도</td></tr>
+      <tr><td><b>시치 검사</b></td><td>1ms 이하</td><td>기전류 2배로 흥분 일어나는 시간</td></tr>
+      <tr><td><b>신경재생 속도</b></td><td colspan="2">= 양 자극부위 간 거리(mm) ÷ 잠복시 차(ms)</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th></th><th>단속직류 - 근육</th><th>단속직류 - 신경</th><th>감응전류 - 근육</th><th>감응전류 - 신경</th></tr>
+      <tr><td><b>정상</b></td><td>연축</td><td>연축</td><td>강축</td><td>강축</td></tr>
+      <tr><td><b>부분변성</b></td><td>반응감소</td><td>느린수축</td><td>반응감소</td><td>반응감소</td></tr>
+      <tr><td><b>완전변성</b></td><td>반응X</td><td>느리고 완만한 수축</td><td>반응X</td><td>반응X</td></tr>
+      <tr><td><b>절대변성</b></td><td>반응X</td><td>반응X</td><td>반응X</td><td>반응X</td></tr>
+    </table>
+    <div class="def-box">
+      <b>강시곡선(SD-커브)</b>: 강도-시간 관계 곡선<br>
+      → 변성 심할수록 <strong>오른쪽 위</strong>로 이동 / 회복될수록 <strong>왼쪽 아래</strong>로 이동<br>
+      → 탈신경근: 우상향 곡선, 선이 매끄럽지 않고 불규칙
+    </div>
+    <div class="def-box">
+      <b>근전도(EMG)</b><br>
+      · 안정 시 이상 근전도: <strong>세동전위, 양성예파, 섬유속 연축, 고빈도반사</strong><br>
+      · 정상 근전도: <strong>운동 단위 활동전위</strong>
+    </div>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>변성반응 검사 시기</b>: 손상 후 최소 10일 이후 실시 (변성 완성에 10~14일 필요)<br>
+      <b>정상근 단속직류 자극</b>: 연축 후 빠른 이완<br>
+      <b>감응전류·단속직류로 신경자극 시 반응 모두 감소</b> → 부분변성
+    </div>
+  </div>
+
+  <!-- S4: 근육섬유 -->
+  <div id="s4" class="section-block">
+    <h3><span class="icon">💪</span> 근육섬유 & 전기생리학</h3>
+    <table class="num-table">
+      <tr><th>섬유형</th><th>특징</th><th>수축속도</th><th>피로</th></tr>
+      <tr><td><b>I형</b> (완근, 적색근)</td><td>소운동신경 지배, 긴장근</td><td>느림</td><td>낮음</td></tr>
+      <tr><td><b>Ia형</b></td><td>큰 운동신경 지배</td><td>빠름</td><td>중간</td></tr>
+      <tr><td><b>II형</b> (속근, 백색근)</td><td>큰 운동신경 지배, 지구력↓</td><td>가장 빠름</td><td>높음</td></tr>
+    </table>
+    <div class="def-box">
+      <b>근수축 과정</b><br>
+      탈분극 → 신경말단 활동전위 → <strong>아세틸콜린</strong> 분비 → 종판전위 → 근육 섬유 활동전위 발생 → 근세포질그물 <strong>Ca²⁺ 방출</strong> → 액틴·마이오신 결합 → <strong>근수축</strong>
+    </div>
+    <div class="def-box">
+      <b>극성공식(정상근)</b>: <strong>CCC > ACC > AOC > COC</strong><br>
+      <b>탈신경근</b>: <strong>CCC &lt; ACC &lt; AOC &lt; COC</strong> (반대!)<br><br>
+      <b>강축 자극빈도</b>: 20~25pps → 강축 / <strong>30pps 이상 → 근피로</strong>
+    </div>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>연축 시간</b>: 잠복기(0.01s) → 수축기(0.04s) → 이완기(0.05s)<br>
+      <b>안정막전위 -70mV</b>: 안정 시 K⁺ 투과성 = Na⁺의 100배<br>
+      <b>절대불응기</b>: 어떤 자극에도 반응 없음 / <b>상대불응기</b>: 더 큰 자극이면 활동전위 발생
+    </div>
+  </div>
+
+  <!-- S5: 신경섬유 -->
+  <div id="s5" class="section-block">
+    <h3><span class="icon">🧠</span> 신경섬유 분류</h3>
+    <table class="num-table">
+      <tr><th>섬유</th><th>종류</th><th>기능</th><th>특징</th></tr>
+      <tr><td><b>Aα</b></td><td>말이집</td><td>근육 운동종판 날신경</td><td rowspan="4">크고 빠름, 운동·감각</td></tr>
+      <tr><td><b>Aβ</b></td><td>말이집</td><td>촉각, 압각, 골지힘줄기관</td></tr>
+      <tr><td><b>Aγ</b></td><td>말이집</td><td>근방추 날신경</td></tr>
+      <tr><td><b>Aδ</b></td><td>말이집</td><td>빠른 통증·온도·경한 촉각</td></tr>
+      <tr><td><b>B</b></td><td>말이집</td><td>자율신경 절전섬유</td><td>작고 느림</td></tr>
+      <tr><td><b>C</b></td><td>민말이집</td><td>느린 통증(작열통·둔통), 자율신경 절후</td><td>가장 얇고 느림, 역치 가장 높음</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>굵기 순서</b>: Aα → Aβ → Aδ → B → C (갈수록 얇고, 전도속도↓, 역치↑)<br>
+      <b>TENS 통증 조절 (관문조절설)</b>: Aβ 자극 → SG 활성화 → Aδ·C 섬유 통로 차단
+    </div>
+  </div>
+
+  <!-- S6: 전기치료기기 -->
+  <div id="s6" class="section-block">
+    <h3><span class="icon">⚙️</span> 전기치료기기 구성</h3>
+    <div class="def-box">
+      <b>기본 3가지</b>: 전원공급회로 → 발진회로 → 출력증폭회로<br>
+      · <b>발진회로</b>: 교류에 진동 발생, 주파수·맥동기간·강도 등 변환<br>
+      · <b>출력증폭회로</b>: 강도 최종 조절·증폭
+    </div>
+    <table class="num-table">
+      <tr><th>구성요소</th><th>기능</th></tr>
+      <tr><td><b>변압기</b></td><td>전자유도 작용으로 전압 효율적 변환</td></tr>
+      <tr><td><b>정류기</b></td><td>교류 → 직류 또는 단상맥동전류 전환</td></tr>
+      <tr><td><b>여과기</b></td><td>맥류 → 평류 변환</td></tr>
+      <tr><td><b>조정기</b></td><td>부드러운 전류·전압 발생 조정</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th>파형</th><th>특징</th></tr>
+      <tr><td><b>정형파 전류</b></td><td>방향·크기 대칭 변화 (TENS, SSP, FES, HVGS)</td></tr>
+      <tr><td><b>감응전류(패러딕)</b></td><td>비대칭, 자극시간 1ms 고정 (정상 신경근 자극·진단)</td></tr>
+      <tr><td><b>격동전류</b></td><td>세기가 갑자기 강약 반복</td></tr>
+      <tr><td><b>펄스파</b></td><td>전압 높고 지속시간 짧음 (동통 최소화)</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>전선 종류</b>: 전기코드(저전압) / 전도케이블(단파) / <b>동축케이블(극초단파·초음파)</b><br>
+      <b>누설전류</b>: 치료 중 기구와 환자가 접촉 시 발생하는 원치 않는 전류
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== 퀴즈 탭 ==================== -->
+<div id="tab-quiz" class="tab-content">
+  <div class="quiz-header">
+    <h3>📝 전기치료학 기초 퀴즈</h3>
+    <span class="score-badge" id="scoreBadge">0 / 0</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div id="quizArea"></div>
+  <div class="quiz-nav">
+    <button class="qbtn secondary" onclick="prevQ()">◀ 이전</button>
+    <button class="qbtn primary" onclick="nextQ()">다음 ▶</button>
+  </div>
+  <div id="resultScreen" class="result-screen">
+    <h2>🎉 퀴즈 완료!</h2>
+    <div class="big-score" id="finalScore"></div>
+    <p id="finalMsg"></p>
+    <div class="wrong-review" id="wrongReview" style="display:none">
+      <h4>❌ 틀린 문제 복습</h4>
+      <div id="wrongList"></div>
+    </div>
+    <div style="margin-top:16px; display:flex; gap:8px; justify-content:center;">
+      <button class="qbtn primary" onclick="retryWrong()">틀린 문제만 다시</button>
+      <button class="qbtn secondary" onclick="resetQuiz()">처음부터</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ALL_QUESTIONS = [
+  {q:"전자는 어느 방향으로 흐르는가?",opts:["양극→음극","음극→양극","양극→양극","중성→음극"],ans:1,exp:"전자는 음에서 양으로 흐른다. 전류의 방향은 반대로 양→음이다."},
+  {q:"1C(쿨롱)의 정의는?",opts:["1A가 0.5초 동안 운반하는 전기량","1A가 1초 동안 운반하는 전기량","2A가 1초 동안 운반하는 전기량","1A가 1분 동안 운반하는 전기량"],ans:1,exp:"1C = 1A의 전류가 1초 동안 운반하는 전기량."},
+  {q:"줄의 법칙(발열)에 관한 공식은?",opts:["H=IRT","H=I²RT","H=I/RT","H=IR²T"],ans:1,exp:"H=I²RT → 발열은 전류의 제곱에 비례한다."},
+  {q:"전류밀도를 감소시키는 방법으로 옳은 것은?",opts:["전극 크기를 작게 한다","전극 간격을 좁게 한다","전극 접촉면을 크게 한다","전류강도를 높인다"],ans:2,exp:"전류밀도 감소: ① 전극 접촉면 크게 ② 전극 간격 넓게 ③ 전류강도 낮추기"},
+  {q:"저주파의 주파수 범위는?",opts:["1,000Hz 이하","1,000~10,000Hz","10,000~100,000Hz","100,000Hz 이상"],ans:0,exp:"저주파: 1,000Hz 이하 / 중주파: 1,000~100,000Hz / 고주파: 100,000Hz 이상"},
+  {q:"양극(+) 자극의 생리적 효과로 옳은 것은?",opts:["알칼리 반응, 흥분성 증가","산성 반응, 혈관수축, 진정효과","알칼리 반응, 혈관확장","산성 반응, 역치 감소"],ans:1,exp:"양극: 산성 반응, 흥분성↓, 역치↑, 진정효과, 통증감소, 혈관수축, 지혈효과"},
+  {q:"전기분해 시 음극과 양극의 기체 발생률 비율은?",opts:["1:1","1:2","2:1","3:1"],ans:2,exp:"음극(수소):양극(산소) = 2:1"},
+  {q:"변성반응은 신경손상 후 몇 일이 지나서 나타나는가?",opts:["3일","5일","10일","14일"],ans:2,exp:"변성반응은 신경손상 10일 후 나타남. 변성 완성에는 10~14일 소요."},
+  {q:"정상근의 평류강축비(GTR)는?",opts:["1.5~1:1","3.5~6:1","10:1","1~20:1"],ans:1,exp:"GTR - 정상:3.5~6:1 / 변성:10:1 / 탈신경:1.5~1:1 / 재생:1~20:1"},
+  {q:"시치검사에서 정상근의 시치는?",opts:["1ms 이하","2ms 이하","5ms 이하","10ms 이하"],ans:0,exp:"시치 검사 정상근: 1ms 이하. 탈신경근 시치는 10ms (변성 심할수록 길어짐)"},
+  {q:"정상근 근전도에서 볼 수 있는 전위는?",opts:["세동전위","양성예파","섬유속연축","운동단위 활동전위"],ans:3,exp:"정상 근전도: 운동 단위 활동전위. 안정 시 이상: 세동전위, 양성예파, 섬유속 연축, 고빈도반사"},
+  {q:"근수축 과정에서 칼슘 이온(Ca²⁺)은 어디에서 방출되는가?",opts:["세포막","미토콘드리아","근세포질 그물","리보솜"],ans:2,exp:"탈분극→아세틸콜린→종판전위→근육활동전위→근세포질그물에서 Ca²⁺ 방출→액틴·마이오신 결합→수축"},
+  {q:"느린 통증(작열통·둔통)을 전달하는 신경섬유는?",opts:["Aα섬유","Aβ섬유","Aδ섬유","C섬유"],ans:3,exp:"C섬유: 민말이집, 가장 얇고 느림, 느린 통증(작열통·둔통) 전달, 역치 가장 높음"},
+  {q:"정상근의 극성공식에서 가장 강한 자극은?",opts:["AOC","ACC","CCC","COC"],ans:2,exp:"정상근 극성공식: CCC > ACC > AOC > COC (탈신경근은 반대)"},
+  {q:"안정막전위 상태에서 세포막의 K⁺ 투과성은 Na⁺의 몇 배인가?",opts:["10배","50배","100배","200배"],ans:2,exp:"안정막전위(-70mV) 상태: K⁺ 투과성 = Na⁺의 100배"}
+];
+
+let questions = [...ALL_QUESTIONS];
+let currentQ = 0;
+let score = 0;
+let answered = new Array(questions.length).fill(null);
+let wrongQs = [];
+
+function renderQ() {
+  const q = questions[currentQ];
+  const total = questions.length;
+  document.getElementById('scoreBadge').textContent = score + ' / ' + total;
+  document.getElementById('progressFill').style.width = ((currentQ+1)/total*100) + '%';
+  
+  let html = `<div class="quiz-card">
+    <div class="q-num">문제 ${currentQ+1} / ${total}</div>
+    <div class="q-text">${q.q}</div>`;
+  
+  q.opts.forEach((o, i) => {
+    let cls = '';
+    if(answered[currentQ] !== null) {
+      if(i === q.ans) cls = 'correct';
+      else if(i === answered[currentQ] && i !== q.ans) cls = 'wrong';
+    }
+    html += `<button class="opt-btn ${cls}" onclick="selectAns(${i})" ${answered[currentQ]!==null?'disabled':''}>${String.fromCharCode(9312+i)} ${o}</button>`;
+  });
+  
+  html += `<div class="explain-box" id="expBox" style="display:${answered[currentQ]!==null?'block':'none'}">${q.exp}</div>`;
+  html += `</div>`;
+  document.getElementById('quizArea').innerHTML = html;
+}
+
+function selectAns(i) {
+  if(answered[currentQ] !== null) return;
+  answered[currentQ] = i;
+  if(i === questions[currentQ].ans) score++;
+  else wrongQs.push(currentQ);
+  renderQ();
+  document.getElementById('scoreBadge').textContent = score + ' / ' + questions.length;
+}
+
+function nextQ() {
+  if(currentQ < questions.length - 1) { currentQ++; renderQ(); }
+  else showResult();
+}
+function prevQ() {
+  if(currentQ > 0) { currentQ--; renderQ(); }
+}
+
+function showResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  document.querySelector('.quiz-nav').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.style.display = 'block';
+  document.getElementById('finalScore').textContent = score + ' / ' + questions.length;
+  const pct = Math.round(score/questions.length*100);
+  document.getElementById('finalMsg').textContent = pct>=80 ? '🎊 훌륭합니다! 개념을 잘 이해하고 있어요.' : pct>=60 ? '👍 좋아요! 조금 더 복습해 보세요.' : '📚 틀린 문제를 다시 복습하세요.';
+  
+  if(wrongQs.length > 0) {
+    document.getElementById('wrongReview').style.display = 'block';
+    document.getElementById('wrongList').innerHTML = wrongQs.map(idx => `<div class="wrong-item">Q${idx+1}. ${questions[idx].q}</div>`).join('');
+  }
+}
+
+function retryWrong() {
+  if(wrongQs.length === 0) return;
+  questions = wrongQs.map(i => ALL_QUESTIONS[i]);
+  currentQ = 0; score = 0;
+  answered = new Array(questions.length).fill(null);
+  wrongQs = [];
+  document.getElementById('quizArea').style.display = 'block';
+  document.querySelector('.quiz-nav').style.display = 'flex';
+  document.getElementById('resultScreen').style.display = 'none';
+  renderQ();
+}
+
+function resetQuiz() {
+  questions = [...ALL_QUESTIONS];
+  questions.sort(() => Math.random()-0.5);
+  currentQ = 0; score = 0;
+  answered = new Array(questions.length).fill(null);
+  wrongQs = [];
+  document.getElementById('quizArea').style.display = 'block';
+  document.querySelector('.quiz-nav').style.display = 'flex';
+  document.getElementById('resultScreen').style.display = 'none';
+  renderQ();
+}
+
+function showTab(t) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  event.target.classList.add('active');
+  if(t==='quiz' && document.getElementById('quizArea').innerHTML === '') renderQ();
+}
+
+renderQ();
+</script>
+</body>
+</html>

@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수치료 · 국가고시 완전정복</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #EEF4FF;
+  --bg2: #E2ECFF;
+  --surface: #FFFFFF;
+  --surface2: #F5F9FF;
+  --primary: #1E3A5F;
+  --primary2: #2B5299;
+  --accent: #3B82F6;
+  --accent2: #60A5FA;
+  --teal: #0D9488;
+  --teal2: #14B8A6;
+  --red: #DC2626;
+  --red2: #EF4444;
+  --orange: #D97706;
+  --orange2: #F59E0B;
+  --green: #059669;
+  --green2: #10B981;
+  --purple: #7C3AED;
+  --border: #C7D9F5;
+  --text: #1a2640;
+  --text2: #4a5a78;
+  --text3: #7a8aa8;
+  --shadow: 0 4px 20px rgba(30,58,95,0.10);
+  --shadow2: 0 2px 8px rgba(30,58,95,0.07);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ─── HEADER ─── */
+.header {
+  background: linear-gradient(135deg, #1E3A5F 0%, #2B5299 50%, #1a4a8a 100%);
+  padding: 28px 32px 20px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 10%;
+  width: 300px; height: 300px;
+  background: rgba(59,130,246,0.08);
+  border-radius: 50%;
+}
+.header-inner { position: relative; z-index: 1; }
+.header h1 { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+.header h1 span { color: #93C5FD; }
+.header-sub { font-size: 12px; color: #93C5FD; margin-top: 4px; font-weight: 300; letter-spacing: 1px; }
+.badge-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.badge {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ─── TABS ─── */
+.tabs {
+  display: flex;
+  background: var(--primary);
+  padding: 0 16px;
+  gap: 2px;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(30,58,95,0.3);
+}
+.tab-btn {
+  padding: 12px 18px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.tab-btn:hover { color: rgba(255,255,255,0.85); }
+.tab-btn.active {
+  color: white;
+  border-bottom-color: #60A5FA;
+  background: rgba(255,255,255,0.07);
+}
+
+/* ─── PANELS ─── */
+.panel { display: none; padding: 24px 20px 48px; max-width: 900px; margin: 0 auto; }
+.panel.active { display: block; }
+
+/* ─── OVERVIEW TAB ─── */
+.section-card {
+  background: var(--surface);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow2);
+}
+.section-header {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary2) 100%);
+  color: white;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-header .num {
+  background: rgba(255,255,255,0.2);
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  padding: 14px;
+}
+.toc-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: var(--text);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.toc-item:hover {
+  background: var(--bg2);
+  border-color: var(--accent);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.toc-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.kw-cloud {
+  display: flex; flex-wrap: wrap; gap: 6px; padding: 14px;
+}
+.kw {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: default;
+}
+.kw-blue { background: #DBEAFE; color: #1E40AF; }
+.kw-teal { background: #CCFBF1; color: #0F766E; }
+.kw-orange { background: #FEF3C7; color: #B45309; }
+.kw-red { background: #FEE2E2; color: #B91C1C; }
+.kw-purple { background: #EDE9FE; color: #6D28D9; }
+.kw-green { background: #D1FAE5; color: #065F46; }
+
+/* ─── SUMMARY TAB ─── */
+/* Anchor nav */
+.anchor-nav {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow2);
+}
+.anchor-btn {
+  padding: 5px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.anchor-btn:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.sum-section {
+  background: var(--surface);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow2);
+  scroll-margin-top: 90px;
+}
+.sum-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--surface) 0%, var(--bg2) 100%);
+  transition: background 0.2s;
+}
+.sum-header:hover { background: var(--bg2); }
+.sum-h3-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.sum-h3-title {
+  font-size: 14px; font-weight: 700;
+  color: var(--primary);
+  flex: 1;
+}
+.chevron {
+  font-size: 12px; color: var(--text3);
+  transition: transform 0.25s;
+}
+.sum-header.open .chevron { transform: rotate(180deg); }
+.sum-body {
+  display: none;
+  padding: 18px;
+}
+.sum-body.open { display: block; }
+
+/* Definition block */
+.def-block {
+  background: var(--surface2);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.def-block strong { color: var(--primary); }
+.kw-inline {
+  font-weight: 700;
+  color: var(--primary2);
+  background: #DBEAFE;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+/* Key numbers table */
+.kn-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.kn-table th {
+  background: var(--primary);
+  color: white;
+  padding: 7px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+}
+.kn-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  background: white;
+}
+.kn-table tr:last-child td { border-bottom: none; }
+.kn-table tr:nth-child(even) td { background: var(--surface2); }
+.val { font-weight: 700; color: var(--red2); font-family: 'JetBrains Mono', monospace; }
+
+/* Clinical highlight */
+.clinical-box {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 100%);
+  border: 1px solid #FED7AA;
+  border-left: 4px solid var(--orange);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.clinical-box .c-title {
+  font-size: 12px; font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 5px;
+}
+.clinical-box ul {
+  padding-left: 16px;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+.clinical-box li { color: var(--text); }
+
+/* Comparison tables */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 14px;
+  font-size: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.cmp-table th {
+  padding: 7px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px;
+}
+.cmp-table td {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  font-size: 12px;
+  background: white;
+}
+.th-blue { background: #DBEAFE; color: #1E40AF; }
+.th-red { background: #FEE2E2; color: #B91C1C; }
+.th-gray { background: var(--primary); color: white; }
+.th-teal { background: #CCFBF1; color: #0F766E; }
+.th-orange { background: #FEF3C7; color: #B45309; }
+
+/* Note tag */
+.note-tag {
+  display: inline-block;
+  background: #EDE9FE;
+  color: #6D28D9;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+/* Sub-list */
+.sub-list {
+  padding-left: 16px;
+  margin: 6px 0;
+}
+.sub-list li {
+  margin-bottom: 4px;
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+.sub-list li::marker { color: var(--accent); }
+
+/* ─── QUIZ TAB ─── */
+.quiz-container { max-width: 700px; margin: 0 auto; }
+.quiz-controls {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.quiz-btn {
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.18s;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary2); }
+.btn-accent { background: var(--accent); color: white; }
+.btn-accent:hover { background: var(--primary2); }
+.btn-red { background: var(--red2); color: white; }
+.btn-red:hover { background: var(--red); }
+.btn-green { background: var(--green); color: white; }
+.btn-green:hover { background: #047857; }
+.btn-outline {
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Progress bar */
+.progress-wrap {
+  background: var(--bg2);
+  border-radius: 20px;
+  height: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--teal2) 100%);
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+.progress-info {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--text2); margin-bottom: 16px;
+}
+.score-info {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.score-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.score-chip span { font-size: 16px; font-weight: 900; }
+.score-chip.green span { color: var(--green2); }
+.score-chip.red span { color: var(--red2); }
+.score-chip.blue span { color: var(--accent); }
+
+/* Question card */
+.q-card {
+  background: var(--surface);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.q-meta {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.q-num {
+  background: var(--primary);
+  color: white;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.q-category {
+  background: var(--bg2);
+  color: var(--primary2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.q-text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.options { display: flex; flex-direction: column; gap: 8px; }
+.option-btn {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  transition: all 0.18s;
+  line-height: 1.5;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: #EFF6FF;
+}
+.option-btn.correct {
+  border-color: var(--green);
+  background: #D1FAE5;
+  color: #065F46;
+}
+.option-btn.wrong {
+  border-color: var(--red2);
+  background: #FEE2E2;
+  color: #991B1B;
+}
+.option-letter {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.option-btn.correct .option-letter { background: var(--green); color: white; }
+.option-btn.wrong .option-letter { background: var(--red2); color: white; }
+
+.explanation {
+  background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%);
+  border: 1px solid #A7F3D0;
+  border-left: 4px solid var(--green);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 14px;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  display: none;
+}
+.explanation.show { display: block; }
+.explanation .e-title {
+  font-weight: 700; color: var(--green);
+  margin-bottom: 6px; font-size: 12px;
+}
+
+/* Result */
+.result-card {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: none;
+}
+.result-card.show { display: block; }
+.result-score {
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--primary);
+  margin: 8px 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+.result-score span { font-size: 24px; color: var(--text3); }
+.result-msg { font-size: 15px; font-weight: 600; margin-bottom: 20px; color: var(--text2); }
+.result-breakdown {
+  display: flex; justify-content: center; gap: 16px;
+  margin-bottom: 24px; flex-wrap: wrap;
+}
+.rb-chip {
+  padding: 8px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.rb-chip.g { background: #D1FAE5; color: #065F46; }
+.rb-chip.r { background: #FEE2E2; color: #991B1B; }
+
+/* Mode badge */
+.mode-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary2);
+  margin-bottom: 16px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .header { padding: 20px 16px 16px; }
+  .panel { padding: 16px 12px 40px; }
+  .toc-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>💧 <span>수치료</span> · 물리치료 국가고시</h1>
+    <div class="header-sub">HYDROTHERAPY · PHYSICAL THERAPY BOARD EXAM</div>
+    <div class="badge-row">
+      <span class="badge">한랭·온열치료</span>
+      <span class="badge">수치료 원리</span>
+      <span class="badge">침수욕</span>
+      <span class="badge">기계적 자극</span>
+      <span class="badge">팩·습포</span>
+      <span class="badge">수중운동</span>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('overview')">📋 목차·개요</button>
+  <button class="tab-btn" onclick="switchTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- OVERVIEW TAB                          -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-overview" class="panel active">
+
+  <div class="section-card">
+    <div class="section-header"><span class="num">1</span> 물의 특성 & 이론</div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goSummary('s1')"><span class="toc-dot" style="background:#3B82F6"></span>물의 물리적 특성 7가지</div>
+      <div class="toc-item" onclick="goSummary('s2')"><span class="toc-dot" style="background:#3B82F6"></span>물의 이론 6가지 법칙</div>
+      <div class="toc-item" onclick="goSummary('s3')"><span class="toc-dot" style="background:#3B82F6"></span>체온조절 (열생산 vs 열방출)</div>
+      <div class="toc-item" onclick="goSummary('s4')"><span class="toc-dot" style="background:#3B82F6"></span>열전달 방법 4가지</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header"><span class="num">2</span> 수치료의 원리</div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goSummary('s5')"><span class="toc-dot" style="background:#0D9488"></span>한랭 적용 1·2차 효과</div>
+      <div class="toc-item" onclick="goSummary('s6')"><span class="toc-dot" style="background:#0D9488"></span>한랭·열 적응증 / 금기증</div>
+      <div class="toc-item" onclick="goSummary('s7')"><span class="toc-dot" style="background:#0D9488"></span>수치료 효과 결정인자</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header"><span class="num">3</span> 완전 침수욕 & 부분 침수욕</div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goSummary('s8')"><span class="toc-dot" style="background:#7C3AED"></span>완전침수욕 (고온·한냉·미온욕·지속욕)</div>
+      <div class="toc-item" onclick="goSummary('s9')"><span class="toc-dot" style="background:#7C3AED"></span>족욕 / 좌욕 / 반신욕 / 교대욕</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header"><span class="num">4</span> 기계적 자극 & 팩·습포</div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goSummary('s10')"><span class="toc-dot" style="background:#D97706"></span>소용돌이욕 (Whirlpool)</div>
+      <div class="toc-item" onclick="goSummary('s11')"><span class="toc-dot" style="background:#D97706"></span>하버드 탱크</div>
+      <div class="toc-item" onclick="goSummary('s12')"><span class="toc-dot" style="background:#D97706"></span>압주 & 도수마찰</div>
+      <div class="toc-item" onclick="goSummary('s13')"><span class="toc-dot" style="background:#D97706"></span>온습포 / 케니팩 / 파라핀욕 / 고온습포</div>
+      <div class="toc-item" onclick="goSummary('s14')"><span class="toc-dot" style="background:#D97706"></span>증기욕·터키욕·러시안욕·사우나</div>
+      <div class="toc-item" onclick="goSummary('s15')"><span class="toc-dot" style="background:#D97706"></span>수화학적 적용 (가스욕·약물목욕)</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header"><span class="num">5</span> 수중운동 물리치료</div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goSummary('s16')"><span class="toc-dot" style="background:#059669"></span>할리윅 (Halliwick)</div>
+      <div class="toc-item" onclick="goSummary('s17')"><span class="toc-dot" style="background:#059669"></span>바드라가즈링 (Bad Ragaz Ring)</div>
+      <div class="toc-item" onclick="goSummary('s18')"><span class="toc-dot" style="background:#059669"></span>와츠법 / 아이치 / 자하라</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">🔑 핵심 키워드 전체</div>
+    <div class="kw-cloud">
+      <span class="kw kw-blue">부력</span><span class="kw kw-blue">정수압</span><span class="kw kw-blue">비열</span>
+      <span class="kw kw-blue">열전도율</span><span class="kw kw-blue">점성</span><span class="kw kw-blue">표면장력</span>
+      <span class="kw kw-blue">아르키메데스</span><span class="kw kw-blue">파스칼</span><span class="kw kw-blue">베르누이</span>
+      <span class="kw kw-teal">시상하부</span><span class="kw kw-teal">전도·대류·복사·전환열</span>
+      <span class="kw kw-teal">통증문턱값↑</span><span class="kw kw-teal">혈관수축→확장</span>
+      <span class="kw kw-orange">34°C 열적불감점</span><span class="kw kw-orange">미온욕</span>
+      <span class="kw kw-orange">교대욕</span><span class="kw kw-orange">좌욕·족욕·반신욕</span>
+      <span class="kw kw-red">소용돌이욕</span><span class="kw kw-red">하버드탱크</span>
+      <span class="kw kw-red">파라핀욕 7:1</span><span class="kw kw-red">케니팩</span>
+      <span class="kw kw-red">온습포 40°C</span>
+      <span class="kw kw-purple">할리윅 10단계 4원리</span>
+      <span class="kw kw-purple">바드라가즈링 PNF</span>
+      <span class="kw kw-purple">와츠법 아코디언</span>
+      <span class="kw kw-purple">아이치 19동작</span>
+      <span class="kw kw-green">급성염좌→한랭</span>
+      <span class="kw kw-green">만성염증→열</span>
+      <span class="kw kw-green">혈전성정맥염→금기</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SUMMARY TAB                           -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-summary" class="panel">
+
+  <!-- Anchor navigation -->
+  <div class="anchor-nav">
+    <a class="anchor-btn" onclick="openAndGo('s1')">💧 물의 특성</a>
+    <a class="anchor-btn" onclick="openAndGo('s2')">📐 이론 법칙</a>
+    <a class="anchor-btn" onclick="openAndGo('s3')">🌡️ 체온조절</a>
+    <a class="anchor-btn" onclick="openAndGo('s4')">🔥 열전달</a>
+    <a class="anchor-btn" onclick="openAndGo('s5')">❄️ 한랭 효과</a>
+    <a class="anchor-btn" onclick="openAndGo('s6')">💊 적응·금기</a>
+    <a class="anchor-btn" onclick="openAndGo('s7')">⚙️ 효과 결정인자</a>
+    <a class="anchor-btn" onclick="openAndGo('s8')">🛁 완전침수욕</a>
+    <a class="anchor-btn" onclick="openAndGo('s9')">🦵 부분침수욕</a>
+    <a class="anchor-btn" onclick="openAndGo('s10')">🌀 소용돌이욕</a>
+    <a class="anchor-btn" onclick="openAndGo('s11')">🏥 하버드탱크</a>
+    <a class="anchor-btn" onclick="openAndGo('s12')">💪 압주·도수</a>
+    <a class="anchor-btn" onclick="openAndGo('s13')">🧪 팩·파라핀</a>
+    <a class="anchor-btn" onclick="openAndGo('s14')">♨️ 증기욕·사우나</a>
+    <a class="anchor-btn" onclick="openAndGo('s15')">🧴 수화학적</a>
+    <a class="anchor-btn" onclick="openAndGo('s16')">🏊 할리윅</a>
+    <a class="anchor-btn" onclick="openAndGo('s17')">🔗 바드라가즈링</a>
+    <a class="anchor-btn" onclick="openAndGo('s18')">🌊 와츠·아이치·자하라</a>
+  </div>
+
+  <!-- S1: 물의 물리적 특성 -->
+  <div class="sum-section" id="s1">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#DBEAFE">💧</div>
+      <div class="sum-h3-title">물의 물리적 특성 7가지</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <strong>물의 물리적 특성</strong>은 수치료 효과의 근거가 되는 기초 개념이다. 각 특성은 <span class="kw-inline">부력·비중·표면장력·정수압·열전도율·비열·점성</span> 7가지로 구성된다. 임상에서 운동 보조 또는 저항, 부종 감소, 열 전달 등의 치료 원리와 직결된다.
+      </div>
+      <table class="kn-table">
+        <tr><th>특성</th><th>핵심 수치 / 내용</th></tr>
+        <tr><td><strong>부력</strong></td><td>중력 반대 방향 / 위쪽=보조, 수평=보존, 아래쪽=저항</td></tr>
+        <tr><td><strong>비중과 밀도</strong></td><td>물 <span class="val">4°C</span>에서 가장 큰 밀도 / 비중=1 (1↑가라앉음, 1↓뜸)</td></tr>
+        <tr><td><strong>표면장력</strong></td><td>공기 마찰저항보다 <span class="val">790배</span> 높음</td></tr>
+        <tr><td><strong>정수압</strong></td><td>물 깊이에 비례 / 모든 면에 수직 작용 / <span class="val">부종 개선</span> / 호흡근 활동 증가</td></tr>
+        <tr><td><strong>열전도율</strong></td><td>공기보다 <span class="val">23~27배</span> 높음</td></tr>
+        <tr><td><strong>비열</strong></td><td>공기보다 <span class="val">5배</span> 높음 / 물=1.00, 파라핀=0.65 / 비열↑→온도 높이기 어려움</td></tr>
+        <tr><td><strong>점성</strong></td><td>분자 간 인력으로 끊어지지 않으려는 성질 / 수중 움직임에 저항</td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 임상 포인트</div>
+        <ul>
+          <li><strong>정수압</strong>: 심부전·부종 환자에서 수중 입수 시 정맥환류 증가 → 심장 부담↑ 주의</li>
+          <li><strong>부력</strong>: 체중 부하 감소 → 관절 보호 운동, 편마비·절단 환자 조기 보행 훈련에 활용</li>
+          <li><strong>비열</strong>: 파라핀(0.65)이 물(1.00)보다 낮아 더 높은 온도에서도 화상 위험 낮음</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2: 물의 이론 법칙 -->
+  <div class="sum-section" id="s2">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#EDE9FE">📐</div>
+      <div class="sum-h3-title">물의 이론 법칙 6가지</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        수치료에 적용되는 물리 이론으로, <span class="kw-inline">파스칼·뉴턴·아르키메데스·스토크스·연속의 정리·베르누이</span> 6가지를 묻는다. 각 법칙이 어떤 치료 효과/방법과 연결되는지가 핵심이다.
+      </div>
+      <table class="kn-table">
+        <tr><th>법칙</th><th>핵심 내용</th><th>임상 연결</th></tr>
+        <tr><td><strong>파스칼의 원리</strong></td><td>밀폐 유체에 가한 압력이 모든 곳에 동일하게 전달</td><td>정수압 치료, 압주욕</td></tr>
+        <tr><td><strong>뉴턴의 냉각</strong></td><td>열 손실 ∝ 표면적 × 온도차</td><td>열·냉 치료 시간 계산</td></tr>
+        <tr><td><strong>아르키메데스</strong> <span class="note-tag">47회</span></td><td>유체 속 물체는 무게만큼 부력 받음 / 중력 방향 움직임 → 저항</td><td>수중 보행, 부력 운동</td></tr>
+        <tr><td><strong>스토크스 저항</strong></td><td>저항 ∝ 속력·크기 / 빠름=저항, 느림=보조</td><td>수중 저항운동 강도 조절</td></tr>
+        <tr><td><strong>연속의 정리</strong></td><td>유속 ∝ 1/단면적 / 좁은 관=빠름, 넓은 관=느림</td><td>압주 노즐 설계</td></tr>
+        <tr><td><strong>베르누이 정리</strong></td><td>유속↑ → 압력↓ / 유속↓ → 압력↑</td><td>소용돌이욕 내부 압력 분포</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S3: 체온조절 -->
+  <div class="sum-section" id="s3">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEE2E2">🌡️</div>
+      <div class="sum-h3-title">체온조절 – 시상하부 (열생산 vs 열방출)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        체온조절 중추는 <span class="kw-inline">시상하부</span>이다. <span class="kw-inline">후 시상하부</span>는 한냉환경에서 열생산, <span class="kw-inline">전 시상하부</span>는 고온환경에서 열방출을 담당한다. 기능 장애 시 각각 저체온증·고체온증이 나타난다.
+      </div>
+      <table class="cmp-table">
+        <tr>
+          <th class="th-gray">구분</th>
+          <th class="th-blue">열생산 (한냉환경)</th>
+          <th class="th-red">열방출 (고온환경)</th>
+        </tr>
+        <tr>
+          <td><strong>위치</strong></td>
+          <td>후 시상하부</td>
+          <td>전 시상하부</td>
+        </tr>
+        <tr>
+          <td><strong>장애</strong></td>
+          <td>저체온증 (심부온도↓)</td>
+          <td>고체온증 (심부온도↑)</td>
+        </tr>
+        <tr>
+          <td><strong>증가</strong></td>
+          <td>근긴장, 뼈대근 떨림, 수의운동, TSH 분비, 맥박</td>
+          <td>피부혈관 확장, 심박출량, 호흡 촉진, 땀분비</td>
+        </tr>
+        <tr>
+          <td><strong>감소</strong></td>
+          <td>땀분비 감소, 피부혈관 수축, 웅크림, 입모</td>
+          <td>식욕부진, 근이완·활동 정체, TSH 분비 감소</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S4: 열전달 방법 -->
+  <div class="sum-section" id="s4">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEF3C7">🔥</div>
+      <div class="sum-h3-title">열전달 방법 4가지 & 열역학 법칙</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        열전달에는 <span class="kw-inline">전도·대류·복사·전환열</span> 4가지가 있으며, 각 치료기기가 어떤 방식인지 짝지어 암기한다.
+      </div>
+      <table class="kn-table">
+        <tr><th>방법</th><th>특징</th><th>적용 기기</th></tr>
+        <tr><td><strong>전도</strong></td><td>직접 접촉 (고온→저온)</td><td>온습포, 파라핀욕, 하버드탱크, 회전욕(마사지)</td></tr>
+        <tr><td><strong>대류</strong></td><td>공기 운동에 의한 열 이동</td><td>증기욕, 사우나, 회전욕(치료)</td></tr>
+        <tr><td><strong>복사</strong></td><td>매개체 없는 에너지 이동</td><td>적외선, 베이커</td></tr>
+        <tr><td><strong>전환열</strong></td><td>기계적 진동 → 열에너지</td><td>단파, 극초단파, 레이저, 초음파</td></tr>
+      </table>
+      <table class="kn-table" style="margin-top:10px">
+        <tr><th>열역학 법칙</th><th>내용</th></tr>
+        <tr><td><strong>제0법칙</strong></td><td>A↔B 열평형, A↔C 열평형 → B↔C 열평형 → <span class="kw-inline">미온욕</span> 원리</td></tr>
+        <tr><td><strong>제1법칙</strong></td><td>가해준 열에너지 = 내부에너지 증가 + 외부에 한 일</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S5: 한랭 적용 효과 -->
+  <div class="sum-section" id="s5">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#DBEAFE">❄️</div>
+      <div class="sum-h3-title">한랭 적용의 1차·2차 생리적 효과</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <span class="kw-inline">자극 적용 → 1차적 효과(작용) → 2차적 효과(반응) → 반응의 지연</span>. 한랭 적용 시 1차적으로 혈관 수축이 일어나고, 2차적으로 역설적 혈관 확장이 일어난다. 국가고시에서 <span class="kw-inline">통증문턱값 상승</span>이 자주 출제된다.
+      </div>
+      <table class="cmp-table">
+        <tr>
+          <th class="th-blue" style="width:50%">1차적 효과 (즉각 반응)</th>
+          <th class="th-teal" style="width:50%">2차적 효과 (이후 반응)</th>
+        </tr>
+        <tr>
+          <td>
+            <ul class="sub-list">
+              <li>말초혈관 <strong>수축</strong></li>
+              <li>심박출량 증가</li>
+              <li>심박수·혈압 상승</li>
+              <li>헐떡거림, 호흡률 증가</li>
+              <li>피부활동 감소</li>
+              <li>근긴장 증가</li>
+              <li>신진대사율·맥박 증가</li>
+              <li>내부온도 미세 증가, 오한 떨림</li>
+              <li><strong>통증문턱값 상승</strong> ⭐</li>
+            </ul>
+          </td>
+          <td>
+            <ul class="sub-list">
+              <li>말초혈관 <strong>확장</strong></li>
+              <li>심박출량·심박수·혈압 감소</li>
+              <li>호흡 느려짐·호흡률 감소</li>
+              <li>피부활동 증가 (조홍)</li>
+              <li>근이완</li>
+              <li>신진대사율·맥박 감소</li>
+              <li>내부온도 감소</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 임상 포인트</div>
+        <ul>
+          <li>한랭 적용의 통증 감소 효과는 1차 효과의 <strong>통증문턱값 상승</strong>에 의한 것 (48, 51, 46회 출제)</li>
+          <li>2차 효과인 혈관 확장(조홍)을 이용해 장기간 한랭 적용 후 오히려 혈류 증가</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6: 적응증·금기증 -->
+  <div class="sum-section" id="s6">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#D1FAE5">💊</div>
+      <div class="sum-h3-title">한랭·열치료 적응증 / 금기증</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="cmp-table">
+        <tr>
+          <th class="th-gray">구분</th>
+          <th class="th-blue">한랭 치료</th>
+          <th class="th-red">열 치료</th>
+        </tr>
+        <tr>
+          <td><strong>적응증</strong></td>
+          <td>급성 염좌 및 타박상<br>급성 통증 감소</td>
+          <td>아급성·만성 염증, 통증, 경련 감소<br>관절구축 감소, 힘줄염</td>
+        </tr>
+        <tr>
+          <td><strong>금기증</strong></td>
+          <td>-</td>
+          <td>혈전성 정맥염, 혈액순환 장애<br>진행성 관절염, 무감각 부위, 종양</td>
+        </tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 임상 포인트</div>
+        <ul>
+          <li>열치료 5대 금기: <strong>혈전성 정맥염 / 혈액순환 장애 / 진행성 관절염 / 무감각 부위 / 종양</strong></li>
+          <li>급성기(0~48h) → 냉, 아급성·만성기 → 온열이 원칙</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7: 효과 결정인자 -->
+  <div class="sum-section" id="s7">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEF3C7">⚙️</div>
+      <div class="sum-h3-title">수치료 효과 결정인자 & 사고 고려점</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        수치료 효과는 <span class="kw-inline">물의 온도 / 침수 시간 / 침수 부위 / 환자 상태 / 연령 / 환자의 준비상태</span> 6가지 인자에 의해 결정된다.
+      </div>
+      <div class="clinical-box">
+        <div class="c-title">⚠️ 수치료 사고 고려점</div>
+        <ul>
+          <li><strong>한기</strong>: 입술 새파래짐 / 얼굴 피부 창백 / 피부의 소름 / 떨림</li>
+          <li><strong>조직세포 손상</strong>: 화상·동상 → 혈액순환 장애</li>
+          <li><strong>발진</strong>: 장시간 물에 있는 경우</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8: 완전침수욕 -->
+  <div class="sum-section" id="s8">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#EDE9FE">🛁</div>
+      <div class="sum-h3-title">완전 침수욕 (고온·한냉·미온욕·지속욕)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <span class="kw-inline">완전 침수욕</span>은 턱을 제외한 신체 모든 부분을 물에 잠기게 하는 방법이다. 온도에 따라 고온·한냉·미온욕·지속욕으로 구분하며, 각각의 적응증·금기증이 다르다.
+      </div>
+      <table class="cmp-table">
+        <tr>
+          <th class="th-gray">종류</th>
+          <th class="th-gray">핵심 특징</th>
+          <th class="th-orange">적응증</th>
+          <th class="th-red">금기증</th>
+        </tr>
+        <tr>
+          <td><strong>고온</strong></td>
+          <td>말초순환↑ 심박수↑ 발한↑ 근이완 울혈감소</td>
+          <td>관절염</td>
+          <td>간질, 동맥성 질환</td>
+        </tr>
+        <tr>
+          <td><strong>한냉</strong></td>
+          <td>심박수↓ 호흡 느림 식욕·신진대사·혈압 증가 해열</td>
+          <td>전신 신진대사, 비만</td>
+          <td>고혈압, 신경과민, 신장염</td>
+        </tr>
+        <tr>
+          <td><strong>미온욕</strong> ⭐</td>
+          <td><span class="val">34°C (92°F)</span> = 열적불감점<br>긴장·피로 해소 가장 간단한 방법</td>
+          <td>해열, 진정효과</td>
+          <td>동맥경화, 진행성 심장질환</td>
+        </tr>
+        <tr>
+          <td><strong>지속욕</strong></td>
+          <td>신경계 진정, 갈증해소, 수면습관 변화</td>
+          <td>불면증</td>
+          <td>저혈압, 피부병</td>
+        </tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 임상 포인트</div>
+        <ul>
+          <li>미온욕 <strong>34°C(92°F)</strong>는 열적불감점 — 체온과 같아 온도 자극이 없어 진정·해열 효과</li>
+          <li>열역학 제0법칙(열평형)의 임상 적용이 미온욕 (49회 출제)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9: 부분침수욕 -->
+  <div class="sum-section" id="s9">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#CCFBF1">🦵</div>
+      <div class="sum-h3-title">부분 침수욕 (족욕·좌욕·반신욕·교대욕)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="cmp-table">
+        <tr>
+          <th class="th-gray">종류</th>
+          <th class="th-gray">온도·부위</th>
+          <th class="th-orange">적응증</th>
+          <th class="th-red">금기증</th>
+        </tr>
+        <tr>
+          <td><strong>족욕</strong></td>
+          <td><span class="val">39.4°C</span> / 발 충분히 침수 / 화상 주의 / 내부 장기·뇌 울혈 감소</td>
+          <td>불면증, 만성두통, 통풍</td>
+          <td>말초혈관장애</td>
+        </tr>
+        <tr>
+          <td><strong>좌욕</strong></td>
+          <td>골반부위(넙다리 상부, 엉덩이, 배꼽 아래) / 골반·복부 순환 증가</td>
+          <td>고온: 월경불순<br>한냉: 자궁 퇴축부전</td>
+          <td>고온: 임신·월경<br>한냉: 신장질환</td>
+        </tr>
+        <tr>
+          <td><strong>반신욕</strong></td>
+          <td>골반·엉덩이·다리 침수 / 고온·한냉 모두 가능<br>정수압 효과: 다리 부종 제거</td>
+          <td>고온: 급성 좌골신경통<br>한냉: 기능적 신경장애</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><strong>교대욕</strong> ⭐ <span class="note-tag">46·50회</span></td>
+          <td>고온·한냉 교대 / 1차 효과: 혈관 수축+확장 / 사지 혈액순환 증진 / 신진대사↑ / 부종경감</td>
+          <td>혈액순환 증진, 염좌, 통증 감소</td>
+          <td>악성종양, 동맥성 질환, 당뇨병, 버거씨병</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S10: 소용돌이욕 -->
+  <div class="sum-section" id="s10">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEE2E2">🌀</div>
+      <div class="sum-h3-title">소용돌이욕 (Whirlpool)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <span class="kw-inline">소용돌이욕</span>은 터빈을 환측에 직접 적용하여 기계적 자극을 제공하는 치료이다. 전도열(가벼운 마사지 효과)을 이용하며 개방창, 화상, 절단 단단부에 주로 사용한다.
+      </div>
+      <table class="kn-table">
+        <tr><th>항목</th><th>내용</th></tr>
+        <tr><td><strong>기전</strong></td><td>터빈 → 환측 직접 적용 → 기계적 자극 / 유착 감소 / 괴사·화농 제거</td></tr>
+        <tr><td><strong>효과</strong></td><td>대사율 증가, 상처치유 촉진, 통증·근경직 감소(진정), 전도열(마사지)</td></tr>
+        <tr><td><strong>적응증</strong></td><td>절단된 단단부, 화상, 개방창, 궤양</td></tr>
+        <tr><td><strong>금기증</strong></td><td>당뇨병, 정맥류, 급성 염증, 감염성 피부질환</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S11: 하버드탱크 -->
+  <div class="sum-section" id="s11">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#DBEAFE">🏥</div>
+      <div class="sum-h3-title">하버드 탱크 (Hubbard Tank)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <span class="kw-inline">하버드 탱크</span>는 전신 수중 치료 탱크로, 식염수(화상)·염수(욕창) 사용. 터빈으로 움직임·혈액순환 보조. 전신 근육 이완·진정 효과. 류마티스 치료 시 <span class="kw-inline">가장 높은 온도(105~106°F)</span>를 사용한다.
+      </div>
+      <table class="kn-table">
+        <tr><th>질환</th><th>온도</th></tr>
+        <tr><td>류마티스</td><td><span class="val">105~106°F</span> (가장 높은 온도)</td></tr>
+        <tr><td>이완성 마비</td><td><span class="val">90°F</span></td></tr>
+        <tr><td>경직성 마비</td><td><span class="val">100°F</span></td></tr>
+        <tr><td>화상·욕창</td><td><span class="val">94~98°F</span></td></tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 임상 포인트</div>
+        <ul>
+          <li>적응증: 류마티스, 화상, 궤양</li>
+          <li>화상 시 식염수, 욕창 시 염수 사용</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S12: 압주·도수마찰 -->
+  <div class="sum-section" id="s12">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEF3C7">💪</div>
+      <div class="sum-h3-title">압주 & 도수마찰을 겸한 적용</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="kn-table">
+        <tr><th>방법</th><th>특징</th></tr>
+        <tr><td><strong>스코치식 압주</strong></td><td>고온수·냉온수 2개 호스 / 교대압주욕 / 시작=고온수, 끝=한냉수</td></tr>
+        <tr><td><strong>수중 압주</strong></td><td>물속에서 적용 / 노즐-치료부위 거리 <span class="val">4인치</span></td></tr>
+        <tr><td><strong>염마찰</strong></td><td>화학적(소금)+기계적(문지름) 자극 / 피부 부드러워짐, 불순물 제거</td></tr>
+        <tr><td><strong>수건욕</strong></td><td>단시간 한냉 적용</td></tr>
+        <tr><td><strong>마찰세척</strong></td><td>손을 사용하여 몸을 씻음</td></tr>
+        <tr><td><strong>시트욕</strong></td><td>해열 목적</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S13: 팩·파라핀욕 -->
+  <div class="sum-section" id="s13">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEE2E2">🧪</div>
+      <div class="sum-h3-title">팩·습포 (온습포·케니팩·파라핀욕·고온습포)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="cmp-table">
+        <tr>
+          <th class="th-gray">종류</th>
+          <th class="th-gray">핵심 특징</th>
+          <th class="th-orange">적응증</th>
+          <th class="th-red">금기증</th>
+        </tr>
+        <tr>
+          <td><strong>온습포</strong> (Hot pack)</td>
+          <td>습열 / 전도열 / 인체접촉 <span class="val">약 40°C(104°F)</span> / 열강도=수건 두께</td>
+          <td>관절염, 요통</td>
+          <td>급성 염증, 감각 장애</td>
+        </tr>
+        <tr>
+          <td><strong>케니팩</strong></td>
+          <td>모 70% + 면 30% / 통증 이완·근경련 감소 / <strong>소아마비</strong> 치료 요법</td>
+          <td>소아마비</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><strong>파라핀욕</strong> ⭐ <span class="note-tag">47·51회</span></td>
+          <td>전도열 / 융점 높고 열전도율 낮음 → 높은 온도 치료 가능<br>초:미네랄오일 = <span class="val">7:1</span> / 화상 없는 이유: 심한 발한·피막·낮은 열전도율</td>
+          <td>류마티스, 불규칙한 국소 부위</td>
+          <td>개방된 상처</td>
+        </tr>
+        <tr>
+          <td><strong>고온습포</strong></td>
+          <td>면 50% + 모 50% / 오랫동안 열지속 / 진통·심부울혈감소·진정</td>
+          <td>-</td>
+          <td>출혈, 말초혈관장애</td>
+        </tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 임상 포인트 — 파라핀욕</div>
+        <ul>
+          <li>파라핀 비율: <strong>초(파라핀): 미네랄오일 = 7:1</strong> → 융점을 낮추기 위함</li>
+          <li>담글 수 없는 부위 → 국자나 붓 사용 (48회 출제)</li>
+          <li>화상이 안 나는 이유 3가지: <strong>심한 발한 / 피막 형성 / 낮은 열전도율</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S14: 증기욕·사우나 -->
+  <div class="sum-section" id="s14">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#FEF3C7">♨️</div>
+      <div class="sum-h3-title">뜨거운 공기와 증기 (증기욕·터키욕·러시안욕·사우나)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="cmp-table">
+        <tr>
+          <th class="th-gray">종류</th>
+          <th class="th-gray">열 종류</th>
+          <th class="th-gray">특징</th>
+          <th class="th-orange">적응증</th>
+          <th class="th-red">금기증</th>
+        </tr>
+        <tr>
+          <td><strong>증기욕</strong></td>
+          <td>습열</td>
+          <td>상자 속 증기 / 근육이완 <strong>다른 열치료 대비 최대 효과</strong></td>
+          <td>류마티스, 정신병</td>
+          <td>당뇨병</td>
+        </tr>
+        <tr>
+          <td><strong>터키욕</strong></td>
+          <td>건열기욕</td>
+          <td>발한 증가 / 내장기관 울혈경감 / <strong>세 개</strong> 온도의 열기실</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><strong>러시안욕</strong></td>
+          <td>습기욕</td>
+          <td>체온 상승 목적 / 100% 습기 → 체온 소실 없음</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><strong>핀란드욕(사우나)</strong></td>
+          <td>건열기욕</td>
+          <td>노폐물 제거 / 발한에 의한 몸의 청결</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S15: 수화학적 적용 -->
+  <div class="sum-section" id="s15">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#CCFBF1">🧴</div>
+      <div class="sum-h3-title">수화학적 적용 (가스욕·약물목욕)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="cmp-table">
+        <tr><th class="th-teal">가스욕</th><th class="th-teal">특징/적응·금기</th></tr>
+        <tr>
+          <td><strong>나우하임욕</strong></td>
+          <td>열절연효과 / 거품욕 / 적응: 고혈압·만성심장질환·동맥경화증 / 금기: 진행된 매독성 심장질환</td>
+        </tr>
+        <tr>
+          <td><strong>산소욕</strong></td>
+          <td>따끔거리는 감각 / 진정·최면 작용 / 심장질환자·쇠약환자 사용 가능</td>
+        </tr>
+        <tr>
+          <td><strong>거품욕</strong></td>
+          <td>기포:물 = <span class="val">9:1</span> / 적응: 통증, 고혈압</td>
+        </tr>
+      </table>
+      <table class="cmp-table" style="margin-top:10px">
+        <tr><th class="th-orange">약물목욕</th><th class="th-orange">특징</th></tr>
+        <tr><td><strong>염수욕</strong></td><td>해수, 강장효과</td></tr>
+        <tr>
+          <td><strong>밀기울욕</strong></td>
+          <td>피부질환 완화 / 밀기울·전분·중탄산나트륨 / 피부흥분 진정·연화 / 적응: 전신소양증, 피부병</td>
+        </tr>
+        <tr><td><strong>겨자욕</strong></td><td>만성류마티즘, 근경련, 통증 / 유도 효과</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S16: 할리윅 -->
+  <div class="sum-section" id="s16">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#D1FAE5">🏊</div>
+      <div class="sum-h3-title">할리윅 (Halliwick)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <span class="kw-inline">할리윅</span>은 이동 능력 및 몸통 안정성 향상을 위한 <span class="kw-inline">10가지 프로그램</span>으로 구성된 수중 물리치료이다. <span class="kw-inline">4단계 원리</span>: 정신적 적응 → 균형 조절 → 촉진성 움직임 → 억제성 움직임.
+      </div>
+      <table class="kn-table">
+        <tr><th>항목</th><th>내용</th></tr>
+        <tr><td><strong>프로그램 수</strong></td><td><span class="val">10가지</span></td></tr>
+        <tr><td><strong>4단계 원리</strong></td><td>정신적 적응 → 균형 조절 → 촉진성 움직임 → 억제성 움직임</td></tr>
+        <tr><td><strong>목적</strong></td><td>이동 능력 및 몸통 안정성 향상</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S17: 바드라가즈링 -->
+  <div class="sum-section" id="s17">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#DBEAFE">🔗</div>
+      <div class="sum-h3-title">바드라가즈링 (Bad Ragaz Ring)</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <div class="def-block">
+        <span class="kw-inline">바드라가즈링</span>은 <span class="kw-inline">고유수용성신경근촉진법(PNF)</span>의 기초 원리를 수중운동 기술에 통합하여 적용하는 방법이다. 환자에게 <span class="kw-inline">부력기구</span>를 착용시켜 적절한 부력을 제공한다.
+      </div>
+      <table class="kn-table">
+        <tr><th>항목</th><th>내용</th></tr>
+        <tr><td><strong>기반 이론</strong></td><td>PNF (고유수용성신경근촉진법)</td></tr>
+        <tr><td><strong>장비</strong></td><td>부력기구 착용</td></tr>
+        <tr><td><strong>효과</strong></td><td>근육긴장 이완 / 관절가동범위 증가 / 몸통 안정화 향상</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- S18: 와츠·아이치·자하라 -->
+  <div class="sum-section" id="s18">
+    <div class="sum-header" onclick="toggleSection(this)">
+      <div class="sum-h3-icon" style="background:#CCFBF1">🌊</div>
+      <div class="sum-h3-title">와츠법 / 아이치 / 자하라</div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="sum-body">
+      <table class="kn-table">
+        <tr><th>방법</th><th>핵심 특징</th></tr>
+        <tr>
+          <td><strong>와츠법</strong></td>
+          <td>따뜻한 물에서 수행 / 몸의 느긋한 스트레칭·마사지 / <strong>근이완</strong> 목적 / <span class="kw-inline">아코디언 동작</span> 수동운동</td>
+        </tr>
+        <tr>
+          <td><strong>아이치</strong> <span class="note-tag">51회</span></td>
+          <td>타이치에서 영감 / 깊은 호흡·느린 단순 동작으로 경락 이완 / <strong>능동이완·균형능력 향상</strong> / 수중에서 <span class="kw-inline">19가지 동작</span> 환자 스스로 수행</td>
+        </tr>
+        <tr>
+          <td><strong>자하라</strong></td>
+          <td>수중 부드러운 움직임·스트레칭 / 근육 긴장 완화·심신 긴장 완화 / 따뜻한 물에서 수행</td>
+        </tr>
+      </table>
+      <div class="clinical-box">
+        <div class="c-title">🏥 수중운동 비교 포인트</div>
+        <ul>
+          <li><strong>할리윅</strong>: 10가지 프로그램, 4단계 원리, 몸통 안정성</li>
+          <li><strong>바드라가즈링</strong>: PNF 기반, 부력기구, 관절가동범위</li>
+          <li><strong>와츠법</strong>: 아코디언 동작, 수동운동, 근이완</li>
+          <li><strong>아이치</strong>: 타이치 기반, 19가지 동작, 능동이완</li>
+          <li><strong>자하라</strong>: 스트레칭+심신 이완, 따뜻한 물</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- QUIZ TAB                              -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-quiz" class="panel">
+  <div class="quiz-container">
+    <div class="mode-badge">🎯 핵심 15문제 · 랜덤 출제</div>
+
+    <div id="quiz-start-area">
+      <div class="quiz-controls">
+        <button class="quiz-btn btn-primary" onclick="startQuiz('all')">🔀 전체 랜덤</button>
+        <button class="quiz-btn btn-red" id="retry-btn" onclick="startQuiz('wrong')" style="display:none">❌ 틀린 문제만</button>
+      </div>
+    </div>
+
+    <div id="quiz-area" style="display:none">
+      <div class="progress-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
+      <div class="progress-info">
+        <span id="prog-text">0 / 15</span>
+        <span id="score-text">점수: 0</span>
+      </div>
+      <div class="score-info">
+        <div class="score-chip green">✅ 정답 <span id="c-cnt">0</span></div>
+        <div class="score-chip red">❌ 오답 <span id="w-cnt">0</span></div>
+        <div class="score-chip blue">📝 남은 <span id="r-cnt">15</span></div>
+      </div>
+      <div id="q-display"></div>
+      <button class="quiz-btn btn-accent" id="next-btn" onclick="nextQ()" style="display:none; margin-top:8px">다음 문제 →</button>
+    </div>
+
+    <div class="result-card" id="result-card">
+      <div style="font-size:32px">🏆</div>
+      <div style="font-size:15px; color:var(--text2); margin-top:4px">최종 결과</div>
+      <div class="result-score" id="r-score">0<span>/15</span></div>
+      <div class="result-msg" id="r-msg"></div>
+      <div class="result-breakdown">
+        <div class="rb-chip g">✅ 정답: <span id="r-c">0</span>개</div>
+        <div class="rb-chip r">❌ 오답: <span id="r-w">0</span>개</div>
+      </div>
+      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap">
+        <button class="quiz-btn btn-primary" onclick="startQuiz('all')">🔄 처음부터</button>
+        <button class="quiz-btn btn-red" id="retry-result-btn" onclick="startQuiz('wrong')" style="display:none">❌ 틀린 문제 재풀기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── TAB CONTROL ───
+function switchTab(t) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function goSummary(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-summary').classList.add('active');
+  document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) {
+      const header = el.querySelector('.sum-header');
+      const body = el.querySelector('.sum-body');
+      if (!body.classList.contains('open')) {
+        header.classList.add('open');
+        body.classList.add('open');
+      }
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 50);
+}
+
+function openAndGo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const header = el.querySelector('.sum-header');
+  const body = el.querySelector('.sum-body');
+  if (!body.classList.contains('open')) {
+    header.classList.add('open');
+    body.classList.add('open');
+  }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── TOGGLE SECTION ───
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ─── QUIZ DATA ───
+const ALL_QUESTIONS = [
+  {
+    cat: '물의 특성',
+    q: '물의 밀도가 가장 높아지는 온도는?',
+    opts: ['0°C', '4°C', '20°C', '100°C'],
+    ans: 1,
+    exp: '물은 4°C에서 가장 큰 밀도를 가지며, 이때 비중은 1이다. 비중이 1보다 크면 가라앉고, 1보다 작으면 뜬다.'
+  },
+  {
+    cat: '물의 특성',
+    q: '물의 열전도율은 공기보다 몇 배 높은가?',
+    opts: ['5배', '10~15배', '23~27배', '790배'],
+    ans: 2,
+    exp: '물의 열전도율은 공기보다 23~27배 높다. (비열은 5배, 표면장력은 790배)'
+  },
+  {
+    cat: '물의 특성',
+    q: '물의 비열은 공기보다 몇 배 높은가?',
+    opts: ['2배', '5배', '10배', '23배'],
+    ans: 1,
+    exp: '물의 비열은 공기보다 5배 높다. 비열이 크면 온도를 높이기 어렵다. 물=1.00, 파라핀=0.65'
+  },
+  {
+    cat: '물의 이론',
+    q: '유체 속도는 관의 단면적에 반비례한다는 이론은?',
+    opts: ['파스칼의 원리', '베르누이 정리', '연속의 정리', '스토크스 저항 법칙'],
+    ans: 2,
+    exp: '연속의 정리: 유체 속도는 관의 단면적에 반비례한다. 넓은 관=느림, 좁은 관=빠름. 최종 흐르는 양은 동일하다.'
+  },
+  {
+    cat: '물의 이론',
+    q: '아르키메데스의 원리에 대한 설명으로 옳은 것은?',
+    opts: ['유속이 빠를수록 압력이 높아진다', '물체를 중력 방향으로 움직이면 저항이 작용한다', '관의 단면적이 좁을수록 속도가 느려진다', '밀폐 유체의 압력은 모든 곳에 동일하게 전달된다'],
+    ans: 1,
+    exp: '아르키메데스의 원리: 유체 속 물체는 무게만큼 부력을 받으며, 물체를 중력 방향(아래쪽)으로 움직이면 물체에 저항이 작용한다.'
+  },
+  {
+    cat: '체온조절',
+    q: '체온조절 중추는 어디인가?',
+    opts: ['대뇌피질', '소뇌', '시상하부', '연수'],
+    ans: 2,
+    exp: '체온조절 중추는 시상하부이다. 후 시상하부=열생산(한냉환경), 전 시상하부=열방출(고온환경).'
+  },
+  {
+    cat: '체온조절',
+    q: '한냉 환경에서 열생산을 담당하는 시상하부의 위치는?',
+    opts: ['전 시상하부', '후 시상하부', '내측 시상하부', '외측 시상하부'],
+    ans: 1,
+    exp: '후 시상하부는 한냉환경에서 열생산을 담당한다. 전 시상하부는 고온환경에서 열방출을 담당한다.'
+  },
+  {
+    cat: '열전달',
+    q: '파라핀욕의 열전달 방식은?',
+    opts: ['대류', '복사', '전도', '전환열'],
+    ans: 2,
+    exp: '파라핀욕은 전도(전도열) 방식이다. 온습포, 하버드탱크, 회전욕(마사지)도 전도열을 이용한다.'
+  },
+  {
+    cat: '한랭 효과',
+    q: '한랭 적용의 1차적 효과로 옳은 것은?',
+    opts: ['말초혈관 확장', '근이완', '통증문턱값 상승', '신진대사율 감소'],
+    ans: 2,
+    exp: '한랭 적용의 1차적 효과에는 말초혈관 수축, 근긴장 증가, 통증문턱값 상승 등이 포함된다. 혈관 확장과 근이완은 2차적 효과이다.'
+  },
+  {
+    cat: '침수욕',
+    q: '미온욕의 온도(열적불감점)는?',
+    opts: ['30°C', '34°C (92°F)', '37°C', '40°C'],
+    ans: 1,
+    exp: '미온욕의 온도는 34°C(92°F)로 열적불감점이라 한다. 긴장감과 정서적 피로감을 풀 수 있는 가장 간단한 방법이며, 해열·진정 효과가 있다.'
+  },
+  {
+    cat: '침수욕',
+    q: '지속욕의 적응증은?',
+    opts: ['관절염', '고혈압', '불면증', '비만'],
+    ans: 2,
+    exp: '지속욕은 신경계 진정효과, 갈증 해소, 수면습관 변화를 위해 사용하며 적응증은 불면증이다. 금기: 저혈압, 피부병.'
+  },
+  {
+    cat: '부분침수욕',
+    q: '교대욕의 금기증이 아닌 것은?',
+    opts: ['악성종양', '버거씨병', '당뇨병', '급성 좌골신경통'],
+    ans: 3,
+    exp: '교대욕의 금기증: 악성종양, 동맥성 질환, 당뇨병, 버거씨병. 급성 좌골신경통은 반신욕(고온)의 적응증이다.'
+  },
+  {
+    cat: '파라핀욕',
+    q: '파라핀욕에서 초(파라핀)와 미네랄오일의 비율은?',
+    opts: ['1:7', '5:1', '7:1', '9:1'],
+    ans: 2,
+    exp: '파라핀욕에서 초(파라핀):미네랄오일 = 7:1이다. 이 비율은 융점을 낮추기 위한 것이다.'
+  },
+  {
+    cat: '수중운동',
+    q: '할리윅(Halliwick)에서 4단계 원리의 순서로 옳은 것은?',
+    opts: [
+      '균형 조절 → 정신적 적응 → 촉진성 움직임 → 억제성 움직임',
+      '정신적 적응 → 균형 조절 → 촉진성 움직임 → 억제성 움직임',
+      '정신적 적응 → 촉진성 움직임 → 균형 조절 → 억제성 움직임',
+      '균형 조절 → 촉진성 움직임 → 억제성 움직임 → 정신적 적응'
+    ],
+    ans: 1,
+    exp: '할리윅 4단계 원리: 정신적 적응 → 균형 조절 → 촉진성 움직임 → 억제성 움직임. 10가지 프로그램으로 구성된다.'
+  },
+  {
+    cat: '수중운동',
+    q: '아이치(Ai Chi) 수중운동의 특징으로 옳은 것은?',
+    opts: ['고유수용성신경근촉진법(PNF) 기반', '아코디언 동작을 통한 수동운동', '수중에서 19가지 동작을 환자 스스로 수행', '10가지 프로그램으로 구성'],
+    ans: 2,
+    exp: '아이치는 타이치에서 영감을 받아 만들어진 수중 운동 기법으로, 능동이완과 균형능력 향상을 위해 수중에서 19가지 동작을 환자 스스로 수행한다.'
+  }
+];
+
+let currentQList = [];
+let currentIdx = 0;
+let correctCnt = 0, wrongCnt = 0;
+let wrongQs = [];
+let answered = false;
+
+function startQuiz(mode) {
+  if (mode === 'wrong') {
+    if (wrongQs.length === 0) { alert('틀린 문제가 없습니다!'); return; }
+    currentQList = shuffle([...wrongQs]);
+    wrongQs = [];
+  } else {
+    currentQList = shuffle([...ALL_QUESTIONS]);
+    wrongQs = [];
+  }
+  currentIdx = 0; correctCnt = 0; wrongCnt = 0; answered = false;
+  document.getElementById('result-card').classList.remove('show');
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('next-btn').style.display = 'none';
+  updateMeta();
+  renderQ();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function updateMeta() {
+  const total = currentQList.length;
+  const done = currentIdx;
+  const pct = total > 0 ? (done / total * 100) : 0;
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = done + ' / ' + total;
+  document.getElementById('score-text').textContent = '점수: ' + correctCnt;
+  document.getElementById('c-cnt').textContent = correctCnt;
+  document.getElementById('w-cnt').textContent = wrongCnt;
+  document.getElementById('r-cnt').textContent = total - done;
+}
+
+function renderQ() {
+  const qd = document.getElementById('q-display');
+  if (currentIdx >= currentQList.length) { showResult(); return; }
+  const q = currentQList[currentIdx];
+  answered = false;
+  document.getElementById('next-btn').style.display = 'none';
+  qd.innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <div class="q-num">${currentIdx + 1}</div>
+        <div class="q-category">${q.cat}</div>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.opts.map((o, i) => `
+          <button class="option-btn" onclick="selectOpt(${i})" id="opt-${i}">
+            <span class="option-letter">${['A','B','C','D'][i]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp">${q.exp ? '<div class="e-title">💡 해설</div>' + q.exp : ''}</div>
+    </div>
+  `;
+}
+
+function selectOpt(sel) {
+  if (answered) return;
+  answered = true;
+  const q = currentQList[currentIdx];
+  const opts = document.querySelectorAll('.option-btn');
+  opts.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('correct');
+    else if (i === sel) b.classList.add('wrong');
+  });
+  if (sel === q.ans) {
+    correctCnt++;
+  } else {
+    wrongCnt++;
+    wrongQs.push(q);
+  }
+  document.getElementById('exp').classList.add('show');
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  currentIdx++;
+  updateMeta();
+}
+
+function nextQ() {
+  renderQ();
+  if (currentIdx > currentQList.length) showResult();
+}
+
+function showResult() {
+  document.getElementById('quiz-area').style.display = 'none';
+  const rc = document.getElementById('result-card');
+  rc.classList.add('show');
+  const total = currentQList.length + (currentIdx === currentQList.length ? 0 : 0);
+  const fin = correctCnt + wrongCnt;
+  document.getElementById('r-score').innerHTML = correctCnt + '<span>/' + fin + '</span>';
+  const pct = fin > 0 ? Math.round(correctCnt / fin * 100) : 0;
+  let msg = '';
+  if (pct >= 90) msg = '🎉 완벽합니다! 국가고시 합격권입니다.';
+  else if (pct >= 70) msg = '👍 좋습니다! 조금 더 다듬으면 완벽해요.';
+  else if (pct >= 50) msg = '📚 기초는 있어요. 약점 파트를 복습하세요.';
+  else msg = '💪 처음부터 차근차근 다시 공부해봐요!';
+  document.getElementById('r-msg').textContent = msg;
+  document.getElementById('r-c').textContent = correctCnt;
+  document.getElementById('r-w').textContent = wrongCnt;
+  const retryBtn = document.getElementById('retry-btn');
+  const retryResultBtn = document.getElementById('retry-result-btn');
+  if (wrongQs.length > 0) {
+    retryBtn.style.display = 'inline-flex';
+    retryResultBtn.style.display = 'inline-flex';
+  } else {
+    retryBtn.style.display = 'none';
+    retryResultBtn.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

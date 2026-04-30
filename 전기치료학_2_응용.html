@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전기치료학 ② 응용</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+  :root {
+    --bg:#EEF4FF; --bg2:#E0ECFF; --card:#FFFFFF;
+    --navy:#1E3A5F; --blue:#2563EB; --sky:#3B82F6; --accent:#0EA5E9;
+    --teal:#0891B2; --green:#059669; --amber:#D97706; --red:#DC2626; --purple:#7C3AED;
+    --text:#1E293B; --sub:#475569; --border:#CBD5E1;
+    --shadow:0 2px 12px rgba(30,58,95,0.08); --shadow-lg:0 8px 30px rgba(30,58,95,0.13);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,#0891B2 0%,#2563EB 100%);color:white;padding:20px 24px 16px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(8,145,178,0.3);}
+  header h1{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
+  header p{font-size:12px;opacity:0.8;margin-top:2px;}
+  .tab-bar{background:white;display:flex;border-bottom:2px solid var(--border);position:sticky;top:72px;z-index:90;box-shadow:var(--shadow);overflow-x:auto;}
+  .tab-btn{flex:1;min-width:80px;padding:12px 8px;font-size:12px;font-weight:700;color:var(--sub);background:none;border:none;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+  .tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);background:#F0FDFA;}
+  .tab-content{display:none;padding:16px;}
+  .tab-content.active{display:block;}
+
+  .chapter-card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--teal);}
+  .chapter-card h3{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .keyword-grid{display:flex;flex-wrap:wrap;gap:6px;}
+  .kw{background:#F0FDFA;color:var(--teal);border:1px solid #A5F3FC;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+  .kw.red{background:#FEF2F2;color:#DC2626;border-color:#FECACA;}
+  .kw.blue{background:#EFF6FF;color:#2563EB;border-color:#BFDBFE;}
+  .kw.green{background:#ECFDF5;color:#059669;border-color:#A7F3D0;}
+  .kw.purple{background:#F5F3FF;color:#7C3AED;border-color:#DDD6FE;}
+  .kw.amber{background:#FFFBEB;color:#D97706;border-color:#FDE68A;}
+
+  .summary-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;background:white;padding:12px;border-radius:12px;box-shadow:var(--shadow);}
+  .nav-btn{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;background:#F0FDFA;color:var(--teal);border:1px solid #A5F3FC;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+  .nav-btn:hover{background:var(--teal);color:white;}
+
+  .section-block{background:var(--card);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .section-block h3{font-size:15px;font-weight:900;color:var(--navy);padding-bottom:10px;border-bottom:2px solid var(--bg2);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .section-block h3 .icon{width:28px;height:28px;background:linear-gradient(135deg,var(--teal),var(--blue));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  .def-box{background:#F0FDFA;border-left:3px solid var(--teal);padding:10px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:13px;line-height:1.7;}
+  .def-box strong{color:var(--teal);}
+  .num-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;border-radius:8px;overflow:hidden;}
+  .num-table th{background:var(--navy);color:white;padding:7px 10px;text-align:left;font-size:11px;}
+  .num-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  .num-table tr:nth-child(even) td{background:#F0FDFA;}
+  .num-table tr:last-child td{border-bottom:none;}
+  .clinical-box{background:linear-gradient(135deg,#FFF7ED,#FFFBEB);border:1px solid #FDE68A;border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:10px 12px;margin-top:12px;font-size:12px;line-height:1.7;}
+  .clinical-box .ct{font-size:11px;font-weight:800;color:var(--amber);margin-bottom:4px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+  .mini-card{background:#F8FAFF;border-radius:8px;padding:10px;font-size:12px;border:1px solid #E0ECFF;}
+  .mini-card .mc-title{font-weight:800;color:var(--navy);font-size:11px;margin-bottom:5px;}
+  b{color:var(--navy);}
+  ul{padding-left:16px;}
+  li{font-size:12px;line-height:1.8;color:var(--sub);}
+  p{font-size:13px;line-height:1.7;color:var(--sub);}
+
+  .quiz-header{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;}
+  .quiz-header h3{font-size:14px;font-weight:800;color:var(--navy);}
+  .score-badge{background:linear-gradient(135deg,var(--teal),var(--blue));color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;}
+  .progress-bar{height:8px;background:var(--border);border-radius:4px;margin-bottom:14px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));border-radius:4px;transition:width 0.4s ease;}
+  .quiz-card{background:white;border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:12px;}
+  .q-num{font-size:11px;font-weight:800;color:var(--teal);margin-bottom:6px;}
+  .q-text{font-size:14px;font-weight:600;line-height:1.6;margin-bottom:14px;color:var(--navy);}
+  .opt-btn{display:block;width:100%;text-align:left;padding:11px 14px;margin-bottom:7px;background:#F8FAFF;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:13px;font-family:'Noto Sans KR',sans-serif;transition:all 0.2s;color:var(--text);}
+  .opt-btn:hover{background:#F0FDFA;border-color:var(--teal);}
+  .opt-btn.correct{background:#ECFDF5;border-color:#10B981;color:#065F46;font-weight:700;}
+  .opt-btn.wrong{background:#FEF2F2;border-color:#EF4444;color:#991B1B;}
+  .opt-btn:disabled{cursor:default;}
+  .explain-box{background:#F0FDF4;border-left:3px solid #10B981;padding:10px 12px;border-radius:0 8px 8px 0;font-size:12px;line-height:1.6;color:#065F46;margin-top:8px;}
+  .quiz-nav{display:flex;gap:8px;margin-top:16px;justify-content:center;}
+  .qbtn{padding:10px 20px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all 0.2s;}
+  .qbtn.primary{background:var(--teal);color:white;}
+  .qbtn.secondary{background:#E2E8F0;color:var(--navy);}
+  .qbtn:hover{transform:translateY(-1px);box-shadow:var(--shadow);}
+  .result-screen{text-align:center;padding:30px 16px;display:none;}
+  .result-screen h2{font-size:24px;font-weight:900;color:var(--navy);margin-bottom:8px;}
+  .result-screen .big-score{font-size:56px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:16px 0;}
+  .wrong-review{background:#FEF2F2;border-radius:12px;padding:14px;margin-top:16px;text-align:left;}
+  .wrong-review h4{font-size:13px;font-weight:800;color:var(--red);margin-bottom:10px;}
+  .wrong-item{font-size:12px;padding:6px 0;border-bottom:1px solid #FECACA;color:var(--text);}
+  .wrong-item:last-child{border-bottom:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ 전기치료학 ② — 응용 치료</h1>
+  <p>의용평류 · 이온도입 · 저주파 · 중주파 · 고주파</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('overview')">📋 개요</button>
+  <button class="tab-btn" onclick="showTab('summary')">📖 요약</button>
+  <button class="tab-btn" onclick="showTab('quiz')">❓ 퀴즈</button>
+</div>
+
+<!-- ==================== 개요 탭 ==================== -->
+<div id="tab-overview" class="tab-content active">
+  <div class="chapter-card" style="border-left-color:#0891B2">
+    <h3>💉 의용평류 & 이온도입법</h3>
+    <div class="keyword-grid">
+      <span class="kw">직류 화학효과</span><span class="kw blue">이온도입(반발력)</span>
+      <span class="kw">침투깊이 1~3cm</span><span class="kw">5mA 이하</span>
+      <span class="kw amber">전기화학적 화상→양극</span>
+      <span class="kw green">초산·요오드칼륨·리도카인</span>
+    </div>
+  </div>
+  <div class="chapter-card" style="border-left-color:#2563EB">
+    <h3>📡 저주파 치료기기</h3>
+    <div class="keyword-grid">
+      <span class="kw blue">SSP (은침전극)</span><span class="kw blue">TENS (관문조절설/엔돌핀설)</span>
+      <span class="kw blue">MENS (미세전류, 1mA↓)</span>
+      <span class="kw blue">FES (기능적 전기자극)</span><span class="kw blue">HVGS (고전압맥동전류)</span>
+      <span class="kw red">역동전류(베르나르전류)</span>
+    </div>
+  </div>
+  <div class="chapter-card" style="border-left-color:#7C3AED">
+    <h3>🌀 중주파 치료</h3>
+    <div class="keyword-grid">
+      <span class="kw purple">ICT (간섭파치료)</span><span class="kw purple">러시안전류</span>
+      <span class="kw">4,000Hz 안팎 이용</span><span class="kw">맥놀이 전기</span>
+      <span class="kw amber">길데마이스터 효과</span><span class="kw red">웨덴스키 억제</span>
+    </div>
+  </div>
+  <div class="chapter-card" style="border-left-color:#D97706">
+    <h3>🔥 고주파 치료</h3>
+    <div class="keyword-grid">
+      <span class="kw amber">단파치료 27.12MHz</span>
+      <span class="kw amber">극초단파 2,450MHz</span>
+      <span class="kw amber">초음파 1MHz / 3MHz</span>
+      <span class="kw red">열효과만 (전기분해 없음)</span>
+      <span class="kw green">역압전효과 (초음파 발생)</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 요약 탭 ==================== -->
+<div id="tab-summary" class="tab-content">
+  <div class="summary-nav">
+    <a href="#s1" class="nav-btn">💉 이온도입</a>
+    <a href="#s2" class="nav-btn">📡 저주파기기</a>
+    <a href="#s3" class="nav-btn">⚡ TENS</a>
+    <a href="#s4" class="nav-btn">🔵 HVGS/MENS</a>
+    <a href="#s5" class="nav-btn">🌀 중주파/ICT</a>
+    <a href="#s6" class="nav-btn">🔥 고주파</a>
+    <a href="#s7" class="nav-btn">🌊 초음파</a>
+  </div>
+
+  <!-- 이온도입 -->
+  <div id="s1" class="section-block">
+    <h3><span class="icon">💉</span> 의용평류 & 이온도입법</h3>
+    <div class="def-box">
+      <b>이온도입법</b>: 직류전류를 이용, <strong>같은 극성 도자</strong>를 선택해 반발력으로 이온을 피부에 강제 주입.<br>
+      침투 깊이: <strong>1~3cm</strong> / 농도: <strong>1~2%</strong> / 강도: <strong>5mA 이하</strong> (보통 0.5mA)
+    </div>
+    <table class="num-table">
+      <tr><th>약품</th><th>효과</th></tr>
+      <tr><td><b>초산(아세트산, +)</b></td><td>칼슘 침착 용해, 근경축 완화</td></tr>
+      <tr><td><b>요오드칼륨(KI, -)</b></td><td>섬유 용해, 방부, 진통</td></tr>
+      <tr><td><b>구리(Cu+)</b></td><td>진균감염, 국소 살균, 항진균</td></tr>
+      <tr><td><b>리도카인/프로카인(+)</b></td><td>통증억제, 국소마취</td></tr>
+      <tr><td><b>마그네슘(Mg²⁺)</b></td><td>경련감소, 근육이완</td></tr>
+      <tr><td><b>히스타민(-)</b></td><td>혈관확장, 충혈, 말초혈관질환</td></tr>
+      <tr><td><b>아연(Zn+)</b></td><td>상처치료, 염증완화, 무통성 궤양</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>전기화학적 화상</b>: 양극에서 잘 발생 (산성 반응)<br>
+      <b>활성전극 : 비활성전극 크기</b> = 1 : 2 (비활성이 2배)<br>
+      <b>높은 강도보다 낮은 강도가 더 효과적</b><br>
+      <b>금기</b>: 개방된 상처, 감염, 뼈돌출부, 감각상실부위
+    </div>
+  </div>
+
+  <!-- 저주파 기기 -->
+  <div id="s2" class="section-block">
+    <h3><span class="icon">📡</span> 저주파 치료 & 전극배치</h3>
+    <div class="def-box">
+      <b>저주파</b>: 1,000Hz 이하, <strong>역학적 효과</strong>(신경근 전기자극 → 수축 유발)<br>
+      <b>자극의 3대 요소</b>: 자극강도 / 자극시간 / <strong>전류강도의 변화율</strong>
+    </div>
+    <table class="num-table">
+      <tr><th>전극배치</th><th>특징</th></tr>
+      <tr><td><b>단극식</b></td><td>활성전극(작음, 음극, motor point) + 분산전극(큰, 양극) → 단일근 자극</td></tr>
+      <tr><td><b>양극식</b></td><td>크기 같은 두 전극, 근육 기시·정지에 부착, 2개 이상 큰 근육 자극</td></tr>
+      <tr><td><b>상향배치</b></td><td>말초→중추 (음극을 몸쪽에)</td></tr>
+      <tr><td><b>하향배치</b></td><td>중추→말초 (양극을 몸쪽에)</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th>자극 대상</th><th>특징</th></tr>
+      <tr><td><b>신경지배근</b></td><td>시치 1ms 이내 / 맥동빈도 10~35pps → 강축 / 극성공식: CCC>ACC>AOC>COC</td></tr>
+      <tr><td><b>탈신경근</b></td><td>시치 10ms / 통전시간 긴 전기 사용 / 극성공식: CCC&lt;ACC&lt;AOC&lt;COC (반대)</td></tr>
+    </table>
+    <div class="def-box">
+      <b>단속시간비(on-off ratio)</b>: 통전시간:비통전시간<br>
+      예) 10초 통전 / 20초 비통전 = <strong>1:2</strong><br>
+      <b>순환주기</b> = 맥동렬 기간 × 100 / 총 주기 시간<br>
+      불편감 최소화: 4KHz - 20% / 최대 토크 발생: 1KHz - 10%
+    </div>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>SSP(은침전극)</b>: 쌍극성 대칭파, 저빈도, 경혈·발통점 자극. 어린이 치료 적합, 권태감 적음<br>
+      <b>탈신경근 전기자극</b>: 위축예방, 근재교육, 유착방지 목적
+    </div>
+  </div>
+
+  <!-- TENS -->
+  <div id="s3" class="section-block">
+    <h3><span class="icon">⚡</span> TENS (경피신경전기자극)</h3>
+    <div class="def-box">
+      <b>TENS</b>: 말초감각신경(표층감각신경) 자극 → 통증 치료<br>
+      파형: <strong>이상성 비대칭 맥동전류</strong><br>
+      전극: <strong>탄소실리콘전극</strong>(가장 많이 사용), 카라야 전극(수분 보존)
+    </div>
+    <table class="num-table">
+      <tr><th>종류</th><th>이론</th><th>특징</th></tr>
+      <tr><td><b>고빈도-고강도</b></td><td>겉질억제설</td><td>빠른 진통, 강한 전기감, 근수축, 양극전도차단</td></tr>
+      <tr><td><b>고빈도-저강도</b></td><td>관문조절설</td><td>빠른 진통, 낮은 전기감, 습성통증 조절, 지속력 짧음</td></tr>
+      <tr><td><b>저빈도-고강도</b></td><td>엔돌핀설</td><td>느린 진통, 강한 전기감, 만성통증 조절, 지속력 길다</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th>배치법</th><th>적용</th></tr>
+      <tr><td>특수점 배치법</td><td>경혈점, 운동점, 발통점</td></tr>
+      <tr><td>통증부위 배치법</td><td>통증 부위 직접 적용</td></tr>
+      <tr><td>척수구획 배치법</td><td>척수 수준에 전극 배치</td></tr>
+      <tr><td><b>이중삼각 배치법</b></td><td>몸·허리 통증 (양극 중앙, 음극 4개 배치)</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>이중삼각배치 적응증</b>: 근골격계 통증, 초기월경통, 난치성 협심증, 수술 후 통증<br>
+      <b>금기</b>: 심박조정기, 목동맥팽대 위, 임산부<br>
+      <b>관문조절설</b>: Aβ 자극 → SG 활성화 → Aδ·C 섬유 통로 차단
+    </div>
+  </div>
+
+  <!-- HVGS & MENS -->
+  <div id="s4" class="section-block">
+    <h3><span class="icon">🔵</span> HVGS · MENS · FES</h3>
+    <div class="def-box">
+      <b>HVGS (고전압맥동전류)</b>: <strong>이중점점파(짝점점파)</strong><br>
+      전압 100~500V, 전류 최대 300~400mA, 통전시간 <strong>50~100μs</strong> (아주 짧음)<br>
+      맥동기간:맥동간 간격 = <strong>1:99</strong> / <b>변성근 자극 불가</b>
+    </div>
+    <div class="def-box">
+      <b>MENS (미세전류)</b>: <strong>1mA 이하</strong>의 아주 작은 μA 전류 → 상처 치유<br>
+      세포 수준 에너지 자극 / 파형: 단상 직사각형파, 이상대칭 직사각형파<br>
+      효과: ATP 생성↑, 콜라겐 합성↑, 뼈 형성 촉진, 세균 성장 억제
+    </div>
+    <table class="num-table">
+      <tr><th>기기</th><th>파형특성</th><th>적응증</th></tr>
+      <tr><td><b>HVGS</b></td><td>짝점점파, 높은전압, 짧은통전</td><td>통증감소, 말초순환↑, 궤양치유, 부종감소</td></tr>
+      <tr><td><b>MENS</b></td><td>μA 전류, 손상전류 회복</td><td>상처치유, 통증감소</td></tr>
+      <tr><td><b>FES</b></td><td>저주파, 신경지배근 자극</td><td>기립·보행·일상생활 동작 (UMN 마비환자)</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>HVGS 파형을 짝으로 만드는 이유</b>: 맥동 기간을 늘리기 위해<br>
+      <b>FES 적응증</b>: 무용성 위축, 관절가동범위↑, 경련성 관리, 보행훈련, <b>어깨관절 아탈구</b>, 일차성 척추옆굽음증
+    </div>
+  </div>
+
+  <!-- 중주파 / ICT -->
+  <div id="s5" class="section-block">
+    <h3><span class="icon">🌀</span> 중주파 / 간섭파(ICT) / 러시안전류</h3>
+    <div class="def-box">
+      <b>ICT (간섭파치료)</b>: 2개의 서로 다른 중주파 교차 → <strong>간섭으로 새로운 저주파 발생</strong><br>
+      · 4,000Hz × 4,100Hz 교차 → 100Hz 저주파 발생<br>
+      · 중주파가 저주파보다 피부저항 적게 받아 <strong>심부자극 가능</strong><br>
+      · 변조심도: 두 파의 간섭이나 보강의 크기(백분율)
+    </div>
+    <table class="num-table">
+      <tr><th>전극 배치</th><th>특징</th></tr>
+      <tr><td><b>2극 배치</b></td><td>마주보는 선상에서 100% 간섭</td></tr>
+      <tr><td><b>4극 배치</b></td><td>전기력선 중심에서 100% 간섭, 교차점 45도 방향에서 100% 간섭효과</td></tr>
+      <tr><td><b>벡터스케닝</b></td><td>꽃잎처럼 중심점 회전 → 넓은 부위 자극 (치료부위 불명확 시)</td></tr>
+      <tr><td><b>6극 배치</b></td><td>조직을 입체적으로 자극</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th>현상</th><th>설명</th></tr>
+      <tr><td><b>길데마이스터 효과</b></td><td>맥동이 모여 가중 → 신경흥분, 탈분극 (상대불응기에서도 가능)</td></tr>
+      <tr><td><b>웨덴스키 억제</b></td><td>1,000MHz 이상 계속 자극 → 재분극 기회 없어 흥분성 완전 상실</td></tr>
+      <tr><td><b>보강간섭</b></td><td>골과 골, 마루와 마루의 중첩</td></tr>
+      <tr><td><b>상쇄간섭</b></td><td>골과 마루의 중첩 → 합성 변위 약해짐</td></tr>
+    </table>
+    <div class="def-box">
+      <b>러시안 전류</b>: 교류전류 돌발시킨 <strong>시간 변조 교류</strong><br>
+      최대 수의적 수축과 같은 정도의 근수축 가능 → <strong>운동선수 근재교육·근력 증강</strong>에 주로 사용
+    </div>
+    <table class="num-table">
+      <tr><th>주파수</th><th>생리학적 효과</th></tr>
+      <tr><td>100Hz 고정파</td><td>미세진동, 혈관확장, 진통, 교감신경억제</td></tr>
+      <tr><td>1~10Hz 고정파</td><td>운동신경자극, 근수축 유발(정상근)</td></tr>
+      <tr><td>1~100Hz 리듬파</td><td>미세진동, 조직 활성화↑, 부종 경감</td></tr>
+      <tr><td>90~100Hz 리듬파</td><td>혈관확장, 진통</td></tr>
+    </table>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>웨덴스키 억제 해결법</b>: 주파수↓ / 리듬감 부여 / 진폭변조 주파수 사용<br>
+      <b>역동전류(베르나르전류)</b>: 교류 정형파를 정류한 정형 직류. 완파장·단파장·짧은교대파·긴교대파 4종류
+    </div>
+  </div>
+
+  <!-- 고주파 -->
+  <div id="s6" class="section-block">
+    <h3><span class="icon">🔥</span> 고주파 치료 (단파·극초단파)</h3>
+    <div class="def-box">
+      <b>고주파 특징</b>: 100,000Hz 이상 → 이온 운동 거의 없음 → <strong>열효과만 존재</strong><br>
+      ⚠️ <b>고주파는 주파수 낮을수록 심부 침투</b> (저·중주파는 반대: 높을수록 깊이 침투)
+    </div>
+    <table class="num-table">
+      <tr><th>열 발생 순서</th><th>특성</th></tr>
+      <tr><td><b>유전율 높을수록</b> 열↑</td><td>혈액 > 근육 > 뇌 > 지방 > 피부 > 뼈</td></tr>
+      <tr><td><b>비저항 높을수록</b> 열↑</td><td>뼈속질 > 지방 > 피부 > 간 > 근육 > 혈액</td></tr>
+    </table>
+    <table class="num-table">
+      <tr><th>구분</th><th>단파치료</th><th>극초단파치료</th></tr>
+      <tr><td>주파수</td><td><b>27.12MHz</b></td><td><b>2,450MHz</b> / 915MHz / 433.9MHz</td></tr>
+      <tr><td>가열</td><td>심부가열</td><td>표면가열</td></tr>
+      <tr><td>치료부위</td><td>양쪽 치료 가능</td><td>한쪽만</td></tr>
+      <tr><td>범위</td><td>넓은 부위</td><td>좁은 부위</td></tr>
+    </table>
+    <div class="def-box">
+      <b>단파 전극사이거리</b>: 2~4cm 유지 / 가까우면 표층열, 멀면 심부열 집중<br>
+      <b>단파 전극배치법</b>: 대면법 / 공명법 / 교차법 / 병렬법 / 콘덴서패드 코일법<br>
+      <b>극초단파 선택적 가열</b>: 물(고함수조직) 많이 함유할수록 가열 잘됨
+    </div>
+    <div class="def-box">
+      <b>극초단파 도자 종류</b><br>
+      · A·B형: 1극 도너츠형 빔 50-100-50 → <b>볼록하고 불규칙한 돌출부</b><br>
+      · C·D형: 2극 타원형 빔 100-75-50 → <b>오목하고 좁은 평평한 곳</b><br>
+      · E형: 2극 타원형 → <b>오목하고 넓은 평평한 곳</b><br>
+      · 반터널형: 신체 양쪽 동시 가열
+    </div>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>고주파 공통 금기</b>: 악성종양, 허혈부위, 금속삽입부, 심박조정기, 결핵<br>
+      <b>극초단파 추가 금기</b>: 남성생식기, 비만, 성장기 뼈·관절<br>
+      <b>맥동단파투열</b>: 비열적 효과 목적 / 적응증: 염증·타박상·혈종·윤활주머니염·정맥굴염
+    </div>
+  </div>
+
+  <!-- 초음파 -->
+  <div id="s7" class="section-block">
+    <h3><span class="icon">🌊</span> 초음파 치료</h3>
+    <div class="def-box">
+      <b>초음파</b>: 음파 진동 (금속 적용 가능)<br>
+      주파수: 0.5~5MHz / <strong>1MHz·3MHz 많이 사용</strong><br>
+      발생 원리: <strong>역압전효과</strong> / 전달에 매질 필요
+    </div>
+    <table class="num-table">
+      <tr><th>특성</th><th>내용</th></tr>
+      <tr><td><b>침투 깊이</b></td><td>주파수 낮을수록 깊이 침투 (1MHz가 3MHz보다 더 깊이)</td></tr>
+      <tr><td><b>흡수율 순서</b></td><td>뼈>연골>힘줄>피부>근육>신경>지방>혈액</td></tr>
+      <tr><td><b>반사율</b></td><td>도자-공기 99% / 뼈-골막 70% 반사</td></tr>
+      <tr><td><b>강도</b></td><td>0.25~3W/cm² 주로 사용</td></tr>
+      <tr><td><b>적용 시간</b></td><td>연속 3~10분 / 펄스 5~15분</td></tr>
+    </table>
+    <div class="def-box">
+      <b>적용 방법</b>: 50% 겹치기, 2.5cm/s, 90도 유지, 젤 충분히 사용<br>
+      <b>고정치료법</b>: 1W/cm², Trigger point / 직각 고정, 국소 0.8W/cm²<br>
+      <b>수중치료법</b>: 23~34℃ 증류수, 1~2cm 떨어트려 고정 적용
+    </div>
+    <div class="def-box">
+      <b>음파영동 vs 이온도입</b><br>
+      · 약물 극성 불필요 / 분자량 크면 어려움<br>
+      · 이온도입보다 <strong>더 깊이 침투</strong>
+    </div>
+    <div class="clinical-box">
+      <div class="ct">⚡ 임상 포인트</div>
+      <b>공동현상</b>: 기계적 효과로 조직의 액체 안 기포 발생 → 조직파괴<br>
+      <b>도자를 이동시켜야 하는 이유</b>: 도자 가까이 열 집중 → 화상 예방<br>
+      <b>금기</b>: 뇌·척수, 눈, 생식기, 임산부, 악성종양, 방사선 치료부위, 노출된 신경조직
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== 퀴즈 탭 ==================== -->
+<div id="tab-quiz" class="tab-content">
+  <div class="quiz-header">
+    <h3>📝 전기치료학 응용 퀴즈</h3>
+    <span class="score-badge" id="scoreBadge">0 / 0</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div id="quizArea"></div>
+  <div class="quiz-nav">
+    <button class="qbtn secondary" onclick="prevQ()">◀ 이전</button>
+    <button class="qbtn primary" onclick="nextQ()">다음 ▶</button>
+  </div>
+  <div id="resultScreen" class="result-screen">
+    <h2>🎉 퀴즈 완료!</h2>
+    <div class="big-score" id="finalScore"></div>
+    <p id="finalMsg"></p>
+    <div class="wrong-review" id="wrongReview" style="display:none">
+      <h4>❌ 틀린 문제 복습</h4>
+      <div id="wrongList"></div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;">
+      <button class="qbtn primary" onclick="retryWrong()">틀린 문제만 다시</button>
+      <button class="qbtn secondary" onclick="resetQuiz()">처음부터</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ALL_QUESTIONS = [
+  {q:"이온도입법에서 활성 전극과 비활성 전극의 크기 비율은?",opts:["1:1","1:2","2:1","1:3"],ans:1,exp:"활성전극:비활성전극 = 1:2. 비활성전극이 2배 커야 한다."},
+  {q:"이온도입법에서 사용하는 전류강도는?",opts:["0.5mA 이하","5mA 이하","10mA 이하","20mA 이하"],ans:1,exp:"이온도입법: 5mA 이하 사용 (보통 0.5mA). 높은 강도보다 낮은 강도가 더 효과적."},
+  {q:"통증 치료에 쓰이는 약품으로 리도카인을 이온도입 시 사용하는 극성은?",opts:["음극(-)","양극(+)","양쪽 모두","극성 무관"],ans:1,exp:"리도카인/프로카인은 양극(+)에서 통증억제·국소마취 효과. 마그네슘(Mg²⁺)도 양극."},
+  {q:"TENS에서 관문조절설에 해당하는 신경섬유 자극은?",opts:["C섬유 자극","Aδ섬유 자극","Aβ섬유 자극","B섬유 자극"],ans:2,exp:"관문조절설: Aβ 자극 → SG 활성화 → Aδ·C섬유 통로 차단 → 통증 조절"},
+  {q:"TENS 전극으로 가장 많이 사용되는 것은?",opts:["카라야 전극","탄소실리콘전극","금속전극","석영전극"],ans:1,exp:"TENS 전극: 탄소실리콘전극(가장 많이 사용). 카라야 전극은 수분 보존력이 좋음."},
+  {q:"HVGS(고전압맥동전류)의 파형 특성으로 옳은 것은?",opts:["단일점점파","이중점점파(짝점점파)","정형파","삼각파"],ans:1,exp:"HVGS: 이중점점파(짝점점파=쌍둥이 Peak파). 높은 전압과 짧은 통전시간(50~100μs). 변성근 자극 불가."},
+  {q:"HVGS에서 파형을 짝으로 만드는 이유는?",opts:["전압을 낮추기 위해","전류를 강하게 하기 위해","맥동 기간을 늘리기 위해","피부 저항을 낮추기 위해"],ans:2,exp:"HVGS 짝파형 이유: 맥동 기간을 늘리기 위해."},
+  {q:"MENS(미세전류자극)의 전류 범위는?",opts:["1mA 이하(μA)","1~5mA","5~10mA","10mA 이상"],ans:0,exp:"MENS: 1mA 이하의 아주 작은 μA 전류. 세포 수준 에너지 자극. 손상전류 회복에 사용."},
+  {q:"간섭파치료(ICT)에서 주로 사용하는 중주파 주파수는?",opts:["1,000Hz와 2,000Hz","4,000Hz와 4,100Hz","10,000Hz와 11,000Hz","100Hz와 200Hz"],ans:1,exp:"ICT: 4,000Hz와 4,100Hz 교차 → 두 주파수 차이인 100Hz 저주파 발생. 심부자극 가능."},
+  {q:"ICT 4극 전극 배치에서 100% 간섭이 일어나는 위치는?",opts:["전극 바로 아래","전기력선 중심 및 교차점 45도 방향","전극 위","조직의 표면"],ans:1,exp:"4극 배치: 전기력선 중심에서 100% 간섭, 교차점 45도 방향에서도 100% 간섭효과"},
+  {q:"러시안 전류의 주요 적응 대상은?",opts:["고령 환자의 재활","만성통증 환자","운동선수 근재교육 및 근력 증강","급성 외상 환자"],ans:2,exp:"러시안 전류: 최대 수의적 수축과 같은 근수축 가능 → 환자보다 건강한 운동선수 근력 증강에 주로 사용"},
+  {q:"고주파에서 주파수가 낮을수록 어떻게 되는가?",opts:["심부 침투가 잘됨","표면 가열만 됨","열 발생이 줄어듦","피부저항이 증가함"],ans:0,exp:"고주파는 주파수 낮을수록 심부 침투 잘됨. (저·중주파는 반대: 높을수록 심부 침투)"},
+  {q:"단파치료(27.12MHz)에서 전극사이거리는?",opts:["0.5~1cm","2~4cm","5~10cm","10~15cm"],ans:1,exp:"단파 전극사이거리: 2~4cm 유지. 더 가까우면 표층, 더 멀면 심부 열 집중."},
+  {q:"초음파의 발생 원리는?",opts:["압전효과","역압전효과","전자유도","광전효과"],ans:1,exp:"초음파 발생 원리: 역압전효과 (전기에너지 → 음파 변환)"},
+  {q:"초음파 치료 시 적용 방법으로 옳은 것은?",opts:["10% 겹치기, 5cm/s","50% 겹치기, 2.5cm/s","100% 겹치기, 1cm/s","겹치기 없이 직선으로"],ans:1,exp:"초음파 적용: 50% 겹치기, 2.5cm/s, 90도 유지, 젤 충분히 사용"}
+];
+
+let questions = [...ALL_QUESTIONS];
+let currentQ=0, score=0, answered, wrongQs=[];
+
+function init(){
+  questions=[...ALL_QUESTIONS].sort(()=>Math.random()-0.5);
+  currentQ=0; score=0; answered=new Array(questions.length).fill(null); wrongQs=[];
+}
+
+function renderQ(){
+  const q=questions[currentQ], total=questions.length;
+  document.getElementById('scoreBadge').textContent=score+' / '+total;
+  document.getElementById('progressFill').style.width=((currentQ+1)/total*100)+'%';
+  let html=`<div class="quiz-card"><div class="q-num">문제 ${currentQ+1} / ${total}</div><div class="q-text">${q.q}</div>`;
+  q.opts.forEach((o,i)=>{
+    let cls='';
+    if(answered[currentQ]!==null){if(i===q.ans)cls='correct';else if(i===answered[currentQ]&&i!==q.ans)cls='wrong';}
+    html+=`<button class="opt-btn ${cls}" onclick="selectAns(${i})" ${answered[currentQ]!==null?'disabled':''}>${String.fromCharCode(9312+i)} ${o}</button>`;
+  });
+  html+=`<div class="explain-box" style="display:${answered[currentQ]!==null?'block':'none'}">${q.exp}</div></div>`;
+  document.getElementById('quizArea').innerHTML=html;
+}
+
+function selectAns(i){
+  if(answered[currentQ]!==null)return;
+  answered[currentQ]=i;
+  if(i===questions[currentQ].ans)score++;
+  else wrongQs.push(currentQ);
+  renderQ();
+  document.getElementById('scoreBadge').textContent=score+' / '+questions.length;
+}
+
+function nextQ(){if(currentQ<questions.length-1){currentQ++;renderQ();}else showResult();}
+function prevQ(){if(currentQ>0){currentQ--;renderQ();}}
+
+function showResult(){
+  document.getElementById('quizArea').style.display='none';
+  document.querySelector('.quiz-nav').style.display='none';
+  const rs=document.getElementById('resultScreen'); rs.style.display='block';
+  document.getElementById('finalScore').textContent=score+' / '+questions.length;
+  const pct=Math.round(score/questions.length*100);
+  document.getElementById('finalMsg').textContent=pct>=80?'🎊 훌륭합니다!':pct>=60?'👍 조금 더 복습해 보세요.':'📚 틀린 문제를 다시 복습하세요.';
+  if(wrongQs.length>0){document.getElementById('wrongReview').style.display='block';document.getElementById('wrongList').innerHTML=wrongQs.map(idx=>`<div class="wrong-item">Q${idx+1}. ${questions[idx].q}</div>`).join('');}
+}
+
+function retryWrong(){
+  if(!wrongQs.length)return;
+  const wq=wrongQs.map(i=>ALL_QUESTIONS.find(q=>q===questions[i])||questions[i]);
+  questions=wrongQs.map(i=>questions[i]); currentQ=0; score=0; answered=new Array(questions.length).fill(null); wrongQs=[];
+  document.getElementById('quizArea').style.display='block';document.querySelector('.quiz-nav').style.display='flex';
+  document.getElementById('resultScreen').style.display='none'; renderQ();
+}
+
+function resetQuiz(){
+  init();
+  document.getElementById('quizArea').style.display='block';document.querySelector('.quiz-nav').style.display='flex';
+  document.getElementById('resultScreen').style.display='none'; renderQ();
+}
+
+function showTab(t){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  event.target.classList.add('active');
+  if(t==='quiz'&&document.getElementById('quizArea').innerHTML===''){init();renderQ();}
+}
+
+init(); renderQ();
+</script>
+</body>
+</html>
