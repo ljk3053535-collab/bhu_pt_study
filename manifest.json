@@ -1,0 +1,23 @@
+{
+  "name": "PT 스터디 포털",
+  "short_name": "PT 포털",
+  "description": "PT 국가시험 스터디 포털",
+  "start_url": "/pt-study/",
+  "scope": "/pt-study/",
+  "display": "standalone",
+  "background_color": "#ddeeff",
+  "theme_color": "#1a7fd4",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
