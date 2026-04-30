@@ -240,6 +240,38 @@ body {
 /* search-mode: show all subjects regardless of tab */
 body.searching .subject.tab-hidden { display: block; }
 
+/* install button */
+.install-btn {
+  display: none;
+  align-items: center; gap: 8px;
+  margin-top: 14px;
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.5);
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.install-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); }
+.install-btn.visible { display: inline-flex; }
+.install-btn-icon { font-size: 16px; }
+
+/* ios guide */
+.ios-guide {
+  display: none;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.9);
+  font-size: 12px; line-height: 1.7;
+}
+.ios-guide.visible { display: block; }
+
 /* footer */
 .footer {
   text-align: center; padding: 28px;
@@ -256,6 +288,12 @@ body.searching .subject.tab-hidden { display: block; }
   <span class="header-badge">PT Study Portal</span>
   <h1>♥ 진이랑 보려고 만듬 ♥</h1>
   <p>정리해서 올릴거임</p>
+  <button class="install-btn" id="installBtn" onclick="installApp()">
+    <span class="install-btn-icon">📲</span> 앱으로 설치하기
+  </button>
+  <div class="ios-guide" id="iosGuide">
+    📲 Safari 하단 공유 버튼 → <strong>홈 화면에 추가</strong> 탭하면 설치돼요
+  </div>
 </div>
 
 <!-- STICKY: SEARCH + TABS -->
@@ -540,6 +578,43 @@ function clearSearch() {
 applyTabVisibility();
 </script>
 <script>
+// ── 설치 버튼 ──
+let deferredPrompt = null;
+const installBtn = document.getElementById('installBtn');
+const iosGuide   = document.getElementById('iosGuide');
+
+// 안드로이드 크롬: beforeinstallprompt 이벤트 잡기
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.classList.add('visible');
+});
+
+// 설치 완료되면 버튼 숨기기
+window.addEventListener('appinstalled', () => {
+  installBtn.classList.remove('visible');
+  deferredPrompt = null;
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    // 안드로이드
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      installBtn.classList.remove('visible');
+    });
+  }
+}
+
+// iOS 감지 — Safari에서만 안내 표시
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandalone = window.navigator.standalone;
+if (isIOS && !isInStandalone) {
+  iosGuide.classList.add('visible');
+}
+
+// 서비스워커
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/bhu_pt_study/sw.js')
