@@ -1,10 +1,10 @@
-const CACHE_NAME = 'pt-study-v1';
+const CACHE_NAME = 'bhu-pt-study-v1';
 
 // 오프라인에서도 열 수 있도록 캐시할 파일 목록
 const CACHE_FILES = [
-  '/pt-study/',
-  '/pt-study/index.html',
-  '/pt-study/manifest.json'
+  '/bhu_pt_study/',
+  '/bhu_pt_study/index.html',
+  '/bhu_pt_study/manifest.json'
 ];
 
 // 설치 시 캐시 저장

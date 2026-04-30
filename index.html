@@ -542,7 +542,7 @@ applyTabVisibility();
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/pt-study/sw.js')
+    navigator.serviceWorker.register('/bhu_pt_study/sw.js')
       .then(() => console.log('SW 등록 완료'))
       .catch(err => console.log('SW 등록 실패:', err));
   });
